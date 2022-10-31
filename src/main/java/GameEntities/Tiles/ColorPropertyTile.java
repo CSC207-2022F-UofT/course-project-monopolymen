@@ -12,9 +12,8 @@ public class ColorPropertyTile extends Property{
      * @see GameEntities.Tiles.Tile
      */
     public ColorPropertyTile(String color, String propertyName, String propertyDisplayName, int purchasePrice, int mortgageValue){
-        super("ColorPropertyTile", "Color Property Tile", 0, 0);
+        super(propertyName, propertyDisplayName, purchasePrice, mortgageValue);
         this.color = color;
-
 
     }
 

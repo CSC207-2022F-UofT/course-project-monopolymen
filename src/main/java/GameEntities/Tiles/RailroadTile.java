@@ -1,7 +1,7 @@
 package GameEntities.Tiles;
-import java.util.ArrayList;
+
 public class RailroadTile extends Property{
-    private ArrayList rentPrice;
+    private int[] rentPrice;
     /**
      * When landed on, players can choose to buy the rail road property for its printed price if it is unowned.
      * @param propertyName        The internal string name representing this tile
@@ -11,8 +11,8 @@ public class RailroadTile extends Property{
      * @param mortgageValue       The value of this property for mortgage purposes
      * @see GameEntities.Tiles.Tile
      */
-    public RailroadTile(ArrayList rentPrice, String propertyName, String propertyDisplayName, int purchasePrice, int mortgageValue) {
-        super("RailroadTile", "Rail Road Tile", 200, 100);
+    public RailroadTile(int[] rentPrice, String propertyName, String propertyDisplayName, int purchasePrice, int mortgageValue) {
+        super(propertyName, propertyDisplayName, purchasePrice, mortgageValue);
         this.rentPrice = rentPrice;
     }
     public int checkNumOwnedByPlayer(){
