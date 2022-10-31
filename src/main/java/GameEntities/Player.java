@@ -7,12 +7,14 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private int money = 1500;
-    private ArrayList<Propertie> properties;
+    private ArrayList<Property> properties;
     private int turnsInJail = -1;
     private int position = 0;
     private String icon;
     private int[] lastRoll = {0, 0};
     private int consecutiveDoubles = 0;
+
+    private int getOutOfJailFree = 0;
 
     public Player(String nameInput, String iconInput){
         this.name = nameInput;
@@ -29,7 +31,7 @@ public class Player {
         return this.money;
     }
 
-    public ArrayList<Propertie> getProperties() {
+    public ArrayList<Property> getProperties() {
         return this.properties;
     }
 
@@ -74,17 +76,16 @@ public class Player {
         return false;
     }
 
-    public boolean ownsProperty(Propertie check){
-        //NEED TO WAIT FOR PROPERTY TO GET IMPLEMENTED
-        return false;
+    public boolean ownsProperty(Property check){
+        return this.properties.contains(check);
     }
 
-    public void addProperty(Propertie add){
+    public void addProperty(Property add){
         this.properties.add(add);
     }
 
-    public void sellProperty(Propertie sell){
-        //NEED TO WAIT FOR PROPERTY TO GET IMPLEMENTED
+    public void sellProperty(Property sell){
+        this.properties.remove(sell);
     }
 
     public void addTurnInJail(){
@@ -92,7 +93,7 @@ public class Player {
         this.turnsInJail += 1;
     }
 
-    public void resetTrunInJail(){
+    public void resetTurnInJail(){
         this.turnsInJail = -1;
     }
 
@@ -107,6 +108,14 @@ public class Player {
         }
     }
 
+    public boolean getGetOutOfJailCard(){
+        return (this.getOutOfJailFree != 0);
+    }
+
+    public void removeGetOutOfJailCard(){
+        this.getOutOfJailFree -= 1;
+    }
+
     public void updateConsecutiveDoubles(boolean doubleRoll){
         if(doubleRoll){
             this.consecutiveDoubles += 1;
@@ -115,4 +124,3 @@ public class Player {
         }
     }
 }
-
