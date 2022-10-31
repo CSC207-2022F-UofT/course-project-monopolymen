@@ -11,8 +11,8 @@ public class GoToJailTile extends Tile{
      *                        only subclasses of Tile can be ownable.
      * @see GameEntities.Tiles.Property
      */
-    protected GoToJailTile(String tileName, String tileDisplayName, boolean ownable) {
-        super("GoToJailTile", "Go To jail Tile", false);
+    public GoToJailTile() {
+        super("GoToJailTile", "Go To jail Tile");
     }
 
     /**
@@ -23,8 +23,7 @@ public class GoToJailTile extends Tile{
      */
     @Override
     public TileActionResultModel action(Player player) {
-        System.out.println("You are being arrested and are going to jail");
-        MovePlayerToTile(player, -1);
-        return new TileActionResultModel("You have been sent to jail", -1);
+        player.addTurnInJail();
+        return new TileActionResultModel(player, -1);
     }
 }

@@ -13,8 +13,8 @@ public class JailTile extends Tile{
      *                        only subclasses of Tile can be ownable.
      * @see GameEntities.Tiles.Property
      */
-    protected JailTile(String tileName, String tileDisplayName, boolean ownable) {
-        super("JailTile", "jail Tile", false);
+    public JailTile() {
+        super("JailTile", "jail Tile");
     }
 
     /**
@@ -26,40 +26,6 @@ public class JailTile extends Tile{
      */
     @Override
     public TileActionResultModel action(Player player) {
-        Scanner options = new Scanner(System.in);
-        if (player.getGetOutOfJailCard()) {
-            //basic idea, there will be no print statments in final inplementation.
-            System.out.println("You have the option to use your get out of jail card:");
-            int option = options.nextInt();
-            if (option == 1) {
-                player.RemoveGetOutOfJailCard();
-                player.resetTurnInJail();
-                // need something to tell the gamestate that it is still the players turn and they can still roll.
-                return new TileActionResultModel("You used your get out of jail card!", -1);
-            } else {
-                player.addTurnInJail();
-                // player turn ends here.
-                return new TileActionResultModel("You didn't use your get out of jail card", -1)
-            }
-        } else {
-            if (player.getMoney() >= 50) {
-                System.out.println("Do you wish to spend $50 to get out of jail?");
-                int option = options.nextInt();
-                if (option == 1) {
-                    player.subtractMoney(50);
-                    player.resetTurnInJail();
-                    //player turn doesn't end here.
-                    return new TileActionResultModel("You paid $50 to get out of jail!", -1);
-                } else {
-                    player.addTurnInJail();
-                    //player turn ends here.
-                    return new TileActionResultModel("You didn't pay $50 to get out of jail", -1);
-                }
-            } else {
-                System.out.println("You cannot leave jail");
-                player.addTurnInJail();
-                return new TileActionResultModel("You cannot leave jail", -1);
-            }
-        }
+        return new TileActionResultModel(player, -1);
     }
 }
