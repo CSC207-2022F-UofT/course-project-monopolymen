@@ -11,16 +11,16 @@ public class GoTile extends Tile {
 
 
     /**
-     * Give $200 to the Player <i>player</i> that lands on this tile.
+     * Nothing happens when a player lands on this tile specifically, only when passing.
      *
      * @param player The Player that the action is being performed on (landed on the tile)
      * @return A TileActionResultModel object describing the action that was performed
      */
     @Override
     public TileActionResultModel action(Player player) {
-        Player.money += 200;
 
-        return new TileActionResultModel("You got $200!", 0);
+
+        return null;
     }
 
     /**
