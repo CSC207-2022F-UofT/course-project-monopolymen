@@ -36,4 +36,7 @@ public class TileActionResultModel {
         return playerPosition;
     }
 
+    public int getMoveToPosition() { return moveToPosition; }
+
+    public int getPlayer() { return player; }
 }
