@@ -17,11 +17,22 @@ public class Board {
         if (tileName.equals("JailTile")){
             return -1;
         }
-        for(int i = 0; i <= tilesList.size(); i++){
+        for(int i = 0; i < tilesList.size(); i++){
             if(tileName.equals(tilesList.get(i).tileName)){
                 return i;
             }
         }
         return 0;
     }
+
+    public ArrayList<Tiles> getPropertyTiles(){
+        ArrayList<Tiles> propertyTiles = new ArrayList<Tiles>();
+        for(int i = 0; i < tilesList.size(); i++){
+            if(tilesList.get(i) instanceof Property){
+                propertyTiles.add(tilesList.get(i));
+            }
+        }
+        return propertyTiles;
+    }
+
 }
