@@ -3,9 +3,9 @@ package GameEntities;
 import java.util.ArrayList;
 
 public class Board {
-    private  ArrayList<> communityCards = new ArrayList<>();
-    private ArrayList<> chanceCards = new ArrayList<>();
-    private ArrayList<Tiles> tilesList = new ArrayList<Tiles>();
+    private  ArrayList<> communityCards;
+    private ArrayList<> chanceCards;
+    private ArrayList<Tiles> tilesList;
     public Board(ArrayList communityCards, ArrayList chanceCards, ArrayList tilesList){
 
         this.communityCards = communityCards;
