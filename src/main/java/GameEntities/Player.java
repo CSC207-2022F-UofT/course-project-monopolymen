@@ -5,7 +5,7 @@ import java.util.ArrayList;
  *
  */
 public class Player {
-    private String nameq;
+    private String name;
     private int money = 1500;
     private ArrayList<Propertie> properties;
     private int turnsInJail = -1;
@@ -13,6 +13,8 @@ public class Player {
     private String icon;
     private int[] lastRoll = {0, 0};
     private int consecutiveDoubles = 0;
+
+    private int getOutOfJailFree = 0;
 
     public Player(String nameInput, String iconInput){
         this.name = nameInput;
@@ -91,7 +93,7 @@ public class Player {
         this.turnsInJail += 1;
     }
 
-    public void resetTrunInJail(){
+    public void resetTurnInJail(){
         this.turnsInJail = -1;
     }
 
@@ -104,6 +106,14 @@ public class Player {
             rollSum = rollSum - (30 - this.position);
             this.position = rollSum;
         }
+    }
+
+    public boolean getGetOutOfJailCard(){
+        return (this.getOutOfJailFree != 0);
+    }
+
+    public void removeGetOutOfJailCard(){
+        this.getOutOfJailFree -= 1;
     }
 
     public void updateConsecutiveDoubles(boolean doubleRoll){
