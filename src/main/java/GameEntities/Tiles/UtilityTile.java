@@ -11,7 +11,7 @@ public class UtilityTile extends Property{
      * @param mortgageValue       The value of this property for mortgage purposes
      * @see GameEntities.Tiles.Tile
      */
-    public ColorPropertyTile(String propertyName, String propertyDisplayName, int purchasePrice, int mortgageValue){
+    public UtilityTile(String propertyName, String propertyDisplayName, int purchasePrice, int mortgageValue){
         super(propertyName, propertyDisplayName, purchasePrice, mortgageValue);
     }
 }
