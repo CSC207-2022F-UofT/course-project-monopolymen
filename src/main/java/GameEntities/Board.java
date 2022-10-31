@@ -12,4 +12,16 @@ public class Board {
         this.chanceCards = chanceCards;
         this.tilesList = tilesList;
     }
+
+    public int getTilePosition(String tileName){
+        if (tileName.equals("JailTile")){
+            return -1;
+        }
+        for(int i = 0; i <= tilesList.size(); i++){
+            if(tileName.equals(tilesList.get(i).tileName)){
+                return i;
+            }
+        }
+        return 0;
+    }
 }
