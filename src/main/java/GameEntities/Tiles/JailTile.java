@@ -1,6 +1,6 @@
 package GameEntities.Tiles;
 
-import java.util.Scanner;
+import GameEntities.Player;
 
 public class JailTile extends Tile{
     /**

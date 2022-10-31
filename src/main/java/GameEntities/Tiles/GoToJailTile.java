@@ -1,5 +1,7 @@
 package GameEntities.Tiles;
 
+import GameEntities.Player;
+
 public class GoToJailTile extends Tile{
     /**
      * A player landing on the space will be put into jail.
