@@ -1,8 +1,10 @@
 package GameEntities.Tiles;
 
-public class LuxuryTaxTile extends Tile{
+public class TaxTile extends Tile{
+
+    private int taxAmount;
     /**
-     * A player landing on the space must pay a luxury tax to the Bank.
+     * A player landing on the space must pay a income tax or luxury tax to the Bank.
      *
      * @param tileName        The internal string name representing this tile
      *                        (intended to not contain spaces or other special characters).
@@ -11,19 +13,20 @@ public class LuxuryTaxTile extends Tile{
      *                        only subclasses of Tile can be ownable.
      * @see GameEntities.Tiles.Property
      */
-    protected LuxuryTaxTile(String tileName, String tileDisplayName, boolean ownable) {
-        super("LuxuryTaxTile", "Luxury Tax Tile", false);
+    protected TaxTile(String tileName, String tileDisplayName, boolean ownable, int taxAmount) {
+        super(tileName, tileDisplayName, ownable);
+        this.taxAmount = taxAmount;
     }
 
     /**
-     * Player <i>player</i> pays $100 luxury tax when lands on this tile.
+     * Player <i>player</i> pays tax when lands on tax tile.
      *
      * @param player The Player that the action is being performed on (landed on the tile)
      * @return A TilePassResultModel object describing the action that was performed
      */
-    @Override
     public TileActionResultModel action(Player player) {
-        Player.money -= 100;
-        return new TileActionResultModel("You paid $100 luxury tax!", 0);
+        Player.money -= taxAmount;
+        return new TileActionResultModel("You paid $" + taxAmount + getTileDisplayName() + " !", 0);
     }
 }
+
