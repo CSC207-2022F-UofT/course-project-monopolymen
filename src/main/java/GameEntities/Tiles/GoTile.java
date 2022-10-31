@@ -4,15 +4,9 @@ public class GoTile extends Tile {
     /**
      * When landed on or passed, that player gets 200$. Does not happen when sent to Jail.
      *
-     * @param tileName        The internal string name representing this tile
-     *                        (intended to not contain spaces or other special characters).
-     * @param tileDisplayName The string name displayed to the user. This may have special characters.
-     * @param ownable         Whether the tile is able to be owned by a player. This is protected with the intention that
-     *                        only subclasses of Tile can be ownable.
-     * @see GameEntities.Tiles.Property
      */
-    protected GoTile(String tileName, String tileDisplayName, boolean ownable) {
-        super("GoTile", "Go Tile", false);
+    public GoTile() {
+        super("GoTile", "Go Tile");
     }
 
 
