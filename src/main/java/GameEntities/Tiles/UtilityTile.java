@@ -3,7 +3,7 @@ package GameEntities.Tiles;
 public class UtilityTile extends Property{
 
     /**
-     * When landed on, players can choose to buy the colored property for its printed price if it is unowned.
+     * When landed on, players can choose to buy the utility for its printed price.
      * @param propertyName        The internal string name representing this tile
      *                            (intended to not contain spaces or other special characters).
      * @param propertyDisplayName The string name displayed to the user. This may have special characters.
