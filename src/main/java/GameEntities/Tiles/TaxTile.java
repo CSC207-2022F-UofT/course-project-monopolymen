@@ -1,5 +1,7 @@
 package GameEntities.Tiles;
 
+import GameEntities.Player;
+
 public class TaxTile extends Tile{
 
     private int taxAmount;
@@ -13,8 +15,8 @@ public class TaxTile extends Tile{
      *                        only subclasses of Tile can be ownable.
      * @see GameEntities.Tiles.Property
      */
-    protected TaxTile(String tileName, String tileDisplayName, boolean ownable, int taxAmount) {
-        super(tileName, tileDisplayName, ownable);
+    public TaxTile(String tileName, String tileDisplayName, int taxAmount) {
+        super(tileName, tileDisplayName);
         this.taxAmount = taxAmount;
     }
 
@@ -25,8 +27,8 @@ public class TaxTile extends Tile{
      * @return A TilePassResultModel object describing the action that was performed
      */
     public TileActionResultModel action(Player player) {
-        Player.money -= taxAmount;
-        return new TileActionResultModel("You paid $" + taxAmount + getTileDisplayName() + " !", 0);
+        player.subtractMoney(taxAmount);
+        return new TileActionResultModel("You paid $" + taxAmount + getTileDisplayName() + " !", player.getPosition());
     }
 }
 
