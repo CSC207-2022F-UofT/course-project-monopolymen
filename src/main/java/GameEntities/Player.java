@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private int money = 1500;
-    private ArrayList<Property> properties;
+    private ArrayList<Propertie> properties;
     private int turnsInJail = -1;
     private int position = 0;
     private String icon;
@@ -31,7 +31,7 @@ public class Player {
         return this.money;
     }
 
-    public ArrayList<Property> getProperties() {
+    public ArrayList<Propertie> getProperties() {
         return this.properties;
     }
 
@@ -76,15 +76,15 @@ public class Player {
         return false;
     }
 
-    public boolean ownsProperty(Property check){
+    public boolean ownsProperty(Propertie check){
         return this.properties.contains(check);
     }
 
-    public void addProperty(Property add){
+    public void addProperty(Propertie add){
         this.properties.add(add);
     }
 
-    public void sellProperty(Property sell){
+    public void sellProperty(Propertie sell){
         this.properties.remove(sell);
     }
 
