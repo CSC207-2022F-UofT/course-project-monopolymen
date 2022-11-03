@@ -5,7 +5,7 @@ import java.util.ArrayList;
  *
  */
 public class Player {
-    private String nameq;
+    private String name;
     private int money = 1500;
     private ArrayList<Propertie> properties;
     private int turnsInJail = -1;
@@ -75,7 +75,8 @@ public class Player {
     }
 
     public boolean ownsProperty(Propertie check){
-        return this.properties.contains(check);
+        //NEED TO WAIT FOR PROPERTY TO GET IMPLEMENTED
+        return false;
     }
 
     public void addProperty(Propertie add){
@@ -83,7 +84,7 @@ public class Player {
     }
 
     public void sellProperty(Propertie sell){
-        this.properties.remove(sell);
+        //NEED TO WAIT FOR PROPERTY TO GET IMPLEMENTED
     }
 
     public void addTurnInJail(){
