@@ -17,10 +17,11 @@ public class Trade implements  TradeInputBoundary{
      * Provides a list of all the other players in the game player can trade with to the presenter.
      *
      * @param listOfPlayers list of all the players in the game.
-     * @param player the player who wants to make a trade.
+     * @param player        the player who wants to make a trade.
+     * @return the list of potential players
      */
     @Override
-    public void ChoosePlayer(String[] listOfPlayers, Player player) {
+    public List<String> ChoosePlayer(String[] listOfPlayers, Player player) {
 
         List<String> listOfPotentialPlayers = new ArrayList<>(listOfPlayers.length - 1);
 
@@ -32,6 +33,8 @@ public class Trade implements  TradeInputBoundary{
 
         TurnActionPresenter.showListOfPlayers(listOfPotentialPlayers, player, "Please choose who to trade with.");
 
+
+        return listOfPotentialPlayers;
     }
 
 
@@ -40,14 +43,16 @@ public class Trade implements  TradeInputBoundary{
      *
      * @param player1 the player who wants to make a trade
      * @param player2 the player who player1 wants to trade with
+     * @return a TradeOption object that contains the potential options for the trade.
      */
     @Override
-    public void GetTradeOptions(Player player1, Player player2) {
+    public TradeOption GetTradeOptions(Player player1, Player player2) {
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
                 player1.getProperties(), player2.getProperties());
 
         TurnActionPresenter.showTradeOptions(tradeOption, "Please choose what you want to trade.");
 
+        return tradeOption;
     }
 
 
