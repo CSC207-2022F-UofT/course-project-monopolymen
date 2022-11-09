@@ -2,6 +2,8 @@ package TurnUseCases.TradeUseCase;
 
 import GameEntities.Player;
 
+import java.util.List;
+
 /**
  * The input boundary for the trade use case.
  */
@@ -13,17 +15,19 @@ public interface TradeInputBoundary {
      * Provides a list of all the other players in the game player can trade with to the presenter.
      *
      * @param listOfPlayers list of all the players in the game.
-     * @param player the player who wants to make a trade.
+     * @param player        the player who wants to make a trade.
+     * @return the list of potential players
      */
-    public void ChoosePlayer(String[] listOfPlayers, Player player);
+    public List<String> ChoosePlayer(String[] listOfPlayers, Player player);
 
     /**
      * Provides the presenter with all potential options for player1 and player2 to trade.
      *
      * @param player1 the player who wants to make a trade
      * @param player2 the player who player1 wants to trade with
+     * @return a TradeOption object that contains the potential options for the trade.
      */
-    public void GetTradeOptions(Player player1, Player player2);
+    public TradeOption GetTradeOptions(Player player1, Player player2);
 
     /**
      * Provides the presenter with the details of the trade offer and whether it is valid.
