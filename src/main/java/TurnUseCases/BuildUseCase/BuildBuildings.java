@@ -24,27 +24,27 @@ public class BuildBuildings {
         if(property.isMortgaged()){
             return false;
         }
-        //When player owns all the properties in a Monopoly color group, player can buy houses.
         String color = property.getColor(); // need to add a method getColor to get the color of the ColorPropertyTile.
         int counter = 0;
+        ArrayList<Propertie> SameColorProperties = new ArrayList<Propertie>();;
         ArrayList<Propertie> properties = player.getProperties();
         for (int i = 0; i < player.getProperties().size(); i++){
             if(properties.get(i).getColor().equals(color)) {
                 counter += 1;
-            }
-        }
-        if (color.equals("Brown") || color.equals("Dark Blue")){
-            return counter == 2;
-        } else{
-            return counter == 3;
-        }
-        //Player has to build equally – this means player can’t build a second house on a property unless player has a house on all the other properties.
-        ArrayList<Propertie> SameColorProperties = new ArrayList<Propertie>();;
-        for (int i = 0; i < player.getProperties().size(); i++){
-            if(properties.get(i).getColor().equals(color)){
                 SameColorProperties.add(properties.get(i));
             }
         }
+        //When player owns all the properties in a Monopoly color group, player can buy houses.
+        if (color.equals("Brown") || color.equals("Dark Blue")){
+           if (counter != 2){
+               return false;
+           }
+        } else{
+            if (counter != 3){
+                return false;
+            }
+        }
+        //Player has to build equally – this means player can’t build a second house on a property unless player has a house on all the other properties.
         for (Propertie sameColorProperty : SameColorProperties) {
             int a = sameColorProperty.getHouse() + sameColorProperty.getHotel();
             // need to add two methods getHouse and getHotel in ColorPropertyTile class to get the number of houses and hotels.
