@@ -49,7 +49,7 @@ public class BuildBuildings {
             int a = sameColorProperty.getHouse() + sameColorProperty.getHotel();
             // need to add two methods getHouse and getHotel in ColorPropertyTile class to get the number of houses and hotels.
             int b = property.getHouse() + property.getHotel();
-            if (Math.abs(a - b) > 1) {
+            if (b > a) {
                 return false;
             }
         }
