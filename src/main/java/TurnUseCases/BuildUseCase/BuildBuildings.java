@@ -48,7 +48,7 @@ public class BuildBuildings {
             }
         }
         //Player has to build equally – this means player can’t build a second house on a property unless player has a house on all the other properties.
-        for (Propertie sameColorProperty : SameColorProperties) {
+        for (ColorPropertyTile sameColorProperty : SameColorProperties) {
             int a = sameColorProperty.getHouse() + sameColorProperty.getHotel();
             // need to add two methods getHouse and getHotel in ColorPropertyTile class to get the number of houses and hotels.
             int b = property.getHouse() + property.getHotel();
