@@ -9,8 +9,10 @@ public class TileActionResultModel {
 
     private final String flavorText;
     private final int playerPosition;
+    // -1 if the player is in jail
     private final Player player;
     private final int moveToPosition;
+    // -1 to move player to jail, and all others are simple steps
 
     /**
      * Construct an object that contains data for the result of a game tile's action
@@ -21,11 +23,15 @@ public class TileActionResultModel {
     public TileActionResultModel(String flavorText, int playerPosition) {
         this.flavorText = flavorText;
         this.playerPosition = playerPosition;
+        this.moveToPosition = -2;
+        this.player = null;
     }
 
     public TileActionResultModel(Player player, int moveToPosition) {
         this.player = player;
         this.moveToPosition = moveToPosition;
+        this.playerPosition = -1;
+        this.flavorText = null;
     }
 
     public String getFlavorText() {
@@ -38,5 +44,5 @@ public class TileActionResultModel {
 
     public int getMoveToPosition() { return moveToPosition; }
 
-    public int getPlayer() { return player; }
+    public Player getPlayer() { return player; }
 }

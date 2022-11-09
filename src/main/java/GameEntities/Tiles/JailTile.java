@@ -26,6 +26,6 @@ public class JailTile extends Tile{
      */
     @Override
     public TileActionResultModel action(Player player) {
-        return new TileActionResultModel(player, -1);
+        return new TileActionResultModel("You are just visiting jail", -1);
     }
 }
