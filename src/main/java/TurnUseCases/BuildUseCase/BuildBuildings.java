@@ -2,7 +2,10 @@ package TurnUseCases.BuildUseCase;
 
 import GameEntities.Player;
 import GameEntities.Tiles.ColorPropertyTile;
+import GameEntities.Tiles.Property;
+
 import java.lang.Math;
+import java.util.ArrayList;
 
 
 /**
@@ -26,8 +29,8 @@ public class BuildBuildings {
         }
         String color = property.getColor(); // need to add a method getColor to get the color of the ColorPropertyTile.
         int counter = 0;
-        ArrayList<Propertie> SameColorProperties = new ArrayList<Propertie>();;
-        ArrayList<Propertie> properties = player.getProperties();
+        ArrayList<ColorPropertyTile> SameColorProperties = new ArrayList<ColorPropertyTile>();;
+        ArrayList<ColorPropertyTile> properties = player.getProperties();
         for (int i = 0; i < player.getProperties().size(); i++){
             if(properties.get(i).getColor().equals(color)) {
                 counter += 1;
