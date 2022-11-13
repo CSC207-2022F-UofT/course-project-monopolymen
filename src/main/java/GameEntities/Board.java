@@ -16,9 +16,6 @@ public class Board {
     }
 
     public int getTilePosition(String tileName){
-        if (tileName.equals("JailTile")){
-            return -1;
-        }
         for(int i = 0; i < tilesList.size(); i++){
             if(tileName.equals(tilesList.get(i).getTileName())){
                 return i;
@@ -38,12 +35,7 @@ public class Board {
     }
 
     public Tile getTile(int tilePosition){
-        if(tilePosition == -1){
-            return this.tilesList.get(40);
-        }
-        else {
-            return this.tilesList.get(tilePosition);
-        }
+        return this.tilesList.get(tilePosition);
     }
 
 }
