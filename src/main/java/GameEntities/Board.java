@@ -1,11 +1,13 @@
 package GameEntities;
 
 import java.util.ArrayList;
+import GameEntities.Tiles.Tile;
+import GameEntities.Tiles.Property;
 
 public class Board {
     private  ArrayList<> communityCards;
     private ArrayList<> chanceCards;
-    private ArrayList<Tiles> tilesList;
+    private ArrayList<Tile> tilesList;
     public Board(ArrayList communityCards, ArrayList chanceCards, ArrayList tilesList){
 
         this.communityCards = communityCards;
@@ -18,21 +20,30 @@ public class Board {
             return -1;
         }
         for(int i = 0; i < tilesList.size(); i++){
-            if(tileName.equals(tilesList.get(i).tileName)){
+            if(tileName.equals(tilesList.get(i).getTileName())){
                 return i;
             }
         }
         return 0;
     }
 
-    public ArrayList<Tiles> getPropertyTiles(){
-        ArrayList<Tiles> propertyTiles = new ArrayList<Tiles>();
+    public ArrayList<Tile> getPropertyTiles(){
+        ArrayList<Tile> propertyTiles = new ArrayList<Tile>();
         for(int i = 0; i < tilesList.size(); i++){
             if(tilesList.get(i) instanceof Property){
                 propertyTiles.add(tilesList.get(i));
             }
         }
         return propertyTiles;
+    }
+
+    public Tile getTile(int tilePosition){
+        if(tilePosition == -1){
+            return this.tilesList.get(40);
+        }
+        else {
+            return this.tilesList.get(tilePosition);
+        }
     }
 
 }
