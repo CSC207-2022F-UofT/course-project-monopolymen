@@ -5,8 +5,8 @@ import GameEntities.Tiles.Tile;
 import GameEntities.Tiles.Property;
 
 public class Board {
-    private  ArrayList<> communityCards;
-    private ArrayList<> chanceCards;
+    private  ArrayList<Card> communityCards;
+    private ArrayList<Card> chanceCards;
     private ArrayList<Tile> tilesList;
     public Board(ArrayList communityCards, ArrayList chanceCards, ArrayList tilesList){
 
