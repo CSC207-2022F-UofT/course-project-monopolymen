@@ -1,6 +1,7 @@
 package TurnUseCases;
 import GameEntities.Player;
 import GameEntities.Tiles.TileActionResultModel;
+// Need import here for implemented version of movePlayerOutputBoundary which is in presenter
 
 public class MovePlayerUseCase {
     /**
@@ -10,7 +11,7 @@ public class MovePlayerUseCase {
      * @param movePlayerOutputBoundary movePlayer output boundary to handle the connection to the turn presenter
      * @param board board the game is operating on
      */
-    public void startAction(int[] playerRollAmount, Player player, MovePlayerOutputBoundary movePlayerOutputBoundary,
+    public void startAction(int[] playerRollAmount, Player player, MovePlayerPresenter movePlayerPresenter,
                             Board board) {
         int rollSum = playerRollAmount[0] + playerRollAmount[1];
         boolean doubleRoll = playerRollAmount[0] == playerRollAmount[1];
@@ -18,19 +19,20 @@ public class MovePlayerUseCase {
         player.updateConsecutiveDoubles(doubleRoll);
         player.setLastRoll(playerRollAmount[0], playerRollAmount[1]);
         if (player.getConsecutiveDoubles() == 3) {
-            player.updatePosition(-1);//make issue about player class to update player to jail
+            player.enterJail();
+            movePlayerPresenter.showChoices(new String[0], true);
         } else {
             player.updatePosition(rollSum);
             TileActionResultModel result = board.getTile(player.getPosition()).action();
-            // way to know what tile they are on
             if (result.getMoveToPosition() != -2) {
-                // Player landed on go to jail
-                player.updatePosition(-1);//make issue about player class to update player to jail
-                movePlayerOutputBoundary.showChoices(result.getChoices()); //TileActionResultModel will need another
+                // Player landed on "go to jail"
+                player.enterJail();
+                movePlayerPresenter.showChoices(result.getChoices(), true);
+                //TileActionResultModel will need another
                 // instance variable to show what options the player can make
             } else {
                 // Normal move
-                movePlayerOutputBoundary.showChoices(result.getChoices());
+                movePlayerPresenter.showChoices(result.getChoices(), false);
             }
         }
     }

@@ -2,7 +2,6 @@ package TurnUseCases;
 
 public interface MovePlayerOutputBoundary {
     /**
-     *
      * @param choicesPlayerCanMake String array of the options the player can make
      * @param inJail boolean variable for weather the player is in jail
      */
