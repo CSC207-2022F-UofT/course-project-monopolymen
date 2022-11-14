@@ -1,6 +1,8 @@
 package GameEntities;
 
 import java.util.ArrayList;
+
+import GameEntities.Tiles.JailTile;
 import GameEntities.Tiles.Tile;
 import GameEntities.Tiles.Property;
 import GameEntities.Cards;
@@ -34,8 +36,23 @@ public class Board {
         return propertyTiles;
     }
 
+    public ArrayList<Tile> getTilesList() {
+        return tilesList;
+    }
+
     public Tile getTile(int tilePosition){
         return this.tilesList.get(tilePosition);
+    }
+    
+    public int jailTilePosition(){
+        int jailTilePosition = 0;
+        for(int i = 0; i < tilesList.size(); i++){
+            if(tilesList.get(i) instanceof JailTile){
+                jailTilePosition = i;
+            }
+        }
+        
+        return jailTilePosition;
     }
 
 }
