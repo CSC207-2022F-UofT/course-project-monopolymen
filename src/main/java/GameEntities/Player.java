@@ -17,13 +17,7 @@ public class Player {
 
     private int getOutOfJailFree = 0;
 
-    /**
-     * The Player can choose their name and icon but the other attributes are set to default values
-     *
-     * @param iconInput     string representing the icon the player has chosen to be
-     *
-     * @param nameInput     string representing the name the player has chosen
-     */
+  
     public Player(String nameInput, String iconInput){
         this.name = nameInput;
         this.icon = iconInput;
