@@ -65,7 +65,7 @@ public class BuildBuildings {
      * @param player the player who wants build buildings.
      * @param property the property on which player wants to build buildings.
      */
-    public boolean buildHouse (Player player, ColorPropertyTile property){
+    public void buildHouse (Player player, ColorPropertyTile property){
         if (isBuildable(player, property)){
             property.addHouse();
             //need to add a method addHouse in ColorPropertyTile class to add the number of house.
@@ -99,7 +99,7 @@ public class BuildBuildings {
      * @param player the player who wants build buildings.
      * @param property the property on which player wants to build buildings.
      */
-    public boolean buildHotel (Player player, ColorPropertyTile property){
+    public void buildHotel (Player player, ColorPropertyTile property){
         if (isBuildable(player, property) && property.getHouses() >= 4){
             property.addHotel();
             //need to add a method addHotel in ColorPropertyTile class to add the number of hotel.
@@ -122,8 +122,6 @@ public class BuildBuildings {
                     player.subtractMoney(200);
                     break;
             }
-            return true;
         }
-        return false;
     }
 }
