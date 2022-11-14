@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private int money;
-    private ArrayList<Property> properties;
+    private ArrayList<Property> properties = new ArrayList<Property>();
     private int turnsInJail = -1;
     private int position = 0;
     private String icon;
