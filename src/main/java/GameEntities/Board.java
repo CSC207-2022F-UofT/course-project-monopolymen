@@ -3,13 +3,13 @@ package GameEntities;
 import java.util.ArrayList;
 import GameEntities.Tiles.Tile;
 import GameEntities.Tiles.Property;
+import GameEntities.Cards;
 
 public class Board {
     private  ArrayList<Card> communityCards;
     private ArrayList<Card> chanceCards;
     private ArrayList<Tile> tilesList;
-    public Board(ArrayList communityCards, ArrayList chanceCards, ArrayList tilesList){
-
+    public Board(ArrayList<Card> communityCards, ArrayList<Card> chanceCards, ArrayList<Tile> tilesList){
         this.communityCards = communityCards;
         this.chanceCards = chanceCards;
         this.tilesList = tilesList;
