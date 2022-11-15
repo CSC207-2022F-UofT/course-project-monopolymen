@@ -13,18 +13,18 @@ public class UtilityTile extends Property {
      * Construct a Utility Property Tile.
      * When landed on, players can choose to buy the utility for its printed price.
      *
-     * @param rentFactor          An array specifying the multiplicative factor where the index denotes the number
-     *                            of utilities owned besides this one (ex. rentFactor[1] is the rate that the dice
-     *                            roll is multiplied by to determine the rent paid).
      * @param propertyName        The internal string name representing this tile
      *                            (intended to not contain spaces or other special characters).
      * @param propertyDisplayName The string name displayed to the user. This may have special characters.
      * @param purchasePrice       The price to purchase this property
+     * @param rentFactor          An array specifying the multiplicative factor where the index denotes the number
+     *                            of utilities owned besides this one (ex. rentFactor[1] is the rate that the dice
+     *                            roll is multiplied by to determine the rent paid).
      * @param mortgageValue       The value of this property for Mortgaging purposes
-     * @param unMortgageValue     The value of this property for unMortgaging purposes
-     * @see GameEntities.Tiles.Tile
+     * @param unMortgageValue     The amount it takes to unMortgage this property
+     * @see GameEntities.Tiles.Property
      */
-    public UtilityTile(int[] rentFactor, String propertyName, String propertyDisplayName, int purchasePrice,
+    public UtilityTile(String propertyName, String propertyDisplayName, int purchasePrice, int[] rentFactor,
                        int mortgageValue, int unMortgageValue) {
         super(propertyName, propertyDisplayName, purchasePrice, mortgageValue, unMortgageValue);
         this.rentFactor = rentFactor;

@@ -10,19 +10,21 @@ public class RailroadTile extends Property{
     private final int[] rentPrice;
 
     /**
-     * When landed on, players can choose to buy the railroad property for its printed price if it is unowned.
+     * Construct a Railroad Property Tile.
+     * When landed on, players can choose to buy the railroad for its printed price.
      *
-     * @param rentPrice           An array specifying the rent where the index denotes the number of railroads owned
-     *                            besides this one (ex. rentPrice[1] is the rent if the owner of this railroad owns 2
-     *                            total railroads).
      * @param propertyName        The internal string name representing this tile
      *                            (intended to not contain spaces or other special characters).
      * @param propertyDisplayName The string name displayed to the user. This may have special characters.
      * @param purchasePrice       The price to purchase this property
+     * @param rentPrice           An array specifying the rent where the index denotes the number of railroads owned
+     *                            besides this one (ex. rentPrice[1] is the rent if the owner of this railroad owns 2
+     *                            total railroads).
      * @param mortgageValue       The value of this property for mortgage purposes
-     * @see GameEntities.Tiles.Tile
+     * @param unMortgageValue     The amount it takes to unMortgage this property
+     * @see GameEntities.Tiles.Property
      */
-    public RailroadTile(int[] rentPrice, String propertyName, String propertyDisplayName, int purchasePrice,
+    public RailroadTile(String propertyName, String propertyDisplayName, int purchasePrice, int[] rentPrice,
                         int mortgageValue, int unMortgageValue) {
         super(propertyName, propertyDisplayName, purchasePrice, mortgageValue, unMortgageValue);
         this.rentPrice = rentPrice;
