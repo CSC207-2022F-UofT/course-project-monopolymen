@@ -1,115 +1,79 @@
 package GameEntities.Tiles;
 
-import java.util.ArrayList;
 import GameEntities.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ColorPropertyTile extends Property{
     private String color;
 
-    private int rent;
-
-    private int rentSet;
-
-    private int rentHouse1;
-
-    private int rentHouse2;
-
-    private int rentHouse3;
-
-    private int rentHouse4;
-
-    private int rentHotel;
+    private final int[] rentPrice;
 
     private int buildingCost;
 
-    private int mortgage;
-
-    private int unMortgage;
 
     /**
      * When landed on, players can choose to buy the colored property for its printed price if it is unowned.
-     * @param color The color of the tile property
-     * @param propertyName The internal string name representing this tile
-     *      *              (intended to not contain spaces or other special characters).
+     *
+     * @param color               The color of the tile property
+     * @param propertyName        The internal string name representing this tile
+     *                            (intended to not contain spaces or other special characters).
      * @param propertyDisplayName The string name displayed to the user. This may have special characters.
-     * @param purchasePrice The price to purchase this property
-     * @param rent The cost of rent if a player lands on the property
-     * @param rentSet The cost of rent if a player lands on the color property if a whole color set has been owned
-     *                by a player
-     * @param rentHouse1 Cost of rent if a player lands on the color property if it has 1 house
-     * @param rentHouse2 Cost of rent if a player lands on the color property if it has 2 house
-     * @param rentHouse3 Cost of rent if a player lands on the color property if it has 3 house
-     * @param rentHouse4 Cost of rent if a player lands on the color property if it has 4 house
-     * @param rentHotel Cost of rent if a player lands on the color property if it has a hotel
-     * @param buildingCost Cost it takes to upgrade to the next house or hotel level
-     * @param mortgage The value of this property for mortgage purposes
-     * @param unMortgage The amount it takes to unMortgage
+     * @param purchasePrice       The price to purchase this property
+     * @param rentPrice           An array specifying the rent where the index denotes the number of color properties owned
+     *                            belonging to the same set as this property. (ex. rentPrice[1] is the rent if the owner of this
+     *                            ColorPropertyTile owns 2 total ColorPropertyTiles of the set <i>color</i>).
+     * @param buildingCost        Cost it takes to upgrade to the next house or hotel level
+     * @param mortgage            The value of this property for mortgage purposes
+     * @param unMortgage          The amount it takes to unMortgage
      */
     public ColorPropertyTile(String color, String propertyName, String propertyDisplayName, int purchasePrice,
-                             int rent, int rentSet, int rentHouse1, int rentHouse2, int rentHouse3, int rentHouse4, int rentHotel,
-                             int buildingCost, int mortgage, int unMortgage) {
-        super(propertyName, propertyDisplayName, purchasePrice, mortgage);
+                             int[] rentPrice, int buildingCost, int mortgage, int unMortgage) {
+        super(propertyName, propertyDisplayName, purchasePrice, mortgage, unMortgage);
         this.color = color;
-        this.rent = rent;
-        this.rentSet = rentSet;
-        this.rentHouse1 = rentHouse1;
-        this.rentHouse2 = rentHouse2;
-        this.rentHouse3 = rentHouse3;
-        this.rentHouse4 = rentHouse4;
-        this.rentHotel = rentHotel;
+        this.rentPrice = rentPrice;
         this.buildingCost = buildingCost;
-        this.unMortgage = unMortgage;
     }
 
     public String getColor() {
         return color;
     }
 
-    public int getRent(Player player) {
-        //
-        if()
+    /**
+     * Return the rent for this ColorPropertyTile property.
+     * ColorPropertyTile rent is influenced by whether the owner owns all the properties in a set and how many
+     * buildings (houses/hotels) are on the ColorPropertyTile property.
+     * If this property is unowned, returns -1.
+     *
+     * @param rentPayer    The Player who is paying the rent.
+     * @param propertyList The list of properties to search for other ColorPropertyTiles in.
+     * @return The int rent value of this property
+     */
+    @Override
+    public int getRent(Player rentPayer, List<Property> propertyList) {
+        return 0;
     }
 
-    public int getRentSet() {
-        return rentSet;
-    }
-
-    public int getRentHouse1() {
-        return rentHouse1;
-    }
-
-    public int getRentHouse2() {
-        return rentHouse2;
-    }
-
-    public int getRentHouse3() {
-        return rentHouse3;
-    }
-
-    public int getRentHouse4() {
-        return rentHouse4;
-    }
-
-    public int getRentHotel() {
-        return rentHotel;
+    /**
+     * TODO not implemented (leaving for Youssef).
+     *
+     * @param player The Player that the action is being performed on (landed on the tile)
+     * @return A TileActionResultModel object describing the action that was performed
+     */
+    @Override
+    public TileActionResultModel action(Player player) {
+        return null;
     }
 
     public int getBuildingCost() {
         return buildingCost;
     }
 
-    public int getMortgage() {
-        return mortgage;
-    }
-
-    public int getUnMortgage() {
-        return unMortgage;
-    }
-
     public boolean checkSetOwned(Property[] arr) {
         boolean ownSet = true;
         ArrayList<Player> playerArr = new ArrayList<Player>();
-        for(Property property: arr) {
+        for (Property property : arr) {
             if(property instanceof ColorPropertyTile) {
                 if(((ColorPropertyTile) property).getColor() == this.color) {
                     playerArr.add(property.getOwner());
