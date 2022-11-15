@@ -2,6 +2,8 @@ package GameEntities.Tiles;
 
 import GameEntities.Player;
 
+import java.util.List;
+
 /**
  * Property (Ownable Monopoly Tile that can be purchased and rented)
  * All Properties have rent, purchase prices, mortgaging, and owners.
@@ -55,7 +57,7 @@ public abstract class Property extends Tile {
      * @param rentPayer The Player who is paying the rent.
      * @return The int rent value of this property
      */
-    public abstract int getRent(Player rentPayer);
+    public abstract int getRent(Player rentPayer, List<Property> propertyList);
 
     /**
      * Mortgage this Property and return the mortgage value.
@@ -89,6 +91,10 @@ public abstract class Property extends Tile {
 
     public boolean isMortgaged() {
         return mortgaged;
+    }
+
+    public boolean isOwned() {
+        return owner != null;
     }
 
     public Player getOwner() {
