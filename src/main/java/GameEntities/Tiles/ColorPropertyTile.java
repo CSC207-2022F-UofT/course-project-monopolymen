@@ -14,23 +14,26 @@ public class ColorPropertyTile extends Property{
 
 
     /**
-     * When landed on, players can choose to buy the colored property for its printed price if it is unowned.
+     * Construct a Colored Property Tile.
+     * When landed on, players can choose to buy the color property for its printed price.
      *
      * @param color               The color of the tile property
      * @param propertyName        The internal string name representing this tile
      *                            (intended to not contain spaces or other special characters).
      * @param propertyDisplayName The string name displayed to the user. This may have special characters.
      * @param purchasePrice       The price to purchase this property
-     * @param rentPrice           An array specifying the rent where the index denotes the number of color properties owned
-     *                            belonging to the same set as this property. (ex. rentPrice[1] is the rent if the owner of this
-     *                            ColorPropertyTile owns 2 total ColorPropertyTiles of the set <i>color</i>).
+     * @param rentPrice           An array specifying the rent where the index denotes the number of color properties
+     *                            owned belonging to the same set as this property. (ex. rentPrice[1] is the rent if
+     *                            the owner of this ColorPropertyTile owns 2 total ColorPropertyTiles of the
+     *                            set <i>color</i>).
      * @param buildingCost        Cost it takes to upgrade to the next house or hotel level
-     * @param mortgage            The value of this property for mortgage purposes
-     * @param unMortgage          The amount it takes to unMortgage
+     * @param mortgageValue       The value of this property for mortgage purposes
+     * @param unMortgageValue     The amount it takes to unMortgage
+     * @see GameEntities.Tiles.Property
      */
     public ColorPropertyTile(String color, String propertyName, String propertyDisplayName, int purchasePrice,
-                             int[] rentPrice, int buildingCost, int mortgage, int unMortgage) {
-        super(propertyName, propertyDisplayName, purchasePrice, mortgage, unMortgage);
+                             int[] rentPrice, int buildingCost, int mortgageValue, int unMortgageValue) {
+        super(propertyName, propertyDisplayName, purchasePrice, mortgageValue, unMortgageValue);
         this.color = color;
         this.rentPrice = rentPrice;
         this.buildingCost = buildingCost;
