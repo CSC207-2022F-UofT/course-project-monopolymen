@@ -100,5 +100,27 @@ public class TradeOffer {
         return true;
     }
 
+    public int getTradeMoney() {
+        return tradeMoney;
+    }
 
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public ArrayList<Property> getPropertiesOffered() {
+        return propertiesOffered;
+    }
+
+    public ArrayList<Property> getPropertiesReceived() {
+        return propertiesReceived;
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
 }

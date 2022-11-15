@@ -11,6 +11,7 @@ import java.util.List;
  */
 
 public class Trade implements  TradeInputBoundary{
+    TemporaryTurnActionPresenter presenter = new TemporaryTurnActionPresenter();
 
 
     /**
@@ -31,7 +32,9 @@ public class Trade implements  TradeInputBoundary{
             }
         }
 
-        TurnActionPresenter.showListOfPlayers(listOfPotentialPlayers, player, "Please choose who to trade with.");
+
+        presenter.showListOfPlayers(listOfPotentialPlayers,
+                player.getName() +  ", please choose who to trade with.");
 
 
         return listOfPotentialPlayers;
@@ -50,7 +53,7 @@ public class Trade implements  TradeInputBoundary{
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
                 player1.getProperties(), player2.getProperties());
 
-        TurnActionPresenter.showTradeOptions(tradeOption, "Please choose what you want to trade.");
+        presenter.showTradeOptions(tradeOption, "Please choose what you want to trade.");
 
         return tradeOption;
     }
@@ -66,9 +69,9 @@ public class Trade implements  TradeInputBoundary{
     @Override
     public void MakeOffer(TradeOffer tradeOffer, Player player1, Player player2) {
         if(tradeOffer.isValid){
-            TurnActionPresenter.showTradeOffer(tradeOffer, player2.getName() + ", do you accept this trade?");
+            presenter.showTradeOffer(tradeOffer, player2.getName() + ", do you accept this trade?");
         } else {
-            TurnActionPresenter.showTradeOffer(tradeOffer, player1.getName() +
+            presenter.showTradeOffer(tradeOffer, player1.getName() +
                     ", this is an invalid trade, please make another offer.");
         }
 
@@ -94,13 +97,13 @@ public class Trade implements  TradeInputBoundary{
 
         if(option == 1){
             ExecuteOffer(player1, player2, tradeOffer);
-            TurnActionPresenter.showResultOfTradeOffer(1, "The Trade was a success!");
+            presenter.showResultOfTradeOffer(1, "The Trade was a success!");
         } else if (option == 2) {
-            TurnActionPresenter.showResultOfTradeOffer(2, player2.getName() + "wants to make a counter offer!");
+            presenter.showResultOfTradeOffer(2, player2.getName() + "wants to make a counter offer!");
         } else if (option == 3) {
-            TurnActionPresenter.showResultOfTradeOffer(3, "The offer was declined!");
+            presenter.showResultOfTradeOffer(3, "The offer was declined!");
         } else{
-            TurnActionPresenter.showResultOfTradeOffer(4, "That was an invalid input, please try again.");
+            presenter.showResultOfTradeOffer(4, "That was an invalid input, please try again.");
         }
 
     }
