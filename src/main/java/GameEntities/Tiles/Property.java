@@ -9,11 +9,13 @@ import GameEntities.Player;
 public abstract class Property extends Tile {
     private final int purchasePrice;
     private final int mortgageValue;
+    private final int unMortgageValue;
     private boolean mortgaged;
     private Player owner;
 
     /**
      * Construct a Property (Ownable Monopoly Tile that can be purchased and rented)
+     * Sets the unmortgage value to the full mortgage value.
      *
      * @param propertyName        The internal string name representing this tile
      *                            (intended to not contain spaces or other special characters).
@@ -23,9 +25,26 @@ public abstract class Property extends Tile {
      * @see GameEntities.Tiles.Tile
      */
     public Property(String propertyName, String propertyDisplayName, int purchasePrice, int mortgageValue) {
+        this(propertyName, propertyDisplayName, purchasePrice, mortgageValue, mortgageValue);
+    }
+
+    /**
+     * Construct a Property (Ownable Monopoly Tile that can be purchased and rented)
+     *
+     * @param propertyName        The internal string name representing this tile
+     *                            (intended to not contain spaces or other special characters).
+     * @param propertyDisplayName The string name displayed to the user. This may have special characters.
+     * @param purchasePrice       The price to purchase this property
+     * @param mortgageValue       The value of this property for Mortgaging purposes
+     * @param unMortgageValue     The value of this property for unMortgaging purposes
+     * @see GameEntities.Tiles.Tile
+     */
+    public Property(String propertyName, String propertyDisplayName, int purchasePrice, int mortgageValue,
+                    int unMortgageValue) {
         super(propertyName, propertyDisplayName, true);
         this.purchasePrice = purchasePrice;
         this.mortgageValue = mortgageValue;
+        this.unMortgageValue = unMortgageValue;
         this.mortgaged = false;
         this.owner = null;
     }
@@ -62,6 +81,10 @@ public abstract class Property extends Tile {
 
     public int getMortgageValue() {
         return mortgageValue;
+    }
+
+    public int getUnMortgageValue() {
+        return unMortgageValue;
     }
 
     public boolean isMortgaged() {
