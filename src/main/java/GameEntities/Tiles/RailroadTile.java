@@ -1,5 +1,7 @@
 package GameEntities.Tiles;
 
+import java.util.ArrayList;
+
 public class RailroadTile extends Property{
     private int[] rentPrice;
     /**
@@ -15,8 +17,28 @@ public class RailroadTile extends Property{
         super(propertyName, propertyDisplayName, purchasePrice, mortgageValue);
         this.rentPrice = rentPrice;
     }
-    public int checkNumOwnedByPlayer(){
 
+    /**
+     * Returns the number of railroads that the owner of this Property owns in propertyList.
+     * Does not count this property if it is not in propertyList
+     * If there is no owner, the return value is 0.
+     * @param propertyList The list of Property objects to search through
+     * @return The number of railroads that this Property's owner owns in total. 0 if no owner of this Property.
+     */
+    public int numRailroadOwned(ArrayList<Property> propertyList) {
+        if (getOwner() == null) {
+            return 0;
+        }
+
+        int numOwned = 0;
+        for(Property property : propertyList) {
+            if(property instanceof RailroadTile &&
+                    property.getOwner() != null &&
+                    property.getOwner().equals(getOwner())) {
+                numOwned++;
+            }
+        }
+        return numOwned;
     }
 
 }
