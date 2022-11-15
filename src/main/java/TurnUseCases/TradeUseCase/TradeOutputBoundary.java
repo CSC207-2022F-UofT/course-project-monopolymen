@@ -2,8 +2,12 @@ package TurnUseCases.TradeUseCase;
 
 import GameEntities.Player;
 
+import java.util.List;
+
 public interface TradeOutputBoundary {
 
+
+    void showListOfPlayers(List<String> listOfPlayers, String flavorText);
 
     /**
      * Presents the list of players player can trade with.
