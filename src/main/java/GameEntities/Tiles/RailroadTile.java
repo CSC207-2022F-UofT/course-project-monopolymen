@@ -73,14 +73,13 @@ public class RailroadTile extends Property{
     }
 
     /**
-     * Not Implemented, leaving implementation for Youssef
+     * TODO not implemented (leaving for Youssef).
      *
      * @param player The Player that the action is being performed on (landed on the tile)
      * @return a TileActionResultModel object describing the action taken.
      */
     @Override
     public TileActionResultModel action(Player player) {
-        // Leaving proper implementation for Youssef so he has code he can implement
         return null;
     }
 
