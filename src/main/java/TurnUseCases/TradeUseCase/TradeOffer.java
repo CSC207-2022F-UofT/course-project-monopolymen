@@ -13,22 +13,22 @@ public class TradeOffer {
 
     // The amount of money player1 is offering player2 if positive,
     // the amount of money player1 wants from player2 if negative.
-    public int tradeMoney;
+    private int tradeMoney;
 
     // The list of properties player1 is offering to player2.
-    public ArrayList<Property> propertiesOffered;
+    private ArrayList<Property> propertiesOffered;
 
     // The list of properties player1 wants to receive from player2.
-    public ArrayList<Property> propertiesReceived;
+    private ArrayList<Property> propertiesReceived;
 
     // The player who is making the trade offer.
-    public Player player1;
+    private Player player1;
 
     // The player who is receiving the trade offer.
-    public Player player2;
+    private Player player2;
 
     // Says if this trade offer is valid or not.
-    public boolean isValid;
+    private boolean isValid;
 
     /**
      * Creates a new TradeOffer.
