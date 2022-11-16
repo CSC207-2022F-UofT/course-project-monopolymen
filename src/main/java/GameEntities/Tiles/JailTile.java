@@ -26,6 +26,12 @@ public class JailTile extends Tile{
      */
     @Override
     public TileActionResultModel action(Player player) {
-        return new TileActionResultModel(player, -1);
+        String inJail = "You are in jail";
+        String notInJail = "You are just visiting";
+        if(player.getTurnsInJail() != -1) {
+            return new TileActionResultModel(inJail, player, -1);
+        } else {
+            return new TileActionResultModel(notInJail, player, -1);
+        }
     }
 }
