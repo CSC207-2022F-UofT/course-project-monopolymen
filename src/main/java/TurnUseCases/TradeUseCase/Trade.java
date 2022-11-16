@@ -22,15 +22,10 @@ public class Trade implements  TradeInputBoundary{
      * @return the list of potential players
      */
     @Override
-    public List<String> ChoosePlayer(String[] listOfPlayers, Player player) {
+    public ArrayList<Player> ChoosePlayer(ArrayList<Player> listOfPlayers, Player player) {
 
-        List<String> listOfPotentialPlayers = new ArrayList<>(listOfPlayers.length - 1);
-
-        for (String listOfPlayer : listOfPlayers) {
-            if (!listOfPlayer.equals(player.getName())) {
-                listOfPotentialPlayers.add(listOfPlayer);
-            }
-        }
+        ArrayList<Player> listOfPotentialPlayers = (ArrayList<Player>) listOfPlayers.clone();
+        listOfPotentialPlayers.remove(player);
 
 
         presenter.showListOfPlayers(listOfPotentialPlayers,
@@ -68,7 +63,7 @@ public class Trade implements  TradeInputBoundary{
      */
     @Override
     public void MakeOffer(TradeOffer tradeOffer, Player player1, Player player2) {
-        if(tradeOffer.isValid){
+        if(tradeOffer.isValid()){
             presenter.showTradeOffer(tradeOffer, player2.getName() + ", do you accept this trade?");
         } else {
             presenter.showTradeOffer(tradeOffer, player1.getName() +
@@ -116,15 +111,15 @@ public class Trade implements  TradeInputBoundary{
      * @param tradeOffer the details of the trade.
      */
     public void ExecuteOffer(Player player1, Player player2, TradeOffer tradeOffer){
-        player1.addMoney(tradeOffer.tradeMoney);
-        player2.subtractMoney(tradeOffer.tradeMoney);
+        player1.addMoney(tradeOffer.getTradeMoney());
+        player2.subtractMoney(tradeOffer.getTradeMoney());
 
-        for (Property p : tradeOffer.propertiesReceived){
+        for (Property p : tradeOffer.getPropertiesReceived()){
             player1.addProperty(p);
             player2.sellProperty(p);
         }
 
-        for (Property p : tradeOffer.propertiesOffered){
+        for (Property p : tradeOffer.getPropertiesOffered()){
             player1.sellProperty(p);
             player2.addProperty(p);
         }
