@@ -2,6 +2,7 @@ package TurnUseCases.TradeUseCase;
 
 import GameEntities.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public interface TradeInputBoundary {
      * @param player        the player who wants to make a trade.
      * @return the list of potential players
      */
-    public List<String> ChoosePlayer(String[] listOfPlayers, Player player);
+    public ArrayList<Player> ChoosePlayer(ArrayList<Player> listOfPlayers, Player player);
 
     /**
      * Provides the presenter with all potential options for player1 and player2 to trade.
