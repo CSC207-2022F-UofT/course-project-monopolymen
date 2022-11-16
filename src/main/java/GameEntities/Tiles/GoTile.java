@@ -20,9 +20,7 @@ public class GoTile extends Tile {
      */
     @Override
     public TileActionResultModel action(Player player) {
-
-
-        return null;
+        return new TileActionResultModel("You landed on Go!", player, player.getPosition());
     }
 
     /**
@@ -34,7 +32,6 @@ public class GoTile extends Tile {
     @Override
     public TilePassResultModel passing(Player player) {
         player.addMoney(200);
-
         return new TilePassResultModel(true, "You got $200!");
     }
 }
