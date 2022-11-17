@@ -21,6 +21,19 @@ public class MortgageProperty {
         }
     }
 
+
+    /**
+     * Overloading method mortgage. Player mortgages a color property.
+     *
+     * @param player the player who wants mortgages property.
+     * @param property the property which player wants to mortgages.
+     */
+    public void mortgage(Player player, ColorPropertyTile property){
+        if (player.ownsProperty(property) && property.getHouse() == 0 && property.getHotel() == 0) {
+            player.addMoney(property.mortgage());
+        }
+    }
+
     /**
      * Player unmortgages property
      *
