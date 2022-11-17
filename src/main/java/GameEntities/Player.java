@@ -76,7 +76,7 @@ public class Player {
      */
     public void setLastRoll(int roll1, int roll2){
         this.lastRoll[0] = roll1;
-        this.lastRoll[2] = roll2;
+        this.lastRoll[1] = roll2;
     }
 
     //methods:
@@ -151,24 +151,28 @@ public class Player {
     /**
      * Called when a player enters the jail, updates the position of the player to the jail position and adds a turn in
      * jail
+     *
+     * @param board         the board that the game is being played on
      */
-    public void enterJail(){
+    public void enterJail(Board board){
         this.addTurnInJail();
-        this.position = Board.getJailTilePosition();
+        this.position = board.getJailTilePosition();
     }
 
     /**
      * Update the position of a player given the sum of the dies they have rolled
      *
      * @param rollSum       the sum of the two dies the player has rolled
+     * @param board         the board that the game is being played on
      */
-    public void updatePosition(int rollSum) {
-        if (this.position + rollSum <= 39) {
+    public void updatePosition(int rollSum, Board board) {
+        int length = board.getTilesList().size();
+        if (this.position + rollSum <= length - 1) {
             this.position += rollSum;
-        } else if (this.position + rollSum == 40) {
+        } else if (this.position + rollSum == length) {
             this.position = 0;
         } else{
-            rollSum = rollSum - (40 - this.position);
+            rollSum = rollSum - (length - this.position);
             this.position = rollSum;
         }
     }
@@ -178,7 +182,7 @@ public class Player {
      *
      * @return      True if the player owns a get out of jail free card
      */
-    public boolean getGetOutOfJailCard(){
+    public boolean hasGetOutofJailFreeCard(){
         return (this.getOutOfJailFree != 0);
     }
 

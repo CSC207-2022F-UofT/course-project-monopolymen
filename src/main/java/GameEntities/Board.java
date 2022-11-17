@@ -45,7 +45,7 @@ public class Board {
             return this.tilesList.get(tilePosition);
         }
 
-        public int jailTilePosition(){
+        public int getJailTilePosition(){
             int jailTilePosition = 0;
             for(int i = 0; i < tilesList.size(); i++){
                 if(tilesList.get(i) instanceof JailTile){
