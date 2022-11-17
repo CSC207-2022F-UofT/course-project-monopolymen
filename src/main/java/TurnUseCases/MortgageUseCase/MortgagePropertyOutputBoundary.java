@@ -9,10 +9,10 @@ public interface MortgagePropertyOutputBoundary {
     /**
      * Presents the list of players player can trade with.
      *
-     * @param players the player who wants to mortgage or unmortgage property.
+     * @param player the player who wants to mortgage or unmortgage property.
      * @param flavorText the text describing what is happening.
      */
-    public void showPlayer(String players, String flavorText);
+    public void showPlayer(String player, String flavorText);
 
     /**
      * Presents the property which is mortgaged by player.
