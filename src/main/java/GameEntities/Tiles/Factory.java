@@ -26,6 +26,14 @@ public class Factory {
         }
         return properties;
     }
+
+    /**
+     * Take a CSV file with the information of Colored Properties and create and return ColorPropertyTile objects.
+     *
+     * @param path                          the CSV location of the properties
+     * @return                              return an ArrayList which includes all the Color Property Tiles
+     * @throws FileNotFoundException        if the given file is not found throw this exception
+     */
     public static List<ColorPropertyTile> initializeColorProperties(String path) throws FileNotFoundException {
         List<List<String>> colorProperties = extractor(path);
         List<ColorPropertyTile> returnProperties= new ArrayList<ColorPropertyTile>();
@@ -52,6 +60,13 @@ public class Factory {
         return returnProperties;
     }
 
+    /**
+     * Take a CSV file with the information of RailRoad Properties and create and return RailroadTile objects.
+     *
+     * @param path                          the CSV location of the properties
+     * @return                              return an ArrayList which includes all the Color Property Tiles
+     * @throws FileNotFoundException        if the given file is not found throw this exception
+     */
     public static List<RailroadTile> initializeRailRoadProperties(String path) throws FileNotFoundException {
         List<List<String>> railRoad = extractor(path);
         List<RailroadTile> returnProperties= new ArrayList<RailroadTile>();
@@ -72,6 +87,13 @@ public class Factory {
         return returnProperties;
     }
 
+    /**
+     * Take a CSV file with the information of UtilityTile Properties and create and return UtilityTile objects.
+     *
+     * @param path                          the CSV location of the properties
+     * @return                              return an ArrayList which includes all the Color Property Tiles
+     * @throws FileNotFoundException        if the given file is not found throw this exception
+     */
     public static List<UtilityTile> initializeUtilityProperties(String path) throws FileNotFoundException {
         List<List<String>> utilityProperties = extractor(path);
         List<UtilityTile> returnProperties= new ArrayList<UtilityTile>();
