@@ -1,6 +1,7 @@
 package TurnUseCases;
 import GameEntities.Player;
 import GameEntities.Tiles.TileActionResultModel;
+import GameEntities.Board;
 // Need import here for implemented version of movePlayerOutputBoundary which is in presenter
 
 public class MovePlayerUseCase implements MovePlayerInputBoundary {
@@ -11,8 +12,8 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
      * @param movePlayerPresenter Implemented movePlayerOutputBoundary to handle the connection to the turn presenter
      * @param board The board the game is operating on
      */
-    public void makePlayerChoice(int[] playerRollAmount, Player player, MovePlayerUseCase movePlayerUseCase,
-                                 MovePlayerPresenter movePlayerPresenter) {
+    public void makePlayerChoice(int[] playerRollAmount, Player player, MovePlayerPresenter movePlayerPresenter,
+                                 Board board) {
         startAction(playerRollAmount, player, movePlayerPresenter, board);
     }
 
@@ -21,23 +22,21 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         int rollSum = playerRollAmount[0] + playerRollAmount[1];
         boolean doubleRoll = playerRollAmount[0] == playerRollAmount[1];
         // Check if the player is in jail will be handled separately
-        player.updateConsecutiveDoubles(doubleRoll);
+        player.updateConsecutiveDoubles(playerRollAmount[0], playerRollAmount[1]);
         player.setLastRoll(playerRollAmount[0], playerRollAmount[1]);
         if (player.getConsecutiveDoubles() == 3) {
             player.enterJail();
-            movePlayerPresenter.showChoices(new String[0], true);
+            movePlayerPresenter.showResultOfAction(player, player.getPosition(), false, true);
         } else {
             player.updatePosition(rollSum);
-            TileActionResultModel result = board.getTile(player.getPosition()).action();
-            if (result.getMoveToPosition() != -2) {
-                // Player landed on "go to jail"
+            TileActionResultModel result = board.getTile(player.getPosition()).action(player);
+            if (result.getPlayerPosition() == -1) {
+                // Player landed on "go to jail" and their position should now be in jail
                 player.enterJail();
-                movePlayerPresenter.showChoices(result.getChoices(), true);
-                //TileActionResultModel will need another
-                // instance variable to show what options the player can make
+                movePlayerPresenter.showResultOfAction(player, player.getPosition(), false, true);
             } else {
                 // Normal move
-                movePlayerPresenter.showChoices(result.getChoices(), false);
+                movePlayerPresenter.showResultOfAction(player, player.getPosition(), doubleRoll, false);
             }
         }
     }
