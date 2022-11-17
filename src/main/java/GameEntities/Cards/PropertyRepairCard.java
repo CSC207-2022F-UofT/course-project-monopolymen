@@ -22,10 +22,10 @@ public class PropertyRepairCard extends Card{
         int totalHouses = 0;
         int totalHotels = 0;
         ArrayList<Property> pProperties = player.getProperties();
-        for(int i = 0; i < pProperties.size(); i++){
-            totalHouses = totalHouses + pProperties.get(i).getHouses();
-            totalHotels = totalHotels + pProperties.get(i).getHotels();
-        }
+//        for(int i = 0; i < pProperties.size(); i++){
+//            totalHouses = totalHouses + pProperties.get(i).getHouses();
+//            totalHotels = totalHotels + pProperties.get(i).getHotels();
+//        } the getHouses and getHotels methods haven't been made yet
         player.addMoney(totalHotels * -hotelRepair);
         player.addMoney(totalHouses * -houseRepair);
     }
