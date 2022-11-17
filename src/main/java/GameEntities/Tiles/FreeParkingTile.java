@@ -20,7 +20,8 @@ public class FreeParkingTile extends Tile{
      */
     @Override
     public TileActionResultModel action(Player player) {
-        return new TileActionResultModel("You land on free parking tile! Nothing happens!", player.getPosition());
+        return new TileActionResultModel("You land on free parking tile! Nothing happens!", player,
+                player.getPosition());
     }
 
 }
