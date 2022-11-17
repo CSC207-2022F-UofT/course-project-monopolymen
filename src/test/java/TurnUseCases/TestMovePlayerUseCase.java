@@ -58,4 +58,20 @@ public class TestMovePlayerUseCase {
         assertEquals(jailTilePosition, player.getPosition());
     }
 
+    @Test
+    public void testVisitingJail() {
+        /**
+         * Test if the player is just visiting jail
+         */
+        int[] playerRollAmount = {6, 6};
+        Player player = new Player("player", "icon", 500);
+        MovePlayerPresenter movePlayerPresenter = new MovePlayerPresenter();
+        Board board = new Board(); // Constructor will need inputs
+        int jailTilePosition = board.jailTilePosition();
+        MovePlayerUseCase movePlayerUseCase = new MovePlayerUseCase();
+        movePlayerUseCase.makePlayerChoice(playerRollAmount, player, movePlayerPresenter, board);
+        //will need to find out how to land on "jail", this will probably take around 2 to 3 rolls
+        assertEquals(true, player.getTurnsInJail() == -1);
+        assertEquals(jailTilePosition, player.getPosition());
+    }
 }
