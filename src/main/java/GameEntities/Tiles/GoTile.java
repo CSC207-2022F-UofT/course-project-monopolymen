@@ -1,5 +1,7 @@
 package GameEntities.Tiles;
 
+import GameEntities.Player;
+
 public class GoTile extends Tile {
     /**
      * When landed on or passed, that player gets 200$. Does not happen when sent to Jail.
@@ -18,9 +20,7 @@ public class GoTile extends Tile {
      */
     @Override
     public TileActionResultModel action(Player player) {
-
-
-        return null;
+        return new TileActionResultModel("You landed on Go!", player, player.getPosition());
     }
 
     /**
@@ -31,8 +31,7 @@ public class GoTile extends Tile {
      */
     @Override
     public TilePassResultModel passing(Player player) {
-        Player.money += 200;
-
+        player.addMoney(200);
         return new TilePassResultModel(true, "You got $200!");
     }
 }
