@@ -32,7 +32,7 @@ public class TestMovePlayerUseCase {
         Player player = new Player("player", "icon", 500);
         MovePlayerPresenter movePlayerPresenter = new MovePlayerPresenter();
         Board board = new Board(); // Constructor will need inputs
-        int jailTilePosition = board.jailTilePosition();
+        int jailTilePosition = board.getJailTilePosition();
         MovePlayerUseCase movePlayerUseCase = new MovePlayerUseCase();
         movePlayerUseCase.makePlayerChoice(playerRollAmount, player, movePlayerPresenter, board);
         movePlayerUseCase.makePlayerChoice(playerRollAmount, player, movePlayerPresenter, board);
@@ -50,7 +50,7 @@ public class TestMovePlayerUseCase {
         Player player = new Player("player", "icon", 500);
         MovePlayerPresenter movePlayerPresenter = new MovePlayerPresenter();
         Board board = new Board(); // Constructor will need inputs
-        int jailTilePosition = board.jailTilePosition();
+        int jailTilePosition = board.getJailTilePosition();
         MovePlayerUseCase movePlayerUseCase = new MovePlayerUseCase();
         movePlayerUseCase.makePlayerChoice(playerRollAmount, player, movePlayerPresenter, board);
         //will need to find out how to land on "go to jail", this will probably take around 2 to 3 rolls
@@ -67,7 +67,7 @@ public class TestMovePlayerUseCase {
         Player player = new Player("player", "icon", 500);
         MovePlayerPresenter movePlayerPresenter = new MovePlayerPresenter();
         Board board = new Board(); // Constructor will need inputs
-        int jailTilePosition = board.jailTilePosition();
+        int jailTilePosition = board.getJailTilePosition();
         MovePlayerUseCase movePlayerUseCase = new MovePlayerUseCase();
         movePlayerUseCase.makePlayerChoice(playerRollAmount, player, movePlayerPresenter, board);
         //will need to find out how to land on "jail", this will probably take around 2 to 3 rolls
