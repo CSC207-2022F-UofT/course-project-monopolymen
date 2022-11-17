@@ -3,22 +3,25 @@ package TurnUseCases.MortgageUseCase;
 import GameEntities.Player;
 import GameEntities.Tiles.ColorPropertyTile;
 import GameEntities.Tiles.Property;
-import GameEntities.Tiles.RailroadTile;
-import GameEntities.Tiles.UtilityTile;
-
 /**
  * The input boundary for the mortgage property use case.
  */
 public interface MortgagePropertyInputBoundary {
+    /**
+     * Player mortgages property
+     *
+     * @param player the player who wants mortgages property.
+     * @param property the property which player wants to mortgages.
+     */
+    public void mortgage(Player player, Property property);
 
     /**
      * Overloading method mortgage. Player mortgages a color property.
      *
      * @param player the player who wants mortgages property.
      * @param property the property which player wants to mortgages.
-     * @param presenter presenter which provides info for players.
      */
-    public void mortgage(Player player, Property property, MortgagePropertyOutputBoundary presenter);
+    public void mortgage(Player player, ColorPropertyTile property);
 
     /**
      * Player unmortgages property
@@ -26,5 +29,5 @@ public interface MortgagePropertyInputBoundary {
      * @param player the player who wants to unmortgages property.
      * @param property the property which player wants to unmortgages.
      */
-    public void unmortgage(Player player, Property property, MortgagePropertyOutputBoundary presenter);
+    public void unmortgage(Player player, Property property);
 }
