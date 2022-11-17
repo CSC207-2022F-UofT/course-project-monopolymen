@@ -11,7 +11,10 @@ import java.util.List;
  */
 
 public class Trade implements  TradeInputBoundary{
-    TemporaryTurnActionPresenter presenter = new TemporaryTurnActionPresenter();
+    private TradeOutputBoundary presenter;
+    public Trade(TradeOutputBoundary presenter){
+        this.presenter = presenter;
+    }
 
 
     /**
