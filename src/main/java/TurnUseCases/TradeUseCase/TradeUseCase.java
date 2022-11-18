@@ -4,13 +4,12 @@ import GameEntities.Player;
 import GameEntities.Tiles.Property;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Contains all the functions related to the trading aspect of this game.
  */
 
-public class Trade implements  TradeInputBoundary{
+public class TradeUseCase implements  TradeInputBoundary{
     private TradeOutputBoundary presenter;
 
     /**
@@ -18,7 +17,7 @@ public class Trade implements  TradeInputBoundary{
      *
      * @param presenter displays the result of the functions in this class to the screen.
      */
-    public Trade(TradeOutputBoundary presenter){
+    public TradeUseCase(TradeOutputBoundary presenter){
         this.presenter = presenter;
     }
 

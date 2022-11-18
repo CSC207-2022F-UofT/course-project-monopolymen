@@ -5,14 +5,10 @@ import GameEntities.Tiles.ColorPropertyTile;
 import GameEntities.Tiles.Property;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
-import java.util.Arrays;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

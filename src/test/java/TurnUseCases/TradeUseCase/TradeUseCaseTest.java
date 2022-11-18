@@ -10,9 +10,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 
-import static org.junit.Assert.*;
-
-public class TradeTest {
+public class TradeUseCaseTest {
     Player player1 = new Player("player1", "player1", 1500);
 
     Player player2 = new Player("player2", "player2", 1500);
@@ -27,7 +25,7 @@ public class TradeTest {
             "Other Road", 500, fakeRent, 0, 0, 0);
 
     TemporaryTurnActionPresenter presenter = new TemporaryTurnActionPresenter();
-    Trade trade = new Trade(presenter);
+    TradeUseCase tradeUseCase = new TradeUseCase(presenter);
 
     @Before
     public void setUp() throws Exception {
@@ -61,7 +59,7 @@ public class TradeTest {
         potentialPlayers.add(player2);
 
 
-        ArrayList<Player> actual = trade.ChoosePlayer(listOfPlayers, player1);
+        ArrayList<Player> actual = tradeUseCase.ChoosePlayer(listOfPlayers, player1);
         assertEquals(potentialPlayers, actual);
 
     }
@@ -72,7 +70,7 @@ public class TradeTest {
                 player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
                 player1.getProperties(), player2.getProperties());
 
-        TradeOption actual = trade.GetTradeOptions(player1, player2);
+        TradeOption actual = tradeUseCase.GetTradeOptions(player1, player2);
 
         assertEquals(tradeOption.getPlayer1Money(), actual.getPlayer1Money());
         assertEquals(tradeOption.getPlayer2Money(), actual.getPlayer2Money());
@@ -90,7 +88,7 @@ public class TradeTest {
         TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
-        trade.MakeOffer(tradeOffer, player1, player2);
+        tradeUseCase.MakeOffer(tradeOffer, player1, player2);
 
     }
 
@@ -103,7 +101,7 @@ public class TradeTest {
         TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
-        trade.MakeOffer(tradeOffer, player1, player2);
+        tradeUseCase.MakeOffer(tradeOffer, player1, player2);
 
     }
 
@@ -116,7 +114,7 @@ public class TradeTest {
         TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
-        trade.GetResultOfTradeOffer(1, player1, player2, tradeOffer);
+        tradeUseCase.GetResultOfTradeOffer(1, player1, player2, tradeOffer);
 
     }
 
@@ -129,7 +127,7 @@ public class TradeTest {
         TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
-        trade.GetResultOfTradeOffer(2, player1, player2, tradeOffer);
+        tradeUseCase.GetResultOfTradeOffer(2, player1, player2, tradeOffer);
 
     }
 
@@ -142,7 +140,7 @@ public class TradeTest {
         TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
-        trade.GetResultOfTradeOffer(3, player1, player2, tradeOffer);
+        tradeUseCase.GetResultOfTradeOffer(3, player1, player2, tradeOffer);
 
     }
 
@@ -155,7 +153,7 @@ public class TradeTest {
         TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
-        trade.GetResultOfTradeOffer(4, player1, player2, tradeOffer);
+        tradeUseCase.GetResultOfTradeOffer(4, player1, player2, tradeOffer);
 
     }
 
@@ -173,7 +171,7 @@ public class TradeTest {
         ArrayList<Property> player2Properties = new ArrayList<>();
         player2Properties.add(fakeStreet);
 
-        trade.ExecuteOffer(player1, player2, tradeOffer);
+        tradeUseCase.ExecuteOffer(player1, player2, tradeOffer);
 
         assertEquals(1600, player1.getMoney());
         assertEquals(1400, player2.getMoney());
@@ -202,7 +200,7 @@ public class TradeTest {
         ArrayList<Property> player2Properties = new ArrayList<>();
         player2Properties.add(fakeStreet);
 
-        trade.ExecuteOffer(player1, player2, tradeOffer);
+        tradeUseCase.ExecuteOffer(player1, player2, tradeOffer);
 
         assertEquals(1600, player1.getMoney());
         assertEquals(1400, player2.getMoney());
@@ -231,7 +229,7 @@ public class TradeTest {
         ArrayList<Property> player2Properties = new ArrayList<>();
         player2Properties.add(fakeStreet);
 
-        trade.ExecuteOffer(player1, player2, tradeOffer);
+        tradeUseCase.ExecuteOffer(player1, player2, tradeOffer);
 
         assertEquals(1600, player1.getMoney());
         assertEquals(1400, player2.getMoney());
