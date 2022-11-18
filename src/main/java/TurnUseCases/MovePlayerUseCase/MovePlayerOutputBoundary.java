@@ -1,6 +1,11 @@
-package TurnUseCases;
+package TurnUseCases.MovePlayerUseCase;
 import GameEntities.Player;
+import GameEntities.Tiles.TilePassResultModel;
 
+/**
+ * Output Boundary for MovePlayer UseCase, to be implemented by the Presenter
+ * Includes the player, their positions, and if they are allowed to roll again
+ */
 public interface MovePlayerOutputBoundary {
     /**
      *
@@ -12,4 +17,5 @@ public interface MovePlayerOutputBoundary {
      */
     public void showResultOfAction(Player player, int playerPosition, boolean rollAgain, boolean turnOver);
 
+    public void showResultOfPass(Player player, int playerPosition, TilePassResultModel tilePassResultModel);
 }

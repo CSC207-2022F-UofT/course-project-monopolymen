@@ -1,6 +1,6 @@
-package TurnUseCases;
+package TurnUseCases.TestMovePlayerUseCase;
 import static org.junit.Assert.*;
-import TurnUseCases.MovePlayerUseCase;
+import TurnUseCases.MovePlayerUseCase.MovePlayerUseCase;
 import GameEntities.Player;
 // Need import here for implemented version of movePlayerOutputBoundary which is in presenter
 import GameEntities.Board;
@@ -15,11 +15,12 @@ public class TestMovePlayerUseCase {
         int[] playerRollAmount = {1, 2};
         Player player = new Player("player", "icon", 500);
         MovePlayerPresenter movePlayerPresenter = new MovePlayerPresenter();
+        // movePlayerPresenter is the implemented version of MovePlayerOutputBoundary
         Board board = new Board(); // Constructor will need inputs
         int currPlayerPosition = player.getPosition();
         int updatedPosition = currPlayerPosition + playerRollAmount[0] + playerRollAmount[1];
-        MovePlayerUseCase movePlayerUseCase = new MovePlayerUseCase();
-        movePlayerUseCase.makePlayerChoice(playerRollAmount, player, movePlayerPresenter, board);
+        MovePlayerUseCase movePlayerUseCase = new MovePlayerUseCase(movePlayerPresenter, board);
+        movePlayerUseCase.startAction(playerRollAmount, player);
         assertEquals(updatedPosition, player.getPosition());
     }
 
@@ -33,10 +34,10 @@ public class TestMovePlayerUseCase {
         MovePlayerPresenter movePlayerPresenter = new MovePlayerPresenter();
         Board board = new Board(); // Constructor will need inputs
         int jailTilePosition = board.getJailTilePosition();
-        MovePlayerUseCase movePlayerUseCase = new MovePlayerUseCase();
-        movePlayerUseCase.makePlayerChoice(playerRollAmount, player, movePlayerPresenter, board);
-        movePlayerUseCase.makePlayerChoice(playerRollAmount, player, movePlayerPresenter, board);
-        movePlayerUseCase.makePlayerChoice(playerRollAmount, player, movePlayerPresenter, board);
+        MovePlayerUseCase movePlayerUseCase = new MovePlayerUseCase(movePlayerPresenter, board);
+        movePlayerUseCase.startAction(playerRollAmount, player);
+        movePlayerUseCase.startAction(playerRollAmount, player);
+        movePlayerUseCase.startAction(playerRollAmount, player);
         assertEquals(true, player.getTurnsInJail() != -1);
         assertEquals(jailTilePosition, player.getPosition());
     }
@@ -51,8 +52,8 @@ public class TestMovePlayerUseCase {
         MovePlayerPresenter movePlayerPresenter = new MovePlayerPresenter();
         Board board = new Board(); // Constructor will need inputs
         int jailTilePosition = board.getJailTilePosition();
-        MovePlayerUseCase movePlayerUseCase = new MovePlayerUseCase();
-        movePlayerUseCase.makePlayerChoice(playerRollAmount, player, movePlayerPresenter, board);
+        MovePlayerUseCase movePlayerUseCase = new MovePlayerUseCase(movePlayerPresenter, board);
+        movePlayerUseCase.startAction(playerRollAmount, player);
         //will need to find out how to land on "go to jail", this will probably take around 2 to 3 rolls
         assertEquals(true, player.getTurnsInJail() != -1);
         assertEquals(jailTilePosition, player.getPosition());
@@ -68,8 +69,8 @@ public class TestMovePlayerUseCase {
         MovePlayerPresenter movePlayerPresenter = new MovePlayerPresenter();
         Board board = new Board(); // Constructor will need inputs
         int jailTilePosition = board.getJailTilePosition();
-        MovePlayerUseCase movePlayerUseCase = new MovePlayerUseCase();
-        movePlayerUseCase.makePlayerChoice(playerRollAmount, player, movePlayerPresenter, board);
+        MovePlayerUseCase movePlayerUseCase = new MovePlayerUseCase(movePlayerPresenter, board);
+        movePlayerUseCase.startAction(playerRollAmount, player);
         //will need to find out how to land on "jail", this will probably take around 2 to 3 rolls
         assertEquals(true, player.getTurnsInJail() == -1);
         assertEquals(jailTilePosition, player.getPosition());
