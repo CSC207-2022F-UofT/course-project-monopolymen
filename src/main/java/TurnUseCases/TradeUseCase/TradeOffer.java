@@ -15,6 +15,11 @@ public class TradeOffer {
     // the amount of money player1 wants from player2 if negative.
     private int tradeMoney;
 
+    // If 1, player1 is offering a get out of jail card to player2.
+    // If 0, player1 is not offering or requesting a get out of jail card from player2.
+    // If -1, player1 is requesting a get out of jail card from player2.
+    private int jailCard;
+
     // The list of properties player1 is offering to player2.
     private ArrayList<Property> propertiesOffered;
 
@@ -35,15 +40,17 @@ public class TradeOffer {
      *
      * @param tradeMoney if positive, it is the amount of money player1 is offering player2.
      *                   If negative, it is the amount of money player1 wants from player2.
+     *
      * @param propertiesOffered the list of properties player1 is offering player2.
      * @param propertiesReceived the list of properties player1 wants from player2.
      * @param player1 the player who made the trade offer.
      * @param player2 the player who is receiving the trade offer.
      */
-    public TradeOffer(int tradeMoney,
+    public TradeOffer(int tradeMoney, int jailCard,
                       ArrayList<Property> propertiesOffered, ArrayList<Property> propertiesReceived,
                       Player player1, Player player2){
         this.tradeMoney = tradeMoney;
+        this.jailCard = jailCard;
         this.propertiesOffered = propertiesOffered;
         this.propertiesReceived = propertiesReceived;
         this.player1 = player1;
@@ -64,8 +71,10 @@ public class TradeOffer {
             return false;
         } else if (!CheckPropertiesOffered()) {
             return false;
+        } else if (!CheckPropertiesReceived()) {
+            return false;
         } else {
-            return CheckPropertiesReceived();
+            return CheckJailCard();
         }
 
     }
@@ -100,8 +109,24 @@ public class TradeOffer {
         return true;
     }
 
+
+    /**
+     * Checks if the player offering the jail card has one.
+     *
+     * @return whether the player offering the jail card has one.
+     */
+    public boolean CheckJailCard(){
+        if (getJailCard() > 0 && !player1.getGetOutOfJailCard()){
+            return false;
+        } else return !(getJailCard() < 0 && !player2.getGetOutOfJailCard());
+    }
+
     public int getTradeMoney() {
         return tradeMoney;
+    }
+
+    public int getJailCard() {
+        return jailCard;
     }
 
     public Player getPlayer1() {

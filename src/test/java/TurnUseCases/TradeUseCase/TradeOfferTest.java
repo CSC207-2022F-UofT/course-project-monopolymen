@@ -14,16 +14,16 @@ import static org.junit.Assert.*;
 public class TradeOfferTest {
     Player player1 = new Player("player1", "player1", 1500);
 
+    int[] fakeRent = {};
+
     ColorPropertyTile fakeStreet = new ColorPropertyTile("red", "fakeStreet",
-            "Fake Street", 500, 100, 0, 0,
-            0, 0, 0, 0, 0, 0, 0);
+            "Fake Street", 500, fakeRent, 0, 0, 0);
 
 
     Player player2 = new Player("player2", "player2", 1500);
 
     ColorPropertyTile otherRoad = new ColorPropertyTile("blue", "otherRoad",
-            "Other Road", 500, 100, 0, 0,
-            0, 0, 0, 0, 0, 0, 0);
+            "Other Road", 500, fakeRent, 0, 0, 0);
 
     @Before
     public void setUp() throws Exception {
@@ -43,7 +43,7 @@ public class TradeOfferTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
         assertTrue(tradeOffer.isValid());
     }
@@ -54,7 +54,7 @@ public class TradeOfferTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(2000,
+        TradeOffer tradeOffer = new TradeOffer(2000, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
         assertFalse(tradeOffer.isValid());
     }
@@ -65,7 +65,7 @@ public class TradeOfferTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(-2000,
+        TradeOffer tradeOffer = new TradeOffer(-2000, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
         assertFalse(tradeOffer.isValid());
     }
@@ -76,7 +76,7 @@ public class TradeOfferTest {
         propertiesOffered.add(otherRoad);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
         assertFalse(tradeOffer.isValid());
     }
@@ -87,7 +87,7 @@ public class TradeOfferTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(fakeStreet);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
         assertFalse(tradeOffer.isValid());
     }
@@ -98,7 +98,7 @@ public class TradeOfferTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
         assertEquals(100, tradeOffer.getTradeMoney());
@@ -111,7 +111,7 @@ public class TradeOfferTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
         assertEquals(player1, tradeOffer.getPlayer1());
@@ -123,7 +123,7 @@ public class TradeOfferTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
         assertEquals(player2, tradeOffer.getPlayer2());
@@ -135,7 +135,7 @@ public class TradeOfferTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
         assertEquals(propertiesOffered, tradeOffer.getPropertiesOffered());
@@ -147,7 +147,7 @@ public class TradeOfferTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
         assertEquals(propertiesReceived, tradeOffer.getPropertiesReceived());
