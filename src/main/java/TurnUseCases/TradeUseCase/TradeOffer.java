@@ -40,7 +40,9 @@ public class TradeOffer {
      *
      * @param tradeMoney if positive, it is the amount of money player1 is offering player2.
      *                   If negative, it is the amount of money player1 wants from player2.
-     *
+     * @param jailCard if 1, then player1 is offering a get out of jail card to player2.
+     *                 If -1, then player1 is requesting a get out of jail card from player2.
+     *                 If 0, then no get out of jail cards are offered or requested.
      * @param propertiesOffered the list of properties player1 is offering player2.
      * @param propertiesReceived the list of properties player1 wants from player2.
      * @param player1 the player who made the trade offer.
