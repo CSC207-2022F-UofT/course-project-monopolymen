@@ -28,7 +28,10 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         if(property.isMortgaged()){
             return false;
         }
-        // Selecting ColorPropertyTile
+        if(!property.getClass().getName().equals("GameEntities.Tiles.ColorPropertyTile")){
+            return false;
+        }
+        // Selecting ColorPropertyTile from player's properties.
         ArrayList<ColorPropertyTile> ColorProperties = new ArrayList<ColorPropertyTile>();
         ArrayList<Property> properties = player.getProperties();
         for (int i = 0; i < properties.size(); i++){
@@ -36,6 +39,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
                 ColorProperties.add(properties.get(i));
             }
         }
+        // Selecting ColorPropertyTile with the same color.
         String color = property.getColor(); // need to add a method getColor to get the color of the ColorPropertyTile.
         ArrayList<ColorPropertyTile> SameColorProperties = new ArrayList<ColorPropertyTile>();
         int counter = 0;
@@ -72,7 +76,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
      *
      * @param player the player who wants build buildings.
      * @param property the property on which player wants to build buildings.
-     * @param presenter presenter which provides info for players
+     * @param presenter presenter which provides info for players.
      */
     @Override
     public void buildHouse (Player player, ColorPropertyTile property, BuildBuildingOutputBoundary presenter){
@@ -110,7 +114,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
      *
      * @param player the player who wants build buildings.
      * @param property the property on which player wants to build buildings.
-     * @param presenter presenter which provides info for players
+     * @param presenter presenter which provides info for players.
      */
     @Override
     public void buildHotel (Player player, ColorPropertyTile property, BuildBuildingOutputBoundary presenter){
