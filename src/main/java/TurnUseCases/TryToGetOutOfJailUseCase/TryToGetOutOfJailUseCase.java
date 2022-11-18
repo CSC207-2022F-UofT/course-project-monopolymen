@@ -3,8 +3,7 @@ import GameEntities.Board;
 import GameEntities.Player;
 import GameEntities.Tiles.TileActionResultModel;
 import GameEntities.Tiles.TilePassResultModel;
-import TurnUseCases.MovePlayerUseCase.MovePlayerInputBoundary;
-import TurnUseCases.MovePlayerUseCase.MovePlayerOutputBoundary;
+import TurnUseCases.MovePlayerUseCase.MovePlayerUseCase;
 
 import java.util.ArrayList;
 
@@ -16,12 +15,17 @@ import java.util.ArrayList;
 public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary {
     private TryToGetOutOfJailOutputBoundary tryToGetOutOfJailOutputBoundary;
     private Board board;
+    private EndTurnUseCase endTurnUseCase;
+    private MovePlayerUseCase movePlayerUseCase;
     /**
      * @param tryToGetOutOfJailOutputBoundary tryToGetOutOfJailOutputBoundary to handle the connection to \
      *                                        the turn presenter
      * @param board The board the game is operating on
+     * @param endTurnUseCase Use Case to force end the player's turn if they are sent to jail or failed their roll
+     * @param movePlayerUseCase Use Case to move the player if they get out of jail
      */
-    public TryToGetOutOfJailUseCase(TryToGetOutOfJailOutputBoundary tryToGetOutOfJailOutputBoundary, Board board) {
+    public TryToGetOutOfJailUseCase(TryToGetOutOfJailOutputBoundary tryToGetOutOfJailOutputBoundary, Board board,
+                                    EndTurnUseCase endTurnUseCase, MovePlayerUseCase movePlayerUseCase) {
         this.tryToGetOutOfJailOutputBoundary = tryToGetOutOfJailOutputBoundary;
         this.board = board;
     }
@@ -29,7 +33,41 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
     @Override
     public void startAction(String playerOption, Player player) {
         if(playerOption.equals("Roll")) {
-
+            // This is different from movePlayerUseCase as it doesn't take into account previous double rolls
+            int[] playerRollAmount = {(int)(Math.random() * 6) + 1, (int)(Math.random() * 6) + 1};
+            tryToGetOutOfJailOutputBoundary.showRoll(playerRollAmount);
+            if(playerRollAmount[0] == playerRollAmount[1]) {
+                // player rolled a double and are free
+                int rollSum = playerRollAmount[0] + playerRollAmount[1];
+                for(int i = 0; i < rollSum; i++) {
+                    player.updatePosition(1);
+                    TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
+                    tryToGetOutOfJailOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
+                }
+                TileActionResultModel result = board.getTile(player.getPosition()).action(player);
+                if (result.getPlayerPosition() == -1) {
+                    // Player landed on "go to jail" and their position should now be in jail
+                    player.enterJail();
+                    tryToGetOutOfJailOutputBoundary.showResultOfAction(player, player.getPosition());
+                    endTurnUseCase.forceEnd(player);
+                } else {
+                    // Normal move
+                    tryToGetOutOfJailOutputBoundary.showResultOfAction(player, player.getPosition());
+                }
+            } else {
+                // Player didn't roll double, force ending their turn
+                endTurnUseCase.forceEnd(player);
+            }
+        } else if (playerOption.equals("Pay")) {
+            player.subtractMoney(50);
+            player.resetTurnInJail();
+            // Normal roll dice move
+            movePlayerUseCase.startAction(player);
+        } else if (playerOption.equals("Card")) {
+            player.removeGetOutOfJailCard();
+            player.resetTurnInJail();
+            // Normal roll dice move
+            movePlayerUseCase.startAction(player);
         }
     }
 

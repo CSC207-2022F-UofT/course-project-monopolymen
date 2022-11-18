@@ -8,14 +8,23 @@ import GameEntities.Tiles.TilePassResultModel;
  */
 public interface MovePlayerOutputBoundary {
     /**
-     *
      * @param player The player object the action is being performed on
      * @param playerPosition The end position the player is supposed to be
      * @param rollAgain Boolean indicating if the player rolled a double and is able to roll again
-     * @param turnOver Boolean indicating if the player is forced to end their turn, for example: if they land on
-     *                 "go to jail" their turn will be forcefully ended instead if of any other move
      */
-    public void showResultOfAction(Player player, int playerPosition, boolean rollAgain, boolean turnOver);
+    public void showResultOfAction(Player player, int playerPosition, boolean rollAgain);
 
+    /**
+     * Shows the result of player passing the tile
+     * @param player The player object the action is being performed on
+     * @param playerPosition The player's position
+     * @param tilePassResultModel The data model of what happens when a player passes the tile
+     */
     public void showResultOfPass(Player player, int playerPosition, TilePassResultModel tilePassResultModel);
+
+    /**
+     * Shows the roll the player made
+     * @param playerRollAmount The array of two elements representing the players rolls
+     */
+    public void showRoll(int[] playerRollAmount);
 }

@@ -3,7 +3,6 @@ import GameEntities.Player;
 import GameEntities.Tiles.TileActionResultModel;
 import GameEntities.Board;
 import GameEntities.Tiles.TilePassResultModel;
-// Need import here for implemented version of movePlayerOutputBoundary which is in presenter
 
 /**
  * MovePlayerUseCase (Class to handle moving the player and all its relevant logic such as passing a tile and landing
@@ -16,17 +15,23 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
 
     private MovePlayerOutputBoundary movePlayerOutputBoundary;
     private Board board;
+    private EndTurnUseCase endTurnUseCase;
     /**
      * @param movePlayerOutputBoundary movePlayerOutputBoundary to handle the connection to the turn presenter
      * @param board The board the game is operating on
+     * @param endTurnUseCase class to force end a turn if the player is sent to jail
      */
-    public MovePlayerUseCase(MovePlayerOutputBoundary movePlayerOutputBoundary, Board board) {
+    public MovePlayerUseCase(MovePlayerOutputBoundary movePlayerOutputBoundary, Board board,
+                             EndTurnUseCase endTurnUseCase) {
         this.movePlayerOutputBoundary = movePlayerOutputBoundary;
         this.board = board;
+        this.endTurnUseCase = endTurnUseCase;
     }
 
     @Override
-    public void startAction(int[] playerRollAmount, Player player) {
+    public void startAction(Player player) {
+        int[] playerRollAmount = {(int)(Math.random() * 6) + 1, (int)(Math.random() * 6) + 1};
+        movePlayerOutputBoundary.showRoll(playerRollAmount);
         int rollSum = playerRollAmount[0] + playerRollAmount[1];
         boolean doubleRoll = playerRollAmount[0] == playerRollAmount[1];
         // Check if the player is in jail will be handled separately
@@ -34,7 +39,8 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         player.setLastRoll(playerRollAmount[0], playerRollAmount[1]);
         if (player.getConsecutiveDoubles() == 3) {
             player.enterJail();
-            movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false, true);
+            movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false);
+            endTurnUseCase.forceEnd(player);
         } else {
             // Presenter calls to show player passing through the tiles
             for(int i = 0; i < rollSum; i++) {
@@ -47,10 +53,11 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
             if (result.getPlayerPosition() == -1) {
                 // Player landed on "go to jail" and their position should now be in jail
                 player.enterJail();
-                movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false, true);
+                movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false);
+                endTurnUseCase.forceEnd(player);
             } else {
                 // Normal move
-                movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), doubleRoll, false);
+                movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), doubleRoll);
             }
         }
     }

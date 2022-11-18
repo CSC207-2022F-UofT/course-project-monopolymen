@@ -18,7 +18,6 @@ public interface TryToGetOutOfJailInputBoundary {
     /**
      * Returns a string array of possible options the player can choose, This method should be called first
      * instead of startAction to determine appropriate actions to present
-     *
      * @param player The player object that the action is being performed on
      */
     public ArrayList<String> getPlayerOptions(Player player);
