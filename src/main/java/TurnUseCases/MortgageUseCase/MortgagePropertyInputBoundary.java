@@ -13,7 +13,7 @@ public interface MortgagePropertyInputBoundary {
      * @param player the player who wants mortgages property.
      * @param property the property which player wants to mortgages.
      */
-    public void mortgage(Player player, Property property);
+    public void mortgage(Player player, Property property, MortgagePropertyOutputBoundary presenter);
 
     /**
      * Overloading method mortgage. Player mortgages a color property.
@@ -21,7 +21,7 @@ public interface MortgagePropertyInputBoundary {
      * @param player the player who wants mortgages property.
      * @param property the property which player wants to mortgages.
      */
-    public void mortgage(Player player, ColorPropertyTile property);
+    public void mortgage(Player player, ColorPropertyTile property, MortgagePropertyOutputBoundary presenter);
 
     /**
      * Player unmortgages property
@@ -29,5 +29,5 @@ public interface MortgagePropertyInputBoundary {
      * @param player the player who wants to unmortgages property.
      * @param property the property which player wants to unmortgages.
      */
-    public void unmortgage(Player player, Property property);
+    public void unmortgage(Player player, Property property, MortgagePropertyOutputBoundary presenter);
 }
