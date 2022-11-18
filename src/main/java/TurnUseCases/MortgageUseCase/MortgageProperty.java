@@ -7,7 +7,7 @@ import GameEntities.Tiles.Property;
 /**
  * All methods related to mortgage.
  */
-public class MortgageProperty {
+public class MortgageProperty implements MortgagePropertyInputBoundary{
 
     /**
      * Player mortgages property
