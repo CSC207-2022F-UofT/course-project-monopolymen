@@ -12,6 +12,12 @@ import java.util.List;
 
 public class Trade implements  TradeInputBoundary{
     private TradeOutputBoundary presenter;
+
+    /**
+     * Creates an instance of the trade class with the provided presenter.
+     *
+     * @param presenter displays the result of the functions in this class to the screen.
+     */
     public Trade(TradeOutputBoundary presenter){
         this.presenter = presenter;
     }
