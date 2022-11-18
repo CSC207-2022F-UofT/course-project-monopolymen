@@ -14,6 +14,7 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
      *
      * @param player the player who wants mortgages property.
      * @param property the property which player wants to mortgages.
+     * @param presenter presenter which provides info for players.
      */
     @Override
     public void mortgage(Player player, Property property, MortgagePropertyOutputBoundary presenter){
@@ -34,6 +35,7 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
      *
      * @param player the player who wants mortgages property.
      * @param property the property which player wants to mortgages.
+     * @param presenter presenter which provides info for players.
      */
     @Override
     public void mortgage(Player player, ColorPropertyTile property, MortgagePropertyOutputBoundary presenter){
@@ -53,6 +55,7 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
      *
      * @param player the player who wants to unmortgages property.
      * @param property the property which player wants to unmortgages.
+     * @param presenter presenter which provides info for players.
      */
     @Override
     public void unmortgage(Player player, Property property, MortgagePropertyOutputBoundary presenter){
