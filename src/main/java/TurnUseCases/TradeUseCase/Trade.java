@@ -46,6 +46,7 @@ public class Trade implements  TradeInputBoundary{
     @Override
     public TradeOption GetTradeOptions(Player player1, Player player2) {
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
+                player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
                 player1.getProperties(), player2.getProperties());
 
         presenter.showTradeOptions(tradeOption, "Please choose what you want to trade.");
@@ -122,6 +123,14 @@ public class Trade implements  TradeInputBoundary{
         for (Property p : tradeOffer.getPropertiesOffered()){
             player1.sellProperty(p);
             player2.addProperty(p);
+        }
+
+        if (tradeOffer.getJailCard() > 0){
+            player1.removeGetOutOfJailCard();
+            player2.addGetOutOfJailCard();
+        } else if (tradeOffer.getJailCard() < 0) {
+            player1.addGetOutOfJailCard();
+            player2.removeGetOutOfJailCard();
         }
 
     }
