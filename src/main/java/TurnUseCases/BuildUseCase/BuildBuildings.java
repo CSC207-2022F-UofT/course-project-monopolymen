@@ -72,6 +72,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
      *
      * @param player the player who wants build buildings.
      * @param property the property on which player wants to build buildings.
+     * @param presenter presenter which provides info for players
      */
     @Override
     public void buildHouse (Player player, ColorPropertyTile property, BuildBuildingOutputBoundary presenter){
@@ -109,6 +110,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
      *
      * @param player the player who wants build buildings.
      * @param property the property on which player wants to build buildings.
+     * @param presenter presenter which provides info for players
      */
     @Override
     public void buildHotel (Player player, ColorPropertyTile property, BuildBuildingOutputBoundary presenter){
