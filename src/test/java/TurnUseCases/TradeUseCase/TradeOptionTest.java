@@ -42,6 +42,8 @@ public class TradeOptionTest {
         player2.addProperty(otherRoad);
         p1Properties.add(fakeStreet);
         p2Properties.add(otherRoad);
+        player1.addGetOutOfJailCard();
+        player2.addGetOutOfJailCard();
 
     }
 
@@ -51,6 +53,8 @@ public class TradeOptionTest {
         player2.sellProperty(otherRoad);
         p1Properties.remove(fakeStreet);
         p2Properties.remove(otherRoad);
+        player1.removeGetOutOfJailCard();
+        player2.removeGetOutOfJailCard();
     }
 
     @Test(timeout = 100)
@@ -91,5 +95,22 @@ public class TradeOptionTest {
 
 
         }
+
+        @Test
+        public void getPlayer1JailCard() {
+            TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
+                    player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
+                    player1.getProperties(), player2.getProperties());
+            assertEquals(player1.getGetOutOfJailCard(), tradeOption.getPlayer1JailCard());
+        }
+
+    @Test
+    public void getPlayer2JailCard() {
+        TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
+                player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
+                player1.getProperties(), player2.getProperties());
+        assertEquals(player2.getGetOutOfJailCard(), tradeOption.getPlayer2JailCard());
+    }
+
 
     }

@@ -93,6 +93,30 @@ public class TradeOfferTest {
     }
 
     @Test
+    public void checkIsValidFalseJailCard1() {
+        ArrayList<Property> propertiesOffered = new ArrayList<>();
+        propertiesOffered.add(fakeStreet);
+        ArrayList<Property> propertiesReceived = new ArrayList<>();
+        propertiesReceived.add(fakeStreet);
+        TradeOffer tradeOffer = new TradeOffer(100, 1,
+                propertiesOffered, propertiesReceived, player1, player2);
+        assertFalse(tradeOffer.isValid());
+    }
+
+    @Test
+    public void checkIsValidFalseJailCard2() {
+        ArrayList<Property> propertiesOffered = new ArrayList<>();
+        propertiesOffered.add(fakeStreet);
+        ArrayList<Property> propertiesReceived = new ArrayList<>();
+        propertiesReceived.add(fakeStreet);
+        TradeOffer tradeOffer = new TradeOffer(100, -1,
+                propertiesOffered, propertiesReceived, player1, player2);
+        assertFalse(tradeOffer.isValid());
+    }
+
+
+
+    @Test
     public void getTradeMoney() {
         ArrayList<Property> propertiesOffered = new ArrayList<>();
         propertiesOffered.add(fakeStreet);
@@ -152,5 +176,18 @@ public class TradeOfferTest {
 
         assertEquals(propertiesReceived, tradeOffer.getPropertiesReceived());
     }
+
+    @Test
+    public void getJailCard() {
+        ArrayList<Property> propertiesOffered = new ArrayList<>();
+        propertiesOffered.add(fakeStreet);
+        ArrayList<Property> propertiesReceived = new ArrayList<>();
+        propertiesReceived.add(otherRoad);
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
+                propertiesOffered, propertiesReceived, player1, player2);
+
+        assertEquals(0, tradeOffer.getJailCard());
+    }
+
 
 }
