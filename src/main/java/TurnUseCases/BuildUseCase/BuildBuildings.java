@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * All methods related to build buildings.
  */
 
-public class BuildBuildings {
+public class BuildBuildings implements BuildBuildingInputBoundary{
 
     /**
      * Check if player can build buildings
@@ -20,21 +20,29 @@ public class BuildBuildings {
      * @param player the player who wants build buildings.
      * @param property the property on which player wants to build buildings.
      */
-    public boolean isBuildable (Player player, ColorPropertyTile property){
+    @Override
+    public boolean isBuildable (Player player, Property property){
         if(!player.ownsProperty(property)){
             return false;
         }
         if(property.isMortgaged()){
             return false;
         }
+        // Selecting ColorPropertyTile
+        ArrayList<ColorPropertyTile> ColorProperties = new ArrayList<ColorPropertyTile>();
+        ArrayList<Property> properties = player.getProperties();
+        for (int i = 0; i < properties.size(); i++){
+            if(properties.get(i).getClass().getName().equals("GameEntities.Tiles.ColorPropertyTile")){
+                ColorProperties.add(properties.get(i));
+            }
+        }
         String color = property.getColor(); // need to add a method getColor to get the color of the ColorPropertyTile.
+        ArrayList<ColorPropertyTile> SameColorProperties = new ArrayList<ColorPropertyTile>();
         int counter = 0;
-        ArrayList<ColorPropertyTile> SameColorProperties = new ArrayList<ColorPropertyTile>();;
-        ArrayList<ColorPropertyTile> properties = player.getProperties();
-        for (int i = 0; i < player.getProperties().size(); i++){
-            if(properties.get(i).getColor().equals(color)) {
+        for (int i = 0; i < ColorProperties.size(); i++){
+            if(ColorProperties.get(i).getColor().equals(color)) {
                 counter += 1;
-                SameColorProperties.add(properties.get(i));
+                SameColorProperties.add(ColorProperties.get(i));
             }
         }
         //When player owns all the properties in a Monopoly color group, player can buy houses.
@@ -65,6 +73,7 @@ public class BuildBuildings {
      * @param player the player who wants build buildings.
      * @param property the property on which player wants to build buildings.
      */
+    @Override
     public void buildHouse (Player player, ColorPropertyTile property){
         if (isBuildable(player, property)){
             property.addHouse();
@@ -88,9 +97,7 @@ public class BuildBuildings {
                     player.subtractMoney(200);
                     break;
             }
-            return true;
         }
-        return false;
     }
 
     /**
@@ -99,6 +106,7 @@ public class BuildBuildings {
      * @param player the player who wants build buildings.
      * @param property the property on which player wants to build buildings.
      */
+    @Override
     public void buildHotel (Player player, ColorPropertyTile property){
         if (isBuildable(player, property) && property.getHouses() >= 4){
             property.addHotel();
