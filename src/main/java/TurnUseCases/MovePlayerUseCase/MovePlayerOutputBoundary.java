@@ -4,7 +4,6 @@ import GameEntities.Tiles.TilePassResultModel;
 
 /**
  * Output Boundary for MovePlayer UseCase, to be implemented by the Presenter
- * Includes the player, their positions, and if they are allowed to roll again
  */
 public interface MovePlayerOutputBoundary {
     /**

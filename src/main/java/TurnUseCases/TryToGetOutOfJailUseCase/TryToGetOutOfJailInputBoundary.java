@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 /**
  * Input Boundary for TryToGetOutOfJail UseCase, to be implemented by the UseCase
- * includes the player and their choice
  */
 public interface TryToGetOutOfJailInputBoundary {
     /**

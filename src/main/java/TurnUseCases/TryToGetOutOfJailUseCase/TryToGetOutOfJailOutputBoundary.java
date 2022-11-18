@@ -3,6 +3,9 @@ package TurnUseCases.TryToGetOutOfJailUseCase;
 import GameEntities.Player;
 import GameEntities.Tiles.TilePassResultModel;
 
+/**
+ * Output Boundary for TryToGetOutOfJail UseCase, to be implemented by the Presenter
+ */
 public interface TryToGetOutOfJailOutputBoundary {
     /**
      * Shows the result of the player landing on the tile
