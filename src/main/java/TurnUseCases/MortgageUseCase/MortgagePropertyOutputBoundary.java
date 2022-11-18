@@ -1,5 +1,6 @@
 package TurnUseCases.MortgageUseCase;
 
+import GameEntities.Player;
 import GameEntities.Tiles.ColorPropertyTile;
 import GameEntities.Tiles.Property;
 /**
@@ -7,43 +8,20 @@ import GameEntities.Tiles.Property;
  */
 public interface MortgagePropertyOutputBoundary {
     /**
-     * Presents the list of players player can trade with.
+     * Presents the property which is mortgaged or unmortgaged by player.
      *
      * @param player the player who wants to mortgage or unmortgage property.
+     * @param property The property which is mortgaged or unmortgaged by player.
      * @param flavorText the text describing what is happening.
      */
-    public void showPlayer(String player, String flavorText);
+    public void showMortgageProperty(Player player, Property property, String flavorText);
 
     /**
-     * Presents the property which is mortgaged by player.
+     * Presents the property which is mortgaged or unmortgaged by player.
      *
-     * @param property The property which is mortgaged by player.
+     * @param player the player who wants to mortgage or unmortgage property.
+     * @param property The property which is mortgaged or unmortgaged by player.
      * @param flavorText the text describing what is happening.
      */
-    public void showMortgageProperty(Property property, String flavorText);
-
-    /**
-     * Presents Tthe property which is mortgaged by player.
-     *
-     * @param property The property which is mortgaged by player.
-     * @param flavorText the text describing what is happening.
-     */
-    public void showMortgageProperty(ColorPropertyTile property, String flavorText);
-
-    /**
-     * Presents the property which is unmortgaged by player.
-     *
-     * @param property details the possible options for the trade
-     * @param flavorText the text describing what is happening.
-     */
-    public void showUnmortgageProperty(Property property, String flavorText);
-
-    /**
-     * Presents the property which is unmortgaged by player.
-     *
-     * @param property details the possible options for the trade
-     * @param flavorText the text describing what is happening.
-     */
-    public void showUnmortgageProperty(ColorPropertyTile property, String flavorText);
-
+    public void showMortgageProperty(Player player, ColorPropertyTile property, String flavorText);
 }

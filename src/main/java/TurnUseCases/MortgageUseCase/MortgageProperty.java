@@ -19,6 +19,9 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
         if (player.ownsProperty(property)) {
             player.addMoney(property.mortgage());
         }
+        int mortgageValue = property.getMortgageValue();
+        String text = player.getName() + "mortgaged " + property.getTileName() + "and get $" + mortgageValue;
+        TurnActionPresenter.showMortgageProperty(player, property, text);
     }
 
 
@@ -32,6 +35,9 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
         if (player.ownsProperty(property) && property.getHouse() == 0 && property.getHotel() == 0) {
             player.addMoney(property.mortgage());
         }
+        int mortgageValue = property.getMortgageValue();
+        String text = player.getName() + "mortgaged " + property.getTileName() + "and get $" + mortgageValue;
+        TurnActionPresenter.showMortgageProperty(player, property, text);
     }
 
     /**
@@ -41,12 +47,14 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
      * @param property the property which player wants to unmortgages.
      */
     public void unmortgage(Player player, Property property){
+        int mortgageValue = 0;
+        mortgageValue = property.getMortgageValue();
+        mortgageValue = (int) (mortgageValue * 1.1);
         if (player.ownsProperty(property)) {
-            int value = 0;
-            value = property.getMortgageValue();
-            value = (int) (value * 1.1);
-            player.subtractMoney(value);
+            player.subtractMoney(mortgageValue);
             property.unmortgage();
         }
+        String text = player.getName() + "unmortgaged " + property.getTileName() + "and subtract $" + Integer.toString(mortgageValue);
+        TurnActionPresenter.showUnmortgageProperty(player, property, text);
     }
 }
