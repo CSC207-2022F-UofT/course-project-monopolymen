@@ -41,6 +41,14 @@ public class TradeTest {
         player1.sellProperty(otherRoad);
         player2.sellProperty(otherRoad);
 
+        if(player1.getGetOutOfJailCard()){
+            player1.removeGetOutOfJailCard();
+        }
+
+        if(player2.getGetOutOfJailCard()){
+            player2.removeGetOutOfJailCard();
+        }
+
     }
 
     @Test
@@ -171,6 +179,66 @@ public class TradeTest {
         assertEquals(1400, player2.getMoney());
         assertEquals(player1Properties, player1.getProperties());
         assertEquals(player2Properties, player2.getProperties());
+        assertFalse(player1.getGetOutOfJailCard());
+        assertFalse(player2.getGetOutOfJailCard());
+
+
+
+    }
+
+    @Test
+    public void executeOfferJailCard1() {
+        player1.addGetOutOfJailCard();
+
+        ArrayList<Property> propertiesOffered = new ArrayList<>();
+        propertiesOffered.add(fakeStreet);
+        ArrayList<Property> propertiesReceived = new ArrayList<>();
+        propertiesReceived.add(otherRoad);
+        TradeOffer tradeOffer = new TradeOffer(100, 1,
+                propertiesOffered, propertiesReceived, player1, player2);
+
+        ArrayList<Property> player1Properties = new ArrayList<>();
+        player1Properties.add(otherRoad);
+        ArrayList<Property> player2Properties = new ArrayList<>();
+        player2Properties.add(fakeStreet);
+
+        trade.ExecuteOffer(player1, player2, tradeOffer);
+
+        assertEquals(1600, player1.getMoney());
+        assertEquals(1400, player2.getMoney());
+        assertEquals(player1Properties, player1.getProperties());
+        assertEquals(player2Properties, player2.getProperties());
+        assertFalse(player1.getGetOutOfJailCard());
+        assertTrue(player2.getGetOutOfJailCard());
+
+
+
+    }
+
+    @Test
+    public void executeOfferJailCard2() {
+        player2.addGetOutOfJailCard();
+
+        ArrayList<Property> propertiesOffered = new ArrayList<>();
+        propertiesOffered.add(fakeStreet);
+        ArrayList<Property> propertiesReceived = new ArrayList<>();
+        propertiesReceived.add(otherRoad);
+        TradeOffer tradeOffer = new TradeOffer(100, -1,
+                propertiesOffered, propertiesReceived, player1, player2);
+
+        ArrayList<Property> player1Properties = new ArrayList<>();
+        player1Properties.add(otherRoad);
+        ArrayList<Property> player2Properties = new ArrayList<>();
+        player2Properties.add(fakeStreet);
+
+        trade.ExecuteOffer(player1, player2, tradeOffer);
+
+        assertEquals(1600, player1.getMoney());
+        assertEquals(1400, player2.getMoney());
+        assertEquals(player1Properties, player1.getProperties());
+        assertEquals(player2Properties, player2.getProperties());
+        assertFalse(player2.getGetOutOfJailCard());
+        assertTrue(player1.getGetOutOfJailCard());
 
 
 
