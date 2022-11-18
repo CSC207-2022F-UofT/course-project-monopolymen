@@ -17,15 +17,17 @@ public class TradeTest {
 
     Player player2 = new Player("player2", "player2", 1500);
 
+    int[] fakeRent = {};
+
     ColorPropertyTile fakeStreet = new ColorPropertyTile("red", "fakeStreet",
-            "Fake Street", 500, 100, 0, 0,
-            0, 0, 0, 0, 0, 0, 0);
+            "Fake Street", 500, fakeRent, 0, 0, 0);
+
 
     ColorPropertyTile otherRoad = new ColorPropertyTile("blue", "otherRoad",
-            "Other Road", 500, 100, 0, 0,
-            0, 0, 0, 0, 0, 0, 0);
+            "Other Road", 500, fakeRent, 0, 0, 0);
 
-    Trade trade = new Trade();
+    TemporaryTurnActionPresenter presenter = new TemporaryTurnActionPresenter();
+    Trade trade = new Trade(presenter);
 
     @Before
     public void setUp() throws Exception {
@@ -59,6 +61,7 @@ public class TradeTest {
     @Test
     public void getTradeOptions() {
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
+                player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
                 player1.getProperties(), player2.getProperties());
 
         TradeOption actual = trade.GetTradeOptions(player1, player2);
@@ -76,7 +79,7 @@ public class TradeTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
         trade.MakeOffer(tradeOffer, player1, player2);
@@ -89,7 +92,7 @@ public class TradeTest {
         propertiesOffered.add(otherRoad);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(fakeStreet);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
         trade.MakeOffer(tradeOffer, player1, player2);
@@ -102,7 +105,7 @@ public class TradeTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
         trade.GetResultOfTradeOffer(1, player1, player2, tradeOffer);
@@ -115,7 +118,7 @@ public class TradeTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
         trade.GetResultOfTradeOffer(2, player1, player2, tradeOffer);
@@ -128,7 +131,7 @@ public class TradeTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
         trade.GetResultOfTradeOffer(3, player1, player2, tradeOffer);
@@ -141,7 +144,7 @@ public class TradeTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
         trade.GetResultOfTradeOffer(4, player1, player2, tradeOffer);
@@ -154,7 +157,7 @@ public class TradeTest {
         propertiesOffered.add(fakeStreet);
         ArrayList<Property> propertiesReceived = new ArrayList<>();
         propertiesReceived.add(otherRoad);
-        TradeOffer tradeOffer = new TradeOffer(100,
+        TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
         ArrayList<Property> player1Properties = new ArrayList<>();
