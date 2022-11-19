@@ -167,15 +167,7 @@ public class Player {
      * @param board         the board that the game is being played on
      */
     public void updatePosition(int rollSum, Board board) {
-        int length = board.getTilesList().size();
-        if (this.position + rollSum <= length - 1) {
-            this.position += rollSum;
-        } else if (this.position + rollSum == length) {
-            this.position = 0;
-        } else{
-            rollSum = rollSum - (length - this.position);
-            this.position = rollSum;
-        }
+        this.position = (this.position + rollSum) % board.getTilesList().size();
     }
 
     /**
