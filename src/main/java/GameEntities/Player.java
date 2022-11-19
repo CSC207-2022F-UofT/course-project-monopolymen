@@ -150,13 +150,14 @@ public class Player {
 
     /**
      * Called when a player enters the jail, updates the position of the player to the jail position and adds a turn in
-     * jail
+     * jail. It will also reset consecutive doubles to 0
      *
      * @param board         the board that the game is being played on
      */
     public void enterJail(Board board){
         this.addTurnInJail();
         this.position = board.getJailTilePosition();
+        this.resetConesecutiveDoubles();
     }
 
     /**
@@ -194,6 +195,11 @@ public class Player {
     }
 
     /**
+     * Adds one get out of jail free card to the players inventory
+     */
+    public void addGetOutOfJailCard() {this.getOutOfJailFree += 1;}
+
+    /**
      * Take in a players two die rolls and update the consecutive doubles attributes if they are equal
      *
      * @param roll1     int representing the value of the first dice roll
@@ -203,6 +209,13 @@ public class Player {
         if(roll1 == roll2){
             this.consecutiveDoubles += 1;
         }
+    }
+
+    /**
+     * Reset the consecutive doubles rolled by the player to 0
+     */
+    public void resetConesecutiveDoubles(){
+        this.consecutiveDoubles = 0;
     }
 }
 
