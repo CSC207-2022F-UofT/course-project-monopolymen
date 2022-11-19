@@ -96,12 +96,8 @@ public class Player {
      * @param subtract      int representing the amount of money we are trying to subtract
      * @return              return true if the player had enough money to make the payment and false if they do not
      */
-    public boolean subtractMoney(int subtract){
-        if(this.money >= subtract){
-            this.money -= subtract;
-            return true;
-        }
-        return false;
+    public void subtractMoney(int subtract){
+        this.money -= subtract;
     }
 
     /**
@@ -200,6 +196,8 @@ public class Player {
     public void updateConsecutiveDoubles(int roll1, int roll2){
         if(roll1 == roll2){
             this.consecutiveDoubles += 1;
+        }else{
+            this.resetConesecutiveDoubles();
         }
     }
 
