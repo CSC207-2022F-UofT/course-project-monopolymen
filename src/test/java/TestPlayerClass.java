@@ -54,7 +54,7 @@ public class TestPlayerClass {
         assertEquals(testPlayer.getConsecutiveDoubles(), 0);
         testPlayer.updateConsecutiveDoubles(5, 5);
         testPlayer.updateConsecutiveDoubles(5, 5);
-        testPlayer.resetConesecutiveDoubles();
+        testPlayer.resetConsecutiveDoubles();
         assertEquals(testPlayer.getConsecutiveDoubles(), 0);
     }
 }

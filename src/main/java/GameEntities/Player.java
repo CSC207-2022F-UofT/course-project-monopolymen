@@ -153,7 +153,7 @@ public class Player {
     public void enterJail(Board board){
         this.addTurnInJail();
         this.position = board.getJailTilePosition();
-        this.resetConesecutiveDoubles();
+        this.resetConsecutiveDoubles();
     }
 
     /**
@@ -197,14 +197,14 @@ public class Player {
         if(roll1 == roll2){
             this.consecutiveDoubles += 1;
         }else{
-            this.resetConesecutiveDoubles();
+            this.resetConsecutiveDoubles();
         }
     }
 
     /**
      * Reset the consecutive doubles rolled by the player to 0
      */
-    public void resetConesecutiveDoubles(){
+    public void resetConsecutiveDoubles(){
         this.consecutiveDoubles = 0;
     }
 }
