@@ -3,6 +3,7 @@ import GameEntities.Player;
 import GameEntities.Tiles.TileActionResultModel;
 import GameEntities.Board;
 import GameEntities.Tiles.TilePassResultModel;
+import TurnUseCases.EndTurnUseCase.EndTurnUseCase;
 
 /**
  * MovePlayerUseCase (Class to handle moving the player and all its relevant logic such as passing a tile and landing
@@ -17,7 +18,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
     private Board board;
     private EndTurnUseCase endTurnUseCase;
     /**
-     * @param movePlayerOutputBoundary movePlayerOutputBoundary to handle the connection to the turn presenter
+     * @param movePlayerOutputBoundary MovePlayerOutputBoundary to handle display
      * @param board The board the game is operating on
      * @param endTurnUseCase class to force end a turn if the player is sent to jail
      */
@@ -40,7 +41,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         if (player.getConsecutiveDoubles() == 3) {
             player.enterJail();
             movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false);
-            endTurnUseCase.forceEnd(player);
+            endTurnUseCase.forceEndTurn(player);
         } else {
             // Presenter calls to show player passing through the tiles
             for(int i = 0; i < rollSum; i++) {
@@ -54,7 +55,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                 // Player landed on "go to jail" and their position should now be in jail
                 player.enterJail();
                 movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false);
-                endTurnUseCase.forceEnd(player);
+                endTurnUseCase.forceEndTurn(player);
             } else {
                 // Normal move
                 movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), doubleRoll);

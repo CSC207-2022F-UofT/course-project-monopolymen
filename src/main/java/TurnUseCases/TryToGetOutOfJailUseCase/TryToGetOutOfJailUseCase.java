@@ -4,7 +4,7 @@ import GameEntities.Player;
 import GameEntities.Tiles.TileActionResultModel;
 import GameEntities.Tiles.TilePassResultModel;
 import TurnUseCases.MovePlayerUseCase.MovePlayerUseCase;
-
+import TurnUseCases.EndTurnUseCase.EndTurnUseCase;
 import java.util.ArrayList;
 
 /**
@@ -18,8 +18,7 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
     private EndTurnUseCase endTurnUseCase;
     private MovePlayerUseCase movePlayerUseCase;
     /**
-     * @param tryToGetOutOfJailOutputBoundary tryToGetOutOfJailOutputBoundary to handle the connection to \
-     *                                        the turn presenter
+     * @param tryToGetOutOfJailOutputBoundary TryToGetOutOfJailOutputBoundary to handle the display
      * @param board The board the game is operating on
      * @param endTurnUseCase Use Case to force end the player's turn if they are sent to jail or failed their roll
      * @param movePlayerUseCase Use Case to move the player if they get out of jail
@@ -49,14 +48,14 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
                     // Player landed on "go to jail" and their position should now be in jail
                     player.enterJail();
                     tryToGetOutOfJailOutputBoundary.showResultOfAction(player, player.getPosition());
-                    endTurnUseCase.forceEnd(player);
+                    endTurnUseCase.forceEndTurn(player);
                 } else {
                     // Normal move
                     tryToGetOutOfJailOutputBoundary.showResultOfAction(player, player.getPosition());
                 }
             } else {
                 // Player didn't roll double, force ending their turn
-                endTurnUseCase.forceEnd(player);
+                endTurnUseCase.forceEndTurn(player);
             }
         } else if (playerOption.equals("Pay")) {
             player.subtractMoney(50);
