@@ -15,4 +15,13 @@ public interface BuildBuildingOutputBoundary {
      */
     public void showBuildBuilding(Player player, ColorPropertyTile property, String flavorText);
 
+    /**
+     * Presents the property on which the building would be sold.
+     *
+     * @param player player who wants to sell a building.
+     * @param property the property on which the building would be sold.
+     * @param flavorText the text describing what is happening.
+     */
+    public void showSellBuilding(Player player, ColorPropertyTile property, String flavorText);
+
 }
