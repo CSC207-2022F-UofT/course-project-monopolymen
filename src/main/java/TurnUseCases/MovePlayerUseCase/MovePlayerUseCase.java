@@ -1,5 +1,7 @@
 package TurnUseCases.MovePlayerUseCase;
 import GameEntities.Player;
+import GameEntities.Tiles.Property;
+import GameEntities.Tiles.Tile;
 import GameEntities.Tiles.TileActionResultModel;
 import GameEntities.Board;
 import GameEntities.Tiles.TilePassResultModel;
@@ -30,6 +32,26 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
     }
 
     @Override
+    public void moveToPosition(Player player, int absolutePosition) {
+        int steps = absolutePosition - player.getPosition();
+        for(int i = 0; i < steps; i++) {
+            player.updatePosition(1);
+            TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
+            movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult,
+                    passResult.getFlavorText());
+        }
+        TileActionResultModel result = board.getTile(player.getPosition()).action(player);
+        Tile tile = board.getTile(player.getPosition());
+        movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                result.getFlavorText());
+        if(tile instanceof Property) {
+            if((Property)(tile).getOwner() == null) {
+                movePlayerOutputBoundary.showBuyableProperty(player, tile);
+            }
+        }
+    }
+
+    @Override
     public void startAction(Player player) {
         int[] playerRollAmount = {(int)(Math.random() * 6) + 1, (int)(Math.random() * 6) + 1};
         movePlayerOutputBoundary.showRoll(playerRollAmount);
@@ -40,25 +62,50 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         player.setLastRoll(playerRollAmount[0], playerRollAmount[1]);
         if (player.getConsecutiveDoubles() == 3) {
             player.enterJail();
-            movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false);
+            movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                    "You are going to jail for rolling three consecutive doubles.");
             endTurnUseCase.forceEndTurn(player);
         } else {
             // Presenter calls to show player passing through the tiles
             for(int i = 0; i < rollSum; i++) {
                 player.updatePosition(1);
                 TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
-                movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
+                movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult,
+                        passResult.getFlavorText());
             }
             // Player passed through all the tiles and is now on their original position + rollSum
             TileActionResultModel result = board.getTile(player.getPosition()).action(player);
-            if (result.getPlayerPosition() == -1) {
-                // Player landed on "go to jail" and their position should now be in jail
-                player.enterJail();
-                movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false);
-                endTurnUseCase.forceEndTurn(player);
+            if(result instanceof DrawCardTileResultModel) {
+                // Player landed on draw card tile
+                // tile name, tile description, absolute position, player, chance or community
+                if((DrawCardTileResultModel)result.getPosition != player.getPosition()){
+                    // Card moved player
+                    movePlayerOutputBoundary.showCardDraw(player, result.getTileName, result.getTileDescription,
+                            result.type.equals("Chance"));
+                    moveToPosition(player, result.getPosition);
+                } else {
+                    movePlayerOutputBoundary.showCardDraw(player, result.getTileName, result.getTileDescription,
+                            result.type.equals("Chance"));
+                }
             } else {
-                // Normal move
-                movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), doubleRoll);
+                // Player didn't land on a draw card tile
+                Tile tile = board.getTile(player.getPosition());
+                if (result.getPlayerPosition() == -1) {
+                    // Player landed on "go to jail" and their position should now be in jail
+                    player.enterJail();
+                    movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                            result.getFlavorText());
+                    endTurnUseCase.forceEndTurn(player);
+                } else {
+                    // Normal move
+                    movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), doubleRoll,
+                            result.getFlavorText());
+                    if (tile instanceof Property) {
+                        if ((Property) (tile).getOwner() == null) {
+                            movePlayerOutputBoundary.showBuyableProperty(player, tile);
+                        }
+                    }
+                }
             }
         }
     }
