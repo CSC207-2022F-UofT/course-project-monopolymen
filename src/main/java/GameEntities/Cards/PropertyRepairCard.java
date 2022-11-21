@@ -12,11 +12,18 @@ public class PropertyRepairCard extends Card{
 
     protected PropertyRepairCard(String cardName, String cardDisplayName, boolean ownable,
                                  String flavourText, boolean chanceCard, int houseRepair, int hotelRepair) {
-        super(cardName, cardDisplayName, flavourText, ownable, chanceCard);
+        super(cardName, cardDisplayName, flavourText, chanceCard);
         this.hotelRepair = hotelRepair;
         this.houseRepair = houseRepair;
     }
 
+    /**
+     * Creates a loop that looks at each property the player owns and counts how many total houses
+     * and hotels the player has on their properties. Once the loop finishes counting how many houses
+     * and hotels the player has, it uses the hotelRepair and houseRepair attributes of the card to
+     * and multiplies the amount of
+     * @param player
+     */
     @Override
     public void cardAction(Player player) {
         int totalHouses = 0;
@@ -26,7 +33,7 @@ public class PropertyRepairCard extends Card{
 //            totalHouses = totalHouses + pProperties.get(i).getHouses();
 //            totalHotels = totalHotels + pProperties.get(i).getHotels();
 //        } the getHouses and getHotels methods haven't been made yet
-        player.addMoney(totalHotels * -hotelRepair);
-        player.addMoney(totalHouses * -houseRepair);
+        player.subtractMoney(totalHotels * -this.hotelRepair);
+        player.subtractMoney(totalHouses * -this.houseRepair);
     }
 }
