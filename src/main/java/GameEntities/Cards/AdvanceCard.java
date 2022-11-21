@@ -1,6 +1,8 @@
 package GameEntities.Cards;
 
+import  GameEntities.Board;
 import GameEntities.Player;
+//import GameEntities.TurnUserCases.MovePlayerUseCase;
 
 public class AdvanceCard extends Card{
     private int tileNumber;
@@ -13,27 +15,24 @@ public class AdvanceCard extends Card{
 
     protected AdvanceCard(String cardName, String cardDisplayName, String flavourText,
                           boolean ownable, boolean chanceCard) {
-        super(cardName, cardDisplayName, flavourText, ownable, chanceCard);
+        super(cardName, cardDisplayName, flavourText, chanceCard);
     }
 
 
-    @Override
     public void cardAction(Player player) {
+        /**
         int player_pos = player.getPosition();
         if(this.getCardName().equals("GoToJail")){
             player.enterJail();
         }
-        else if (player_pos <= this.tileNumber){
-            player.updatePosition(this.tileNumber - player_pos);
+        else{
+            MovePlayerUseCase movePlayer = new MovePlayerUseCase();
+            movePlayer.startAction()
+
         }
-        else if(player_pos > this.tileNumber && collectGo){
-            player.updatePosition((39 - player_pos) + this.tileNumber);
-        }
-        else if(player_pos> this.tileNumber && !collectGo){
-            player.updatePosition((39 - player_pos) + this.tileNumber);
-            player.addMoney(-200);
-        }
+         */
 
     }
+
 
 }
