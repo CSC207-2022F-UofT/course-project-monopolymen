@@ -55,5 +55,4 @@ public class Board {
 
         return jailTilePosition;
     }
-
 }
