@@ -7,7 +7,7 @@ import GameEntities.Player;
  */
 public interface EndTurnInputBoundary {
     /**
-     * End the player's turn.
+     * End the player's turn. The GameState class will handle the logic and presenter call.
      * To be used only when a player chooses to end their turn.
      * <dt><b>Precondition:</b><dd>
      * The current turn is of the player in the argument
@@ -16,7 +16,7 @@ public interface EndTurnInputBoundary {
     public void endTurn(Player player);
 
     /**
-     * Forcefully End the player's turn.
+     * Forcefully End the player's turn. The GameState class will handle the logic and presenter call.
      * To be used only when an event in the game ends the players turn, for example player landing on "Go to jail" tile.
      * <dt><b>Precondition:</b><dd>
      * The current turn is of the player in the argument
