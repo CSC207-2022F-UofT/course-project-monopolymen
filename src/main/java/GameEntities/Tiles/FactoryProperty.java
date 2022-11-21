@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Factory {
+public class FactoryProperty {
     /**
      * Extract and put each property into an ArrayList
      *
