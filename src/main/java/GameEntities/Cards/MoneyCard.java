@@ -8,7 +8,7 @@ public class MoneyCard extends Card{
     //or lose money
     protected MoneyCard(String cardName, String cardDisplayName, String flavourText, boolean ownable,
                         boolean chanceCard, int money) {
-        super(cardName, cardDisplayName, flavourText, ownable, chanceCard);
+        super(cardName, cardDisplayName, flavourText, chanceCard);
 
         this.money = money;
     }
@@ -16,6 +16,12 @@ public class MoneyCard extends Card{
 
     @Override
     public void cardAction(Player player) {
-        player.addMoney(this.money);
+        if(0 <= this.money) {
+            player.addMoney(this.money);
+        }
+        else {
+            player.subtractMoney(this.money);
+        }
+
     }
 }
