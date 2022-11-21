@@ -13,7 +13,7 @@ public class AdvanceCard extends Card{
     private boolean collectGo; //Some cards let you collect money when you pass go if you pass by go,
     //others don't.
 
-    protected AdvanceCard(String cardName, String cardDisplayName, String flavourText,
+    public AdvanceCard(String cardName, String cardDisplayName, String flavourText,
                           boolean ownable, boolean chanceCard) {
         super(cardName, cardDisplayName, flavourText, chanceCard);
     }

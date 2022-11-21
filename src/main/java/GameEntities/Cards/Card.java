@@ -11,7 +11,7 @@ public abstract class Card {
 
     private final boolean chanceCard; //If false, then it's a community card.
 
-    protected Card(String cardName, String cardDisplayName, String flavourText, boolean chanceCard) {
+    public Card(String cardName, String cardDisplayName, String flavourText, boolean chanceCard) {
         this.cardName = cardName;
         this.cardDisplayName = cardDisplayName;
         this.flavourText = flavourText;
