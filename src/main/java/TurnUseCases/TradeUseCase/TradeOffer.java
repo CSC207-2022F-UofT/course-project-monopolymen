@@ -57,7 +57,7 @@ public class TradeOffer {
         this.propertiesReceived = propertiesReceived;
         this.player1 = player1;
         this.player2 = player2;
-        this.isValid = CheckIsValid();
+        this.isValid = checkIsValid();
 
     }
 
@@ -66,17 +66,17 @@ public class TradeOffer {
      *
      * @return Whether this TradeOffer is valid or not.
      */
-    public boolean CheckIsValid(){
+    public boolean checkIsValid(){
         if(tradeMoney > 0 && player1.getMoney() < tradeMoney){
             return false;
         } else if (tradeMoney < 0 && player2.getMoney() < - tradeMoney) {
             return false;
-        } else if (!CheckPropertiesOffered()) {
+        } else if (!checkPropertiesOffered()) {
             return false;
-        } else if (!CheckPropertiesReceived()) {
+        } else if (!checkPropertiesReceived()) {
             return false;
         } else {
-            return CheckJailCard();
+            return checkJailCard();
         }
 
     }
@@ -86,7 +86,7 @@ public class TradeOffer {
      *
      * @return whether player1 owns all the properties offered or not.
      */
-    public boolean CheckPropertiesOffered(){
+    public boolean checkPropertiesOffered(){
         for (Property p : propertiesOffered){
             if(!player1.getProperties().contains(p)){
                 return false;
@@ -101,7 +101,7 @@ public class TradeOffer {
      *
      * @return whether player2 owns all the properties offered or not.
      */
-    public boolean CheckPropertiesReceived(){
+    public boolean checkPropertiesReceived(){
         for (Property p : propertiesReceived){
             if(!player2.getProperties().contains(p)){
                 return false;
@@ -117,7 +117,7 @@ public class TradeOffer {
      *
      * @return whether the player offering the jail card has one.
      */
-    public boolean CheckJailCard(){
+    public boolean checkJailCard(){
         if (getJailCard() > 0 && !player1.getGetOutOfJailCard()){
             return false;
         } else return !(getJailCard() < 0 && !player2.getGetOutOfJailCard());

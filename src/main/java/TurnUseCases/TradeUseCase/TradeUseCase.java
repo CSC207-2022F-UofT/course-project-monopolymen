@@ -30,7 +30,7 @@ public class TradeUseCase implements  TradeInputBoundary{
      * @return the list of potential players
      */
     @Override
-    public ArrayList<Player> ChoosePlayer(ArrayList<Player> listOfPlayers, Player player) {
+    public ArrayList<Player> choosePlayer(ArrayList<Player> listOfPlayers, Player player) {
 
         ArrayList<Player> listOfPotentialPlayers = (ArrayList<Player>) listOfPlayers.clone();
         listOfPotentialPlayers.remove(player);
@@ -52,7 +52,7 @@ public class TradeUseCase implements  TradeInputBoundary{
      * @return a TradeOption object that contains the potential options for the trade.
      */
     @Override
-    public TradeOption GetTradeOptions(Player player1, Player player2) {
+    public TradeOption getTradeOptions(Player player1, Player player2) {
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
                 player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
                 player1.getProperties(), player2.getProperties());
@@ -71,7 +71,7 @@ public class TradeUseCase implements  TradeInputBoundary{
      * @param player2 the player receiving the trade offer
      */
     @Override
-    public void MakeOffer(TradeOffer tradeOffer, Player player1, Player player2) {
+    public void makeOffer(TradeOffer tradeOffer, Player player1, Player player2) {
         if(tradeOffer.isValid()){
             presenter.showTradeOffer(tradeOffer, player2.getName() + ", do you accept this trade?");
         } else {
@@ -97,7 +97,7 @@ public class TradeUseCase implements  TradeInputBoundary{
      * @param tradeOffer the details of the trade.
      */
     @Override
-    public void GetResultOfTradeOffer(int option, Player player1, Player player2, TradeOffer tradeOffer) {
+    public void getResultOfTradeOffer(int option, Player player1, Player player2, TradeOffer tradeOffer) {
 
         if(option == 1){
             ExecuteOffer(player1, player2, tradeOffer);

@@ -59,7 +59,7 @@ public class TradeUseCaseTest {
         potentialPlayers.add(player2);
 
 
-        ArrayList<Player> actual = tradeUseCase.ChoosePlayer(listOfPlayers, player1);
+        ArrayList<Player> actual = tradeUseCase.choosePlayer(listOfPlayers, player1);
         assertEquals(potentialPlayers, actual);
 
     }
@@ -70,7 +70,7 @@ public class TradeUseCaseTest {
                 player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
                 player1.getProperties(), player2.getProperties());
 
-        TradeOption actual = tradeUseCase.GetTradeOptions(player1, player2);
+        TradeOption actual = tradeUseCase.getTradeOptions(player1, player2);
 
         assertEquals(tradeOption.getPlayer1Money(), actual.getPlayer1Money());
         assertEquals(tradeOption.getPlayer2Money(), actual.getPlayer2Money());
@@ -88,7 +88,7 @@ public class TradeUseCaseTest {
         TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
-        tradeUseCase.MakeOffer(tradeOffer, player1, player2);
+        tradeUseCase.makeOffer(tradeOffer, player1, player2);
 
     }
 
@@ -101,7 +101,7 @@ public class TradeUseCaseTest {
         TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
-        tradeUseCase.MakeOffer(tradeOffer, player1, player2);
+        tradeUseCase.makeOffer(tradeOffer, player1, player2);
 
     }
 
@@ -114,7 +114,7 @@ public class TradeUseCaseTest {
         TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
-        tradeUseCase.GetResultOfTradeOffer(1, player1, player2, tradeOffer);
+        tradeUseCase.getResultOfTradeOffer(1, player1, player2, tradeOffer);
 
     }
 
@@ -127,7 +127,7 @@ public class TradeUseCaseTest {
         TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
-        tradeUseCase.GetResultOfTradeOffer(2, player1, player2, tradeOffer);
+        tradeUseCase.getResultOfTradeOffer(2, player1, player2, tradeOffer);
 
     }
 
@@ -140,7 +140,7 @@ public class TradeUseCaseTest {
         TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
-        tradeUseCase.GetResultOfTradeOffer(3, player1, player2, tradeOffer);
+        tradeUseCase.getResultOfTradeOffer(3, player1, player2, tradeOffer);
 
     }
 
@@ -153,7 +153,7 @@ public class TradeUseCaseTest {
         TradeOffer tradeOffer = new TradeOffer(100, 0,
                 propertiesOffered, propertiesReceived, player1, player2);
 
-        tradeUseCase.GetResultOfTradeOffer(4, player1, player2, tradeOffer);
+        tradeUseCase.getResultOfTradeOffer(4, player1, player2, tradeOffer);
 
     }
 
