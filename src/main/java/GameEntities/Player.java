@@ -167,6 +167,15 @@ public class Player {
     }
 
     /**
+     * Set the position of the player to a given position
+     *
+     * @param position      the position that the player is being moved to
+     */
+    public void setPosition(int position){
+        this.position = position;
+    }
+
+    /**
      * Checks if a player has a get out of jail free card
      *
      * @return      True if the player owns a get out of jail free card
