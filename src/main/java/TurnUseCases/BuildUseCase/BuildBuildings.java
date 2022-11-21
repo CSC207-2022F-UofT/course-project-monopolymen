@@ -4,7 +4,6 @@ import GameEntities.Player;
 import GameEntities.Tiles.ColorPropertyTile;
 import GameEntities.Tiles.Property;
 
-import java.lang.Math;
 import java.util.ArrayList;
 
 
@@ -28,7 +27,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         if(property.isMortgaged()){
             return false;
         }
-        if(!property.getClass().getName().equals("GameEntities.Tiles.ColorPropertyTile")){
+        if(!(property instanceof ColorPropertyTile)){
             return false;
         }
         // Selecting ColorPropertyTile from player's properties.
@@ -124,7 +123,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         if(!player.ownsProperty(property)){
             return false;
         }
-        if(!property.getClass().getName().equals("GameEntities.Tiles.ColorPropertyTile")){
+        if(!(property instanceof ColorPropertyTile)){
             return false;
         }
         ArrayList<ColorPropertyTile> ColorProperties = new ArrayList<ColorPropertyTile>();
@@ -164,7 +163,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         if (isSellable(player, property) && property.getHotel() == 0){
             property.subtractHouse();
             int value = 0;
-            value = 0.5*property.getBuildingCost;
+            value = 0.5*property.getBuildingCost();
             player.addMoney(value);
             String text = player.getName() + "sold a house on " + property.getTileName();
             presenter.showSellBuilding(player, property, text);
@@ -185,7 +184,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         if (isSellable(player, property) && property.getHotel() > 0){
             property.subtractHotel();
             int value = 0;
-            value = 0.5*property.getBuildingCost;
+            value = 0.5*property.getBuildingCost();
             player.addMoney(value);
             String text = player.getName() + "sold a hotel on " + property.getTileName();
             presenter.showSellBuilding(player, property, text);
