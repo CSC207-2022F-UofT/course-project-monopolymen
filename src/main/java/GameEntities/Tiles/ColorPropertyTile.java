@@ -66,7 +66,12 @@ public class ColorPropertyTile extends Property{
      */
     @Override
     public TileActionResultModel action(Player player) {
-        return null;
+        if (!isOwned()){
+            return new TileActionResultModel("Would you Like to Purchase " + getTileDisplayName() + " for" + getPurchasePrice() + " ?" , player, player.getPosition());
+        }
+        else{
+            return new TileActionResultModel("You Paid" + getRent(player, propertyList) + " to" + getOwner(), player, player.getPosition());
+        }
     }
 
     public int getBuildingCost() {
