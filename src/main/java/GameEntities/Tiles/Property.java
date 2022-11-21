@@ -16,17 +16,20 @@ public abstract class Property extends Tile {
     private Player owner;
 
     /**
-     * Construct a Property (Ownable Monopoly Tile that can be purchased and rented)
-     * Sets the unmortgage value to the full mortgage value.
+     * Construct a Property (Ownable Monopoly Tile that can be purchased and rented).
+     * In this case, the unMortgage value and mortgage value are the same.
      *
      * @param propertyName        The internal string name representing this tile
      *                            (intended to not contain spaces or other special characters).
      * @param propertyDisplayName The string name displayed to the user. This may have special characters.
      * @param purchasePrice       The price to purchase this property
-     * @param mortgageValue       The value of this property for mortgage purposes
+     * @param mortgageValue       The value of this property for mortgage purposes (the money received for mortgaging
+     *                            and the money required to unMortgage this Property)
      * @see GameEntities.Tiles.Tile
      */
     public Property(String propertyName, String propertyDisplayName, int purchasePrice, int mortgageValue) {
+        // Implementation note, I kept this constructor for potential compatibility
+        // considering unMortgageValue was added to the Property class late.
         this(propertyName, propertyDisplayName, purchasePrice, mortgageValue, mortgageValue);
     }
 
@@ -37,8 +40,8 @@ public abstract class Property extends Tile {
      *                            (intended to not contain spaces or other special characters).
      * @param propertyDisplayName The string name displayed to the user. This may have special characters.
      * @param purchasePrice       The price to purchase this property
-     * @param mortgageValue       The value of this property for Mortgaging purposes
-     * @param unMortgageValue     The value of this property for unMortgaging purposes
+     * @param mortgageValue       The value of this property for Mortgaging purposes (the money received for mortgaging)
+     * @param unMortgageValue     The value of this property for unMortgaging purposes (the money required to unMortgage)
      * @see GameEntities.Tiles.Tile
      */
     public Property(String propertyName, String propertyDisplayName, int purchasePrice, int mortgageValue,
