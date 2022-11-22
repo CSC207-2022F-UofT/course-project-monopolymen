@@ -2,7 +2,7 @@ package GameEntities.Cards;
 import GameEntities.Player;
 
 public class GetOutOfJailCard  extends Card{
-    public GetOutOfJailCard(String cardName, String cardDisplayName, String flavourText, boolean ownable, boolean chanceCard) {
+    public GetOutOfJailCard(String cardName, String cardDisplayName, String flavourText, boolean chanceCard) {
         super(cardName, cardDisplayName, flavourText, chanceCard);
     }
 
