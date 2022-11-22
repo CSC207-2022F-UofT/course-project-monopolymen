@@ -10,7 +10,7 @@ public class PropertyRepairCard extends Card{
     private int houseRepair;
     private int hotelRepair;
 
-    public PropertyRepairCard(String cardName, String cardDisplayName, boolean ownable,
+    public PropertyRepairCard(String cardName, String cardDisplayName,
                                  String flavourText, boolean chanceCard, int houseRepair, int hotelRepair) {
         super(cardName, cardDisplayName, flavourText, chanceCard);
         this.hotelRepair = hotelRepair;

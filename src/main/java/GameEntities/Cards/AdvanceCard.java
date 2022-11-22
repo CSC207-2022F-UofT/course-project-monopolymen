@@ -14,7 +14,7 @@ public class AdvanceCard extends Card{
     //others don't.
 
     public AdvanceCard(String cardName, String cardDisplayName, String flavourText,
-                          boolean ownable, boolean chanceCard) {
+                       boolean chanceCard) {
         super(cardName, cardDisplayName, flavourText, chanceCard);
     }
 
