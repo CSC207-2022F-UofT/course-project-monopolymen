@@ -54,7 +54,7 @@ public class TradeUseCase implements  TradeInputBoundary{
     @Override
     public TradeOption getTradeOptions(Player player1, Player player2) {
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
-                player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
+                player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
                 player1.getProperties(), player2.getProperties());
 
         presenter.showTradeOptions(tradeOption, "Please choose what you want to trade.");
