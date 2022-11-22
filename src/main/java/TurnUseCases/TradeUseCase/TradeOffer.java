@@ -118,9 +118,9 @@ public class TradeOffer {
      * @return whether the player offering the jail card has one.
      */
     public boolean checkJailCard(){
-        if (getJailCard() > 0 && !player1.getGetOutOfJailCard()){
+        if (getJailCard() > 0 && !player1.hasGetOutofJailFreeCard()){
             return false;
-        } else return !(getJailCard() < 0 && !player2.getGetOutOfJailCard());
+        } else return !(getJailCard() < 0 && !player2.hasGetOutofJailFreeCard());
     }
 
     public int getTradeMoney() {

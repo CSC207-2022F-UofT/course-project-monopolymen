@@ -56,7 +56,7 @@ public class TradeOptionTest {
     @Test(timeout = 100)
     public void getPlayer1Money() {
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
-                player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
+                player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
                 player1.getProperties(), player2.getProperties());
 
         assertEquals(1500, tradeOption.getPlayer1Money());
@@ -65,7 +65,7 @@ public class TradeOptionTest {
     @Test
     public void getPlayer2Money() {
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
-                player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
+                player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
                 player1.getProperties(), player2.getProperties());
 
         assertEquals(1500, tradeOption.getPlayer2Money());
@@ -74,7 +74,7 @@ public class TradeOptionTest {
     @Test(timeout = 100)
     public void getPlayer1Properties() {
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
-                player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
+                player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
                 player1.getProperties(), player2.getProperties());
         ArrayList<Property> actualProperties = tradeOption.getPlayer1Properties();
         assertEquals(p1Properties.get(0), actualProperties.get(0));
@@ -83,7 +83,7 @@ public class TradeOptionTest {
         @Test
         public void getPlayer2Properties () {
             TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
-                    player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
+                    player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
                     player1.getProperties(), player2.getProperties());
             ArrayList<Property> actualProperties = tradeOption.getPlayer2Properties();
             assertEquals(p2Properties.get(0), actualProperties.get(0));
@@ -95,17 +95,17 @@ public class TradeOptionTest {
         @Test
         public void getPlayer1JailCard() {
             TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
-                    player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
+                    player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
                     player1.getProperties(), player2.getProperties());
-            assertEquals(player1.getGetOutOfJailCard(), tradeOption.getPlayer1JailCard());
+            assertEquals(player1.hasGetOutofJailFreeCard(), tradeOption.getPlayer1JailCard());
         }
 
     @Test
     public void getPlayer2JailCard() {
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
-                player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
+                player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
                 player1.getProperties(), player2.getProperties());
-        assertEquals(player2.getGetOutOfJailCard(), tradeOption.getPlayer2JailCard());
+        assertEquals(player2.hasGetOutofJailFreeCard(), tradeOption.getPlayer2JailCard());
     }
 
 
