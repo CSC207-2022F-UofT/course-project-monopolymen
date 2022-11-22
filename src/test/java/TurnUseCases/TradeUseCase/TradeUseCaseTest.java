@@ -39,11 +39,11 @@ public class TradeUseCaseTest {
         player1.sellProperty(otherRoad);
         player2.sellProperty(otherRoad);
 
-        if(player1.getGetOutOfJailCard()){
+        if(player1.hasGetOutofJailFreeCard()){
             player1.removeGetOutOfJailCard();
         }
 
-        if(player2.getGetOutOfJailCard()){
+        if(player2.hasGetOutofJailFreeCard()){
             player2.removeGetOutOfJailCard();
         }
 
@@ -67,7 +67,7 @@ public class TradeUseCaseTest {
     @Test
     public void getTradeOptions() {
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
-                player1.getGetOutOfJailCard(), player2.getGetOutOfJailCard(),
+                player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
                 player1.getProperties(), player2.getProperties());
 
         TradeOption actual = tradeUseCase.getTradeOptions(player1, player2);
@@ -177,8 +177,8 @@ public class TradeUseCaseTest {
         assertEquals(1400, player2.getMoney());
         assertEquals(player1Properties, player1.getProperties());
         assertEquals(player2Properties, player2.getProperties());
-        assertFalse(player1.getGetOutOfJailCard());
-        assertFalse(player2.getGetOutOfJailCard());
+        assertFalse(player1.hasGetOutofJailFreeCard());
+        assertFalse(player2.hasGetOutofJailFreeCard());
 
 
 
@@ -206,8 +206,8 @@ public class TradeUseCaseTest {
         assertEquals(1400, player2.getMoney());
         assertEquals(player1Properties, player1.getProperties());
         assertEquals(player2Properties, player2.getProperties());
-        assertFalse(player1.getGetOutOfJailCard());
-        assertTrue(player2.getGetOutOfJailCard());
+        assertFalse(player1.hasGetOutofJailFreeCard());
+        assertTrue(player2.hasGetOutofJailFreeCard());
 
 
 
@@ -235,8 +235,8 @@ public class TradeUseCaseTest {
         assertEquals(1400, player2.getMoney());
         assertEquals(player1Properties, player1.getProperties());
         assertEquals(player2Properties, player2.getProperties());
-        assertFalse(player2.getGetOutOfJailCard());
-        assertTrue(player1.getGetOutOfJailCard());
+        assertFalse(player2.hasGetOutofJailFreeCard());
+        assertTrue(player1.hasGetOutofJailFreeCard());
 
 
 
