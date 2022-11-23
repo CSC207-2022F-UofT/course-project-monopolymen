@@ -45,7 +45,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
                 result.getFlavorText());
         if(tile instanceof Property) {
-            if((Property)(tile).getOwner() == null) {
+            if(((Property) tile).getOwner() == null) {
                 movePlayerOutputBoundary.showBuyableProperty(player, tile);
             }
         }
@@ -83,21 +83,21 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                     if(position == -1) {
                         // Player is moving to jail, does not collect "GO" tile money
                         player.enterJail();
-                        movePlayerOutputBoundary.showCardDraw(player, result.getTileName, result.getTileDescription,
-                                result.type.equals("Chance"));
+                        movePlayerOutputBoundary.showCardDraw(player, result.getTileName(), result.getTileDescription(),
+                                result.getIsChance());
                         movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
                                 "You are being sent to jail.");
                         endTurnUseCase.forceEndTurn(player);
                     } else {
                         // Normal move player card
-                        movePlayerOutputBoundary.showCardDraw(player, result.getTileName, result.getTileDescription,
-                                result.type.equals("Chance"));
+                        movePlayerOutputBoundary.showCardDraw(player, result.getTileName(), result.getTileDescription(),
+                                result.getIsChance());
                         moveToPosition(player, result.getPlayerPosition());
                     }
                 } else {
                     // Card didn't move player
-                    movePlayerOutputBoundary.showCardDraw(player, result.getTileName, result.getTileDescription,
-                            result.type.equals("Chance"));
+                    movePlayerOutputBoundary.showCardDraw(player, result.getTileName(), result.getTileDescription(),
+                            result.getIsChance());
                 }
             } else {
                 // Player didn't land on a draw card tile
@@ -113,7 +113,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                     movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), doubleRoll,
                             result.getFlavorText());
                     if (tile instanceof Property) {
-                        if ((Property) (tile).getOwner() == null) {
+                        if (((Property) tile).getOwner() == null) {
                             movePlayerOutputBoundary.showBuyableProperty(player, tile);
                         }
                     }
