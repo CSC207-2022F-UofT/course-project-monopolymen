@@ -18,6 +18,12 @@ public class AdvanceCard extends Card{
         super(cardName, cardDisplayName, flavourText, chanceCard);
     }
 
+    @Override
+    public CardActionResultModel action(Player player) {
+        CardActionResultModel result = new CardActionResultModel(getCardDescription(), player, player.getPosition());
+        return result;
+    }
+
 
     public void cardAction(Player player) {
         /**
