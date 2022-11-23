@@ -77,7 +77,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
             TileActionResultModel result = board.getTile(player.getPosition()).action(player);
             if(result instanceof DrawCardTileResultModel) {
                 // Player landed on draw card tile
-                int position = (DrawCardTileResultModel)result.getPosition();
+                int position = (DrawCardTileResultModel)result.getPlayerPosition();
                 if(position != player.getPosition()){
                     // Card moved player
                     if(position == -1) {
@@ -92,7 +92,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                         // Normal move player card
                         movePlayerOutputBoundary.showCardDraw(player, result.getTileName, result.getTileDescription,
                                 result.type.equals("Chance"));
-                        moveToPosition(player, result.getPosition);
+                        moveToPosition(player, result.getPlayerPosition());
                     }
                 } else {
                     // Card didn't move player
