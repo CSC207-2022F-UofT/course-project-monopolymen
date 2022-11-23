@@ -17,6 +17,12 @@ public class PropertyRepairCard extends Card{
         this.houseRepair = houseRepair;
     }
 
+    @Override
+    public CardActionResultModel action(Player player) {
+        CardActionResultModel result = new CardActionResultModel(getCardDescription(), player, player.getPosition());
+        return result;
+    }
+
     /**
      * Creates a loop that looks at each property the player owns and counts how many total houses
      * and hotels the player has on their properties. Once the loop finishes counting how many houses

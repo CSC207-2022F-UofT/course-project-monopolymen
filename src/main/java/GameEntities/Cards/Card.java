@@ -7,22 +7,28 @@ public abstract class Card {
 
     private final String cardDisplayName;
 
-    private final String flavourText;
+    private final String cardDescription;
 
     private final boolean chanceCard; //If false, then it's a community card.
 
     public Card(String cardName, String cardDisplayName, String flavourText, boolean chanceCard) {
         this.cardName = cardName;
         this.cardDisplayName = cardDisplayName;
-        this.flavourText = flavourText;
+        this.cardDescription = flavourText;
         this.chanceCard = chanceCard;
     }
+
+    public abstract CardActionResultModel action(Player player);
 
 
     public abstract void cardAction(Player player);
 
     public String getCardName() {
         return cardName;
+    }
+
+    public String getCardDescription() {
+        return cardDescription;
     }
 }
 
