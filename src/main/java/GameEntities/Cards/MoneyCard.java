@@ -16,12 +16,6 @@ public class MoneyCard extends Card{
 
     @Override
     public CardActionResultModel action(Player player) {
-        CardActionResultModel result = new CardActionResultModel(getCardDescription(), player, player.getPosition());
-        return result;
-    }
-
-    @Override
-    public void cardAction(Player player) {
         if(0 <= this.money) {
             player.addMoney(this.money);
         }
@@ -29,5 +23,7 @@ public class MoneyCard extends Card{
             player.subtractMoney(this.money);
         }
 
+        return new CardActionResultModel(getCardDescription(), player, player.getPosition(), getCardName());
     }
+
 }

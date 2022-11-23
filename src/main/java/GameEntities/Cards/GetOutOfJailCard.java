@@ -8,13 +8,8 @@ public class GetOutOfJailCard  extends Card{
 
     @Override
     public CardActionResultModel action(Player player) {
-        CardActionResultModel result = new CardActionResultModel(getCardDescription(), player, player.getPosition());
-        return result;
-    }
-
-    @Override
-    public void cardAction(Player player) {
         player.addGetOutOfJailCard();
-
+        return new CardActionResultModel(getCardDescription(), player, player.getPosition(), getCardName());
     }
+
 }

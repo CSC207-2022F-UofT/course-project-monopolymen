@@ -10,34 +10,23 @@ public class AdvanceCard extends Card{
     private String tileName; //This is more for the benefit of the coder so they know what tile the
     //tile number refers to. May Remove later.
 
-    private boolean collectGo; //Some cards let you collect money when you pass go if you pass by go,
-    //others don't.
-
     public AdvanceCard(String cardName, String cardDisplayName, String flavourText,
-                       boolean chanceCard) {
+                       boolean chanceCard, int tileNumber, String tileName) {
         super(cardName, cardDisplayName, flavourText, chanceCard);
+        this.tileNumber = tileNumber;
+        this.tileName = tileName;
     }
 
     @Override
-    public CardActionResultModel action(Player player) {
-        CardActionResultModel result = new CardActionResultModel(getCardDescription(), player, player.getPosition());
-        return result;
-    }
+    public CardActionResultModel action(Player player){return null;}
 
-
-    public void cardAction(Player player) {
-        /**
-        int player_pos = player.getPosition();
-        if(this.getCardName().equals("GoToJail")){
-            player.enterJail();
+    public CardActionResultModel action(Player player, Board board) {
+        if(tileName.equals("GoToJail")){
+            player.enterJail(board);
+            return new CardActionResultModel(getCardDescription(), player, -1, getCardName());
         }
-        else{
-            MovePlayerUseCase movePlayer = new MovePlayerUseCase();
-            movePlayer.startAction()
 
-        }
-         */
-
+        return new CardActionResultModel(getCardDescription(), player, tileNumber, getCardName());
     }
 
 
