@@ -19,10 +19,6 @@ public abstract class Card {
     }
 
     public abstract CardActionResultModel action(Player player);
-
-
-    public abstract void cardAction(Player player);
-
     public String getCardName() {
         return cardName;
     }

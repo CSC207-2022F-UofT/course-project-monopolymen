@@ -19,7 +19,18 @@ public class PropertyRepairCard extends Card{
 
     @Override
     public CardActionResultModel action(Player player) {
-        CardActionResultModel result = new CardActionResultModel(getCardDescription(), player, player.getPosition());
+        int totalHouses = 0;
+        int totalHotels = 0;
+        ArrayList<Property> pProperties = player.getProperties();
+//        for(int i = 0; i < pProperties.size(); i++){
+//            totalHouses = totalHouses + pProperties.get(i).getHouses();
+//            totalHotels = totalHotels + pProperties.get(i).getHotels();
+//        } the getHouses and getHotels methods haven't been made yet
+        player.subtractMoney(totalHotels * -this.hotelRepair);
+        player.subtractMoney(totalHouses * -this.houseRepair);
+
+        CardActionResultModel result = new CardActionResultModel(getCardDescription(), player, player.getPosition(),
+                getCardName());
         return result;
     }
 
@@ -30,16 +41,5 @@ public class PropertyRepairCard extends Card{
      * and multiplies the amount of
      * @param player
      */
-    @Override
-    public void cardAction(Player player) {
-        int totalHouses = 0;
-        int totalHotels = 0;
-        ArrayList<Property> pProperties = player.getProperties();
-//        for(int i = 0; i < pProperties.size(); i++){
-//            totalHouses = totalHouses + pProperties.get(i).getHouses();
-//            totalHotels = totalHotels + pProperties.get(i).getHotels();
-//        } the getHouses and getHotels methods haven't been made yet
-        player.subtractMoney(totalHotels * -this.hotelRepair);
-        player.subtractMoney(totalHouses * -this.houseRepair);
-    }
+
 }
