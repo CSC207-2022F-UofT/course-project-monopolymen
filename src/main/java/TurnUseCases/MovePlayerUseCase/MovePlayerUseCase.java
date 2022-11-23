@@ -77,13 +77,25 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
             TileActionResultModel result = board.getTile(player.getPosition()).action(player);
             if(result instanceof DrawCardTileResultModel) {
                 // Player landed on draw card tile
-                // tile name, tile description, absolute position, player, chance or community
-                if((DrawCardTileResultModel)result.getPosition != player.getPosition()){
+                int position = (DrawCardTileResultModel)result.getPosition();
+                if(position != player.getPosition()){
                     // Card moved player
-                    movePlayerOutputBoundary.showCardDraw(player, result.getTileName, result.getTileDescription,
-                            result.type.equals("Chance"));
-                    moveToPosition(player, result.getPosition);
+                    if(position == -1) {
+                        // Player is moving to jail, does not collect "GO" tile money
+                        player.enterJail();
+                        movePlayerOutputBoundary.showCardDraw(player, result.getTileName, result.getTileDescription,
+                                result.type.equals("Chance"));
+                        movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                                "You are being sent to jail.");
+                        endTurnUseCase.forceEndTurn(player);
+                    } else {
+                        // Normal move player card
+                        movePlayerOutputBoundary.showCardDraw(player, result.getTileName, result.getTileDescription,
+                                result.type.equals("Chance"));
+                        moveToPosition(player, result.getPosition);
+                    }
                 } else {
+                    // Card didn't move player
                     movePlayerOutputBoundary.showCardDraw(player, result.getTileName, result.getTileDescription,
                             result.type.equals("Chance"));
                 }
