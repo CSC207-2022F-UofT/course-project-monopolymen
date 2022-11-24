@@ -3,6 +3,8 @@ package TurnUseCases.MortgageUseCase;
 import GameEntities.Player;
 import GameEntities.Tiles.ColorPropertyTile;
 import GameEntities.Tiles.Property;
+import GameEntities.Tiles.RailroadTile;
+import GameEntities.Tiles.UtilityTile;
 
 /**
  * All methods related to mortgage.
@@ -10,14 +12,34 @@ import GameEntities.Tiles.Property;
 public class MortgageProperty implements MortgagePropertyInputBoundary{
 
     /**
-     * Player mortgages property
+     * Player mortgages property.
      *
      * @param player the player who wants mortgages property.
      * @param property the property which player wants to mortgages.
      * @param presenter presenter which provides info for players.
      */
     @Override
-    public void mortgage(Player player, Property property, MortgagePropertyOutputBoundary presenter){
+    public void mortgage(Player player, UtilityTile property, MortgagePropertyOutputBoundary presenter){
+        if (player.ownsProperty(property)) {
+            player.addMoney(property.mortgage());
+            int mortgageValue = property.getMortgageValue();
+            String text = player.getName() + "mortgaged " + property.getTileName() + "and get $" + mortgageValue;
+            presenter.showMortgageProperty(player, property, text);
+        } else {
+            String text = player.getName() + "cannot mortgage " + property.getTileName();
+            presenter.showMortgageProperty(player, property, text);
+        }
+    }
+
+    /**
+     * Overloading method mortgage. Player mortgages property.
+     *
+     * @param player the player who wants mortgages property.
+     * @param property the property which player wants to mortgages.
+     * @param presenter presenter which provides info for players.
+     */
+    @Override
+    public void mortgage(Player player, RailroadTile property, MortgagePropertyOutputBoundary presenter){
         if (player.ownsProperty(property)) {
             player.addMoney(property.mortgage());
             int mortgageValue = property.getMortgageValue();
