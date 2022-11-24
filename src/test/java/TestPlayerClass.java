@@ -31,7 +31,7 @@ public class TestPlayerClass {
         assertEquals(testPlayer.getTurnsInJail(), 0);
         testPlayer.resetTurnInJail();
         assertEquals(testPlayer.getTurnsInJail(), -1);
-        testPlayer.addTurnInJail();
+        testPlayer.addGetOutOfJailCard();
         assertTrue(testPlayer.hasGetOutofJailFreeCard());
         testPlayer.removeGetOutOfJailCard();
         assertFalse(testPlayer.hasGetOutofJailFreeCard());
