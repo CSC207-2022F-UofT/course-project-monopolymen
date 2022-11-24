@@ -20,10 +20,8 @@ public interface MovePlayerOutputBoundary {
      * @param player The player object the action is being performed on
      * @param playerPosition The player's position
      * @param tilePassResultModel The data model of what happens when a player passes the tile
-     * @param flavorText The string showing a description of the pass
      */
-    public void showResultOfPass(Player player, int playerPosition, TilePassResultModel tilePassResultModel,
-                                 String flavorText);
+    public void showResultOfPass(Player player, int playerPosition, TilePassResultModel tilePassResultModel);
 
     /**
      * Shows the roll the player made
@@ -46,4 +44,11 @@ public interface MovePlayerOutputBoundary {
      * @param isChance If the card is a chance or community card
      */
     public void showCardDraw(Player player, String cardName, String cardDescription, boolean isChance);
+
+    /**
+     * Shows that the property is purchasable
+     * @param player The player object the action is being performed on
+     * @param tile The tile the player landed on
+     */
+    public void showBuyableProperty(Player player, Tile tile);
 }
