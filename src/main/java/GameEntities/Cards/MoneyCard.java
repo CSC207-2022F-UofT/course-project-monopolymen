@@ -23,7 +23,8 @@ public class MoneyCard extends Card{
             player.subtractMoney(this.money);
         }
 
-        return new CardActionResultModel(getCardDescription(), player, player.getPosition(), getCardName());
+        return new CardActionResultModel(getCardDescription(), player, player.getPosition(), getCardName(),
+                isChanceCard());
     }
 
 }
