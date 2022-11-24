@@ -7,6 +7,8 @@ public class CardActionResultModel extends TileActionResultModel{
 
     private final String cardName;
 
+    private final boolean isChance;
+
     /**
      * Construct an object that contains data for the result of a game tile's action
      *
@@ -14,8 +16,10 @@ public class CardActionResultModel extends TileActionResultModel{
      * @param player         the player that the action is being performed on
      * @param playerPosition the integer describing the current position of the player after the action
      */
-    public CardActionResultModel(String flavorText, Player player, int playerPosition, String cardName) {
+    public CardActionResultModel(String flavorText, Player player, int playerPosition, String cardName,
+                                 boolean isChance) {
         super(flavorText, player, playerPosition);
         this.cardName = cardName;
+        this.isChance = isChance;
     }
 }

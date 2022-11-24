@@ -23,10 +23,14 @@ public class AdvanceCard extends Card{
     public CardActionResultModel action(Player player, Board board) {
         if(tileName.equals("GoToJail")){
             player.enterJail(board);
-            return new CardActionResultModel(getCardDescription(), player, -1, getCardName());
+            return new CardActionResultModel(getCardDescription(), player, -1, getCardName(),
+                    isChanceCard());
+        } else if (tileNumber == -3) {
+            return new CardActionResultModel(getCardDescription(), player, player.getPosition() - tileNumber,
+                    getCardName(), isChanceCard());
         }
 
-        return new CardActionResultModel(getCardDescription(), player, tileNumber, getCardName());
+        return new CardActionResultModel(getCardDescription(), player, tileNumber, getCardName(), isChanceCard());
     }
 
 

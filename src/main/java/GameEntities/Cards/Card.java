@@ -26,5 +26,9 @@ public abstract class Card {
     public String getCardDescription() {
         return cardDescription;
     }
+
+    public boolean isChanceCard() {
+        return chanceCard;
+    }
 }
 

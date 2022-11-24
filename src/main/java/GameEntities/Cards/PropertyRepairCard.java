@@ -30,7 +30,7 @@ public class PropertyRepairCard extends Card{
         player.subtractMoney(totalHouses * -this.houseRepair);
 
         CardActionResultModel result = new CardActionResultModel(getCardDescription(), player, player.getPosition(),
-                getCardName());
+                getCardName(), isChanceCard());
         return result;
     }
 
