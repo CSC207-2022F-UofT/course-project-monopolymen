@@ -7,13 +7,6 @@ public class TestPlayerClass {
     int[] rentDummy = {100,200,300};
     RailroadTile testProperty = new RailroadTile("test", "test", 100, rentDummy, 100,200);
     @Test
-    public void LastRoll(){
-        //test the setters and getters for the LastRoll
-        testPlayer.setLastRoll(6,3);
-        int[] expected = {6,3};
-        assertEquals(testPlayer.getLastRoll(), expected);
-    }
-    @Test
     public void properties(){
         //test the methods that are related to the players owned property ArrayList
         testPlayer.addProperty(testProperty);
@@ -46,7 +39,6 @@ public class TestPlayerClass {
     @Test
     public void consecutiveDoubles(){
         testPlayer.updateConsecutiveDoubles(5, 3);
-        assertEquals(testPlayer.getConsecutiveDoubles(), 0);
         testPlayer.updateConsecutiveDoubles(5, 5);
         testPlayer.updateConsecutiveDoubles(5, 5);
         assertEquals(testPlayer.getConsecutiveDoubles(), 2);
