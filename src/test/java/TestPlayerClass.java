@@ -11,7 +11,8 @@ public class TestPlayerClass {
         //test the setters and getters for the LastRoll
         testPlayer.setLastRoll(6,3);
         int[] expected = {6,3};
-        assertEquals(testPlayer.getLastRoll(), expected);
+        assertEquals(testPlayer.getLastRoll()[0], 6);
+        assertEquals(testPlayer.getLastRoll()[1], 3);
     }
     @Test
     public void properties(){
@@ -38,7 +39,7 @@ public class TestPlayerClass {
         assertEquals(testPlayer.getTurnsInJail(), 0);
         testPlayer.resetTurnInJail();
         assertEquals(testPlayer.getTurnsInJail(), -1);
-        testPlayer.addTurnInJail();
+        testPlayer.addGetOutOfJailCard();
         assertTrue(testPlayer.hasGetOutofJailFreeCard());
         testPlayer.removeGetOutOfJailCard();
         assertFalse(testPlayer.hasGetOutofJailFreeCard());
