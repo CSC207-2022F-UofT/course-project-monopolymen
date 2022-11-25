@@ -11,14 +11,11 @@ public class Board {
     private  ArrayList<Card> communityCards;
     private ArrayList<Card> chanceCards;
     private ArrayList<Tile> tilesList;
+    
     public Board(ArrayList<Tile> tilesList) {
         ArrayList<Card> communityCards = new ArrayList<>();
         ArrayList<Card> chanceCards = new ArrayList<>();
 
-
-        this.communityCards = communityCards;
-        this.chanceCards = chanceCards;
-        this.tilesList = tilesList;
     }
 
     public void addCommunityCard(Card communityCard){communityCards.add(communityCard);}
