@@ -59,17 +59,17 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
                             // Player is moving to jail, does not collect "GO" tile money
                             // player.enterJail() is handled in the card's action
                             tryToGetOutOfJailOutputBoundary.showCardDraw(player, result.getCardName(),
-                                    result.getFlavorText(), result.getIsChance());
+                                    result.getFlavorText(), result.isChance());
                             sendToJail(player);
                         } else {
                             // Normal move player card
                             tryToGetOutOfJailOutputBoundary.showCardDraw(player, result.getCardName(),
-                                    result.getFlavorText(), result.getIsChance());
+                                    result.getFlavorText(), result.isChance());
                         }
                     } else {
                         // Card didn't move player
                         tryToGetOutOfJailOutputBoundary.showCardDraw(player, result.getCardName(),
-                                result.getFlavorText(), result.getIsChance());
+                                result.getFlavorText(), result.isChance());
                     }
                 } else {
                     // Player didn't land on a draw card tile
