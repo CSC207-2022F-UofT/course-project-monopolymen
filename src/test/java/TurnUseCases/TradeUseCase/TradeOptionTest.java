@@ -1,8 +1,11 @@
 package TurnUseCases.TradeUseCase;
 
+import GameEntities.Board;
 import GameEntities.Player;
+import GameEntities.Cards.*;
 import GameEntities.Tiles.ColorPropertyTile;
 import GameEntities.Tiles.Property;
+import GameEntities.Tiles.Tile;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +17,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TradeOptionTest {
-
-    Player player1 = new Player("player1", "player1", 1500);
+    ArrayList<Card> temp = new ArrayList<Card>();
+    ArrayList<Tile> temp1 = new ArrayList<Tile>();
+    Board board = new Board(temp, temp, temp1);
+    Player player1 = new Player("player1", "player1", 1500, board);
 
     int[] fakeRent = {};
 
@@ -23,7 +28,7 @@ public class TradeOptionTest {
             "Fake Street", 500, fakeRent, 0, 0, 0);
 
 
-    Player player2 = new Player("player2", "player2", 1500);
+    Player player2 = new Player("player2", "player2", 1500, board);
 
     ColorPropertyTile otherRoad = new ColorPropertyTile("blue", "otherRoad",
             "Other Road", 500, fakeRent, 0, 0, 0);
