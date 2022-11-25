@@ -107,18 +107,18 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                         // Player is moving to jail, does not collect "GO" tile money
                         // player.enterJail() is handled in the card's action
                         movePlayerOutputBoundary.showCardDraw(player, result.getCardName(), result.getFlavorText(),
-                                result.getIsChance());
+                                result.isChance());
                         sendToJail(player);
                     } else {
                         // Normal move player card
                         movePlayerOutputBoundary.showCardDraw(player, result.getCardName(), result.getFlavorText(),
-                                result.getIsChance());
+                                result.isChance());
                         moveToPosition(player, result.getPlayerPosition());
                     }
                 } else {
                     // Card didn't move player
                     movePlayerOutputBoundary.showCardDraw(player, result.getCardName(), result.getFlavorText(),
-                            result.getIsChance());
+                            result.isChance());
                 }
             } else {
                 // Player didn't land on a draw card tile
