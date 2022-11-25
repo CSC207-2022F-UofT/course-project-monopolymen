@@ -15,6 +15,10 @@ public class Board {
     public Board(ArrayList<Tile> tilesList) {
         ArrayList<Card> communityCards = new ArrayList<>();
         ArrayList<Card> chanceCards = new ArrayList<>();
+        
+        this.communityCards = communityCards;
+        this.chanceCards = chanceCards;
+        this.tilesList = tilesList;
 
     }
 
