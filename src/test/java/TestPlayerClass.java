@@ -10,7 +10,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class TestPlayerClass {
-    ArrayList<Card> temp = new ArrayList<Card>();
     ArrayList<Tile> temp1 = new ArrayList<Tile>();
     Board board = new Board(temp1);
     Player testPlayer = new Player("Dummy", "dog", 1500, board);

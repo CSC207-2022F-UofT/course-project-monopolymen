@@ -17,7 +17,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TradeOptionTest {
-    ArrayList<Card> temp = new ArrayList<Card>();
     ArrayList<Tile> temp1 = new ArrayList<Tile>();
     Board board = new Board(temp1);
     Player player1 = new Player("player1", "player1", 1500, board);
