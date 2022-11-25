@@ -8,9 +8,9 @@ import GameEntities.Tiles.Property;
 import GameEntities.Cards.Card;
 
 public class Board {
-    private  ArrayList<Card> communityCards;
-    private ArrayList<Card> chanceCards;
-    private ArrayList<Tile> tilesList;
+    private final ArrayList<Card> communityCards;
+    private final ArrayList<Card> chanceCards;
+    private final ArrayList<Tile> tilesList;
     
     public Board(ArrayList<Tile> tilesList) {
         ArrayList<Card> communityCards = new ArrayList<>();
