@@ -9,16 +9,17 @@ import GameEntities.Tiles.RailroadTile;
 public class GoToNearestCard extends Card{
     private final boolean isUtility;
 
+    private final Board board;
+
     public GoToNearestCard(String cardName, String cardDisplayName, String flavourText, boolean chanceCard,
-                           boolean isUtility) {
+                           boolean isUtility, Board board) {
         super(cardName, cardDisplayName, flavourText, chanceCard);
         this.isUtility = isUtility;
+        this.board = board;
     }
 
     @Override
     public CardActionResultModel action(Player player) {
-
-        Board board = player.getBoard();
         Tile tileSoFar;
         int position = player.getPosition();
         for(int i = 0; i < board.getTilesList().size(); i++){
