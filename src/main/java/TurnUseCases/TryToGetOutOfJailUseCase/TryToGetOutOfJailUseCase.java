@@ -114,7 +114,7 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
         if(player.getMoney() >= 50) {
             playerOptions.add("Pay");
         }
-        if(player.getGetOutOfJailCard()) {
+        if(player.hasGetOutofJailFreeCard()) {
             playerOptions.add("Card");
         }
         return playerOptions;
