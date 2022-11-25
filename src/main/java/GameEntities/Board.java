@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import GameEntities.Tiles.JailTile;
 import GameEntities.Tiles.Tile;
 import GameEntities.Tiles.Property;
-import GameEntities.Cards;
+import GameEntities.Cards.Card;
 
 public class Board {
     private  ArrayList<Card> communityCards;
     private ArrayList<Card> chanceCards;
     private ArrayList<Tile> tilesList;
-    Board(ArrayList<Card> communityCards, ArrayList<Card> chanceCards, ArrayList<Tile> tilesList) {
+     public Board(ArrayList<Card> communityCards, ArrayList<Card> chanceCards, ArrayList<Tile> tilesList) {
         this.communityCards = communityCards;
         this.chanceCards = chanceCards;
         this.tilesList = tilesList;
@@ -45,7 +45,7 @@ public class Board {
             return this.tilesList.get(tilePosition);
         }
 
-        public int jailTilePosition(){
+        public int getJailTilePosition(){
             int jailTilePosition = 0;
             for(int i = 0; i < tilesList.size(); i++){
                 if(tilesList.get(i) instanceof JailTile){

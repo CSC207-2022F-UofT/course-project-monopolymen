@@ -17,6 +17,8 @@ public class Player {
 
     private int getOutOfJailFree = 0;
 
+    private Board board;
+
     /**
      * The Player can choose their name and icon but the other attributes are set to default values
      *
@@ -25,11 +27,14 @@ public class Player {
      * @param nameInput     string representing the name the player has chosen
      *
      * @param money         int representing the amount of money a player starts off with
+     *
+     * @param board         board representing the board the player is currently playing on
      */
-    public Player(String nameInput, String iconInput, int money){
+    public Player(String nameInput, String iconInput, int money, Board board){
         this.name = nameInput;
         this.icon = iconInput;
         this.money = money;
+        this.board = board;
     }
 
     //getters:
@@ -76,7 +81,7 @@ public class Player {
      */
     public void setLastRoll(int roll1, int roll2){
         this.lastRoll[0] = roll1;
-        this.lastRoll[2] = roll2;
+        this.lastRoll[1] = roll2;
     }
 
     //methods:
@@ -96,12 +101,8 @@ public class Player {
      * @param subtract      int representing the amount of money we are trying to subtract
      * @return              return true if the player had enough money to make the payment and false if they do not
      */
-    public boolean subtractMoney(int subtract){
-        if(this.money >= subtract){
-            this.money -= subtract;
-            return true;
-        }
-        return false;
+    public void subtractMoney(int subtract){
+        this.money -= subtract;
     }
 
     /**
@@ -150,11 +151,12 @@ public class Player {
 
     /**
      * Called when a player enters the jail, updates the position of the player to the jail position and adds a turn in
-     * jail
+     * jail. It will also reset consecutive doubles to 0
      */
     public void enterJail(){
         this.addTurnInJail();
-        this.position = Board.getJailTilePosition();
+        this.position = this.board.getJailTilePosition();
+        this.resetConsecutiveDoubles();
     }
 
     /**
@@ -163,14 +165,16 @@ public class Player {
      * @param rollSum       the sum of the two dies the player has rolled
      */
     public void updatePosition(int rollSum) {
-        if (this.position + rollSum <= 39) {
-            this.position += rollSum;
-        } else if (this.position + rollSum == 40) {
-            this.position = 0;
-        } else{
-            rollSum = rollSum - (40 - this.position);
-            this.position = rollSum;
-        }
+        this.position = (this.position + rollSum) % this.board.getTilesList().size();
+    }
+
+    /**
+     * Set the position of the player to a given position
+     *
+     * @param position      the position that the player is being moved to
+     */
+    public void setPosition(int position){
+        this.position = position;
     }
 
     /**
@@ -178,7 +182,7 @@ public class Player {
      *
      * @return      True if the player owns a get out of jail free card
      */
-    public boolean getGetOutOfJailCard(){
+    public boolean hasGetOutofJailFreeCard(){
         return (this.getOutOfJailFree != 0);
     }
 
@@ -190,6 +194,11 @@ public class Player {
     }
 
     /**
+     * Adds one get out of jail free card to the players inventory
+     */
+    public void addGetOutOfJailCard() {this.getOutOfJailFree += 1;}
+
+    /**
      * Take in a players two die rolls and update the consecutive doubles attributes if they are equal
      *
      * @param roll1     int representing the value of the first dice roll
@@ -198,7 +207,16 @@ public class Player {
     public void updateConsecutiveDoubles(int roll1, int roll2){
         if(roll1 == roll2){
             this.consecutiveDoubles += 1;
+        }else{
+            this.resetConsecutiveDoubles();
         }
+    }
+
+    /**
+     * Reset the consecutive doubles rolled by the player to 0
+     */
+    public void resetConsecutiveDoubles(){
+        this.consecutiveDoubles = 0;
     }
 }
 
