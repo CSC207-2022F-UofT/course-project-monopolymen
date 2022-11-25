@@ -1,11 +1,14 @@
 package TurnUseCases.TryToGetOutOfJailUseCase;
 import GameEntities.Board;
 import GameEntities.Player;
+import GameEntities.Tiles.Property;
+import GameEntities.Tiles.Tile;
 import GameEntities.Tiles.TileActionResultModel;
 import GameEntities.Tiles.TilePassResultModel;
 import TurnUseCases.MovePlayerUseCase.MovePlayerUseCase;
 import TurnUseCases.EndTurnUseCase.EndTurnUseCase;
 import java.util.ArrayList;
+import GameEntities.Cards.CardActionResultModel;
 
 /**
  * TryToGetOutOfJailUseCase (Class to handle the player's actions when they are in jail)
@@ -27,6 +30,8 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
                                     EndTurnUseCase endTurnUseCase, MovePlayerUseCase movePlayerUseCase) {
         this.tryToGetOutOfJailOutputBoundary = tryToGetOutOfJailOutputBoundary;
         this.board = board;
+        this.endTurnUseCase = endTurnUseCase;
+        this.movePlayerUseCase = movePlayerUseCase;
     }
 
     @Override
@@ -37,24 +42,56 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
             tryToGetOutOfJailOutputBoundary.showRoll(playerRollAmount);
             if(playerRollAmount[0] == playerRollAmount[1]) {
                 // player rolled a double and are free
+                player.resetTurnInJail();
                 int rollSum = playerRollAmount[0] + playerRollAmount[1];
                 for(int i = 0; i < rollSum; i++) {
                     player.updatePosition(1);
                     TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
                     tryToGetOutOfJailOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
                 }
+                int playerBeforePosition = player.getPosition();
                 TileActionResultModel result = board.getTile(player.getPosition()).action(player);
-                if (result.getPlayerPosition() == -1) {
-                    // Player landed on "go to jail" and their position should now be in jail
-                    player.enterJail();
-                    tryToGetOutOfJailOutputBoundary.showResultOfAction(player, player.getPosition());
-                    endTurnUseCase.forceEndTurn(player);
+                if(result instanceof CardActionResultModel) {
+                    // Player landed on draw card tile
+                    if (playerBeforePosition != result.getPlayerPosition()) {
+                        // Card moved player
+                        if (result.getPlayerPosition() == -1) {
+                            // Player is moving to jail, does not collect "GO" tile money
+                            // player.enterJail() is handled in the card's action
+                            tryToGetOutOfJailOutputBoundary.showCardDraw(player, result.getCardName(),
+                                    result.getFlavorText(), result.getIsChance());
+                            sendToJail(player);
+                        } else {
+                            // Normal move player card
+                            tryToGetOutOfJailOutputBoundary.showCardDraw(player, result.getCardName(),
+                                    result.getFlavorText(), result.getIsChance());
+                        }
+                    } else {
+                        // Card didn't move player
+                        tryToGetOutOfJailOutputBoundary.showCardDraw(player, result.getCardName(),
+                                result.getFlavorText(), result.getIsChance());
+                    }
                 } else {
-                    // Normal move
-                    tryToGetOutOfJailOutputBoundary.showResultOfAction(player, player.getPosition());
+                    // Player didn't land on a draw card tile
+                    Tile tile = board.getTile(player.getPosition());
+                    if (result.getPlayerPosition() == -1) {
+                        // Player landed on "go to jail" and their position should now be in jail
+                        // player.enterJail() is handeled in the tile's action method
+                        sendToJail(player);
+                    } else {
+                        // Normal move
+                        tryToGetOutOfJailOutputBoundary.showResultOfAction(player, player.getPosition(),
+                                result.getFlavorText());
+                        if (tile instanceof Property) {
+                            if (((Property) tile).getOwner() == null) {
+                                tryToGetOutOfJailOutputBoundary.showBuyableProperty(player, tile);
+                            }
+                        }
+                    }
                 }
             } else {
                 // Player didn't roll double, force ending their turn
+                player.addTurnInJail();
                 endTurnUseCase.forceEndTurn(player);
             }
         } else if (playerOption.equals("Pay")) {
@@ -81,5 +118,12 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
             playerOptions.add("Card");
         }
         return playerOptions;
+    }
+
+    @Override
+    public void sendToJail(Player player) {
+        tryToGetOutOfJailOutputBoundary.showResultOfAction(player, player.getPosition(),
+                "You are being sent to jail.");
+        endTurnUseCase.forceEndTurn(player);
     }
 }
