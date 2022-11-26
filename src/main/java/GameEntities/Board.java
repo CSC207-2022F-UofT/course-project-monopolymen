@@ -1,17 +1,19 @@
 package GameEntities;
 
+import GameEntities.Cards.Card;
+import GameEntities.Tiles.JailTile;
+import GameEntities.Tiles.Property;
+import GameEntities.Tiles.Tile;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import GameEntities.Tiles.JailTile;
-import GameEntities.Tiles.Tile;
-import GameEntities.Tiles.Property;
-import GameEntities.Cards.Card;
-
-public class Board {
-    private  ArrayList<Card> communityCards;
+public class Board implements Serializable {
+    private ArrayList<Card> communityCards;
     private ArrayList<Card> chanceCards;
     private ArrayList<Tile> tilesList;
-     public Board(ArrayList<Card> communityCards, ArrayList<Card> chanceCards, ArrayList<Tile> tilesList) {
+
+    public Board(ArrayList<Card> communityCards, ArrayList<Card> chanceCards, ArrayList<Tile> tilesList) {
         this.communityCards = communityCards;
         this.chanceCards = chanceCards;
         this.tilesList = tilesList;

@@ -4,6 +4,8 @@ import Game.GameStateOutputBoundary.TurnActions;
 import GameEntities.Board;
 import GameEntities.Player;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -17,9 +19,9 @@ import java.util.ArrayList;
 public class GameState implements Serializable {
     private final Player[] players;
     private final int numPlayers;
-    private final SaveGameState saveGameState;
+    private transient SaveGameState saveGameState;
     private final String gameName;
-    private final GameStateOutputBoundary presenter;
+    private transient GameStateOutputBoundary presenter;
     private final Board board;
     private int currentPlayer;
     private int turnCounter;
@@ -155,5 +157,33 @@ public class GameState implements Serializable {
         currentPlayer = (currentPlayer + 1) % numPlayers;
         turnCounter++;
         playerAllowedToEndTurn = false;
+    }
+
+    /**
+     * Return the deserialized GameState object from the ObjectInputStream.
+     * The SaveGameState data gateway and the GameStateOutputBoundary presenter are not serialized and so must be given
+     * back to the GameState object in this method.
+     *
+     * @param objectIn      The ObjectInputStream representing the serialized object.
+     * @param saveGameState The SaveGameState object responsible for saving GameState.
+     * @param presenter     The Presenter for the GameState object.
+     * @return The Deserialized GameState object.
+     */
+    public static GameState deserialize(ObjectInputStream objectIn, SaveGameState saveGameState,
+                                        GameStateOutputBoundary presenter) throws ClassNotFoundException, IOException {
+        GameState gameState = (GameState) objectIn.readObject();
+        gameState.setSaveGameState(saveGameState);
+        gameState.setPresenter(presenter);
+        return gameState;
+    }
+
+    private void setSaveGameState(SaveGameState saveGameState) {
+        // Private setter intended use for deserialize method only.
+        this.saveGameState = saveGameState;
+    }
+
+    private void setPresenter(GameStateOutputBoundary presenter) {
+        // Private setter intended use for deserialize method only.
+        this.presenter = presenter;
     }
 }
