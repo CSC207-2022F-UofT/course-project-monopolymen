@@ -1,7 +1,5 @@
 package TurnUseCases.EndTurnUseCase;
 // NEED GAMESTATE IMPORT HERE
-import GameEntities.Player;
-import java.util.ArrayList;
 
 /**
  * EndTurnUseCase (Class to handle ending the player's turn and allowing the next player to move)
@@ -12,28 +10,23 @@ public class EndTurnUseCase implements EndTurnInputBoundary{
 
     private EndTurnOutputBoundary endTurnOutputBoundary;
     private GameState gameState;
-    private SaveGameState saveGameState;
 
     /**
      * @param endTurnOutputBoundary EndTurnOutputBoundary to handle display
-     * @param gameState Controller keeping track of turn rotation and current turn
+     * @param gameState             Controller keeping track of turn rotation and current turn
      */
-    public EndTurnUseCase(EndTurnOutputBoundary endTurnOutputBoundary, GameState gameState,
-                          SaveGameState saveGameState) {
+    public EndTurnUseCase(EndTurnOutputBoundary endTurnOutputBoundary, GameState gameState) {
         this.endTurnOutputBoundary = endTurnOutputBoundary;
         this.gameState = gameState;
-        this.saveGameState = saveGameState;
     }
 
     @Override
-    public void endTurn(Player player) {
-        Player nextPlayer = gameState.nextTurn(player);
-        saveGameState.saveGame();
+    public void endTurn() {
+        gameState.endTurn();
     }
 
     @Override
-    public void forceEndTurn(Player player) {
-        Player nextPlayer = gameState.nextTurn(player);
-        saveGameState.saveGame();
+    public void forceEndTurn() {
+        gameState.endTurn();
     }
 }
