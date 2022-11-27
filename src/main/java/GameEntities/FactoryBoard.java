@@ -1,8 +1,11 @@
 package GameEntities;
 
+import GameEntities.Cards.*;
 import GameEntities.Tiles.*;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** The goal of this class is to create a Board.
@@ -13,6 +16,30 @@ import java.util.Objects;
  *  4) Community/Chance Card CSV
  */
 public class FactoryBoard {
+    /** Take in 4 CSV and create a board.
+     *
+     * @param colorPropertyCSV      A String Representing the path of the CSV file containing information about
+     *                              ColorProperties
+     * @param utilityPropertyCSV    A String Representing the path of the CSV file containing information about
+     *                              UtilityProperties
+     * @param railRoadPropertyCSV   A String Representing the path of the CSV file containing information about
+     *                              RailRoadProperties
+     * @param cardCSV               A String Representing the path of the CSV file containing information about Cards
+     * @return                      Return a board that is made from the given CSV files
+     */
+    public Board boardMaker(String colorPropertyCSV, String utilityPropertyCSV, String railRoadPropertyCSV,
+                            String cardCSV) throws FileNotFoundException {
+        List<ColorPropertyTile> colorProperties = FactoryProperty.initializeColorProperties(colorPropertyCSV);
+        List<UtilityTile> utilityProperties = FactoryProperty.initializeUtilityProperties(utilityPropertyCSV);
+        List<RailroadTile> railRoadProperties = FactoryProperty.initializeRailRoadProperties(railRoadPropertyCSV);
+        List<Tile> orderedTileList = order(colorProperties, railRoadProperties, utilityProperties);
+        ArrayList<Tile> orderTileArrayList = new ArrayList<Tile>(orderedTileList);
+        Board board = new Board(orderTileArrayList);
+        ArrayList<Card>[] cards = FactoryCard.getCards(cardCSV, board);
+        cardUpdate(cards, board);
+        return board;
+    }
+
     /** Take in a list of properties and use that to create an ordered ArrayList of tiles, which will include TaxTiles,
      * GoToJailTile, FreeParkingTile, GoTile, JailTil, Chance Tiles, Community Tiles
      *
@@ -21,8 +48,8 @@ public class FactoryBoard {
      * @param utility           An ArrayList of utility property that will be on the board
      * @return                  Return an ordered ArrayList of tiles that represents the tiles on the board
      */
-    public ArrayList<Tile> order(ArrayList<ColorPropertyTile> colorProperty, ArrayList<RailroadTile> railRoad,
-                                 ArrayList<UtilityTile> utility){
+    public ArrayList<Tile> order(List<ColorPropertyTile> colorProperty, List<RailroadTile> railRoad,
+                                 List<UtilityTile> utility){
         ArrayList<Tile> tileList = new ArrayList<Tile>();
         tileList.add(new GoTile());
         tileList.add(colorProperty.get(0));
@@ -65,5 +92,19 @@ public class FactoryBoard {
         tileList.add(new TaxTile("Luxury Tile", "Luxury Tile", 200));
         tileList.add(colorProperty.get(21));
         return tileList;
+    }
+
+    /** Take in  an ArrayList of cards and add them to the board
+     *
+     * @param cards     The ArrayList of cards that we are trying to add
+     * @param board     The board that we are trying to add the cards to
+     */
+    public static void cardUpdate(ArrayList<Card>[] cards, Board board) {
+        for (Card chanceCard : cards[0]){
+            board.addChanceCard(chanceCard);
+        }
+        for (Card communityCard : cards[1]){
+            board.addChanceCard(communityCard);
+        }
     }
 }
