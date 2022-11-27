@@ -59,7 +59,7 @@ public class FactoryCard {
                     }
                 }
                 case "advanceNear" -> {
-                    Card advanceNearC = advanceNearCard(line);
+                    Card advanceNearC = advanceNearCard(line, board);
                     if (advanceNearC.isChanceCard()) {
                         chance.add(advanceNearC);
                     } else {
@@ -148,13 +148,13 @@ public class FactoryCard {
      * @param information       A List including all the information about the card
      * @return                  Return a Card made from information
      */
-    public static Card advanceNearCard(List<String> information){
+    public static Card advanceNearCard(List<String> information, Board board){
         String cardName = information.get(1);
         String displayName = information.get(2);
         String text = information.get(3);
         boolean chanceCard = Objects.equals(information.get(4), "TRUE");
         boolean isUtility = Objects.equals(information.get(10), "Utility");
-        return new GoToNearestCard(cardName, displayName, text, chanceCard, isUtility);
+        return new GoToNearestCard(cardName, displayName, text, chanceCard, isUtility, board);
     }
 
     /**
