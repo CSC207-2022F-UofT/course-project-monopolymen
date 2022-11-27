@@ -90,9 +90,9 @@ public class GameState implements Serializable {
             options.add(TurnActions.END_TURN);
         } else {
             if (currentPlayer().getTurnsInJail() == -1) {
-                options.add(TurnActions.LEAVE_JAIL);
-            } else {
                 options.add(TurnActions.ROLL_TO_MOVE);
+            } else {
+                options.add(TurnActions.LEAVE_JAIL);
             }
         }
 
