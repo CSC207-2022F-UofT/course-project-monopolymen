@@ -15,9 +15,8 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class TradeOfferTest {
-    ArrayList<Card> temp = new ArrayList<Card>();
     ArrayList<Tile> temp1 = new ArrayList<Tile>();
-    Board board = new Board(temp, temp, temp1);
+    Board board = new Board(temp1);
     Player player1 = new Player("player1", "player1", 1500, board);
 
     int[] fakeRent = {};
