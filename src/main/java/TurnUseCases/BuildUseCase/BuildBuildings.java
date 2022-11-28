@@ -34,8 +34,8 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         ArrayList<ColorPropertyTile> ColorProperties = new ArrayList<ColorPropertyTile>();
         ArrayList<Property> properties = player.getProperties();
         for (int i = 0; i < properties.size(); i++){
-            if(properties.get(i).getClass().getName().equals("GameEntities.Tiles.ColorPropertyTile")){
-                ColorProperties.add(properties.get(i));
+            if(properties.get(i) instanceof ColorPropertyTile){
+                ColorProperties.add((ColorPropertyTile) properties.get(i));
             }
         }
         // Selecting ColorPropertyTile with the same color.
@@ -130,7 +130,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         ArrayList<Property> properties = player.getProperties();
         for (int i = 0; i < properties.size(); i++){
             if(properties.get(i).getClass().getName().equals("GameEntities.Tiles.ColorPropertyTile")){
-                ColorProperties.add(properties.get(i));
+                ColorProperties.add((ColorPropertyTile) properties.get(i));
             }
         }
         // Selecting ColorPropertyTile with the same color.
@@ -163,7 +163,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         if (isSellable(player, property) && property.getHotel() == 0){
             property.subtractHouse();
             int value = 0;
-            value = 0.5*property.getBuildingCost();
+            value = (int) (0.5*property.getBuildingCost());
             player.addMoney(value);
             String text = player.getName() + "sold a house on " + property.getTileName();
             presenter.showSellBuilding(player, property, text);
@@ -184,7 +184,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         if (isSellable(player, property) && property.getHotel() > 0){
             property.subtractHotel();
             int value = 0;
-            value = 0.5*property.getBuildingCost();
+            value = (int) (0.5*property.getBuildingCost());
             player.addMoney(value);
             String text = player.getName() + "sold a hotel on " + property.getTileName();
             presenter.showSellBuilding(player, property, text);
