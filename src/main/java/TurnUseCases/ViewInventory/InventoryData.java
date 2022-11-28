@@ -11,20 +11,23 @@ import java.util.ArrayList;
  *      1) Players Money
  *      2) Players Property List
  *      3) Players get out of Jail free card if they own any
+ *      4) Players name
  */
-public class InventoryGetter {
+public class InventoryData {
     final int money;
     final int getOutofJailFree;
     final ArrayList<Property> properties;
+    final String name;
 
     /**
      * Create an Object consisting of the information that we need to display for a given player
      *
      * @param player        The player that we will be using to create this object
      */
-    public InventoryGetter(Player player){
+    public InventoryData(Player player){
         this.money = player.getMoney();
-        this.getOutofJailFree = player.numGetOutoffJailFreeCards();
+        this.getOutofJailFree = player.numGetOutofJailFreeCards();
         this.properties = player.getProperties();
+        this.name = player.getName();
     }
 }

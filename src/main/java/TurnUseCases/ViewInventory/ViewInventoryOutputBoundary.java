@@ -2,20 +2,16 @@ package TurnUseCases.ViewInventory;
 
 import GameEntities.Player;
 
-import java.util.ArrayList;
-
+import java.util.List;
+/**
+ * The output boundary for the view inventory use case.
+ */
 public interface ViewInventoryOutputBoundary {
     /**
-     * Presents the list of players in the game
+     * Display the inventory of the players
      *
-     * @param listPlayers       The list of players in the game
+     * @param current           The player who has requested to view their inventory
+     * @param playersInfo       A List of Inventory Data objects for all of the players in the game
      */
-    public void showPlayers(ArrayList<Player> listPlayers);
-
-    /**
-     * Presents the inventory of the chosen Player
-     *
-     * @param player        The player that we are trying to view the inventory of
-     */
-    public void showInventory(Player player);
+    public void showInventory(Player current, List<InventoryData> playersInfo);
 }
