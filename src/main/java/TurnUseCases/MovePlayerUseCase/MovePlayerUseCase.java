@@ -53,15 +53,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                     movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
                 }
             }
-            TileActionResultModel result = board.getTile(player.getPosition()).action(player);
-            Tile tile = board.getTile(player.getPosition());
-            movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
-                    result.getFlavorText());
-            if (tile instanceof Property) {
-                if (((Property) tile).getOwner() == null) {
-                    movePlayerOutputBoundary.showBuyableProperty(player, tile);
-                }
-            }
+            showAction(player);
         } else {
             int positiveSteps = steps + board.getTilesList().size();
             for (int i = 0; i < positiveSteps; i++) {
@@ -69,14 +61,22 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                 TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
                 movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
             }
-            TileActionResultModel result = board.getTile(player.getPosition()).action(player);
-            Tile tile = board.getTile(player.getPosition());
-            movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
-                    result.getFlavorText());
-            if (tile instanceof Property) {
-                if (((Property) tile).getOwner() == null) {
-                    movePlayerOutputBoundary.showBuyableProperty(player, tile);
-                }
+            showAction(player);
+        }
+    }
+
+    /**
+     * Shows the action in the presenter
+     * @param player The player object that the action is being performed on
+     */
+    private void showAction(Player player) {
+        TileActionResultModel result = board.getTile(player.getPosition()).action(player);
+        Tile tile = board.getTile(player.getPosition());
+        movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                result.getFlavorText());
+        if (tile instanceof Property) {
+            if (((Property) tile).getOwner() == null) {
+                movePlayerOutputBoundary.showBuyableProperty(player, tile);
             }
         }
     }
@@ -157,4 +157,6 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                 "You are being sent to jail.");
         endTurnUseCase.forceEndTurn(player);
     }
+
+
 }
