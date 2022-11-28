@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A GameState object handles all information about the current Game's state (including who is playing, what board is
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  * Call the startGame method to initiate the game loop.
  */
 public class GameState implements Serializable {
-    private final Player[] players;
+    private final List<Player> players;
     private final int numPlayers;
     private transient SaveGameState saveGameState;
     private final String gameName;
@@ -36,12 +37,12 @@ public class GameState implements Serializable {
      * @param saveGameState The SaveGameState object that handles saving the game.
      * @param presenter     The Presenter object for this game state.
      */
-    public GameState(Board board, Player[] players, String gameName, SaveGameState saveGameState,
+    public GameState(Board board, List<Player> players, String gameName, SaveGameState saveGameState,
                      GameStateOutputBoundary presenter) {
         this.board = board;
         this.players = players;
         this.currentPlayer = 0;
-        this.numPlayers = players.length;
+        this.numPlayers = players.size();
         this.saveGameState = saveGameState;
         this.turnCounter = 0;
         this.gameName = gameName;
@@ -147,7 +148,11 @@ public class GameState implements Serializable {
      * @return The Player whose turn it currently is.
      */
     public Player currentPlayer() {
-        return players[currentPlayer];
+        return players.get(currentPlayer);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 
     /**
