@@ -186,6 +186,11 @@ public class Player {
         return (this.getOutOfJailFree != 0);
     }
 
+    /** Return the number of get out of jail free cards a player has
+     *
+     * @return      The number of get out of jail free cards the player owns
+     */
+    public int numGetOutoffJailFreeCards(){ return this.getOutOfJailFree;}
     /**
      * Remove 1 get out of jail free card from the players inventory
      */
