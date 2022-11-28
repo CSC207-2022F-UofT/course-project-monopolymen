@@ -64,4 +64,24 @@ public class Board {
             return jailTilePosition;
         }
 
+        public Card pickCard(boolean chanceCard){
+            if(chanceCard){
+                //chooses a card off the top
+                Card returnCard = chanceCards.get(0);
+                //moves the card to the back of the deck
+                chanceCards.remove(0);
+                chanceCards.add(returnCard);
+
+                return returnCard;
+
+            }
+
+            else{
+                Card returnCard = communityCards.get(0);
+                communityCards.remove(0);
+                communityCards.add(returnCard);
+                return returnCard;
+            }
+        }
+
     }
