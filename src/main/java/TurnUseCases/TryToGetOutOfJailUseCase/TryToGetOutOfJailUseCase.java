@@ -120,8 +120,12 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
         return playerOptions;
     }
 
-    @Override
-    public void sendToJail(Player player) {
+    /**
+     * Sends the player to jail
+     * Only called by methods in TryToGetOutOfJailUseCase
+     * @param player The player object that the action is being performed on
+     */
+    private void sendToJail(Player player) {
         tryToGetOutOfJailOutputBoundary.showResultOfAction(player, player.getPosition(),
                 "You are being sent to jail.");
         endTurnUseCase.forceEndTurn(player);

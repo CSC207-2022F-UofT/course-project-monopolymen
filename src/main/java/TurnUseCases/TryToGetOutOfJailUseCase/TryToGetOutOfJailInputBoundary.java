@@ -20,11 +20,4 @@ public interface TryToGetOutOfJailInputBoundary {
      * @param player The player object that the action is being performed on
      */
     public ArrayList<String> getPlayerOptions(Player player);
-
-    /**
-     * Sends the player to jail
-     * Only called by methods in MovePlayerUseCase
-     * @param player The player object that the action is being performed on
-     */
-    public void sendToJail(Player player);
 }

@@ -29,8 +29,14 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         this.endTurnUseCase = endTurnUseCase;
     }
 
-    @Override
-    public void moveToPosition(Player player, int absolutePosition) {
+    /**
+     * Starts the logic of moving the player to the position
+     * This is only called by startAction when it lands on a draw card tile that will move the player
+     * @param player The player object that the action is being performed on
+     * @param absolutePosition the position the player will move to
+     */
+
+    private void moveToPosition(Player player, int absolutePosition) {
         // There is only 1 case when the player moves back by the card and its 3 spaces
         int steps = absolutePosition - player.getPosition();
         if(steps == -3) {
@@ -141,8 +147,12 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         }
     }
 
-    @Override
-    public void sendToJail(Player player) {
+    /**
+     * Sends the player to jail
+     * Only called by methods in MovePlayerUseCase
+     * @param player The player object that the action is being performed on
+     */
+    private void sendToJail(Player player) {
         movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
                 "You are being sent to jail.");
         endTurnUseCase.forceEndTurn(player);
