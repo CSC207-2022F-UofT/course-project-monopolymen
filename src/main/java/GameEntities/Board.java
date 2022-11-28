@@ -66,10 +66,9 @@ public class Board {
 
         public Card pickCard(boolean chanceCard){
             if(chanceCard){
-                //chooses a card off the top
-                Card returnCard = chanceCards.get(0);
+                //chooses a card off the top and removes it from the deck
+                Card returnCard = chanceCards.remove(0);
                 //moves the card to the back of the deck
-                chanceCards.remove(0);
                 chanceCards.add(returnCard);
 
                 return returnCard;
