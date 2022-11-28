@@ -10,29 +10,15 @@ import GameEntities.Tiles.UtilityTile;
  * The input boundary for the mortgage property use case.
  */
 public interface MortgagePropertyInputBoundary {
-    /**
-     * Player mortgages property
-     *
-     * @param player the player who wants mortgages property.
-     * @param property the property which player wants to mortgages.
-     */
-    public void mortgage(Player player, RailroadTile property, MortgagePropertyOutputBoundary presenter);
-
-    /**
-     * Player mortgages property
-     *
-     * @param player the player who wants mortgages property.
-     * @param property the property which player wants to mortgages.
-     */
-    public void mortgage(Player player, UtilityTile property, MortgagePropertyOutputBoundary presenter);
 
     /**
      * Overloading method mortgage. Player mortgages a color property.
      *
      * @param player the player who wants mortgages property.
      * @param property the property which player wants to mortgages.
+     * @param presenter presenter which provides info for players.
      */
-    public void mortgage(Player player, ColorPropertyTile property, MortgagePropertyOutputBoundary presenter);
+    public void mortgage(Player player, Property property, MortgagePropertyOutputBoundary presenter);
 
     /**
      * Player unmortgages property
