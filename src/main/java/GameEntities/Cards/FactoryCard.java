@@ -26,54 +26,54 @@ public class FactoryCard {
         lines.remove(0);
         for(List<String> line : lines){
             switch (line.get(0)) {
-                case "jail" -> {
+                case "jail":
                     Card jailC = OutOfJailFreeCard(line);
                     if (jailC.isChanceCard()) {
                         chance.add(jailC);
                     } else {
                         community.add(jailC);
                     }
-                }
-                case "repair" -> {
+                    break;
+                case "repair":
                     Card repairC = repairCard(line);
                     if (repairC.isChanceCard()) {
                         chance.add(repairC);
                     } else {
                         community.add(repairC);
                     }
-                }
-                case "money" -> {
+                    break;
+                case "money":
                     Card moneyC = moneyCard(line);
                     if (moneyC.isChanceCard()) {
                         chance.add(moneyC);
                     } else {
                         community.add(moneyC);
                     }
-                }
-                case "advance" -> {
+                    break;
+                case "advance":
                     Card advanceC = advanceCard(line, board);
                     if (advanceC.isChanceCard()) {
                         chance.add(advanceC);
                     } else {
                         community.add(advanceC);
                     }
-                }
-                case "advanceNear" -> {
+                    break;
+                case "advanceNear":
                     Card advanceNearC = advanceNearCard(line, board);
                     if (advanceNearC.isChanceCard()) {
                         chance.add(advanceNearC);
                     } else {
                         community.add(advanceNearC);
                     }
-                }
-                case "moveBack" -> {
+                    break;
+                case "moveBack":
                     Card moveBackC = moveBackCard(line);
                     if (moveBackC.isChanceCard()) {
                         chance.add(moveBackC);
                     } else {
                         community.add(moveBackC);
                     }
-                }
+                    break;
             }
         }
         combined[0] = chance;
