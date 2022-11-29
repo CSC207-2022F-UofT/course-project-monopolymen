@@ -11,15 +11,25 @@ import GameEntities.Tiles.UtilityTile;
  */
 public class MortgageProperty implements MortgagePropertyInputBoundary{
 
+    private MortgagePropertyOutputBoundary presenter;
+
+    /**
+     * Creates an instance of the MortgageProperty class with the provided presenter.
+     *
+     * @param presenter presenter which provides info for players.
+     */
+    public MortgageProperty(MortgagePropertyOutputBoundary presenter){
+        this.presenter = presenter;
+    }
+
     /**
      * Player mortgages a color property.
      *
      * @param player the player who wants mortgages property.
      * @param property the property which player wants to mortgages.
-     * @param presenter presenter which provides info for players.
      */
     @Override
-    public void mortgage(Player player, Property property, MortgagePropertyOutputBoundary presenter){
+    public void mortgage(Player player, Property property){
         if (player.ownsProperty(property) && property.getHouse() == 0 && property.getHotel() == 0
         && property instanceof ColorPropertyTile) {
             player.addMoney(property.mortgage());
@@ -45,17 +55,14 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
      *
      * @param player the player who wants to unmortgages property.
      * @param property the property which player wants to unmortgages.
-     * @param presenter presenter which provides info for players.
      */
     @Override
-    public void unmortgage(Player player, Property property, MortgagePropertyOutputBoundary presenter){
-        int mortgageValue = 0;
-        mortgageValue = property.getMortgageValue();
-        mortgageValue = (int) (mortgageValue * 1.1);
+    public void unmortgage(Player player, Property property){
+        int unmortgageValue = property.getUnMortgageValue();
         if (player.ownsProperty(property)) {
-            player.subtractMoney(mortgageValue);
+            player.subtractMoney(unmortgageValue);
             property.unmortgage();
-            String text = player.getName() + "unmortgaged " + property.getTileName() + "and subtract $" + Integer.toString(mortgageValue);
+            String text = player.getName() + "unmortgaged " + property.getTileName() + "and subtract $" + Integer.toString(unmortgageValue);
             presenter.showMortgageProperty(player, property, text);
         } else {
             String text = player.getName() + "cannot unmortgage " + property.getTileName();
