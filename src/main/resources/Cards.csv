@@ -1,0 +1,33 @@
+cardType,cardName,cardDisplayName,flavourText,chanceCard,tileName,money,hotelRepair,houseRepair,move,nearest
+jail,card_chance_1,c1,Get Out Of Jail Free.This card may be kept until needed or traded,TRUE,N/A,N/A,N/A,N/A,N/A,N/A
+repair,card_chance_2,c2,"Make general repairs on all your property: For each House pay $25, For each Hotel pay $100",TRUE,N/A,N/A,100,25,N/A,N/A
+money,card_chance_3,c3,Bank pays your dividend of $50,TRUE,N/A,50,N/A,N/A,N/A,N/A
+money,card_chance_4,c4,Your building loan matures. Collect $150,TRUE,N/A,150,N/A,N/A,N/A,N/A
+advance,card_chance_5,c5,"Advance to Illinois Avenue. If you pass ""Go"" collect $200",TRUE,Illinois Avenue,N/A,N/A,N/A,N/A,N/A
+advance,card_chance_6,c6,Advane to Boardwalk,TRUE,Boardwalk,N/A,N/A,N/A,N/A,N/A
+advanceNear,card_chance_7,c7,"Advance to the nearest utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times amount thrown",TRUE,N/A,N/A,N/A,N/A,N/A,Utility
+advance,card_chance_8,c8,"Take a trip to Reading Railroad. If you pass ""Go"" collect $200",TRUE,Reading Railroad,N/A,N/A,N/A,N/A,N/A
+advance,card_chance_9,c9,"Advance to St. Charles Place. If you pass ""Go"" collect $200",TRUE,St. Charles Place,N/A,N/A,N/A,N/A,N/A
+money,card_chance_10,c10,Speeding Fine $15,TRUE,N/A,-15,N/A,N/A,N/A,N/A
+advance,card_chance_11,c11,"Go to Jail. Go directly to Jail, do not pass ""Go"", do not collect $200. ",TRUE,Jail,N/A,N/A,N/A,N/A,N/A
+moveBack,card_chance_12,c12,Go back three spaces,TRUE,N/A,N/A,N/A,N/A,-3,N/A
+advanceNear,card_chance_13,c13,"Advance to he nearest railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental to which they are otherwise entitles",TRUE,N/A,N/A,N/A,N/A,N/A,Railroad
+advanceNear,card_chance_14,c14,"Advance to he nearest railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental to which they are otherwise entitles",TRUE,N/A,N/A,N/A,N/A,N/A,Railroad
+advance,card_chance_15,c15,"Advance to ""Go"". (Collect $200)",TRUE,Go,N/A,N/A,N/A,N/A,N/A
+advance,card_chance_16,c16,"Advance to ""Go"". (Collect $200)",TRUE,Go,N/A,N/A,N/A,N/A,N/A
+repair,card_chest_1,c17,"You are assessed for street repairs: $40 per house, $115 per hotel",FALSE,N/A,N/A,115,40,N/A,N/A
+money,card_chest_2,c18,You have won second prize in a beauty contest. Collect $10,FALSE,N/A,10,N/A,N/A,N/A,N/A
+money,card_chest_3,c19,Pay school fees of $50,FALSE,N/A,50,N/A,N/A,N/A,N/A
+money,card_chest_4,c20,From sale of stock you get $50,FALSE,N/A,50,N/A,N/A,N/A,N/A
+money,card_chest_5,c21,You inherit $100,FALSE,N/A,100,N/A,N/A,N/A,N/A
+money,card_chest_6,c22,Income tax refund. Collect $20,FALSE,N/A,20,N/A,N/A,N/A,N/A
+money,card_chest_7,c23,Pay hospital fees of $100,FALSE,N/A,-100,N/A,N/A,N/A,N/A
+money,card_chest_8,c24,Holiday fund matures. Revieve $100,FALSE,N/A,100,N/A,N/A,N/A,N/A
+advance,card_chest_9,c25,"Go to Jail. Go directly to Jail, do not pass ""Go"", do not collect $200. ",FALSE,Jail,N/A,N/A,N/A,N/A,N/A
+jail,card_chest_10,c26,Get Out Of Jail Free.This card may be kept until needed or traded,FALSE,N/A,N/A,N/A,N/A,N/A,N/A
+money,card_chest_11,c27,Doctor's fees. Pay $50,FALSE,N/A,50,N/A,N/A,N/A,N/A
+money,card_chest_12,c28,Receive $25 consultancy fee,FALSE,N/A,25,N/A,N/A,N/A,N/A
+money,card_chest_13,c29,It is your birthday. Collect $10 from every player,FALSE,N/A,10,N/A,N/A,N/A,N/A
+money,card_chest_14,c30,Bank error in your favor. Collect $200,FALSE,N/A,200,N/A,N/A,N/A,N/A
+advance,card_chest_15,c31,"Advance to ""Go"". (Collect $200)",FALSE,Go,N/A,N/A,N/A,N/A,N/A
+money,card_chest_16,c32,Life insurance matures. Collect $100,FALSE,N/A,100,N/A,N/A,N/A,N/A

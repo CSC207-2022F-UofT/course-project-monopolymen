@@ -8,14 +8,22 @@ import GameEntities.Tiles.Property;
 import GameEntities.Cards.Card;
 
 public class Board {
-    private  ArrayList<Card> communityCards;
-    private ArrayList<Card> chanceCards;
-    private ArrayList<Tile> tilesList;
-     public Board(ArrayList<Card> communityCards, ArrayList<Card> chanceCards, ArrayList<Tile> tilesList) {
+    private final ArrayList<Card> communityCards;
+    private final ArrayList<Card> chanceCards;
+    private final ArrayList<Tile> tilesList;
+    
+    public Board(ArrayList<Tile> tilesList) {
+        ArrayList<Card> communityCards = new ArrayList<>();
+        ArrayList<Card> chanceCards = new ArrayList<>();
+        
         this.communityCards = communityCards;
         this.chanceCards = chanceCards;
         this.tilesList = tilesList;
+
     }
+
+    public void addCommunityCard(Card communityCard){communityCards.add(communityCard);}
+    public void addChanceCard(Card chanceCard){chanceCards.add(chanceCard);}
 
 
         public int getTilePosition(String tileName){
@@ -54,6 +62,25 @@ public class Board {
             }
 
             return jailTilePosition;
+        }
+
+        public Card pickCard(boolean chanceCard){
+            if(chanceCard){
+                //chooses a card off the top and removes it from the deck
+                Card returnCard = chanceCards.remove(0);
+                //moves the card to the back of the deck
+                chanceCards.add(returnCard);
+
+                return returnCard;
+
+            }
+
+            else{
+                Card returnCard = communityCards.get(0);
+                communityCards.remove(0);
+                communityCards.add(returnCard);
+                return returnCard;
+            }
         }
 
     }
