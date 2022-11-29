@@ -61,9 +61,6 @@ public class Board {
             }
         }
 
-        return jailTilePosition;
-    }
-
     public Card pickCard(boolean chanceCard){
         if(chanceCard){
             //chooses a card off the top
