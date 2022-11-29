@@ -16,9 +16,8 @@ public interface MortgagePropertyInputBoundary {
      *
      * @param player the player who wants mortgages property.
      * @param property the property which player wants to mortgages.
-     * @param presenter presenter which provides info for players.
      */
-    public void mortgage(Player player, Property property, MortgagePropertyOutputBoundary presenter);
+    public void mortgage(Player player, Property property);
 
     /**
      * Player unmortgages property
@@ -26,5 +25,5 @@ public interface MortgagePropertyInputBoundary {
      * @param player the player who wants to unmortgages property.
      * @param property the property which player wants to unmortgages.
      */
-    public void unmortgage(Player player, Property property, MortgagePropertyOutputBoundary presenter);
+    public void unmortgage(Player player, Property property);
 }
