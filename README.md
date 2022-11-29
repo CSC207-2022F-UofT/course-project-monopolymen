@@ -20,13 +20,13 @@ NOTE:
   IntelliJ is complaining that the original images are whatever length and that width should be set to that value,
   but we are purposefully downsizing the image here.
 -->
-<p align="middle">
+<p>
   <img src="src/main/resources/assets/misc/board.jpg" width="800" alt="Monopoly Board Image"/>
 </p>
 
 ### Property Title Deeds
 
-<p align="middle">
+<p>
   <img src="src/main/resources/assets/property/property_front_blue_boardwalk.jpg" width="400" alt="Monopoly Board Image"/>
   <img src="src/main/resources/assets/property/property_front_rr_pennsylvania.jpg" width="400" alt="Monopoly Board Image"/>
 </p>
