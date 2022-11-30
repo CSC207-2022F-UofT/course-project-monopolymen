@@ -1,39 +1,70 @@
-# Project Template
+# Monopoly CSC207 Course Project
 
-This is a template repository for CSC 207 projects. 
-This repository contains starter code for a gradle project.
-It also contains workflow documents that give instructions on how to manage your Github repository and how to use Github Projects for efficient collaboration.
+### by Alireza, Cole, Joshua, Tahir, Qingyu, Yanbo, Youssef
 
-## Checklist For Your Project
-- [ ] Verify the correct settings for your project repository
-- [ ] Set up Github Projects
-- [ ] Create the implementation plan using issues and Github Projects
-- [ ] Create deveopment branches for your features
-- [ ] Use pull requests to merge finished features into main branch
-- [ ] Conduct code reviews
+Recreation of the game Monopoly using Java Swing in Java 11 for the CSC207 Fall 2022 Course Project at the University of
+Toronto.
 
-**If your team has trouble with any of these steps, please ask on Piazza. For example, with how GitHub Classroom works, your team *may* not have permissions to do some of the first few steps, in which case we'll post alternative instructions as needed.**
+Implemented with the Clean Architecture and SOLID design principles.
 
-## Workflow Documents
+## Build & Run Instructions:
 
-* Github Workflow: Please refer to the workflow that was introduced in the first lab. You should follow this when working on your code. The following document provides additional details too.
+WIP
 
-* [Project Planning and Development Guide](project_plan_dev.md): This document helps you to understand how to create and maintain a project plan for your class project. **This document helps you to complete the Implementation Plan Milestone.**
+## Sample Images
 
-## Gradle Project
-Import this project into your Intellij editor. It should automatically recognise this as a gradle repository.
-The starter code was built using SDK version 11.0.1. Ensure that you are using this version for this project. (You can, of course, change the SDK version as per your requirement if your team has all agreed to use a different version)
+### Monopoly Board
 
-You have been provided with two starter files for demonstration: HelloWorld and HelloWorldTest.
+<!--
+NOTE:
+  IntelliJ is complaining that the original images are whatever length and that width should be set to that value,
+  but we are purposefully downsizing the image here.
+-->
+<p>
+  <img src="src/main/resources/assets/misc/board.jpg" width="800" alt="Monopoly Board Image"/>
+</p>
 
-You will find HelloWorld in `src/main/java/tutorial` directory. Right click on the HelloWorld file and click on `Run HelloWorld.main()`.
-This should run the program and print on your console.
+### Property Title Deeds
 
-You will find HelloWorldTest in `src/test/java/tutorial` directory. Right click on the HelloWorldTest file and click on `Run HelloWorldTest`.
-All tests should pass. Your team can remove this sample of how testing works once you start adding your project code to the repo.
+<p>
+  <img src="src/main/resources/assets/property/property_front_blue_boardwalk.jpg" width="400" alt="Monopoly Board Image"/>
+  <img src="src/main/resources/assets/property/property_front_rr_pennsylvania.jpg" width="400" alt="Monopoly Board Image"/>
+</p>
 
-Moving forward, we expect you to maintain this project structure. You *should* use Gradle as the build environment, but it is fine if your team prefers to use something else -- just remove the gradle files and push your preferred project setup. Assuming you stick with Gradle, your source code should go into `src/main/java` (you can keep creating more subdirectories as per your project requirement). Every source class can auto-generate a test file for you. For example, open HelloWorld.java file and click on the `HelloWorld` variable as shown in the image below. You should see an option `Generate` and on clicking this your should see an option `Test`. Clicking on this will generate a JUnit test file for `HelloWorld` class. This was used to generate the `HelloWorldTest`.
+## Asset Credit
 
-![image](https://user-images.githubusercontent.com/5333020/196066655-d3c97bf4-fdbd-46b0-b6ae-aeb8dbcf351d.png)
+Images in [src/main/resources/assets](./src/main/resources/assets) created by Joshua @JLenander with additional
+modified Icons:
 
-You can create another simple class and try generating a test for this class.
+- <a href="https://iconscout.com/icons/light-bulb" target="_blank">Light Bulb Icon</a>
+  by <a href="https://iconscout.com/contributors/ferdizzimo" target="_blank">Ferdizzimo</a>
+  on <a href="https://iconscout.com">IconScout</a>
+- <a href="https://www.flaticon.com/free-icons/railway" title="railway icons">Railway icons created by Cuputo -
+  Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/chest" title="chest icons">Chest icons created by Freepik - Flaticon</a>
+- <a href="https://iconscout.com/icons/water-tap" target="_blank">Water Tap Icon</a>
+  by <a href="https://iconscout.com/contributors/elmirag" target="_blank">Elmira Gokoryan</a>
+  on <a href="https://iconscout.com">IconScout</a>
+- <a href="https://iconscout.com/icons/police-badge" target="_blank">Police badge Icon</a>
+  by <a href="https://iconscout.com/contributors/max-icons">Maxicons</a> on <a href="https://iconscout.com">
+  IconScout</a>
+- <a href="https://www.flaticon.com/free-icons/monopoly" title="monopoly icons">Monopoly icons created by Smashicons -
+  Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/dollar-bill" title="dollar-bill icons">Dollar-bill icons created by
+  juicy_fish - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/dice" title="dice icons">Dice icons created by vectorsmarket15 -
+  Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/jail" title="jail icons">Jail icons created by Dreamstale - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/vessel" title="vessel icons">Vessel icons created by Vectoricons -
+  Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/iron" title="iron icons">Iron icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/sewing" title="sewing icons">Sewing icons created by Freepik -
+  Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/car" title="car icons">Car icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/shoes" title="shoes icons">Shoes icons created by Izwar Muis -
+  Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/top-hat" title="top-hat icons">Top-hat icons created by iconixar -
+  Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/dog" title="dog icons">Dog icons created by Icongeek26 - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/wheelbarrow" title="wheelbarrow icons">Wheelbarrow icons created by
+  Freepik - Flaticon</a>
