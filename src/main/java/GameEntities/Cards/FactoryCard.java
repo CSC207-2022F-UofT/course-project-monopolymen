@@ -87,7 +87,7 @@ public class FactoryCard {
      * @param information       A List including all the information about the card
      * @return                  Return a Card made from information
      */
-    public static Card OutOfJailFreeCard(List<String> information){
+    public static GetOutOfJailCard OutOfJailFreeCard(List<String> information){
         String cardName = information.get(1);
         String displayName = information.get(2);
         String text = information.get(3);
@@ -101,7 +101,7 @@ public class FactoryCard {
      * @param information       A List including all the information about the card
      * @return                  Return a Card made from information
      */
-    public static Card repairCard(List<String> information){
+    public static PropertyRepairCard repairCard(List<String> information){
         String cardName = information.get(1);
         String displayName = information.get(2);
         String text = information.get(3);
@@ -117,7 +117,7 @@ public class FactoryCard {
      * @param information       A List including all the information about the card
      * @return                  Return a Card made from information
      */
-    public static Card moneyCard(List<String> information){
+    public static MoneyCard moneyCard(List<String> information){
         String cardName = information.get(1);
         String displayName = information.get(2);
         String text = information.get(3);
@@ -132,7 +132,7 @@ public class FactoryCard {
      * @param information       A List including all the information about the card
      * @return                  Return a Card made from information
      */
-    public static Card advanceCard(List<String> information, Board board){
+    public static AdvanceCard advanceCard(List<String> information, Board board){
         String cardName = information.get(1);
         String displayName = information.get(2);
         String text = information.get(3);
@@ -148,7 +148,7 @@ public class FactoryCard {
      * @param information       A List including all the information about the card
      * @return                  Return a Card made from information
      */
-    public static Card advanceNearCard(List<String> information, Board board){
+    public static GoToNearestCard advanceNearCard(List<String> information, Board board){
         String cardName = information.get(1);
         String displayName = information.get(2);
         String text = information.get(3);
@@ -163,7 +163,7 @@ public class FactoryCard {
      * @param information       A list including all the information about the card
      * @return                  Return a card made from information
      */
-    public static Card moveBackCard(List<String> information){
+    public static AdvanceCard moveBackCard(List<String> information){
         String cardName = information.get(1);
         String displayName = information.get(2);
         String text = information.get(3);
