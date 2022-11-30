@@ -60,7 +60,7 @@ public class FactoryBoard {
         tileList.add(railRoad.get(0));
         tileList.add(colorProperty.get(2));
         tileList.add(new DrawCardTile
-                ("Community Chest Tile", "Community Chest Tile", true));
+                ("Chance Tile", "Chance Tile", true));
         tileList.add(colorProperty.get(3));
         tileList.add(colorProperty.get(4));
         tileList.add(new JailTile());
@@ -77,7 +77,7 @@ public class FactoryBoard {
         tileList.add(new FreeParkingTile());
         tileList.add(colorProperty.get(11));
         tileList.add(new DrawCardTile
-                ("Community Chest Tile", "Community Chest Tile", true));
+                ("Chance Tile", "Chance Tile", true));
         tileList.add(colorProperty.get(12));
         tileList.add(colorProperty.get(13));
         tileList.add(railRoad.get(2));
@@ -93,7 +93,7 @@ public class FactoryBoard {
         tileList.add(colorProperty.get(19));
         tileList.add(railRoad.get(3));
         tileList.add(new DrawCardTile
-                ("Community Chest Tile", "Community Chest Tile", true));
+                ("Chance Tile", "Chance Tile", true));
         tileList.add(colorProperty.get(20));
         tileList.add(new TaxTile("Luxury Tile", "Luxury Tile", 200));
         tileList.add(colorProperty.get(21));
