@@ -22,4 +22,12 @@ public class CardActionResultModel extends TileActionResultModel{
         this.cardName = cardName;
         this.isChance = isChance;
     }
+
+    public String getCardName() {
+        return cardName;
+    }
+
+    public boolean isChance() {
+        return isChance;
+    }
 }
