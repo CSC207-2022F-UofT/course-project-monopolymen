@@ -38,7 +38,7 @@ public class MortgagePropertyTest {
 
     @Before
     public void setUp() throws Exception {
-        property_2.addHouse();
+        property_2.addHouse(1);
         player_1.addProperty(property_1);
         player_1.addProperty(water);
         player_2.addProperty(property_2);
@@ -47,7 +47,7 @@ public class MortgagePropertyTest {
 
     @After
     public void tearDown() throws Exception {
-        property_2.subtractHouse();
+        property_2.subtractHouse(1);
         player_1.sellProperty(property_1);
         player_1.sellProperty(water);
         player_2.sellProperty(property_2);
