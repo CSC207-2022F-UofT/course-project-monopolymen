@@ -18,7 +18,7 @@ public class TestGoTile {
     @Test
     public void action() {
         Player player1 = new Player("Test", "test", 1500, board);
-        TileActionResultModel test = goTile.action(player1);
+        TileActionResultModel test = goTile.action(player1, board);
         assertEquals(test.getFlavorText(), "You landed on Go!");
         assertEquals(test.getPlayer(), player1);
         assertEquals(test.getPlayerPosition(), 0);

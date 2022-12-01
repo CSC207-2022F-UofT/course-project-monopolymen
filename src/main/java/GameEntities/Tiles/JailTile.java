@@ -1,5 +1,6 @@
 package GameEntities.Tiles;
 
+import GameEntities.Board;
 import GameEntities.Player;
 
 public class JailTile extends Tile{
@@ -20,7 +21,7 @@ public class JailTile extends Tile{
      * @return A TilePassResultModel object describing the action that was performed
      */
     @Override
-    public TileActionResultModel action(Player player) {
+    public TileActionResultModel action(Player player, Board board) {
         String inJail = "You are in jail";
         String notInJail = "You are just visiting";
         if(player.getTurnsInJail() != -1) {

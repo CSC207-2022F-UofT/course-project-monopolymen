@@ -24,14 +24,14 @@ public class TestJailTile {
     public void visiting() {
         // Test the player is just visiting if they activate the jail's action method
         assertEquals(testPlayer.getTurnsInJail(), -1);
-        assertEquals("You are just visiting", jail.action(testPlayer).getFlavorText());
+        assertEquals("You are just visiting", jail.action(testPlayer, board).getFlavorText());
     }
 
     @Test
     public void inJail() {
         // Test the player is in jail if they land on "Go To Jail"
         assertEquals(testPlayer.getTurnsInJail(), -1);
-        assertEquals(goToJail.action(testPlayer).getFlavorText(), "You are being sent to jail.");
+        assertEquals(goToJail.action(testPlayer, board).getFlavorText(), "You are being sent to jail.");
         assertEquals(testPlayer.getTurnsInJail(), 0);
         assertEquals(testPlayer.getPosition(), board.getJailTilePosition());
     }
