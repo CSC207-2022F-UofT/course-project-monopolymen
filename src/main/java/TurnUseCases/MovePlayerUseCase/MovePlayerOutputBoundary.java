@@ -49,6 +49,7 @@ public interface MovePlayerOutputBoundary {
      * Shows that the property is purchasable
      * @param player The player object the action is being performed on
      * @param tile The tile the player landed on
+     * @param buyable If the tile is buyable
      */
-    public void showBuyableProperty(Player player, Tile tile);
+    public void showBuyableProperty(Player player, Tile tile, boolean buyable);
 }

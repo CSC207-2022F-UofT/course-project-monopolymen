@@ -53,28 +53,29 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
                 TileActionResultModel result = board.getTile(player.getPosition()).action(player);
                 if(result instanceof CardActionResultModel) {
                     // Player landed on draw card tile
+                    CardActionResultModel cardResult = (CardActionResultModel) result;
                     if (playerBeforePosition != result.getPlayerPosition()) {
                         // Card moved player
-                        if (result.getPlayerPosition() == -1) {
+                        if (result.getPlayerPosition() == board.getJailTilePosition()) {
                             // Player is moving to jail, does not collect "GO" tile money
                             // player.enterJail() is handled in the card's action
-                            tryToGetOutOfJailOutputBoundary.showCardDraw(player, result.getCardName(),
-                                    result.getFlavorText(), result.isChance());
+                            tryToGetOutOfJailOutputBoundary.showCardDraw(player, cardResult.getCardName(),
+                                    cardResult.getFlavorText(), cardResult.isChance());
                             sendToJail(player);
                         } else {
                             // Normal move player card
-                            tryToGetOutOfJailOutputBoundary.showCardDraw(player, result.getCardName(),
-                                    result.getFlavorText(), result.isChance());
+                            tryToGetOutOfJailOutputBoundary.showCardDraw(player, cardResult.getCardName(),
+                                    cardResult.getFlavorText(), cardResult.isChance());
                         }
                     } else {
                         // Card didn't move player
-                        tryToGetOutOfJailOutputBoundary.showCardDraw(player, result.getCardName(),
-                                result.getFlavorText(), result.isChance());
+                        tryToGetOutOfJailOutputBoundary.showCardDraw(player, cardResult.getCardName(),
+                                cardResult.getFlavorText(), cardResult.isChance());
                     }
                 } else {
                     // Player didn't land on a draw card tile
                     Tile tile = board.getTile(player.getPosition());
-                    if (result.getPlayerPosition() == -1) {
+                    if (result.getPlayerPosition() == board.getJailTilePosition()) {
                         // Player landed on "go to jail" and their position should now be in jail
                         // player.enterJail() is handeled in the tile's action method
                         sendToJail(player);
@@ -84,7 +85,9 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
                                 result.getFlavorText());
                         if (tile instanceof Property) {
                             if (((Property) tile).getOwner() == null) {
-                                tryToGetOutOfJailOutputBoundary.showBuyableProperty(player, tile);
+                                tryToGetOutOfJailOutputBoundary.showBuyableProperty(player, tile, true);
+                            } else {
+                                tryToGetOutOfJailOutputBoundary.showBuyableProperty(player, tile, false);;
                             }
                         }
                     }
