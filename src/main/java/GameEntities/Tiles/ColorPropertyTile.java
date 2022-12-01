@@ -39,13 +39,13 @@ public class ColorPropertyTile extends Property{
      * @see GameEntities.Tiles.Property
      */
     public ColorPropertyTile(String color, String propertyName, String propertyDisplayName, int purchasePrice,
-                             int[] rentPrice, int buildingCost, int mortgageValue, int unMortgageValue, int numHouses, int numHotels) {
+                             int[] rentPrice, int buildingCost, int mortgageValue, int unMortgageValue) {
         super(propertyName, propertyDisplayName, purchasePrice, mortgageValue, unMortgageValue);
         this.color = color;
         this.rentPrice = rentPrice;
         this.buildingCost = buildingCost;
-        this.numHouses = numHouses;
-        this.numHotels = numHotels;
+        this.numHouses = 0;
+        this.numHotels = 0;
 
 
     }
@@ -61,6 +61,13 @@ public class ColorPropertyTile extends Property{
     }
     public void addHotel(int add){
         this.numHotels += add;
+    }
+    public void subtractHouse(int subtract){
+        this.numHouses -= subtract;
+    }
+    public void subtractHotel(int subtract){
+        this.numHotels -= subtract;
+
     }
     /**
      * Returns whether all of the colored property in a specific colored set are owned.
