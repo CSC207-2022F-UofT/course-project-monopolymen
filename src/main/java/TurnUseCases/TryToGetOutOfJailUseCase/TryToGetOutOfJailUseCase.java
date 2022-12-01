@@ -1,10 +1,7 @@
 package TurnUseCases.TryToGetOutOfJailUseCase;
 import GameEntities.Board;
 import GameEntities.Player;
-import GameEntities.Tiles.Property;
-import GameEntities.Tiles.Tile;
-import GameEntities.Tiles.TileActionResultModel;
-import GameEntities.Tiles.TilePassResultModel;
+import GameEntities.Tiles.*;
 import TurnUseCases.MovePlayerUseCase.MovePlayerUseCase;
 import TurnUseCases.EndTurnUseCase.EndTurnUseCase;
 import java.util.ArrayList;
@@ -32,6 +29,42 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
         this.board = board;
         this.endTurnUseCase = endTurnUseCase;
         this.movePlayerUseCase = movePlayerUseCase;
+    }
+
+    /**
+     * Starts the logic of moving the player to the position
+     * This is only called by startAction when it lands on a draw card tile that will move the player
+     * @param player The player object that the action is being performed on
+     * @param absolutePosition the position the player will move to
+     */
+
+    private void moveToPosition(Player player, int absolutePosition) {
+        // There is only 1 case when the player moves back by the card and its 3 spaces
+        int steps = absolutePosition - player.getPosition();
+        if(steps == -3) {
+            // Only move backwards case
+            for (int i = 0; i < steps; i++) {
+                player.updatePosition(-1);
+                if(board.getTile(player.getPosition()) instanceof GoTile) {
+                    // Player will pass but not collect money from "GO"
+                    TilePassResultModel nullPass = new TilePassResultModel(false, "");
+                    tryToGetOutOfJailOutputBoundary.showResultOfPass(player, player.getPosition(), nullPass);
+                } else {
+                    // Normal backwards pass
+                    TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
+                    tryToGetOutOfJailOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
+                }
+            }
+            showAction(player);
+        } else {
+            int positiveSteps = (steps + board.getTilesList().size()) % board.getTilesList().size();
+            for (int i = 0; i < positiveSteps; i++) {
+                player.updatePosition(1);
+                TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
+                tryToGetOutOfJailOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
+            }
+            showAction(player);
+        }
     }
 
     @Override
@@ -66,6 +99,7 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
                             // Normal move player card
                             tryToGetOutOfJailOutputBoundary.showCardDraw(player, cardResult.getCardName(),
                                     cardResult.getFlavorText(), cardResult.isChance());
+                            moveToPosition(player, cardResult.getPlayerPosition());
                         }
                     } else {
                         // Card didn't move player
@@ -132,5 +166,23 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
         tryToGetOutOfJailOutputBoundary.showResultOfAction(player, player.getPosition(),
                 "You are being sent to jail.");
         endTurnUseCase.forceEndTurn(player);
+    }
+
+    /**
+     * Shows the action in the presenter
+     * @param player The player object that the action is being performed on
+     */
+    private void showAction(Player player) {
+        TileActionResultModel result = board.getTile(player.getPosition()).action(player, board);
+        Tile tile = board.getTile(player.getPosition());
+        tryToGetOutOfJailOutputBoundary.showResultOfAction(player, player.getPosition(),
+                result.getFlavorText());
+        if (tile instanceof Property) {
+            if (((Property) tile).getOwner() == null) {
+                tryToGetOutOfJailOutputBoundary.showBuyableProperty(player, tile, true);
+            } else {
+                tryToGetOutOfJailOutputBoundary.showBuyableProperty(player, tile, false);
+            }
+        }
     }
 }
