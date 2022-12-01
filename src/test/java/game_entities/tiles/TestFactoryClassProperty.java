@@ -1,4 +1,4 @@
-package FactoryClassTesting;
+package game_entities.tiles;
 
 import static org.junit.Assert.*;
 

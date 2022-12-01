@@ -1,4 +1,4 @@
-package FactoryClassTesting;
+package game_entities.cards;
 import static org.junit.Assert.*;
 
 import game_entities.Board;
