@@ -30,13 +30,6 @@ public interface MovePlayerOutputBoundary {
     public void showRoll(int[] playerRollAmount);
 
     /**
-     * Shows that the player is able to buy the current property they are on
-     * @param player The player object the action is being performed on
-     * @param tile The tile that is available for purchase
-     */
-    public void showRoll(Player player, Tile tile);
-
-    /**
      * Shows the card the player drew and if they moved or not
      * @param player The player object the action is being performed on
      * @param cardName Card's name
