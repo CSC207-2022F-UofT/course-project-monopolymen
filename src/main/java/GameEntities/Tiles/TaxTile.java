@@ -1,5 +1,6 @@
 package GameEntities.Tiles;
 
+import GameEntities.Board;
 import GameEntities.Player;
 
 public class TaxTile extends Tile{
@@ -20,7 +21,7 @@ public class TaxTile extends Tile{
      * @param player The Player that the action is being performed on (landed on the tile)
      * @return A TilePassResultModel object describing the action that was performed
      */
-    public TileActionResultModel action(Player player) {
+    public TileActionResultModel action(Player player, Board board) {
         player.subtractMoney(taxAmount);
         return new TileActionResultModel("You paid $" + taxAmount + getTileDisplayName() + " !", player,
                 player.getPosition());

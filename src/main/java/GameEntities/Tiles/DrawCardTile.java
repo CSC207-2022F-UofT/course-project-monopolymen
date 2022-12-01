@@ -26,7 +26,7 @@ public class DrawCardTile extends Tile{
     }
 
     @Override
-    public TileActionResultModel action(Player player) {
+    public TileActionResultModel action(Player player, Board board) {
         Card drawnCard = board.pickCard(chanceTile);
         TileActionResultModel cardModel = drawnCard.action(player);
         return cardModel;

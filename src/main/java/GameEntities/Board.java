@@ -7,6 +7,7 @@ import GameEntities.Tiles.Tile;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board implements Serializable {
     private final ArrayList<Card> communityCards;
@@ -36,11 +37,11 @@ public class Board implements Serializable {
         return 0;
     }
 
-    public ArrayList<Tile> getPropertyTiles(){
-        ArrayList<Tile> propertyTiles = new ArrayList<Tile>();
+    public List<Property> getPropertyTiles(){
+        List<Property> propertyTiles = new ArrayList<>();
         for(int i = 0; i < tilesList.size(); i++){
             if(tilesList.get(i) instanceof Property){
-                propertyTiles.add(tilesList.get(i));
+                propertyTiles.add((Property) tilesList.get(i));
             }
         }
         return propertyTiles;

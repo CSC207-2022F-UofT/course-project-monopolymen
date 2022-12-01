@@ -1,5 +1,6 @@
 package GameEntities.Tiles;
 
+import GameEntities.Board;
 import GameEntities.Player;
 
 import java.util.List;
@@ -78,14 +79,20 @@ public class UtilityTile extends Property {
     }
 
     /**
-     * TODO not implemented (leaving for Youssef).
      * Perform the action for when Player <i>player</i> lands on this tile.
      *
      * @param player The Player that the action is being performed on (landed on the tile)
      * @return A TileActionResultModel object describing the action that was performed
      */
     @Override
-    public TileActionResultModel action(Player player) {
-        return null;
+    public TileActionResultModel action(Player player, Board board) {
+        if (!isOwned()){
+            return new TileActionResultModel("Would you Like to Purchase " + getTileDisplayName() + " for" + getPurchasePrice() + " ?" , player, player.getPosition());
+        }
+        else{
+            player.subtractMoney(getRent(player, board.getPropertyTiles()));
+            getOwner().addMoney(getRent(player, board.getPropertyTiles()));
+            return new TileActionResultModel("You Paid" + getRent(player, board.getPropertyTiles()) + " to" + getOwner(), player, player.getPosition());
+        }
     }
 }

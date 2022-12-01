@@ -1,5 +1,6 @@
 package GameEntities.Tiles;
 
+import GameEntities.Board;
 import GameEntities.Player;
 
 public class GoTile extends Tile {
@@ -19,7 +20,7 @@ public class GoTile extends Tile {
      * @return A TileActionResultModel object describing the action that was performed
      */
     @Override
-    public TileActionResultModel action(Player player) {
+    public TileActionResultModel action(Player player, Board board) {
         return new TileActionResultModel("You landed on Go!", player, player.getPosition());
     }
 
