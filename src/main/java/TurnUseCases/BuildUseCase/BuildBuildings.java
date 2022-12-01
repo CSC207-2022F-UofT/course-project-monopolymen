@@ -1,5 +1,6 @@
 package TurnUseCases.BuildUseCase;
 
+import GameEntities.Board;
 import GameEntities.Player;
 import GameEntities.Tiles.ColorPropertyTile;
 import GameEntities.Tiles.Property;
@@ -12,6 +13,14 @@ import java.util.ArrayList;
  */
 
 public class BuildBuildings implements BuildBuildingInputBoundary{
+
+    private final BuildBuildingOutputBoundary presenter;
+    private final Board board;
+
+    public BuildBuildings(BuildBuildingOutputBoundary presenter, Board board) {
+        this.presenter = presenter;
+        this.board = board;
+    }
 
     /**
      * Check if player can build buildings
@@ -30,39 +39,34 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         if(!(property instanceof ColorPropertyTile)){
             return false;
         }
+        ColorPropertyTile colorProperty = (ColorPropertyTile) property;
+
+        if(!colorProperty.allColoredPropertySetOwned(colorProperty.getColor(), board.getPropertyTiles())) {
+            return false;
+        }
+
         // Selecting ColorPropertyTile from player's properties.
-        ArrayList<ColorPropertyTile> ColorProperties = new ArrayList<ColorPropertyTile>();
+        ArrayList<ColorPropertyTile> colorProperties = new ArrayList<>();
         ArrayList<Property> properties = player.getProperties();
         for (int i = 0; i < properties.size(); i++){
             if(properties.get(i) instanceof ColorPropertyTile){
-                ColorProperties.add((ColorPropertyTile) properties.get(i));
+                colorProperties.add((ColorPropertyTile) properties.get(i));
             }
         }
         // Selecting ColorPropertyTile with the same color.
-        String color = property.getColor(); // need to add a method getColor to get the color of the ColorPropertyTile.
-        ArrayList<ColorPropertyTile> SameColorProperties = new ArrayList<ColorPropertyTile>();
-        int counter = 0;
-        for (int i = 0; i < ColorProperties.size(); i++){
-            if(ColorProperties.get(i).getColor().equals(color)) {
-                counter += 1;
-                SameColorProperties.add(ColorProperties.get(i));
+        String color = colorProperty.getColor();
+        ArrayList<ColorPropertyTile> sameColorProperties = new ArrayList<>();
+        for (int i = 0; i < colorProperties.size(); i++){
+            if(colorProperties.get(i).getColor().equals(color)) {
+                sameColorProperties.add(colorProperties.get(i));
             }
         }
-        //When player owns all the properties in a Monopoly color group, player can buy houses.
-        if (color.equals("Brown") || color.equals("Dark Blue")){
-           if (counter != 2){
-               return false;
-           }
-        } else{
-            if (counter != 3){
-                return false;
-            }
-        }
+
         //Player has to build equally – this means player can’t build a second house on a property unless player has a house on all the other properties.
-        for (ColorPropertyTile sameColorProperty : SameColorProperties) {
-            int a = sameColorProperty.getHouse() + sameColorProperty.getHotel();
+        for (ColorPropertyTile sameColorProperty : sameColorProperties) {
+            int a = sameColorProperty.getNumHouses() + sameColorProperty.getNumHotels();
             // need to add two methods getHouse and getHotel in ColorPropertyTile class to get the number of houses and hotels.
-            int b = property.getHouse() + property.getHotel();
+            int b = colorProperty.getNumHouses() + colorProperty.getNumHotels();
             if (b > a) {
                 return false;
             }
@@ -75,15 +79,14 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
      *
      * @param player the player who wants to build buildings.
      * @param property the property on which player wants to build buildings.
-     * @param presenter presenter which provides info for players.
      */
     @Override
-    public void buildHouse (Player player, ColorPropertyTile property, BuildBuildingOutputBoundary presenter){
+    public void buildHouse (Player player, ColorPropertyTile property){
         if (isBuildable(player, property)){
-            property.addHouse();
+            property.addHouse(1);
             //need to add a method addHouse in ColorPropertyTile class to add the number of house.
             String color = property.getColor();
-            player.subtractMoney(property.getBuildingCost);
+            player.subtractMoney(property.getBuildingCost());
             String text = player.getName() + "built a house on " + property.getTileName();
             presenter.showBuildBuilding(player, property, text);
         }
@@ -96,15 +99,14 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
      *
      * @param player the player who wants to build buildings.
      * @param property the property on which player wants to build buildings.
-     * @param presenter presenter which provides info for players.
      */
     @Override
-    public void buildHotel (Player player, ColorPropertyTile property, BuildBuildingOutputBoundary presenter){
-        if (isBuildable(player, property) && property.getHouses() >= 4){
-            property.addHotel();
+    public void buildHotel (Player player, ColorPropertyTile property){
+        if (isBuildable(player, property) && property.getNumHouses() >= 4){
+            property.addHotel(1);
             //need to add a method addHotel in ColorPropertyTile class to add the number of hotel.
             String color = property.getColor();
-            player.subtractMoney(property.getBuildingCost);
+            player.subtractMoney(property.getBuildingCost());
             String text = player.getName() + "built a hotel on " + property.getTileName();
             presenter.showBuildBuilding(player, property, text);
         }
@@ -126,6 +128,8 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         if(!(property instanceof ColorPropertyTile)){
             return false;
         }
+        ColorPropertyTile colorProperty = (ColorPropertyTile) property;
+
         ArrayList<ColorPropertyTile> ColorProperties = new ArrayList<ColorPropertyTile>();
         ArrayList<Property> properties = player.getProperties();
         for (int i = 0; i < properties.size(); i++){
@@ -134,7 +138,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             }
         }
         // Selecting ColorPropertyTile with the same color.
-        String color = property.getColor();
+        String color = colorProperty.getColor();
         ArrayList<ColorPropertyTile> SameColorProperties = new ArrayList<ColorPropertyTile>();
         for (int i = 0; i < ColorProperties.size(); i++){
             if(ColorProperties.get(i).getColor().equals(color)) {
@@ -142,8 +146,8 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             }
         }
         for (ColorPropertyTile sameColorProperty : SameColorProperties) {
-            int a = sameColorProperty.getHouse() + sameColorProperty.getHotel();
-            int b = property.getHouse() + property.getHotel();
+            int a = sameColorProperty.getNumHouses() + sameColorProperty.getNumHotels();
+            int b = colorProperty.getNumHouses() + colorProperty.getNumHotels();
             if (b < a) {
                 return false;
             }
@@ -156,12 +160,11 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
      *
      * @param player the player who wants to sell buildings.
      * @param property the property on which player wants to sell buildings.
-     * @param presenter presenter which provides info for players
      */
     @Override
-    public void sellHouse(Player player, ColorPropertyTile property, BuildBuildingOutputBoundary presenter){
-        if (isSellable(player, property) && property.getHotel() == 0){
-            property.subtractHouse();
+    public void sellHouse(Player player, ColorPropertyTile property){
+        if (isSellable(player, property) && property.getNumHotels() == 0){
+            property.subtractHouse(1);
             int value = 0;
             value = (int) (0.5*property.getBuildingCost());
             player.addMoney(value);
@@ -177,12 +180,11 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
      *
      * @param player the player who wants to sell buildings.
      * @param property the property on which player wants to sell buildings.
-     * @param presenter presenter which provides info for players
      */
     @Override
-    public void sellHotel(Player player, ColorPropertyTile property, BuildBuildingOutputBoundary presenter){
-        if (isSellable(player, property) && property.getHotel() > 0){
-            property.subtractHotel();
+    public void sellHotel(Player player, ColorPropertyTile property){
+        if (isSellable(player, property) && property.getNumHotels() > 0){
+            property.subtractHotel(1);
             int value = 0;
             value = (int) (0.5*property.getBuildingCost());
             player.addMoney(value);

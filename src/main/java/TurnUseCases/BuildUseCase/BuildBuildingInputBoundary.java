@@ -18,18 +18,16 @@ public interface BuildBuildingInputBoundary {
      *
      * @param player the player who wants to build buildings.
      * @param property the property on which player wants to build buildings.
-     * @param presenter presenter which provides info for players
      */
-    public void buildHouse (Player player, ColorPropertyTile property, BuildBuildingOutputBoundary presenter);
+    public void buildHouse (Player player, ColorPropertyTile property);
 
     /**
      * Build a hotel on the property.
      *
      * @param player the player who wants to build buildings.
      * @param property the property on which player wants to build buildings.
-     * @param presenter presenter which provides info for players
      */
-    public void buildHotel (Player player, ColorPropertyTile property, BuildBuildingOutputBoundary presenter);
+    public void buildHotel (Player player, ColorPropertyTile property);
 
     /**
      * Check if player can sell buildings
@@ -44,16 +42,14 @@ public interface BuildBuildingInputBoundary {
      *
      * @param player the player who wants to sell buildings.
      * @param property the property on which player wants to sell buildings.
-     * @param presenter presenter which provides info for players
      */
-    public void sellHouse(Player player, ColorPropertyTile property, BuildBuildingOutputBoundary presenter);
+    public void sellHouse(Player player, ColorPropertyTile property);
 
     /**
      * Selling a building on the property.
      *
      * @param player the player who wants to sell buildings.
      * @param property the property on which player wants to sell buildings.
-     * @param presenter presenter which provides info for players
      */
-    public void sellHotel(Player player, ColorPropertyTile property, BuildBuildingOutputBoundary presenter);
+    public void sellHotel(Player player, ColorPropertyTile property);
 }
