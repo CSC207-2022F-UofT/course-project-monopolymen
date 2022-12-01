@@ -11,7 +11,7 @@ import GameEntities.Tiles.UtilityTile;
  */
 public class MortgageProperty implements MortgagePropertyInputBoundary{
 
-    private MortgagePropertyOutputBoundary presenter;
+    private final MortgagePropertyOutputBoundary presenter;
 
     /**
      * Creates an instance of the MortgageProperty class with the provided presenter.
@@ -30,8 +30,10 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
      */
     @Override
     public void mortgage(Player player, Property property){
-        if (player.ownsProperty(property) && property.getHouse() == 0 && property.getHotel() == 0
-        && property instanceof ColorPropertyTile) {
+        if (player.ownsProperty(property)
+                && property instanceof ColorPropertyTile
+                && ((ColorPropertyTile) property).getNumHouses() == 0
+                && ((ColorPropertyTile) property).getNumHotels() == 0) {
             player.addMoney(property.mortgage());
             int mortgageValue = property.getMortgageValue();
             String text = player.getName() + "mortgaged " + property.getTileName() + "and get $" + mortgageValue;
@@ -62,7 +64,7 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
         if (player.ownsProperty(property)) {
             player.subtractMoney(unmortgageValue);
             property.unmortgage();
-            String text = player.getName() + "unmortgaged " + property.getTileName() + "and subtract $" + Integer.toString(unmortgageValue);
+            String text = player.getName() + "unmortgaged " + property.getTileName() + "and subtract $" + unmortgageValue;
             presenter.showMortgageProperty(player, property, text);
         } else {
             String text = player.getName() + "cannot unmortgage " + property.getTileName();
