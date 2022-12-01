@@ -1,10 +1,9 @@
 import static org.junit.Assert.*;
 
-import GameEntities.Board;
-import GameEntities.Cards.Card;
-import GameEntities.Player;
-import GameEntities.Tiles.RailroadTile;
-import GameEntities.Tiles.Tile;
+import game_entities.Board;
+import game_entities.Player;
+import game_entities.tiles.RailroadTile;
+import game_entities.tiles.Tile;
 import org.junit.Test;
 
 import java.util.ArrayList;
