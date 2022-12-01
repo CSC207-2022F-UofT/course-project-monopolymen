@@ -86,7 +86,7 @@ public class MortgagePropertyTest {
     public void testUnmortgagePropertyWithoutBuildings_1(){
         mortgageProperty.mortgage(player_1, property_1);
         mortgageProperty.unmortgage(player_1, property_1);
-        assertEquals(player_2.getMoney(), 1485);
+        assertEquals(player_1.getMoney(), 1485);
         assertEquals(property_1.isMortgaged(), false);
     }
 
@@ -94,7 +94,7 @@ public class MortgagePropertyTest {
     public void testUnmortgagePropertyWithoutBuildings_2(){
         mortgageProperty.mortgage(player_1, water);
         mortgageProperty.unmortgage(player_1, water);
-        assertEquals(player_2.getMoney(), 1490);
+        assertEquals(player_1.getMoney(), 1490);
         assertEquals(water.isMortgaged(), false);
     }
 
