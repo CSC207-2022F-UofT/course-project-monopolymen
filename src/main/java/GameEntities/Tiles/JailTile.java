@@ -5,7 +5,8 @@ import GameEntities.Player;
 
 public class JailTile extends Tile{
     /**
-     * A player landing on the space cannot move for 3 turns unless they pay or have "get out of jail" card.
+     * A player landing on the space by GoToJailTile cannot move for 3 turns unless they pay or have
+     * "get out of jail" card.
      * @see GameEntities.Tiles.Property
      */
     public JailTile() {
