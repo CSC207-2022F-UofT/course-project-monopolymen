@@ -2,7 +2,7 @@ package FactoryClassTesting;
 
 import static org.junit.Assert.*;
 
-import GameEntities.Tiles.*;
+import game_entities.tiles.*;
 
 
 import org.junit.Test;

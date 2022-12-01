@@ -1,25 +1,23 @@
 package FactoryClassTesting;
 import static org.junit.Assert.*;
 
-import GameEntities.Board;
-import GameEntities.Cards.*;
-import GameEntities.FactoryBoard;
-import GameEntities.Tiles.*;
+import game_entities.Board;
+import game_entities.cards.*;
+import game_entities.FactoryBoard;
+import game_entities.tiles.*;
 
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class TestFactoryClassCard {
     @Test
     public void TestOutOfJailFreeCard() throws FileNotFoundException {
         //test the OutOfJailFreeCard method
-        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/Cards.csv");
+        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/cards.csv");
         cardLines.remove(0);
         GetOutOfJailCard test = FactoryCard.OutOfJailFreeCard(cardLines.get(0));
         assertTrue(test.isChanceCard());
@@ -30,7 +28,7 @@ public class TestFactoryClassCard {
     @Test
     public void TestRepairCard() throws FileNotFoundException {
         //test the RepairCard method
-        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/Cards.csv");
+        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/cards.csv");
         cardLines.remove(0);
         PropertyRepairCard test = FactoryCard.repairCard(cardLines.get(1));
         assertTrue(test.isChanceCard());
@@ -41,7 +39,7 @@ public class TestFactoryClassCard {
     @Test
     public void testMoneyCard() throws FileNotFoundException {
         //test the MoneyCard method
-        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/Cards.csv");
+        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/cards.csv");
         cardLines.remove(0);
         MoneyCard test = FactoryCard.moneyCard(cardLines.get(2));
         assertTrue(test.isChanceCard());
@@ -52,7 +50,7 @@ public class TestFactoryClassCard {
     @Test
     public void testMoveBackCard() throws FileNotFoundException {
         //test the MoveBackCard
-        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/Cards.csv");
+        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/cards.csv");
         cardLines.remove(0);
         AdvanceCard test = FactoryCard.moveBackCard(cardLines.get(11));
         assertTrue(test.isChanceCard());
@@ -62,7 +60,7 @@ public class TestFactoryClassCard {
     }
     @Test
     public void testCommunityCard() throws FileNotFoundException {
-        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/Cards.csv");
+        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/cards.csv");
         cardLines.remove(0);
         MoneyCard test = FactoryCard.moneyCard(cardLines.get(31));
         assertFalse(test.isChanceCard());
@@ -73,8 +71,8 @@ public class TestFactoryClassCard {
                 ("src/main/resources/Data/property_csvs/Color Properties Monopoly.csv",
                         "src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv",
                         "src/main/resources/Data/property_csvs/Station Properties Monopoly.csv",
-                        "src/main/resources/Cards.csv");
-        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/Cards.csv");
+                        "src/main/resources/cards.csv");
+        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/cards.csv");
         cardLines.remove(0);
         AdvanceCard test = FactoryCard.advanceCard(cardLines.get(4), temp);
         assertTrue(test.isChanceCard());
@@ -85,8 +83,8 @@ public class TestFactoryClassCard {
                 ("src/main/resources/Data/property_csvs/Color Properties Monopoly.csv",
                         "src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv",
                         "src/main/resources/Data/property_csvs/Station Properties Monopoly.csv",
-                        "src/main/resources/Cards.csv");
-        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/Cards.csv");
+                        "src/main/resources/cards.csv");
+        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/cards.csv");
         cardLines.remove(0);
         GoToNearestCard test = FactoryCard.advanceNearCard(cardLines.get(6), temp);
         assertTrue(test.isChanceCard());
@@ -98,8 +96,8 @@ public class TestFactoryClassCard {
                 ("src/main/resources/Data/property_csvs/Color Properties Monopoly.csv",
                         "src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv",
                         "src/main/resources/Data/property_csvs/Station Properties Monopoly.csv",
-                        "src/main/resources/Cards.csv");
-        ArrayList<Card>[] list = FactoryCard.getCards("src/main/resources/Cards.csv", temp);
+                        "src/main/resources/cards.csv");
+        ArrayList<Card>[] list = FactoryCard.getCards("src/main/resources/cards.csv", temp);
         int chanceNum = 0;
         int communityNum = 0;
         for (Card chance : list[0]){

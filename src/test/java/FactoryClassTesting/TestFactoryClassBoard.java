@@ -1,10 +1,9 @@
 package FactoryClassTesting;
 import static org.junit.Assert.*;
 
-import GameEntities.Board;
-import GameEntities.Cards.*;
-import GameEntities.FactoryBoard;
-import GameEntities.Tiles.*;
+import game_entities.Board;
+import game_entities.FactoryBoard;
+import game_entities.tiles.*;
 
 import org.junit.Test;
 
@@ -31,7 +30,7 @@ public class TestFactoryClassBoard {
                 ("src/main/resources/Data/property_csvs/Color Properties Monopoly.csv",
                         "src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv",
                         "src/main/resources/Data/property_csvs/Station Properties Monopoly.csv",
-                        "src/main/resources/Cards.csv");
+                        "src/main/resources/cards.csv");
         assertEquals(testBoard.getTilesList().size(), 40);
         assertEquals(testBoard.getJailTilePosition(), 10);
     }
