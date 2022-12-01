@@ -50,7 +50,7 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
                     tryToGetOutOfJailOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
                 }
                 int playerBeforePosition = player.getPosition();
-                TileActionResultModel result = board.getTile(player.getPosition()).action(player);
+                TileActionResultModel result = board.getTile(player.getPosition()).action(player, board);
                 if(result instanceof CardActionResultModel) {
                     // Player landed on draw card tile
                     CardActionResultModel cardResult = (CardActionResultModel) result;

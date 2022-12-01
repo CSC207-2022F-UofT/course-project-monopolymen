@@ -70,7 +70,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
      * @param player The player object that the action is being performed on
      */
     private void showAction(Player player) {
-        TileActionResultModel result = board.getTile(player.getPosition()).action(player);
+        TileActionResultModel result = board.getTile(player.getPosition()).action(player, board);
         Tile tile = board.getTile(player.getPosition());
         movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
                 result.getFlavorText());
@@ -106,7 +106,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
             }
             // Player passed through all the tiles and is now on their original position + rollSum
             int playerBeforePosition = player.getPosition();
-            TileActionResultModel result = board.getTile(player.getPosition()).action(player);
+            TileActionResultModel result = board.getTile(player.getPosition()).action(player, board);
             if(result instanceof CardActionResultModel) {
                 // Player landed on draw card tile
                 CardActionResultModel cardResult = (CardActionResultModel) result;
