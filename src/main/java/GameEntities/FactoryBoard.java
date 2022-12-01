@@ -27,7 +27,7 @@ public class FactoryBoard {
      * @param cardCSV               A String Representing the path of the CSV file containing information about Cards
      * @return                      Return a board that is made from the given CSV files
      */
-    public Board boardMaker(String colorPropertyCSV, String utilityPropertyCSV, String railRoadPropertyCSV,
+    public static Board boardMaker(String colorPropertyCSV, String utilityPropertyCSV, String railRoadPropertyCSV,
                             String cardCSV) throws FileNotFoundException {
         List<ColorPropertyTile> colorProperties = FactoryProperty.initializeColorProperties(colorPropertyCSV);
         List<UtilityTile> utilityProperties = FactoryProperty.initializeUtilityProperties(utilityPropertyCSV);
@@ -48,17 +48,19 @@ public class FactoryBoard {
      * @param utility           An ArrayList of utility property that will be on the board
      * @return                  Return an ordered ArrayList of tiles that represents the tiles on the board
      */
-    public ArrayList<Tile> order(List<ColorPropertyTile> colorProperty, List<RailroadTile> railRoad,
-                                 List<UtilityTile> utility){
+    public static ArrayList<Tile> order(List<ColorPropertyTile> colorProperty, List<RailroadTile> railRoad,
+                                        List<UtilityTile> utility){
         ArrayList<Tile> tileList = new ArrayList<Tile>();
         tileList.add(new GoTile());
         tileList.add(colorProperty.get(0));
-        //Community Chest Tile
+        tileList.add(new DrawCardTile
+                ("Community Chest Tile", "Community Chest Tile", false));
         tileList.add(colorProperty.get(1));
         tileList.add(new TaxTile("Income Tax", "Income Tax", 200));
         tileList.add(railRoad.get(0));
         tileList.add(colorProperty.get(2));
-        //Chance Tile
+        tileList.add(new DrawCardTile
+                ("Chance Tile", "Chance Tile", true));
         tileList.add(colorProperty.get(3));
         tileList.add(colorProperty.get(4));
         tileList.add(new JailTile());
@@ -68,12 +70,14 @@ public class FactoryBoard {
         tileList.add(colorProperty.get(7));
         tileList.add(railRoad.get(1));
         tileList.add(colorProperty.get(8));
-        //Community Chest Tile
+        tileList.add(new DrawCardTile
+                ("Community Chest Tile", "Community Chest Tile", false));
         tileList.add(colorProperty.get(9));
         tileList.add(colorProperty.get(10));
         tileList.add(new FreeParkingTile());
         tileList.add(colorProperty.get(11));
-        //Chance Tile
+        tileList.add(new DrawCardTile
+                ("Chance Tile", "Chance Tile", true));
         tileList.add(colorProperty.get(12));
         tileList.add(colorProperty.get(13));
         tileList.add(railRoad.get(2));
@@ -84,10 +88,12 @@ public class FactoryBoard {
         tileList.add(new GoToJailTile());
         tileList.add(colorProperty.get(17));
         tileList.add(colorProperty.get(18));
-        //Community Chest tile
+        tileList.add(new DrawCardTile
+                ("Community Chest Tile", "Community Chest Tile", false));
         tileList.add(colorProperty.get(19));
         tileList.add(railRoad.get(3));
-        //Chance Card tile
+        tileList.add(new DrawCardTile
+                ("Chance Tile", "Chance Tile", true));
         tileList.add(colorProperty.get(20));
         tileList.add(new TaxTile("Luxury Tile", "Luxury Tile", 200));
         tileList.add(colorProperty.get(21));
@@ -104,7 +110,7 @@ public class FactoryBoard {
             board.addChanceCard(chanceCard);
         }
         for (Card communityCard : cards[1]){
-            board.addChanceCard(communityCard);
+            board.addCommunityCard(communityCard);
         }
     }
 }

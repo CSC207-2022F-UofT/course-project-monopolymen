@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 
 import GameEntities.Board;
 import GameEntities.Cards.*;
+import GameEntities.FactoryBoard;
 import GameEntities.Tiles.*;
 
 
@@ -10,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -66,7 +68,49 @@ public class TestFactoryClassCard {
         assertFalse(test.isChanceCard());
     }
     @Test
-    public void testGetCards(){
-
+    public void testAdvanceCard() throws FileNotFoundException {
+        Board temp = FactoryBoard.boardMaker
+                ("src/main/resources/Data/property_csvs/Color Properties Monopoly.csv",
+                        "src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv",
+                        "src/main/resources/Data/property_csvs/Station Properties Monopoly.csv",
+                        "src/main/resources/Cards.csv");
+        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/Cards.csv");
+        cardLines.remove(0);
+        AdvanceCard test = FactoryCard.advanceCard(cardLines.get(4), temp);
+        assertTrue(test.isChanceCard());
+    }
+    @Test
+    public void testAdvanceNearCard() throws FileNotFoundException {
+        Board temp = FactoryBoard.boardMaker
+                ("src/main/resources/Data/property_csvs/Color Properties Monopoly.csv",
+                        "src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv",
+                        "src/main/resources/Data/property_csvs/Station Properties Monopoly.csv",
+                        "src/main/resources/Cards.csv");
+        List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/Cards.csv");
+        cardLines.remove(0);
+        GoToNearestCard test = FactoryCard.advanceNearCard(cardLines.get(6), temp);
+        assertTrue(test.isChanceCard());
+        assertEquals(test.getCardName(), "card_chance_7");
+    }
+    @Test
+    public void testGetCards() throws FileNotFoundException {
+        Board temp = FactoryBoard.boardMaker
+                ("src/main/resources/Data/property_csvs/Color Properties Monopoly.csv",
+                        "src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv",
+                        "src/main/resources/Data/property_csvs/Station Properties Monopoly.csv",
+                        "src/main/resources/Cards.csv");
+        ArrayList<Card>[] list = FactoryCard.getCards("src/main/resources/Cards.csv", temp);
+        int chanceNum = 0;
+        int communityNum = 0;
+        for (Card chance : list[0]){
+            assertTrue(chance.isChanceCard());
+            chanceNum++;
+        }
+        for (Card chance : list[1]){
+            assertFalse(chance.isChanceCard());
+            communityNum++;
+        }
+        assertEquals(16, chanceNum);
+        assertEquals(16, communityNum);
     }
 }
