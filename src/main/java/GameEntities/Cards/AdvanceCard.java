@@ -18,9 +18,7 @@ public class AdvanceCard extends Card{
     }
 
     @Override
-    public CardActionResultModel action(Player player){return null;}
-
-    public CardActionResultModel action(Player player, Board board) {
+    public CardActionResultModel action(Player player) {
         if(tileName.equals("GoToJail")){
             player.enterJail();
             return new CardActionResultModel(getCardDescription(), player, -1, getCardName(),

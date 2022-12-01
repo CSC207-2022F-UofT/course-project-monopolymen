@@ -1,11 +1,15 @@
 package GameEntities;
-import GameEntities.Tiles.*;
+
+import GameEntities.Tiles.Property;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+
 /**
  * A game of monopoly will have 4 players each responsible for keeping track of information such as
  * their money, position and so on...
  */
-public class Player {
+public class Player implements Serializable {
     private String name;
     private int money;
     private ArrayList<Property> properties = new ArrayList<Property>();
@@ -186,6 +190,11 @@ public class Player {
         return (this.getOutOfJailFree != 0);
     }
 
+    /** Return the number of get out of jail free cards a player has
+     *
+     * @return      The number of get out of jail free cards the player owns
+     */
+    public int numGetOutofJailFreeCards(){ return this.getOutOfJailFree;}
     /**
      * Remove 1 get out of jail free card from the players inventory
      */

@@ -10,9 +10,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class TestPlayerClass {
-    ArrayList<Card> temp = new ArrayList<Card>();
     ArrayList<Tile> temp1 = new ArrayList<Tile>();
-    Board board = new Board(temp, temp, temp1);
+    Board board = new Board(temp1);
     Player testPlayer = new Player("Dummy", "dog", 1500, board);
     int[] rentDummy = {100,200,300};
     RailroadTile testProperty = new RailroadTile("test", "test", 100, rentDummy, 100,200);
