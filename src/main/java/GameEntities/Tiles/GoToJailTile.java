@@ -19,6 +19,6 @@ public class GoToJailTile extends Tile{
     @Override
     public TileActionResultModel action(Player player) {
         player.addTurnInJail();
-        return new TileActionResultModel("You are being sent to jail.", player, -1);
+        return new TileActionResultModel("You are being sent to jail.", player, -1, tileName);
     }
 }

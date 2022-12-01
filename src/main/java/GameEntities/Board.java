@@ -1,6 +1,7 @@
 package GameEntities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import GameEntities.Tiles.JailTile;
 import GameEntities.Tiles.Tile;
@@ -27,7 +28,7 @@ public class Board {
             return 0;
         }
 
-        public ArrayList<Tile> getPropertyTiles(){
+        public List<Property> getPropertyTiles(){
             ArrayList<Tile> propertyTiles = new ArrayList<Tile>();
             for(int i = 0; i < tilesList.size(); i++){
                 if(tilesList.get(i) instanceof Property){
