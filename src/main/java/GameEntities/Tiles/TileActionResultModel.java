@@ -15,13 +15,14 @@ public class TileActionResultModel {
      * Construct an object that contains data for the result of a game tile's action
      *
      * @param flavorText     the text describing the action's result
+     * @param player         the player that the action is being performed on
      * @param playerPosition the integer describing the current position of the player after the action
-     * @param player the player that the action is being performed on
      */
     public TileActionResultModel(String flavorText, Player player, int playerPosition) {
         this.flavorText = flavorText;
         this.player = player;
         this.playerPosition = playerPosition;
+
     }
 
     public String getFlavorText() {
@@ -33,4 +34,5 @@ public class TileActionResultModel {
     }
 
     public Player getPlayer() { return player; }
+
 }

@@ -1,5 +1,6 @@
 package GameEntities.Tiles;
 
+import GameEntities.Board;
 import GameEntities.Player;
 
 /**
@@ -47,7 +48,7 @@ public abstract class Tile {
      * @param player The Player that the action is being performed on (landed on the tile)
      * @return A TileActionResultModel object describing the action that was performed
      */
-    public abstract TileActionResultModel action(Player player);
+    public abstract TileActionResultModel action(Player player, Board board);
 
     /**
      * Perform the action for when Player <i>player</i> passes this tile.

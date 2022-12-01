@@ -1,5 +1,6 @@
 package GameEntities.Tiles;
 
+import GameEntities.Board;
 import GameEntities.Player;
 
 import java.util.List;
@@ -68,25 +69,26 @@ public class RailroadTile extends Property{
             return -1;
         }
 
-        int numOwned = numRailroadOwned(null);
+        int numOwned = numRailroadOwned(propertyList);
         // If we have the unintended effect of more railroads owned than accounted for, return the last rent value.
         numOwned = min(numOwned - 1, rentPrice.length - 1);
         return rentPrice[numOwned];
     }
 
     /**
-     * TODO not implemented (leaving for Youssef).
-     *
+     * Perform the action for when Player <i>player</i> lands on this tile.
      * @param player The Player that the action is being performed on (landed on the tile)
      * @return a TileActionResultModel object describing the action taken.
      */
     @Override
-    public TileActionResultModel action(Player player) {
+    public TileActionResultModel action(Player player, Board board) {
         if (!isOwned()){
             return new TileActionResultModel("Would you Like to Purchase " + getTileDisplayName() + " for" + getPurchasePrice() + " ?" , player, player.getPosition());
         }
         else{
-            return new TileActionResultModel("You Paid" + getRent(player, propertyList) + " to" + getOwner(), player, player.getPosition());
+            player.subtractMoney(getRent(player, board.getPropertyTiles()));
+            getOwner().addMoney(getRent(player, board.getPropertyTiles()));
+            return new TileActionResultModel("You Paid" + getRent(player, board.getPropertyTiles()) + " to" + getOwner(), player, player.getPosition());
         }
     }
 
