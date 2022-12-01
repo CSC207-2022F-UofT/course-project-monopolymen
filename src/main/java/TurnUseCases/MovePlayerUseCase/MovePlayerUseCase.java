@@ -55,7 +55,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
             }
             showAction(player);
         } else {
-            int positiveSteps = steps + board.getTilesList().size();
+            int positiveSteps = (steps + board.getTilesList().size()) % board.getTilesList().size();
             for (int i = 0; i < positiveSteps; i++) {
                 player.updatePosition(1);
                 TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
