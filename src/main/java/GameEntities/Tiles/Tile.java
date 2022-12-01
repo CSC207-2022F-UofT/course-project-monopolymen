@@ -2,12 +2,14 @@ package GameEntities.Tiles;
 
 import GameEntities.Player;
 
+import java.io.Serializable;
+
 /**
  * Tiles are spaces that players can land on in a game of monopoly.
  * All tiles have action methods intended for what happens when a player lands on the tile.
  * All tiles have passing methods intended for what happens when a player passes the tile (or lands on it).
  */
-public abstract class Tile {
+public abstract class Tile implements Serializable {
     private final String tileName;
     private final String tileDisplayName;
     private final boolean ownable;
