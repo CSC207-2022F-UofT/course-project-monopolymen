@@ -25,6 +25,15 @@ public class Board implements Serializable {
     }
 
     public void addCommunityCard(Card communityCard){communityCards.add(communityCard);}
+
+    public ArrayList<Card> getCommunityCards() {
+        return communityCards;
+    }
+
+    public ArrayList<Card> getChanceCards() {
+        return chanceCards;
+    }
+
     public void addChanceCard(Card chanceCard){chanceCards.add(chanceCard);}
 
 
