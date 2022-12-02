@@ -21,27 +21,29 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
             playerOptions.add("Pay Money");
             presenter.showPlayerOptions(playerOptions, player);
         }
-        //You can only trade if you have properties to trade with.
-        if(0 < player.getProperties().size()){
-            playerOptions.add("Trade");
-        }
-        for(int i = 0; i < player.getProperties().size(); i++){
-            if (!player.getProperties().get(i).isMortgaged()) {
-                playerOptions.add("Mortgage Property");
-                break;
+        else {
+            //You can only trade if you have properties to trade with.
+            if (0 < player.getProperties().size()) {
+                playerOptions.add("Trade");
             }
-        }
-        for(int i = 0; i < player.getProperties().size(); i++){
-            if(player.getProperties().get(i) instanceof ColorPropertyTile) {
-                if (0 < ((ColorPropertyTile) player.getProperties().get(i)).getNumHouses() ||
-                        0 < ((ColorPropertyTile) player.getProperties().get(i)).getNumHotels()) {
-                    playerOptions.add("Sell House/Hotel");
+            for (int i = 0; i < player.getProperties().size(); i++) {
+                if (!player.getProperties().get(i).isMortgaged()) {
+                    playerOptions.add("Mortgage Property");
                     break;
                 }
             }
+            for (int i = 0; i < player.getProperties().size(); i++) {
+                if (player.getProperties().get(i) instanceof ColorPropertyTile) {
+                    if (0 < ((ColorPropertyTile) player.getProperties().get(i)).getNumHouses() ||
+                            0 < ((ColorPropertyTile) player.getProperties().get(i)).getNumHotels()) {
+                        playerOptions.add("Sell House/Hotel");
+                        break;
+                    }
+                }
+            }
+            playerOptions.add("Declare Bankruptcy");
+            presenter.showPlayerOptions(playerOptions, player);
         }
-        playerOptions.add("Declare Bankruptcy");
-        presenter.showPlayerOptions(playerOptions, player);
     }
 
     @Override
