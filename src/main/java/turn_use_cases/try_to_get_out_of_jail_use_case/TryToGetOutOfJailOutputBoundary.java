@@ -4,6 +4,8 @@ import game_entities.Player;
 import game_entities.tiles.Tile;
 import game_entities.tiles.TilePassResultModel;
 
+import java.util.ArrayList;
+
 /**
  * Output Boundary for TryToGetOutOfJail UseCase, to be implemented by the Presenter
  */
@@ -36,9 +38,11 @@ public interface TryToGetOutOfJailOutputBoundary {
      * @param player The player object the action is being performed on
      * @param cardName Card's name
      * @param cardDescription Card's description
+     * @param rollAgain If the player can roll again
      * @param isChance If the card is a chance or community card
      */
-    public void showCardDraw(Player player, String cardName, String cardDescription, boolean isChance);
+    public void showCardDraw(Player player, String cardName, String cardDescription, boolean rollAgain
+            , boolean isChance);
 
     /**
      * Shows that the property is purchasable
@@ -47,4 +51,10 @@ public interface TryToGetOutOfJailOutputBoundary {
      * @param buyable If the tile is buyable
      */
     public void showBuyableProperty(Player player, Tile tile, boolean buyable);
+
+    /**
+     * Shows the options the player can choose
+     * @param options
+     */
+    public void showOptions(ArrayList<String> options);
 }

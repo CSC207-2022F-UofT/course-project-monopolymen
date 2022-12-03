@@ -19,5 +19,5 @@ public interface TryToGetOutOfJailInputBoundary {
      * instead of startAction to determine appropriate actions to present
      * @param player The player object that the action is being performed on
      */
-    public ArrayList<String> getPlayerOptions(Player player);
+    public void getPlayerOptions(Player player);
 }
