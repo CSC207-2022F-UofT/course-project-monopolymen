@@ -29,16 +29,25 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
                 playerOptions.add("Trade");
             }
             for (int i = 0; i < player.getProperties().size(); i++) {
-                if (!player.getProperties().get(i).isMortgaged()) {
-                    playerOptions.add("Mortgage Property");
-                    break;
+                Property property = player.getProperties().get(i);
+                if (!property.isMortgaged()) {
+                    if(property instanceof ColorPropertyTile){
+                        if(((ColorPropertyTile) property).getNumHouses() < 1){
+                            playerOptions.add("Mortgage Property");
+                            break;
+                        }
+                    }
+                    else{
+                        playerOptions.add("Mortgage Property");
+                        break;
+                    }
                 }
             }
             for (int i = 0; i < player.getProperties().size(); i++) {
                 if (player.getProperties().get(i) instanceof ColorPropertyTile) {
                     if (0 < ((ColorPropertyTile) player.getProperties().get(i)).getNumHouses() ||
                             0 < ((ColorPropertyTile) player.getProperties().get(i)).getNumHotels()) {
-                        playerOptions.add("Sell House/Hotel");
+                        playerOptions.add("Sell Houses/Hotels");
                         break;
                     }
                 }
@@ -55,8 +64,16 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
         //Goes through the list of properties the player owns and if it's not mortgaged it adds the name
         // to the mortgageableProperties list.
         for(int i = 0; i < player.getProperties().size(); i++){
-            if(!player.getProperties().get(i).isMortgaged()){
-                mortgageableProperties.add(player.getProperties().get(i));
+            Property property = player.getProperties().get(i);
+            if(!property.isMortgaged()){
+                if(property instanceof ColorPropertyTile){
+                    if(((ColorPropertyTile) property).getNumHouses() < 1){
+                        mortgageableProperties.add(property);
+                    }
+                }
+                else{
+                    mortgageableProperties.add(property);
+                }
             }
         }
         presenter.showMortgageableProperties(mortgageableProperties, situation);
