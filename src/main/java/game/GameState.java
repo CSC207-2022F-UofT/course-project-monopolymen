@@ -1,7 +1,6 @@
 package game;
 
 import game.GameStateOutputBoundary.TurnActions;
-import game_entities.Board;
 import game_entities.Player;
 
 import java.io.IOException;
@@ -11,19 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A GameState object handles all information about the current Game's state (including who is playing, what board is
- * in use, what turn it is).
+ * A GameState object handles all information about the current Game's state (including who is playing, what turn it is).
  * GameState also handles logic for switching between turns.
  * <p>
  * Call the startGame method to initiate the game loop.
  */
 public class GameState implements Serializable {
-    private final List<Player> players;
-    private final int numPlayers;
-    private transient SaveGameState saveGameState;
+    private final List<Player> allPlayers;
+    private final List<Player> activePlayers;
     private final String gameName;
+    private int numPlayers;
+    private transient SaveGameState saveGameState;
     private transient GameStateOutputBoundary presenter;
-    private final Board board;
     private int currentPlayer;
     private int turnCounter;
     private boolean playerAllowedToEndTurn;
@@ -31,23 +29,39 @@ public class GameState implements Serializable {
     /**
      * Construct a GameState object for the purposes of Turn Control and Game Save/Load.
      *
-     * @param board         The Game Board being used.
-     * @param players       The array of Players in the game specifying the order that the players play in.
+     * @param players       The list of Players in the game specifying the order that the players play in.
      * @param gameName      The name of this game. Also used for the save name.
      * @param saveGameState The SaveGameState object that handles saving the game.
      * @param presenter     The Presenter object for this game state.
      */
-    public GameState(Board board, List<Player> players, String gameName, SaveGameState saveGameState,
-                     GameStateOutputBoundary presenter) {
-        this.board = board;
-        this.players = players;
+    public GameState(List<Player> players, String gameName, SaveGameState saveGameState, GameStateOutputBoundary presenter) {
+        this.allPlayers = players;
+        this.activePlayers = new ArrayList<>(players); // Shallow copy
         this.currentPlayer = 0;
-        this.numPlayers = players.size();
+        this.numPlayers = activePlayers.size();
         this.saveGameState = saveGameState;
         this.turnCounter = 0;
         this.gameName = gameName;
         this.presenter = presenter;
         this.playerAllowedToEndTurn = false;
+    }
+
+    /**
+     * Return the deserialized GameState object from the ObjectInputStream.
+     * The SaveGameState data gateway and the GameStateOutputBoundary presenter are not serialized and so must be given
+     * back to the GameState object in this method.
+     *
+     * @param objectIn      The ObjectInputStream representing the serialized object.
+     * @param saveGameState The SaveGameState object responsible for saving GameState.
+     * @param presenter     The Presenter for the GameState object.
+     * @return The Deserialized GameState object.
+     */
+    public static GameState deserialize(ObjectInputStream objectIn, SaveGameState saveGameState,
+                                        GameStateOutputBoundary presenter) throws ClassNotFoundException, IOException {
+        GameState gameState = (GameState) objectIn.readObject();
+        gameState.setSaveGameState(saveGameState);
+        gameState.setPresenter(presenter);
+        return gameState;
     }
 
     /**
@@ -69,7 +83,6 @@ public class GameState implements Serializable {
         // Shallow method to avoid possible confusion about needing to start each turn by method call every time.
         showTurnActions();
     }
-
 
     /**
      * Show the valid TurnActions that the player can take.
@@ -148,11 +161,48 @@ public class GameState implements Serializable {
      * @return The Player whose turn it currently is.
      */
     public Player currentPlayer() {
-        return players.get(currentPlayer);
+        return activePlayers.get(currentPlayer);
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    /**
+     * Gets a list of all the players in the game, whether they have lost or not.
+     *
+     * @return A list of all players in the game.
+     */
+    public List<Player> getAllPlayers() {
+        return allPlayers;
+    }
+
+    /**
+     * Gets a list of all active players (currently in the game).
+     *
+     * @return A list of all players who are not out of the game.
+     */
+    public List<Player> getActivePlayers() {
+        return activePlayers;
+    }
+
+    /**
+     * Returns whether the player given has gone bankrupt or not.
+     *
+     * @return True if the player has gone bankrupt, False otherwise.
+     */
+    public boolean hasLost(Player player) {
+        return !activePlayers.contains(player);
+    }
+
+    /**
+     * Removes the player from the ActivePlayers list, indicating that they have gone bankrupt.
+     * Immediately starts the next player's turn.
+     *
+     * @param player The player who has gone bankrupt.
+     */
+    public void removePlayer(Player player) {
+        activePlayers.remove(player);
+        numPlayers = activePlayers.size();
+        // Compensate for the player removed. Assumes nextPlayer is called right after to do (currentPlayer + 1) % numPlayers
+        currentPlayer--;
+        endTurn();
     }
 
     /**
@@ -162,24 +212,6 @@ public class GameState implements Serializable {
         currentPlayer = (currentPlayer + 1) % numPlayers;
         turnCounter++;
         playerAllowedToEndTurn = false;
-    }
-
-    /**
-     * Return the deserialized GameState object from the ObjectInputStream.
-     * The SaveGameState data gateway and the GameStateOutputBoundary presenter are not serialized and so must be given
-     * back to the GameState object in this method.
-     *
-     * @param objectIn      The ObjectInputStream representing the serialized object.
-     * @param saveGameState The SaveGameState object responsible for saving GameState.
-     * @param presenter     The Presenter for the GameState object.
-     * @return The Deserialized GameState object.
-     */
-    public static GameState deserialize(ObjectInputStream objectIn, SaveGameState saveGameState,
-                                        GameStateOutputBoundary presenter) throws ClassNotFoundException, IOException {
-        GameState gameState = (GameState) objectIn.readObject();
-        gameState.setSaveGameState(saveGameState);
-        gameState.setPresenter(presenter);
-        return gameState;
     }
 
     private void setSaveGameState(SaveGameState saveGameState) {
