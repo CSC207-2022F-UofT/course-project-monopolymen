@@ -20,6 +20,10 @@ public class SaveGameStateSerialize implements SaveGameState {
         }
     }
 
+    public String getSavesDirectory() {
+        return savesDirectory;
+    }
+
     /**
      * Save the GameState to a file with the name <i>saveName</i>.ser in the directory
      * <i>savesDirectory</i>
