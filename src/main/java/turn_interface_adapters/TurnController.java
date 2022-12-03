@@ -23,30 +23,45 @@ import java.util.List;
  * The Turn Controller also performs delegation to the simpler use case methods.
  */
 public class TurnController {
-    private final BuildBuildingInputBoundary buildBuilding;
-    private final MortgagePropertyInputBoundary mortgageProperty;
-    private final MovePlayerInputBoundary movePlayer;
-    private final TradeInputBoundary trade;
-    private final TryToGetOutOfJailInputBoundary getOutOfJail;
-    private final ViewInventoryInputBoundary viewInventory;
     private final GameState gameState;
+    private BuildBuildingInputBoundary buildBuilding;
+    private MortgagePropertyInputBoundary mortgageProperty;
+    private MovePlayerInputBoundary movePlayer;
+    private TradeInputBoundary trade;
+    private TryToGetOutOfJailInputBoundary getOutOfJail;
+    private ViewInventoryInputBoundary viewInventory;
     private EndUseCaseDestination nextEndUseCaseDestination;
 
-    public TurnController(BuildBuildingInputBoundary buildBuilding,
-                          MortgagePropertyInputBoundary mortgageProperty,
-                          MovePlayerInputBoundary movePlayer,
-                          TradeInputBoundary trade,
-                          TryToGetOutOfJailInputBoundary getOutOfJail,
-                          ViewInventoryInputBoundary viewInventory,
-                          GameState gameState) {
+    /**
+     * Construct the TurnController object. Before use, the {@link #setInputBoundaries(BuildBuildingInputBoundary, MortgagePropertyInputBoundary, MovePlayerInputBoundary, TradeInputBoundary, TryToGetOutOfJailInputBoundary, ViewInventoryInputBoundary)}
+     * method must be called to specify the input boundaries.
+     */
+    public TurnController(GameState gameState) {
+        this.buildBuilding = null;
+        this.mortgageProperty = null;
+        this.movePlayer = null;
+        this.trade = null;
+        this.getOutOfJail = null;
+        this.viewInventory = null;
+        this.gameState = gameState;
+        this.nextEndUseCaseDestination = EndUseCaseDestination.DEFAULT_DESTINATION;
+    }
+
+    /**
+     * Set the input boundaries to use in this controller. Must be called before other methods are called.
+     */
+    public void setInputBoundaries(BuildBuildingInputBoundary buildBuilding,
+                                   MortgagePropertyInputBoundary mortgageProperty,
+                                   MovePlayerInputBoundary movePlayer,
+                                   TradeInputBoundary trade,
+                                   TryToGetOutOfJailInputBoundary getOutOfJail,
+                                   ViewInventoryInputBoundary viewInventory) {
         this.buildBuilding = buildBuilding;
         this.mortgageProperty = mortgageProperty;
         this.movePlayer = movePlayer;
         this.trade = trade;
         this.getOutOfJail = getOutOfJail;
         this.viewInventory = viewInventory;
-        this.gameState = gameState;
-        this.nextEndUseCaseDestination = EndUseCaseDestination.DEFAULT_DESTINATION;
     }
 
     /**
@@ -104,7 +119,7 @@ public class TurnController {
         getOutOfJail.startAction(playerChoice, player);
     }
 
-    /* NOTE Mortgage property related methods */
+    /* Mortgage property related methods */
     public void mortgageProperty(Player player, Property property) {
         mortgageProperty.mortgage(player, property);
     }
