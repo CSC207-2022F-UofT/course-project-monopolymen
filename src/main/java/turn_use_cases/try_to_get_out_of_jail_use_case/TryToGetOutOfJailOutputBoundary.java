@@ -10,11 +10,6 @@ import java.util.ArrayList;
  * Output Boundary for TryToGetOutOfJail UseCase, to be implemented by the Presenter
  */
 public interface TryToGetOutOfJailOutputBoundary {
-    /**
-     * Shows the roll the player made
-     * @param playerRollAmount The array of two elements representing the players rolls
-     */
-    public void showRoll(int[] playerRollAmount);
 
     /**
      * Shows the options the player can choose

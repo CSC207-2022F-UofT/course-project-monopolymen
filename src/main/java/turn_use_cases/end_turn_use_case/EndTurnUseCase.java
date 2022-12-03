@@ -24,7 +24,7 @@ public class EndTurnUseCase implements EndTurnInputBoundary{
     @Override
     public void endTurn(Player player) {
         gameState.endTurn();
-        endTurnOutputBoundary.showResultOfAction(player, "ended their turn");
+        endTurnOutputBoundary.showResultOfAction(player, " ended their turn");
     }
 
     @Override

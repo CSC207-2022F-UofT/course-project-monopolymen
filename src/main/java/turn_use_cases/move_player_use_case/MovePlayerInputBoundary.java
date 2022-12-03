@@ -15,8 +15,8 @@ public interface MovePlayerInputBoundary {
     /**
      * This is only called by startAction when it lands on a draw card tile that will move the player
      * @param player The player object that the action is being performed on
-     * @param rollSum the sum of the dice roll
-     * @param doubleRoll whether or not the player rolled a double
+     * @param rollSum The sum of the dice roll
+     * @param doubleRoll If the player rolled a double
      */
     public void movePlayer(Player player, int rollSum, boolean doubleRoll);
 }

@@ -2,6 +2,7 @@ package turn_use_cases.try_to_get_out_of_jail_use_case;
 import game_entities.Board;
 import game_entities.Player;
 import game_entities.tiles.*;
+import turn_use_cases.move_player_use_case.MovePlayerOutputBoundary;
 import turn_use_cases.move_player_use_case.MovePlayerUseCase;
 import turn_use_cases.end_turn_use_case.EndTurnUseCase;
 import java.util.ArrayList;
@@ -17,18 +18,22 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
     private Board board;
     private EndTurnUseCase endTurnUseCase;
     private MovePlayerUseCase movePlayerUseCase;
+    private MovePlayerOutputBoundary movePlayerOutputBoundary;
     /**
      * @param tryToGetOutOfJailOutputBoundary TryToGetOutOfJailOutputBoundary to handle the display
      * @param board The board the game is operating on
      * @param endTurnUseCase Use Case to force end the player's turn if they are sent to jail or failed their roll
      * @param movePlayerUseCase Use Case to move the player if they get out of jail
+     * @param movePlayerOutputBoundary Output boundary to display visuals
      */
     public TryToGetOutOfJailUseCase(TryToGetOutOfJailOutputBoundary tryToGetOutOfJailOutputBoundary, Board board,
-                                    EndTurnUseCase endTurnUseCase, MovePlayerUseCase movePlayerUseCase) {
+                                    EndTurnUseCase endTurnUseCase, MovePlayerUseCase movePlayerUseCase,
+                                    MovePlayerOutputBoundary movePlayerOutputBoundary) {
         this.tryToGetOutOfJailOutputBoundary = tryToGetOutOfJailOutputBoundary;
         this.board = board;
         this.endTurnUseCase = endTurnUseCase;
         this.movePlayerUseCase = movePlayerUseCase;
+        this.movePlayerOutputBoundary = movePlayerOutputBoundary;
     }
 
     @Override
@@ -36,7 +41,7 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
         if(playerOption.equals("Roll")) {
             // This is different from movePlayerUseCase as it doesn't take into account previous double rolls
             int[] playerRollAmount = {(int)(Math.random() * 6) + 1, (int)(Math.random() * 6) + 1};
-            tryToGetOutOfJailOutputBoundary.showRoll(playerRollAmount);
+            movePlayerOutputBoundary.showRoll(playerRollAmount);
             if(playerRollAmount[0] == playerRollAmount[1]) {
                 // player rolled a double and are free
                 player.resetTurnInJail();
