@@ -15,11 +15,13 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
     }
 
     @Override
-    public void getPlayerOptions(Player player, int moneyOwed) {
+    public void getPlayerOptions(LiquiditySituation situation) {
+        Player player = situation.getAffectedPlayer();
+        int moneyOwed = situation.getOwedMoney();
         ArrayList<String> playerOptions = new ArrayList<>();
         if(moneyOwed <= player.getMoney()){
             playerOptions.add("Pay Money");
-            presenter.showPlayerOptions(playerOptions, player);
+            presenter.showPlayerOptions(playerOptions, situation);
         }
         else {
             //You can only trade if you have properties to trade with.
@@ -42,12 +44,13 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
                 }
             }
             playerOptions.add("Declare Bankruptcy");
-            presenter.showPlayerOptions(playerOptions, player);
+            presenter.showPlayerOptions(playerOptions, situation);
         }
     }
 
     @Override
-    public void getMortgageableProperties(Player player) {
+    public void getMortgageableProperties(LiquiditySituation situation) {
+        Player player = situation.getAffectedPlayer();
         ArrayList<Property> mortgageableProperties = new ArrayList<>();
         //Goes through the list of properties the player owns and if it's not mortgaged it adds the name
         // to the mortgageableProperties list.
@@ -56,11 +59,12 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
                 mortgageableProperties.add(player.getProperties().get(i));
             }
         }
-        presenter.showMortgageableProperties(mortgageableProperties, player);
+        presenter.showMortgageableProperties(mortgageableProperties, situation);
     }
 
     @Override
-    public void getPropertiesWithHouses(Player player) {
+    public void getPropertiesWithHouses(LiquiditySituation situation) {
+        Player player = situation.getAffectedPlayer();
         ArrayList<ColorPropertyTile> propertiesWithHouses = new ArrayList<>();
         //Goes through the list of properties the player owns and if it's not mortgaged it adds the name
         // to the mortgageableProperties list.
@@ -74,7 +78,7 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
                 }
             }
         }
-        presenter.showPropertiesWithHouses(propertiesWithHouses, player);
+        presenter.showPropertiesWithHouses(propertiesWithHouses, situation);
     }
 
     private static boolean propertyDoesNotHaveLessHouses(Player player, ColorPropertyTile property){
@@ -95,7 +99,10 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
     }
 
     @Override
-    public void bankruptcy(Player bankruptPlayer, Player owedPlayer, GameState gameState) {
+    public void bankruptcy(LiquiditySituation situation) {
+        GameState gameState = situation.getGameState();
+        Player bankruptPlayer = situation.getAffectedPlayer();
+        Player owedPlayer = situation.getOwedPlayer();
         if(owedPlayer == null){
             for(int i = 0; i < bankruptPlayer.getProperties().size(); i++){
                 Property property = bankruptPlayer.getProperties().get(i);
@@ -121,7 +128,7 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
             }
             //gameState.removePlayer(bankruptPlayer);
         }
-        presenter.showTransferOfAssets(bankruptPlayer, owedPlayer);
+        presenter.showTransferOfAssets(situation);
 
     }
 }
