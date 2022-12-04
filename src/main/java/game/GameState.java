@@ -225,6 +225,14 @@ public class GameState implements Serializable {
         endTurn();
     }
 
+    public void setSaveGameState(SaveGameState saveGameState) {
+        this.saveGameState = saveGameState;
+    }
+
+    public void setPresenter(GameStateOutputBoundary presenter) {
+        this.presenter = presenter;
+    }
+
     /**
      * Increments private counters and resets turn-based logic.
      */
@@ -232,15 +240,5 @@ public class GameState implements Serializable {
         currentPlayer = (currentPlayer + 1) % numPlayers;
         turnCounter++;
         playerAllowedToEndTurn = false;
-    }
-
-    private void setSaveGameState(SaveGameState saveGameState) {
-        // Private setter intended use for deserialize method only.
-        this.saveGameState = saveGameState;
-    }
-
-    private void setPresenter(GameStateOutputBoundary presenter) {
-        // Private setter intended use for deserialize method only.
-        this.presenter = presenter;
     }
 }
