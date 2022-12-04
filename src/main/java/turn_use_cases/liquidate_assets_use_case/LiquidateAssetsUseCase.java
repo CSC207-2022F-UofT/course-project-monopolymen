@@ -67,7 +67,12 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
             Property property = player.getProperties().get(i);
             if(!property.isMortgaged()){
                 if(property instanceof ColorPropertyTile){
-                    if(((ColorPropertyTile) property).getNumHouses() < 1){
+                    int houses = 0;
+                    ArrayList<ColorPropertyTile> sameColor = situation.getBoard().getSameColor(((ColorPropertyTile) property).getColor());
+                    for(int j = 0; j < sameColor.size(); j++){
+                        houses += sameColor.get(j).getNumHouses();
+                    }
+                    if (houses == 0){
                         mortgageableProperties.add(property);
                     }
                 }
@@ -105,9 +110,9 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
             //I know it's a colorProperty
             if(player.getProperties().get(i) instanceof ColorPropertyTile){
                 ColorPropertyTile property1 = (ColorPropertyTile) player.getProperties().get(i);
-                int property1Houses = property1.getNumHouses() + property1.getNumHotels();
+                int property2Houses = property1.getNumHouses() + property1.getNumHotels();
                 if(property1.getColor().equals(property.getColor()) &&
-                        propertyHouses < property1Houses){
+                        propertyHouses < property2Houses){
                     return false;
                 }
             }
