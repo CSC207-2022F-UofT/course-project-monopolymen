@@ -1,11 +1,19 @@
 package turn_interface_adapters;
 
+import game.FakeGameStateOutputBoundary;
+import game.GameState;
+import game.ISaveGameState;
+import game_entities.Board;
+import game_entities.FactoryBoard;
+import game_entities.Player;
 import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
+import game_entities.tiles.Tile;
 import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsOutputBoundary;
 import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsUseCase;
 import turn_use_cases.liquidate_assets_use_case.LiquiditySituation;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -30,6 +38,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
         mainPanel.add(optionsPanel, "Options Panel");
 
     }
+
 
     @Override
     public void showPlayerOptions(ArrayList<String> playerOptions, LiquiditySituation situation) {
@@ -72,6 +81,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                         LiquidateAssetsUseCase liquidateAssetsUseCase = new LiquidateAssetsUseCase(laia);
                         liquidateAssetsUseCase.getMortgageableProperties(situation);
 
+
                     }
                 });
                 optionsPanel.add(mortgageButton);
@@ -101,8 +111,10 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                 optionsPanel.add(bankruptcyButton);
             }
         }
-        moneyTracker.setText("Current Money: $" + situation.getAffectedPlayer()+ "\nOwed Money: $" + situation.getOwedMoney());
+        moneyTracker.setText("<html>Current Money: $" + situation.getAffectedPlayer().getMoney()+ "<br>Owed Money: $" + situation.getOwedMoney()+"</html>");
         optionsPanel.add(moneyTracker);
+        optionsPanel.validate();
+        optionsPanel.repaint();
         cardLayout.show(mainPanel, "Options Panel");
     }
 
@@ -132,13 +144,16 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
         stopMortgaging.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                situation.getAffectedPlayer().addProperty(situation.getBoard().getColorPropertyTiles().get(5));
                 LiquidateAssetsUseCase liquidateAssetsUseCase = new LiquidateAssetsUseCase(laia);
                 liquidateAssetsUseCase.getPlayerOptions(situation);
             }
         });
         optionsPanel.add(stopMortgaging);
-        moneyTracker.setText("Current Money: $" + situation.getAffectedPlayer()+ "\nOwed Money: $" + situation.getOwedMoney());
+        moneyTracker.setText("<html>Current Money: $" + situation.getAffectedPlayer().getMoney()+ "<br>Owed Money: $" + situation.getOwedMoney()+"</html>");
         optionsPanel.add(moneyTracker);
+        optionsPanel.validate();
+        mainPanel.repaint();
         cardLayout.show(mainPanel, "Options Panel");
     }
 
@@ -171,8 +186,10 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
             });
             optionsPanel.add(sellHouse);
         }
-        moneyTracker.setText("Current Money: $" + situation.getAffectedPlayer()+ "\nOwed Money: $" + situation.getOwedMoney());
+        moneyTracker.setText("<html>Current Money: $" + situation.getAffectedPlayer().getMoney()+ "<br>Owed Money: $" + situation.getOwedMoney()+"</html>");
         optionsPanel.add(moneyTracker);
+        optionsPanel.validate();
+        optionsPanel.repaint();
         cardLayout.show(mainPanel, "Options Panel");
     }
 
@@ -187,6 +204,8 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
             optionsPanel.add(new JLabel(situation.getOwedPlayer().getName()+ " bankrupted " +situation.getAffectedPlayer().getName()+
                     ". " +situation.getOwedPlayer().getName()+ " now owns all of " +situation.getAffectedPlayer().getName()+ "'s properties and money."));
         }
+        optionsPanel.validate();
+        optionsPanel.repaint();
         cardLayout.show(mainPanel, "Options Panel");
     }
 }
