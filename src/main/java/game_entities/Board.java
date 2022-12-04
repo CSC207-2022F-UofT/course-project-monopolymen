@@ -1,6 +1,7 @@
 package game_entities;
 
 import game_entities.cards.Card;
+import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.JailTile;
 import game_entities.tiles.Property;
 import game_entities.tiles.Tile;
@@ -56,6 +57,16 @@ public class Board implements Serializable {
         return propertyTiles;
     }
 
+    public List<ColorPropertyTile> getColorPropertyTiles(){
+        List<ColorPropertyTile> propertyTiles = new ArrayList<>();
+        for(int i = 0; i < tilesList.size(); i++){
+            if(tilesList.get(i) instanceof ColorPropertyTile){
+                propertyTiles.add((ColorPropertyTile) tilesList.get(i));
+            }
+        }
+        return propertyTiles;
+    }
+
     public ArrayList<Tile> getTilesList() {
         return tilesList;
     }
@@ -93,6 +104,17 @@ public class Board implements Serializable {
             communityCards.add(returnCard);
             return returnCard;
         }
+    }
+
+    public ArrayList<ColorPropertyTile> getSameColor(String color){
+        ArrayList<ColorPropertyTile> sameColorList = new ArrayList<>();
+        for(int i = 0; i < getColorPropertyTiles().size(); i++){
+            ColorPropertyTile property = getColorPropertyTiles().get(i);
+            if (property.getColor().equals(color)){
+                sameColorList.add(property);
+            }
+        }
+        return sameColorList;
     }
 
 }
