@@ -63,7 +63,18 @@ public class App {
         player1.addProperty(example.getPropertyTiles().get(1));
         player1.addProperty(example.getPropertyTiles().get(2));
         player1.addProperty(example.getPropertyTiles().get(3));
+        player1.addProperty(example.getPropertyTiles().get(4));
+        player1.addProperty(example.getPropertyTiles().get(5));
+        player1.addProperty(example.getPropertyTiles().get(6));
         player1.addProperty(example.getPropertyTiles().get(7));
+        player1.addProperty(example.getPropertyTiles().get(8));
+        player1.addProperty(example.getPropertyTiles().get(9));
+        player1.addProperty(example.getPropertyTiles().get(10));
+        player1.addProperty(example.getPropertyTiles().get(11));
+        player1.addProperty(example.getPropertyTiles().get(12));
+        player1.addProperty(example.getPropertyTiles().get(13));
+        player1.addProperty(example.getPropertyTiles().get(14));
+        player1.addProperty(example.getPropertyTiles().get(15));
         Player player2 = new Player("p2", "icon", 1500, example);
         Player player3 = new Player("p3", "icon", 1500, example);
         Player player4 = new Player("p4", "icon", 1500, example);

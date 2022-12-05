@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
-    private JPanel inventorySummaryBox;
+    private final JPanel inventorySummaryBox;
     private final JPanel chosenPlayerSummaryBox = new JPanel();
 
     ViewInventoryPresenter(JPanel summeryBox){
@@ -31,9 +31,11 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
             }
         }
         JFrame popUpInventory = new JFrame(currentPlayer + " s' Inventory");
-        popUpInventory.setMinimumSize(new Dimension(1000, 800));
+        popUpInventory.setMinimumSize(new Dimension(1000, 300));
         JPanel inventoryInfo = new JPanel();
-        popUpInventory.add(inventoryInfo);
+        JScrollPane testing = new JScrollPane();
+        testing.setViewportView(inventoryInfo);
+        popUpInventory.add(testing);
         inventoryInfo.add(new JLabel(currentPlayer + " s' Inventory"));
         JButton closeTab = new JButton("Close Inventory");
         popUpInventory.setVisible(true);
@@ -75,7 +77,6 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
             inventoryInfo.add(currentPropertySetPanel);
         }
     }
-
     @Override
     public void showInventoryButtons(List<InventoryData> playersInfo) {
         GridLayout quad = new GridLayout(2,2);
