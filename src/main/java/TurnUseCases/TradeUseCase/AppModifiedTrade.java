@@ -105,7 +105,6 @@ public class AppModifiedTrade extends JPanel implements TradeOutputBoundary, Pro
                 "Other Road", 500, fakeRent, 0, 0, 0);
 
         player1.addProperty(fakeStreet);
-
         player2.addProperty(otherRoad);
 
         TradeOffer[] tradeOffer = new TradeOffer[1];
@@ -203,26 +202,20 @@ public class AppModifiedTrade extends JPanel implements TradeOutputBoundary, Pro
 
 
 
-
-                //Build output area.
-                output = new JTextArea(1, 30);
-                output.setEditable(false);
-
-
                 JPanel listContainer = new JPanel(new GridLayout(1,6));
                 listContainer.setBorder(BorderFactory.createTitledBorder(
                         "List"));
                 listContainer.add(listPane1);
 
                 JLabel text1 = new JLabel();
-                text1.setText("");
+                text1.setText("Prop. Offered");
 
                 listContainer.add(text1);
 
                 listContainer.add(listPane2);
 
                 JLabel text2 = new JLabel();
-                text2.setText("");
+                text2.setText("Prop. Requested");
 
                 listContainer.add(text2);
 
