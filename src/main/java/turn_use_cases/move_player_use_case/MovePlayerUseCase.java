@@ -2,6 +2,7 @@ package turn_use_cases.move_player_use_case;
 import game_entities.Player;
 import game_entities.tiles.*;
 import game_entities.Board;
+import turn_use_cases.end_turn_use_case.EndTurnInputBoundary;
 import turn_use_cases.end_turn_use_case.EndTurnUseCase;
 import game_entities.cards.CardActionResultModel;
 
@@ -16,14 +17,14 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
 
     private MovePlayerOutputBoundary movePlayerOutputBoundary;
     private Board board;
-    private EndTurnUseCase endTurnUseCase;
+    private EndTurnInputBoundary endTurnUseCase;
     /**
      * @param movePlayerOutputBoundary MovePlayerOutputBoundary to handle display
      * @param board The board the game is operating on
      * @param endTurnUseCase class to force end a turn if the player is sent to jail
      */
     public MovePlayerUseCase(MovePlayerOutputBoundary movePlayerOutputBoundary, Board board,
-                             EndTurnUseCase endTurnUseCase) {
+                             EndTurnInputBoundary endTurnUseCase) {
         this.movePlayerOutputBoundary = movePlayerOutputBoundary;
         this.board = board;
         this.endTurnUseCase = endTurnUseCase;
