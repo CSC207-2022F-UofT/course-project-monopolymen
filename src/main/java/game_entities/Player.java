@@ -1,7 +1,14 @@
 package game_entities;
 
+import game.GameState;
 import game_entities.tiles.Property;
+import turn_interface_adapters.LiquidateAssetsInterfaceAdapter;
+import turn_interface_adapters.TurnController;
+import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsUseCase;
+import turn_use_cases.liquidate_assets_use_case.LiquiditySituation;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -23,6 +30,14 @@ public class Player implements Serializable {
 
     private Board board;
 
+    private TurnController turnController;
+
+    private JPanel mainPanel;
+
+    private CardLayout cardLayout;
+
+    private GameState gameState;
+
     /**
      * The Player can choose their name and icon but the other attributes are set to default values
      *
@@ -39,6 +54,16 @@ public class Player implements Serializable {
         this.icon = iconInput;
         this.money = money;
         this.board = board;
+    }
+
+    public void presenterSetter(TurnController turnController, JPanel mainPanel, CardLayout cardLayout){
+        this.turnController = turnController;
+        this.mainPanel = mainPanel;
+        this.cardLayout = cardLayout;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 
     //getters:
@@ -105,8 +130,21 @@ public class Player implements Serializable {
      * @param subtract      int representing the amount of money we are trying to subtract
      * @return              return true if the player had enough money to make the payment and false if they do not
      */
+
     public void subtractMoney(int subtract){
-        this.money -= subtract;
+        this.subtractMoney(subtract, null);
+    }
+    public void subtractMoney(int subtract, Player owedPlayer){
+        if(subtract <= this.money) {
+            this.money -= subtract;
+        }
+        else{
+            LiquidateAssetsInterfaceAdapter laia = new LiquidateAssetsInterfaceAdapter(this.turnController, this.mainPanel, this.cardLayout);
+            LiquidateAssetsUseCase lauc = new LiquidateAssetsUseCase(laia);
+            LiquiditySituation situation = new LiquiditySituation(this, owedPlayer,
+                    subtract, this.gameState, this.board);
+            lauc.getPlayerOptions(situation);
+        }
     }
 
     /**
