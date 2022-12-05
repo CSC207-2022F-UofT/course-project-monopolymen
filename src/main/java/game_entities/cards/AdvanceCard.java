@@ -18,7 +18,7 @@ public class AdvanceCard extends Card{
 
     @Override
     public CardActionResultModel action(Player player) {
-        if(tileName.equals("GoToJail")){
+        if(tileName.equals("JailTile")){
             player.enterJail();
             return new CardActionResultModel(getCardDescription(), player, -1, getCardName(),
                     isChanceCard());
