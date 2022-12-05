@@ -105,7 +105,7 @@ public class TurnController {
 
     /* Move Player/RollDice use case related methods */
     public void rollDice(Player player) {
-        movePlayer.startAction(player);
+        movePlayer.startAction(player, true);
     }
 
     public void endRollDice(Player player, boolean rollAgain) {
