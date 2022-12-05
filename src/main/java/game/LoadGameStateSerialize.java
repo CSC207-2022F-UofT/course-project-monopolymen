@@ -21,6 +21,10 @@ public class LoadGameStateSerialize implements LoadGameState {
         }
     }
 
+    public String getSavesDirectory() {
+        return savesDirectory;
+    }
+
     /**
      * Load the GameState object. Assumes the save exists.
      * The SaveGameState data gateway and the GameStateOutputBoundary presenter are not serialized and so must be given
