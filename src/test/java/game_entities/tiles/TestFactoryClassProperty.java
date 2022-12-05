@@ -18,7 +18,7 @@ public class TestFactoryClassProperty {
                 ("src/main/resources/Data/property_csvs/Color Properties Monopoly.csv");
         assertEquals(colorProperty.get(0).get(0), "Property Color");
         assertEquals(colorProperty.get(0).get(4), "Rent(Set Owned)");
-        assertEquals(colorProperty.get(3).get(0), "Light Blue");
+        assertEquals(colorProperty.get(3).get(0), "LightBlue");
         assertEquals(colorProperty.get(3).get(2), "100");
         assertEquals(colorProperty.get(22).get(1), "Boardwalk");
         assertEquals(colorProperty.get(10).get(2), "180");
