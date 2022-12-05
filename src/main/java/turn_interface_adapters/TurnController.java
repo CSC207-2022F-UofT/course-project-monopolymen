@@ -5,6 +5,7 @@ import game_entities.Player;
 import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
 import turn_use_cases.build_use_case.BuildBuildingInputBoundary;
+import turn_use_cases.end_turn_use_case.EndTurnInputBoundary;
 import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsInputBoundary;
 import turn_use_cases.liquidate_assets_use_case.LiquiditySituation;
 import turn_use_cases.mortgage_use_case.MortgagePropertyInputBoundary;
@@ -36,8 +37,10 @@ public class TurnController {
 
     private LiquidateAssetsInputBoundary liquidateAssets;
 
+    private EndTurnInputBoundary endTurn;
+
     /**
-     * Construct the TurnController object. Before use, the {@link #setInputBoundaries(BuildBuildingInputBoundary, MortgagePropertyInputBoundary, MovePlayerInputBoundary, TradeInputBoundary, TryToGetOutOfJailInputBoundary, ViewInventoryInputBoundary, LiquidateAssetsInputBoundary)}
+     * Construct the TurnController object. Before use, the {@link #setInputBoundaries(BuildBuildingInputBoundary, MortgagePropertyInputBoundary, MovePlayerInputBoundary, TradeInputBoundary, TryToGetOutOfJailInputBoundary, ViewInventoryInputBoundary, LiquidateAssetsInputBoundary, EndTurnInputBoundary)}
      * method must be called to specify the input boundaries.
      */
     public TurnController(GameState gameState) {
@@ -60,7 +63,8 @@ public class TurnController {
                                    TradeInputBoundary trade,
                                    TryToGetOutOfJailInputBoundary getOutOfJail,
                                    ViewInventoryInputBoundary viewInventory,
-                                   LiquidateAssetsInputBoundary liquidateAssets) {
+                                   LiquidateAssetsInputBoundary liquidateAssets,
+                                   EndTurnInputBoundary endTurn) {
         this.buildBuilding = buildBuilding;
         this.mortgageProperty = mortgageProperty;
         this.movePlayer = movePlayer;
@@ -68,6 +72,7 @@ public class TurnController {
         this.getOutOfJail = getOutOfJail;
         this.viewInventory = viewInventory;
         this.liquidateAssets = liquidateAssets;
+        this.endTurn = endTurn;
 
     }
 
@@ -212,6 +217,10 @@ public class TurnController {
     /* ViewInventory Related Methods */
     public void showInventory(Player currentPlayer, List<Player> playerList) {
         viewInventory.displayInfo(currentPlayer, playerList);
+    }
+
+    public void endTurn(Player player){
+        endTurn.endTurn(player);
     }
 
     enum EndUseCaseDestination {
