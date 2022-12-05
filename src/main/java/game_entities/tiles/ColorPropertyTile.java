@@ -56,6 +56,8 @@ public class ColorPropertyTile extends Property{
 
     public int getNumHouses() {return numHouses;}
     public int getNumHotels() {return numHotels;}
+
+
     public void addHouse(int add){
         this.numHouses += add;
     }
