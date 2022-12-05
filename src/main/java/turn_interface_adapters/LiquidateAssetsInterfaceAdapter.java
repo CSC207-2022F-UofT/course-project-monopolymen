@@ -35,7 +35,6 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
     @Override
     public void showPlayerOptions(ArrayList<String> playerOptions, LiquiditySituation situation) {
         optionsPanel.removeAll();
-        LiquidateAssetsInterfaceAdapter laia = this;
         //This is the main panel for the use case. BoxLayout so that the options come out as a list
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
         optionsPanel.add(new JLabel("These are your current options to avoid bankruptcy. " +
@@ -59,7 +58,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                 tradeButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        turnController.showTradablePlayers(situation.getAffectedPlayer(), situation.getGameState().getPlayers());
+                        turnController.showTradablePlayers(situation.getAffectedPlayer(), situation.getGameState().getActivePlayers());
                     }
                 });
                 optionsPanel.add(tradeButton);
@@ -70,10 +69,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         //This will need to be changed so that it goes through the controller
-                        LiquidateAssetsUseCase liquidateAssetsUseCase = new LiquidateAssetsUseCase(laia);
-                        liquidateAssetsUseCase.getMortgageableProperties(situation);
-
-
+                        turnController.getMortgageableProperties(situation);
                     }
                 });
                 optionsPanel.add(mortgageButton);
@@ -84,8 +80,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         //This will need to be changed so that it goes through the controller
-                        LiquidateAssetsUseCase liquidateAssetsUseCase = new LiquidateAssetsUseCase(laia);
-                        liquidateAssetsUseCase.getPropertiesWithHouses(situation);
+                        turnController.getPropertiesWithHouses(situation);
                     }
                 });
                 optionsPanel.add(sellHousesButton);
@@ -96,8 +91,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         //This will need to be changed so that it goes through the controller
-                        LiquidateAssetsUseCase liquidateAssetsUseCase = new LiquidateAssetsUseCase(laia);
-                        liquidateAssetsUseCase.bankruptcy(situation);
+                        turnController.bankruptcy(situation);
                     }
                 });
                 optionsPanel.add(bankruptcyButton);
@@ -113,7 +107,6 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
     @Override
     public void showMortgageableProperties(List<Property> mortgageableProperties, LiquiditySituation situation) {
         optionsPanel.removeAll();
-        LiquidateAssetsInterfaceAdapter laia = this;
         //This is the main panel for this method.
         //This will make the mortgage buttons come out as a list.
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
@@ -138,8 +131,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
         stopMortgaging.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                LiquidateAssetsUseCase liquidateAssetsUseCase = new LiquidateAssetsUseCase(laia);
-                liquidateAssetsUseCase.getPlayerOptions(situation);
+                turnController.getPlayerOptions(situation);
             }
         });
         buttonList.add(stopMortgaging);
@@ -153,7 +145,6 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
     @Override
     public void showPropertiesWithHouses(List<ColorPropertyTile> propertiesWithHouses, LiquiditySituation situation) {
         optionsPanel.removeAll();
-        LiquidateAssetsInterfaceAdapter laia = this;
         //This is the main panel for this method.
         //Hopefully this will make the sell house buttons come out as a list.
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
@@ -175,8 +166,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                     }
                     //Because selling a house on a property might change whether you can sell a house on another
                     // property, this method needs to be called again for the list to remain accurate
-                    LiquidateAssetsUseCase liquidateAssetsUseCase = new LiquidateAssetsUseCase(laia);
-                    liquidateAssetsUseCase.getPlayerOptions(situation);
+                    turnController.getPlayerOptions(situation);
                 }
             });
             buttonList.add(sellHouse);
@@ -185,8 +175,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
         stopSelling.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                LiquidateAssetsUseCase liquidateAssetsUseCase = new LiquidateAssetsUseCase(laia);
-                liquidateAssetsUseCase.getPlayerOptions(situation);
+                turnController.getPlayerOptions(situation);
             }
         });
         buttonList.add(stopSelling);
