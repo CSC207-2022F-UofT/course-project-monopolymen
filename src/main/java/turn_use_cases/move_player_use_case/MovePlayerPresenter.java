@@ -31,7 +31,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     private JPanel optionsWindow;
 
     public MovePlayerPresenter(JLayeredPane board, JPanel actionDialogBox, double scaleFactor, List<Player> playerList,
-                               TurnController turnController) {
+                               TurnController turnController, String tilePositionFilePath) {
         this.actionDialogBox = actionDialogBox;
         this.board = board;
         this.playerList = playerList;
@@ -42,7 +42,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         this.tilePositions = new ArrayList<>();
         actionDialogBox.add(optionsWindow, "Roll options");
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("TilePositions.txt")); //FilePath here
+            BufferedReader reader = new BufferedReader(new FileReader(tilePositionFilePath)); //FilePath here
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] splitLine = line.split(",");

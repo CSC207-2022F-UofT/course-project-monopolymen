@@ -2,6 +2,8 @@ package turn_use_cases.try_to_get_out_of_jail_use_case;
 import game_entities.Board;
 import game_entities.Player;
 import game_entities.tiles.*;
+import turn_use_cases.end_turn_use_case.EndTurnInputBoundary;
+import turn_use_cases.move_player_use_case.MovePlayerInputBoundary;
 import turn_use_cases.move_player_use_case.MovePlayerOutputBoundary;
 import turn_use_cases.move_player_use_case.MovePlayerUseCase;
 import turn_use_cases.end_turn_use_case.EndTurnUseCase;
@@ -16,8 +18,8 @@ import game_entities.cards.CardActionResultModel;
 public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary {
     private TryToGetOutOfJailOutputBoundary tryToGetOutOfJailOutputBoundary;
     private Board board;
-    private EndTurnUseCase endTurnUseCase;
-    private MovePlayerUseCase movePlayerUseCase;
+    private EndTurnInputBoundary endTurnUseCase;
+    private MovePlayerInputBoundary movePlayerUseCase;
     private MovePlayerOutputBoundary movePlayerOutputBoundary;
     /**
      * @param tryToGetOutOfJailOutputBoundary TryToGetOutOfJailOutputBoundary to handle the display
@@ -27,7 +29,7 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
      * @param movePlayerOutputBoundary Output boundary to display visuals
      */
     public TryToGetOutOfJailUseCase(TryToGetOutOfJailOutputBoundary tryToGetOutOfJailOutputBoundary, Board board,
-                                    EndTurnUseCase endTurnUseCase, MovePlayerUseCase movePlayerUseCase,
+                                    EndTurnInputBoundary endTurnUseCase, MovePlayerInputBoundary movePlayerUseCase,
                                     MovePlayerOutputBoundary movePlayerOutputBoundary) {
         this.tryToGetOutOfJailOutputBoundary = tryToGetOutOfJailOutputBoundary;
         this.board = board;
