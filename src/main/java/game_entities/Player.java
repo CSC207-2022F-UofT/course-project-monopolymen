@@ -2,13 +2,8 @@ package game_entities;
 
 import game.GameState;
 import game_entities.tiles.Property;
-import turn_interface_adapters.LiquidateAssetsInterfaceAdapter;
 import turn_interface_adapters.TurnController;
-import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsUseCase;
-import turn_use_cases.liquidate_assets_use_case.LiquiditySituation;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,9 +29,9 @@ public class Player implements Serializable {
 
     private TurnController turnController;
 
-    private JPanel mainPanel;
-
-    private CardLayout cardLayout;
+    public void setTurnController(TurnController turnController) {
+        this.turnController = turnController;
+    }
 
     private GameState gameState;
 
@@ -56,12 +51,6 @@ public class Player implements Serializable {
         this.icon = iconInput;
         this.money = money;
         this.board = board;
-    }
-
-    public void presenterSetter(TurnController turnController, JPanel mainPanel, CardLayout cardLayout){
-        this.turnController = turnController;
-        this.mainPanel = mainPanel;
-        this.cardLayout = cardLayout;
     }
 
     public void setGameState(GameState gameState) {
@@ -141,11 +130,7 @@ public class Player implements Serializable {
             this.money -= subtract;
         }
         else{
-            LiquidateAssetsInterfaceAdapter laia = new LiquidateAssetsInterfaceAdapter(this.turnController, this.mainPanel, this.cardLayout);
-            LiquidateAssetsUseCase lauc = new LiquidateAssetsUseCase(laia);
-            LiquiditySituation situation = new LiquiditySituation(this, owedPlayer,
-                    subtract, this.gameState, this.board);
-            lauc.getPlayerOptions(situation);
+            turnController.getPlayerOptions(this, owedPlayer, subtract, this.gameState, this.board);
         }
     }
 

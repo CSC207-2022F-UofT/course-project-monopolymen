@@ -1,6 +1,7 @@
 package turn_interface_adapters;
 
 import game.GameState;
+import game_entities.Board;
 import game_entities.Player;
 import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
@@ -207,6 +208,11 @@ public class TurnController {
 
     /* LiquidityUseCase related methods*/
     public void getPlayerOptions(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+
+    public void getPlayerOptions(Player affectedPlayer, Player owedPlayer, int owedMoney, GameState gameState, Board board) {
+        LiquiditySituation situation = new LiquiditySituation(affectedPlayer, owedPlayer, owedMoney, gameState, board);
+        liquidateAssets.getPlayerOptions(situation);
+    }
 
     public void getMortgageableProperties(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
 

@@ -34,12 +34,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
 
     @Override
     public void showPlayerOptions(ArrayList<String> playerOptions, LiquiditySituation situation) {
-        optionsPanel.removeAll();
-        //This is the main panel for the use case. BoxLayout so that the options come out as a list
-        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
-        optionsPanel.add(new JLabel("These are your current options to avoid bankruptcy. " +
-                "You may declare Bankruptcy early if you wish to exit the game"));
-        //Making the various buttons that are the possible player options.
+        this.resetPanel("These are your current options to avoid bankruptcy. You may declare Bankruptcy early if you wish to exit the game");
         for(int i = 0; i < playerOptions.size(); i++){
             if (playerOptions.get(i).equals("Pay Money")){
                 JButton payButton = new JButton(playerOptions.get(i));
@@ -99,18 +94,12 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
         }
         moneyTracker.setText("<html>Current Money: $" + situation.getAffectedPlayer().getMoney()+ "<br>Owed Money: $" + situation.getOwedMoney()+"</html>");
         optionsPanel.add(moneyTracker);
-        optionsPanel.validate();
-        optionsPanel.repaint();
-        cardLayout.show(mainPanel, "Options Panel");
+        this.showPanel();
     }
 
     @Override
     public void showMortgageableProperties(List<Property> mortgageableProperties, LiquiditySituation situation) {
-        optionsPanel.removeAll();
-        //This is the main panel for this method.
-        //This will make the mortgage buttons come out as a list.
-        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
-        optionsPanel.add(new JLabel("These are properties that you can mortgage to gain money:"));
+        this.resetPanel("These are properties that you can mortgage to gain money:");
         JScrollPane buttonList = new JScrollPane();
         optionsPanel.add(buttonList);
         //Making the various buttons that are the possible properties player can mortgage
@@ -137,18 +126,12 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
         buttonList.add(stopMortgaging);
         moneyTracker.setText("<html>Current Money: $" + situation.getAffectedPlayer().getMoney()+ "<br>Owed Money: $" + situation.getOwedMoney()+"</html>");
         optionsPanel.add(moneyTracker);
-        optionsPanel.validate();
-        mainPanel.repaint();
-        cardLayout.show(mainPanel, "Options Panel");
+        this.showPanel();
     }
 
     @Override
     public void showPropertiesWithHouses(List<ColorPropertyTile> propertiesWithHouses, LiquiditySituation situation) {
-        optionsPanel.removeAll();
-        //This is the main panel for this method.
-        //Hopefully this will make the sell house buttons come out as a list.
-        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
-        optionsPanel.add(new JLabel("These are properties that have houses that can be sold to gain money:"));
+        this.resetPanel("These are properties that have houses that can be sold to gain money:");
         JScrollPane buttonList = new JScrollPane();
         optionsPanel.add(buttonList);
         //Making the various buttons that are the properties that have houses that can be sold
@@ -181,9 +164,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
         buttonList.add(stopSelling);
         moneyTracker.setText("<html>Current Money: $" + situation.getAffectedPlayer().getMoney()+ "<br>Owed Money: $" + situation.getOwedMoney()+"</html>");
         optionsPanel.add(moneyTracker);
-        optionsPanel.validate();
-        optionsPanel.repaint();
-        cardLayout.show(mainPanel, "Options Panel");
+        this.showPanel();
     }
 
     @Override
@@ -197,6 +178,16 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
             optionsPanel.add(new JLabel(situation.getOwedPlayer().getName()+ " bankrupted " +situation.getAffectedPlayer().getName()+
                     ". " +situation.getOwedPlayer().getName()+ " now owns all of " +situation.getAffectedPlayer().getName()+ "'s properties and money."));
         }
+        this.showPanel();
+    }
+
+    public void resetPanel(String jLabel){
+        optionsPanel.removeAll();
+        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
+        optionsPanel.add(new JLabel(jLabel));
+    }
+
+    public void showPanel(){
         optionsPanel.validate();
         optionsPanel.repaint();
         cardLayout.show(mainPanel, "Options Panel");
