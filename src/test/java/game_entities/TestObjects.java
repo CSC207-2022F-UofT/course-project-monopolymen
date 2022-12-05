@@ -51,7 +51,7 @@ public class TestObjects {
         String cPropertiesCSV = "src/main/resources/Data/property_csvs/Color Properties Monopoly.csv";
         String sPropertiesCSV = "src/main/resources/Data/property_csvs/Station Properties Monopoly.csv";
         String uPropertiesCSV = "src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv";
-        String cardsCSV = "src/main/resources/Cards.csv";
+        String cardsCSV = "src/main/resources/cards.csv";
         FactoryBoard factoryBoard = new FactoryBoard();
         Board testBoard = factoryBoard.boardMaker(cPropertiesCSV, uPropertiesCSV, sPropertiesCSV, cardsCSV);
         return testBoard;
