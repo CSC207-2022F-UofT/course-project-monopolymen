@@ -21,7 +21,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
     private JPanel optionsPanel;
     private JLabel moneyTracker;
 
-    LiquidateAssetsInterfaceAdapter(TurnController turnController, JPanel mainPanel, CardLayout cardLayout){
+    public LiquidateAssetsInterfaceAdapter(TurnController turnController, JPanel mainPanel, CardLayout cardLayout){
         this.turnController = turnController;
         this.mainPanel = mainPanel;
         this.cardLayout = cardLayout;
@@ -118,6 +118,8 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
         //This will make the mortgage buttons come out as a list.
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
         optionsPanel.add(new JLabel("These are properties that you can mortgage to gain money:"));
+        JScrollPane buttonList = new JScrollPane();
+        optionsPanel.add(buttonList);
         //Making the various buttons that are the possible properties player can mortgage
         for(int i = 0; i < mortgageableProperties.size(); i++){
             Property property = mortgageableProperties.get(i);
@@ -130,7 +132,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                     turnController.mortgageProperty(situation.getAffectedPlayer(), property);
                 }
             });
-            optionsPanel.add(mortgagePropertyButton);
+            buttonList.add(mortgagePropertyButton);
         }
         JButton stopMortgaging = new JButton("Cancel");
         stopMortgaging.addActionListener(new ActionListener() {
@@ -140,7 +142,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                 liquidateAssetsUseCase.getPlayerOptions(situation);
             }
         });
-        optionsPanel.add(stopMortgaging);
+        buttonList.add(stopMortgaging);
         moneyTracker.setText("<html>Current Money: $" + situation.getAffectedPlayer().getMoney()+ "<br>Owed Money: $" + situation.getOwedMoney()+"</html>");
         optionsPanel.add(moneyTracker);
         optionsPanel.validate();
@@ -156,6 +158,8 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
         //Hopefully this will make the sell house buttons come out as a list.
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
         optionsPanel.add(new JLabel("These are properties that have houses that can be sold to gain money:"));
+        JScrollPane buttonList = new JScrollPane();
+        optionsPanel.add(buttonList);
         //Making the various buttons that are the properties that have houses that can be sold
         for(int i = 0; i < propertiesWithHouses.size(); i++){
             ColorPropertyTile property = propertiesWithHouses.get(i);
@@ -175,7 +179,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                     liquidateAssetsUseCase.getPlayerOptions(situation);
                 }
             });
-            optionsPanel.add(sellHouse);
+            buttonList.add(sellHouse);
         }
         JButton stopSelling = new JButton("Cancel");
         stopSelling.addActionListener(new ActionListener() {
@@ -185,7 +189,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                 liquidateAssetsUseCase.getPlayerOptions(situation);
             }
         });
-        optionsPanel.add(stopSelling);
+        buttonList.add(stopSelling);
         moneyTracker.setText("<html>Current Money: $" + situation.getAffectedPlayer().getMoney()+ "<br>Owed Money: $" + situation.getOwedMoney()+"</html>");
         optionsPanel.add(moneyTracker);
         optionsPanel.validate();
