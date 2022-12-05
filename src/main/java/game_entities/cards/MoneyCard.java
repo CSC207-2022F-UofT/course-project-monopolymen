@@ -20,7 +20,7 @@ public class MoneyCard extends Card{
             player.addMoney(this.money);
         }
         else {
-            player.subtractMoney(this.money);
+            player.subtractMoney(this.money*-1);
         }
 
         return new CardActionResultModel(getCardDescription(), player, player.getPosition(), getCardName(),
