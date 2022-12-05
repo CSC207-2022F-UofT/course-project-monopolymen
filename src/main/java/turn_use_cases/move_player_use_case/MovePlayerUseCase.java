@@ -128,7 +128,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                         // Normal move player card
                         movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
                                 cardResult.getFlavorText(), doubleRoll, cardResult.isChance());
-                        moveToPosition(player, result.getPlayerPosition(), doubleRoll);
+                        moveToPosition(player, cardResult.getPlayerPosition(), doubleRoll);
                     }
                 } else {
                     // Card didn't move player
@@ -144,15 +144,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                     sendToJail(player);
                 } else {
                     // Normal move
-                    movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), doubleRoll,
-                            result.getFlavorText());
-                    if (tile instanceof Property) {
-                        if (((Property) tile).getOwner() == null) {
-                            movePlayerOutputBoundary.showBuyableProperty(player, tile, true, doubleRoll);
-                        } else {
-                            movePlayerOutputBoundary.showBuyableProperty(player, tile, false, doubleRoll);
-                        }
-                    }
+                    moveToPosition(player, result.getPlayerPosition(), doubleRoll);
                 }
             }
     }
