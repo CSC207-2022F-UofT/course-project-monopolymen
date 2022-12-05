@@ -75,6 +75,6 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
         if(player.hasGetOutofJailFreeCard()) {
             playerOptions.add("Card");
         }
-        tryToGetOutOfJailOutputBoundary.showOptions(playerOptions);
+        tryToGetOutOfJailOutputBoundary.showOptions(player, playerOptions);
     }
 }

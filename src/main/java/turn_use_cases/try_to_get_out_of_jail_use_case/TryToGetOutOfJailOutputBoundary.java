@@ -13,7 +13,8 @@ public interface TryToGetOutOfJailOutputBoundary {
 
     /**
      * Shows the options the player can choose
-     * @param options
+     * @param player The player Object
+     * @param options String arraylist for what the player can choose
      */
-    public void showOptions(ArrayList<String> options);
+    public void showOptions(Player player, ArrayList<String> options);
 }
