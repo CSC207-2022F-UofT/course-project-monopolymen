@@ -34,9 +34,11 @@ public interface MovePlayerOutputBoundary {
      * @param player The player object the action is being performed on
      * @param cardName Card's name
      * @param cardDescription Card's description
+     * @param rollAgain If the player can roll again
      * @param isChance If the card is a chance or community card
      */
-    public void showCardDraw(Player player, String cardName, String cardDescription, boolean isChance);
+    public void showCardDraw(Player player, String cardName, String cardDescription, boolean rollAgain,
+                             boolean isChance);
 
     /**
      * Shows that the property is purchasable

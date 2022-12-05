@@ -105,7 +105,19 @@ public class TurnController {
 
     /* Move Player/RollDice use case related methods */
     public void rollDice(Player player) {
-        movePlayer.startAction(player);
+        movePlayer.startAction(player, true);
+    }
+
+    public void endRollDice(Player player, boolean rollAgain) {
+        if(!rollAgain) {
+            gameState.playerRolledToMove();
+        }
+        endUseCase();
+    }
+
+    public void buyProperty(Player player, Property property) {
+        player.addProperty(property);
+        player.subtractMoney(property.getPurchasePrice());
     }
 
     /* TryToGetOutOfJail use case related methods */
@@ -120,19 +132,20 @@ public class TurnController {
     }
 
     /* Mortgage property related methods */
+//    public void showMortgageableProperties(Player player) { mortgageProperty.showMortgageOptions(player); }
+
     public void mortgageProperty(Player player, Property property) {
         mortgageProperty.mortgage(player, property);
     }
+
+//    public void showUnmortgageableProperties(Player palyer) { mortgageProperty.showUnmortgageOptions(player); }
 
     public void unmortgageProperty(Player player, Property property) {
         mortgageProperty.unmortgage(player, property);
     }
 
     /* BuildBuilding Related Methods */
-    public void getBuildableProperties() {
-        // TODO call the method in the BuildBuildingInputBoundary to show the list of properties
-        //      the player can build on. (Does not exist right now)
-    }
+//    public void getBuildableProperties(Player player) { buildBuilding.showBuildingOptions(player); }
 
     public void buildHouse(Player player, ColorPropertyTile property) {
         buildBuilding.buildHouse(player, property);
@@ -142,10 +155,7 @@ public class TurnController {
         buildBuilding.buildHotel(player, property);
     }
 
-    public void getBuiltOnProperties() {
-        // TODO call the method in the BuildBuildingInputBoundary to show the list of properties
-        //      that have a house/hotel on them to sell. (Does not exist right now)
-    }
+//    public void getBuiltOnProperties(Player player) { buildBuilding.showSellOptions(player); }
 
     public void sellHouse(Player player, ColorPropertyTile property) {
         buildBuilding.sellHouse(player, property);
@@ -164,10 +174,9 @@ public class TurnController {
         trade.getTradeOptions(proposing, receiving);
     }
 
-    public void makeOffer(Player offering, Player receiving, int player1Money, int player2Money, int player1JailCard,
-                          int player2JailCard, List<Property> player1Property, List<Property> player2Property) {
-        TradeOffer player1Offer = new TradeOffer(player1Money - player2Money, player1JailCard - player2JailCard,
-                (ArrayList<Property>) player1Property, (ArrayList<Property>) player2Property, offering, receiving);
+    public void makeOffer(Player offering, Player receiving, TradeOffer player1Offer) {
+//        TradeOffer player1Offer = new TradeOffer(player1Money - player2Money, player1JailCard - player2JailCard,
+//                (ArrayList<Property>) player1Property, (ArrayList<Property>) player2Property, offering, receiving);
         trade.makeOffer(player1Offer, offering, receiving);
     }
 
@@ -179,10 +188,19 @@ public class TurnController {
         trade.getResultOfTradeOffer(3, offering, receiving, tradeOffer);
     }
 
-    public void counterOffer(Player offering, Player receiving) {
+    public void counterOffer(Player offering, Player receiving, TradeOffer tradeOffer) {
         // The receiving player is now making the offer
-        trade.getTradeOptions(receiving, offering);
+        trade.getResultOfTradeOffer(2, offering, receiving, tradeOffer);
     }
+
+    /* LiquidityUseCase related methods*/
+//    public void getPlayerOptions(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+//
+//    public void getMortgageableProperties(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+//
+//    public void getPropertiesWithHouses(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+//
+//    public void bankruptcy(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
 
     /* ViewInventory Related Methods */
     public void showInventory(Player currentPlayer, List<Player> playerList) {

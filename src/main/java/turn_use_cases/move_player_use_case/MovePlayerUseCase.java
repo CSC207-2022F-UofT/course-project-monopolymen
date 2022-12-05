@@ -84,11 +84,15 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
     }
 
     @Override
-    public void startAction(Player player) {
+    public void startAction(Player player, boolean canRollAgain) {
         int[] playerRollAmount = {(int)(Math.random() * 6) + 1, (int)(Math.random() * 6) + 1};
         movePlayerOutputBoundary.showRoll(playerRollAmount);
         int rollSum = playerRollAmount[0] + playerRollAmount[1];
         boolean doubleRoll = playerRollAmount[0] == playerRollAmount[1];
+        if (!canRollAgain) {
+            // player is not allowed to roll again even if they roll a double
+            doubleRoll = false;
+        }
         // Check if the player is in jail will be handled separately
         player.updateConsecutiveDoubles(playerRollAmount[0], playerRollAmount[1]);
         player.setLastRoll(playerRollAmount[0], playerRollAmount[1]);
@@ -98,14 +102,13 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                     "You are going to jail for rolling three consecutive doubles.");
             endTurnUseCase.forceEndTurn(player);
         } else {
-            // Presenter calls to show player passing through the tiles
-            for(int i = 0; i < rollSum; i++) {
-                player.updatePosition(1);
-                TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
-                movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
-            }
-            // Player passed through all the tiles and is now on their original position + rollSum
-            int playerBeforePosition = player.getPosition();
+            movePlayer(player, rollSum, doubleRoll);
+        }
+    }
+
+    @Override
+    public void movePlayer(Player player, int rollSum, boolean doubleRoll) {
+        int playerBeforePosition = player.getPosition();
             TileActionResultModel result = board.getTile(player.getPosition()).action(player, board);
             if(result instanceof CardActionResultModel) {
                 // Player landed on draw card tile
@@ -116,18 +119,18 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                         // Player is moving to jail, does not collect "GO" tile money
                         // player.enterJail() is handled in the card's action
                         movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
-                                cardResult.getFlavorText(), cardResult.isChance());
+                                cardResult.getFlavorText(), false, cardResult.isChance());
                         sendToJail(player);
                     } else {
                         // Normal move player card
                         movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
-                                cardResult.getFlavorText(), cardResult.isChance());
+                                cardResult.getFlavorText(), doubleRoll, cardResult.isChance());
                         moveToPosition(player, result.getPlayerPosition());
                     }
                 } else {
                     // Card didn't move player
                     movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(), cardResult.getFlavorText(),
-                            cardResult.isChance());
+                            doubleRoll, cardResult.isChance());
                 }
             } else {
                 // Player didn't land on a draw card tile
@@ -149,7 +152,6 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                     }
                 }
             }
-        }
     }
 
     /**
