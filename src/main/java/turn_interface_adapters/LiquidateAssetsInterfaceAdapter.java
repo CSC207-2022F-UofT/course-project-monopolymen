@@ -1,19 +1,11 @@
 package turn_interface_adapters;
 
-import game.FakeGameStateOutputBoundary;
-import game.GameState;
-import game.ISaveGameState;
-import game_entities.Board;
-import game_entities.FactoryBoard;
-import game_entities.Player;
 import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
-import game_entities.tiles.Tile;
 import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsOutputBoundary;
 import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsUseCase;
 import turn_use_cases.liquidate_assets_use_case.LiquiditySituation;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -144,7 +136,6 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
         stopMortgaging.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                situation.getAffectedPlayer().addProperty(situation.getBoard().getColorPropertyTiles().get(5));
                 LiquidateAssetsUseCase liquidateAssetsUseCase = new LiquidateAssetsUseCase(laia);
                 liquidateAssetsUseCase.getPlayerOptions(situation);
             }
@@ -186,6 +177,15 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
             });
             optionsPanel.add(sellHouse);
         }
+        JButton stopSelling = new JButton("Cancel");
+        stopSelling.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LiquidateAssetsUseCase liquidateAssetsUseCase = new LiquidateAssetsUseCase(laia);
+                liquidateAssetsUseCase.getPlayerOptions(situation);
+            }
+        });
+        optionsPanel.add(stopSelling);
         moneyTracker.setText("<html>Current Money: $" + situation.getAffectedPlayer().getMoney()+ "<br>Owed Money: $" + situation.getOwedMoney()+"</html>");
         optionsPanel.add(moneyTracker);
         optionsPanel.validate();
