@@ -48,10 +48,10 @@ public class TestObjects {
     }
 
     public static Board testBoardReal() throws FileNotFoundException {
-        String cPropertiesCSV = "https://github.com/CSC207-2022F-UofT/course-project-monopolymen/blob/60c5ce003787f742d892145e77e5e28dc3e04907/src/main/resources/Data/property_csvs/Color%20Properties%20Monopoly.csv";
-        String sPropertiesCSV = "https://github.com/CSC207-2022F-UofT/course-project-monopolymen/blob/60c5ce003787f742d892145e77e5e28dc3e04907/src/main/resources/Data/property_csvs/Station%20Properties%20Monopoly.csv";
-        String uPropertiesCSV = "https://github.com/CSC207-2022F-UofT/course-project-monopolymen/blob/60c5ce003787f742d892145e77e5e28dc3e04907/src/main/resources/Data/property_csvs/Utility%20Properties%20Monopoly.csv";
-        String cardsCSV = "https://github.com/CSC207-2022F-UofT/course-project-monopolymen/blob/60c5ce003787f742d892145e77e5e28dc3e04907/src/main/resources/cards.csv";
+        String cPropertiesCSV = "src/main/resources/Data/property_csvs/Color Properties Monopoly.csv";
+        String sPropertiesCSV = "src/main/resources/Data/property_csvs/Station Properties Monopoly.csv";
+        String uPropertiesCSV = "src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv";
+        String cardsCSV = "src/main/resources/cards.csv";
         FactoryBoard factoryBoard = new FactoryBoard();
         Board testBoard = factoryBoard.boardMaker(cPropertiesCSV, uPropertiesCSV, sPropertiesCSV, cardsCSV);
         return testBoard;
