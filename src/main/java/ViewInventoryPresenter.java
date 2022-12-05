@@ -31,7 +31,7 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
             }
         }
         JFrame popUpInventory = new JFrame(currentPlayer + " s' Inventory");
-        popUpInventory.setMinimumSize(new Dimension(1000, 300));
+        popUpInventory.setMinimumSize(new Dimension(1000, 390));
         JPanel inventoryInfo = new JPanel();
         JScrollPane testing = new JScrollPane();
         testing.setViewportView(inventoryInfo);
@@ -71,7 +71,7 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
                 System.out.println(path);
                 ImageIcon temp = new ImageIcon(new ImageIcon
                         (path)
-                        .getImage().getScaledInstance((int)(150), (int)(220), Image.SCALE_SMOOTH));
+                        .getImage().getScaledInstance((int)(250), (int)(320), Image.SCALE_SMOOTH));
                 currentPropertySetPanel.add(new JLabel(temp));
             }
             inventoryInfo.add(currentPropertySetPanel);
@@ -85,10 +85,10 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
         JPanel player2 = new JPanel();
         JPanel player3 = new JPanel();
         JPanel player4 = new JPanel();
-        JButton player1Button = new JButton(playersInfo.get(0).getName());
-        JButton player2Button = new JButton(playersInfo.get(1).getName());
-        JButton player3Button = new JButton(playersInfo.get(2).getName());
-        JButton player4Button = new JButton(playersInfo.get(3).getName());
+        JButton player1Button = new JButton("View "+ playersInfo.get(0).getName() + "s' Inventory");
+        JButton player2Button = new JButton("View "+ playersInfo.get(1).getName() + "s' Inventory");
+        JButton player3Button = new JButton("View "+ playersInfo.get(2).getName() + "s' Inventory");
+        JButton player4Button = new JButton("View "+ playersInfo.get(3).getName() + "s' Inventory");
         player1.setBackground(new Color(201, 201, 201));
         player2.setBackground(new Color(158, 158, 158));
         player3.setBackground(new Color(125, 125, 125));
