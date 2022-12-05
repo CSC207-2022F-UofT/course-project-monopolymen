@@ -34,9 +34,10 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
      * This is only called by startAction when it lands on a draw card tile that will move the player
      * @param player The player object that the action is being performed on
      * @param absolutePosition the position the player will move to
+     * @param doubleRoll If the player rolled a double
      */
 
-    private void moveToPosition(Player player, int absolutePosition) {
+    private void moveToPosition(Player player, int absolutePosition, boolean doubleRoll) {
         // There is only 1 case when the player moves back by the card and its 3 spaces
         int steps = absolutePosition - player.getPosition();
         if(steps == -3) {
@@ -53,7 +54,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                     movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
                 }
             }
-            showAction(player);
+            showAction(player, doubleRoll);
         } else {
             int positiveSteps = (steps + board.getTilesList().size()) % board.getTilesList().size();
             for (int i = 0; i < positiveSteps; i++) {
@@ -61,24 +62,25 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                 TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
                 movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
             }
-            showAction(player);
+            showAction(player, doubleRoll);
         }
     }
 
     /**
      * Shows the action in the presenter
      * @param player The player object that the action is being performed on
+     * @param doubleRoll If the player rolled a double
      */
-    private void showAction(Player player) {
+    private void showAction(Player player, boolean doubleRoll) {
         TileActionResultModel result = board.getTile(player.getPosition()).action(player, board);
         Tile tile = board.getTile(player.getPosition());
         movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
                 result.getFlavorText());
         if (tile instanceof Property) {
             if (((Property) tile).getOwner() == null) {
-                movePlayerOutputBoundary.showBuyableProperty(player, tile, true);
+                movePlayerOutputBoundary.showBuyableProperty(player, tile, true, doubleRoll);
             } else {
-                movePlayerOutputBoundary.showBuyableProperty(player, tile, false);
+                movePlayerOutputBoundary.showBuyableProperty(player, tile, false, doubleRoll);
             }
         }
     }
@@ -125,7 +127,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                         // Normal move player card
                         movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
                                 cardResult.getFlavorText(), doubleRoll, cardResult.isChance());
-                        moveToPosition(player, result.getPlayerPosition());
+                        moveToPosition(player, result.getPlayerPosition(), doubleRoll);
                     }
                 } else {
                     // Card didn't move player
@@ -145,9 +147,9 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                             result.getFlavorText());
                     if (tile instanceof Property) {
                         if (((Property) tile).getOwner() == null) {
-                            movePlayerOutputBoundary.showBuyableProperty(player, tile, true);
+                            movePlayerOutputBoundary.showBuyableProperty(player, tile, true, doubleRoll);
                         } else {
-                            movePlayerOutputBoundary.showBuyableProperty(player, tile, false);
+                            movePlayerOutputBoundary.showBuyableProperty(player, tile, false, doubleRoll);
                         }
                     }
                 }

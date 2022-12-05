@@ -45,6 +45,7 @@ public interface MovePlayerOutputBoundary {
      * @param player The player object the action is being performed on
      * @param tile The tile the player landed on
      * @param buyable If the tile is buyable
+     * @param rollAgain If the player rolled a double
      */
-    public void showBuyableProperty(Player player, Tile tile, boolean buyable);
+    public void showBuyableProperty(Player player, Tile tile, boolean buyable, boolean rollAgain);
 }
