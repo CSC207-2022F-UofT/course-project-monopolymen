@@ -1,3 +1,5 @@
+package turn_use_cases.view_inventory;
+
 import game_entities.Player;
 import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
