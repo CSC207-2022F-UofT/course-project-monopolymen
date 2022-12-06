@@ -158,11 +158,15 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
 
     @Override
     public void showRoll(int[] playerRollAmount){
-        JLabel roll = new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]);
-        roll.setPreferredSize(new Dimension(300, 300));
-        optionsWindow.add(roll);
+        // Add JLabel showing the roll amount
+        optionsWindow.removeAll();
+        System.out.println("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]);
+
         optionsWindow.revalidate();
         optionsWindow.repaint();
+        optionsWindow.add(new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]));
+        CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
+        cardLayout.show(actionDialogBox, "Roll options");
     }
 
     @Override
@@ -216,6 +220,16 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             });
             optionsWindow.add(buyButton);
             optionsWindow.add(dontBuy);
+        } else {
+            JButton other = new JButton("Other Options");
+            other.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
+                    turnController.endRollDice(doubleRoll);
+                }
+            });
+            optionsWindow.add(other);
         }
     }
 }
