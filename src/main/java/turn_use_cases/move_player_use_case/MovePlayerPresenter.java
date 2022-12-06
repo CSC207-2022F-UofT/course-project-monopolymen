@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -30,15 +32,17 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     private int[][] scaledTilePositions;
     private TurnController turnController;
     private JPanel optionsWindow;
+    private JFrame mainWindow;
 
-    public MovePlayerPresenter(JLayeredPane board, JPanel actionDialogBox, double scaleFactor, List<Player> playerList,
+    public MovePlayerPresenter(JFrame mainWindow, JLayeredPane board, JPanel actionDialogBox, List<Player> playerList,
                                TurnController turnController, String tilePositionFilePath) {
         this.actionDialogBox = actionDialogBox;
         this.board = board;
         this.playerList = playerList;
-        this.scaleFactor = scaleFactor;
+        this.scaleFactor = 1.0; // default value for initialization purposes. Is overwritten by rescale method call.
         this.turnController = turnController;
         this.optionsWindow = new JPanel();
+        this.mainWindow = mainWindow;
         // read in the tile positions from TilePositions.txt
         this.tilePositions = new ArrayList<>();
         actionDialogBox.add(optionsWindow, "Roll options");
@@ -55,19 +59,28 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             throw new RuntimeException(e);
         }
         this.scaledTilePositions = scaleTilePositions();
-        PopulateBoard();
+        rescale(mainWindow.getWidth());
+        populateBoard();
+
+        // Resize the board image on window resizing.
+        mainWindow.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                rescale(mainWindow.getWidth());
+            }
+        });
     }
 
     /**
      * Creates the board and the players.
      * Does not create "roll dice" button as it is handled by the controller.
      */
-    private void PopulateBoard() {
+    private void populateBoard() {
         // draw the board
         ImageIcon boardImage = new ImageIcon(new ImageIcon("src/main/resources/assets/misc/board.jpg")
-                .getImage().getScaledInstance((int)(1500 * scaleFactor), (int)(1500 * scaleFactor), Image.SCALE_SMOOTH));
+                .getImage().getScaledInstance((int) (1500 * scaleFactor), (int) (1500 * scaleFactor), Image.SCALE_SMOOTH));
         JLabel boardImageLabel = new JLabel(boardImage);
-        boardImageLabel.setBounds(0, 0, (int)(1500 * scaleFactor), (int)(1500 * scaleFactor));
+        boardImageLabel.setBounds(0, 0, (int) (1500 * scaleFactor), (int) (1500 * scaleFactor));
         board.add(boardImageLabel, new Integer(0));
         this.players = new ArrayList<>();
         for (int i = 0; i < playerList.size(); i++) {
@@ -95,6 +108,18 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             scaledTilePositions[i][1] = (int) (tilePositions.get(i)[1] * scaleFactor);
         }
         return scaledTilePositions;
+    }
+
+    public void rescale(int newWidth) {
+        // scaleFactor is half of the newWidth in 100s of pixels over 15.
+        // newWidth has 100 subtracted to give a 50 pixel buffer between the right edge of the board
+        // and the halfway split mark.
+        this.scaleFactor = ((newWidth - 100) / 200.0) / 15.0;
+        this.scaledTilePositions = scaleTilePositions();
+        board.removeAll();
+        populateBoard();
+        board.validate();
+        board.repaint();
     }
 
     @Override
