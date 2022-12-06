@@ -1,10 +1,14 @@
 package turn_interface_adapters;
 
 import game.GameState;
+import game_entities.Board;
 import game_entities.Player;
 import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
 import turn_use_cases.build_use_case.BuildBuildingInputBoundary;
+import turn_use_cases.end_turn_use_case.EndTurnInputBoundary;
+import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsInputBoundary;
+import turn_use_cases.liquidate_assets_use_case.LiquiditySituation;
 import turn_use_cases.mortgage_use_case.MortgagePropertyInputBoundary;
 import turn_use_cases.move_player_use_case.MovePlayerInputBoundary;
 import turn_use_cases.trade_use_case.TradeInputBoundary;
@@ -32,8 +36,12 @@ public class TurnController {
     private ViewInventoryInputBoundary viewInventory;
     private EndUseCaseDestination nextEndUseCaseDestination;
 
+    private LiquidateAssetsInputBoundary liquidateAssets;
+
+    private EndTurnInputBoundary endTurn;
+
     /**
-     * Construct the TurnController object. Before use, the {@link #setInputBoundaries(BuildBuildingInputBoundary, MortgagePropertyInputBoundary, MovePlayerInputBoundary, TradeInputBoundary, TryToGetOutOfJailInputBoundary, ViewInventoryInputBoundary)}
+     * Construct the TurnController object. Before use, the {@link #setInputBoundaries(BuildBuildingInputBoundary, MortgagePropertyInputBoundary, MovePlayerInputBoundary, TradeInputBoundary, TryToGetOutOfJailInputBoundary, ViewInventoryInputBoundary, LiquidateAssetsInputBoundary, EndTurnInputBoundary)}
      * method must be called to specify the input boundaries.
      */
     public TurnController(GameState gameState) {
@@ -55,13 +63,18 @@ public class TurnController {
                                    MovePlayerInputBoundary movePlayer,
                                    TradeInputBoundary trade,
                                    TryToGetOutOfJailInputBoundary getOutOfJail,
-                                   ViewInventoryInputBoundary viewInventory) {
+                                   ViewInventoryInputBoundary viewInventory,
+                                   LiquidateAssetsInputBoundary liquidateAssets,
+                                   EndTurnInputBoundary endTurn) {
         this.buildBuilding = buildBuilding;
         this.mortgageProperty = mortgageProperty;
         this.movePlayer = movePlayer;
         this.trade = trade;
         this.getOutOfJail = getOutOfJail;
         this.viewInventory = viewInventory;
+        this.liquidateAssets = liquidateAssets;
+        this.endTurn = endTurn;
+
     }
 
     /**
@@ -194,17 +207,26 @@ public class TurnController {
     }
 
     /* LiquidityUseCase related methods*/
-//    public void getPlayerOptions(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
-//
-//    public void getMortgageableProperties(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
-//
-//    public void getPropertiesWithHouses(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
-//
-//    public void bankruptcy(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+    public void getPlayerOptions(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+
+    public void getPlayerOptions(Player affectedPlayer, Player owedPlayer, int owedMoney, GameState gameState, Board board) {
+        LiquiditySituation situation = new LiquiditySituation(affectedPlayer, owedPlayer, owedMoney, gameState, board);
+        liquidateAssets.getPlayerOptions(situation);
+    }
+
+    public void getMortgageableProperties(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+
+    public void getPropertiesWithHouses(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+
+    public void bankruptcy(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
 
     /* ViewInventory Related Methods */
     public void showInventory(Player currentPlayer, List<Player> playerList) {
         viewInventory.displayInfo(currentPlayer, playerList);
+    }
+
+    public void endTurn(Player player){
+        endTurn.endTurn(player);
     }
 
     enum EndUseCaseDestination {
