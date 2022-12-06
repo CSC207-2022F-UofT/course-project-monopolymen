@@ -30,7 +30,6 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     private int[][] scaledTilePositions;
     private TurnController turnController;
     private JPanel optionsWindow;
-    private JPanel cardWindow;
 
     public MovePlayerPresenter(JLayeredPane board, JPanel actionDialogBox, double scaleFactor, List<Player> playerList,
                                TurnController turnController, String tilePositionFilePath) {
@@ -40,10 +39,8 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         this.scaleFactor = scaleFactor;
         this.turnController = turnController;
         this.optionsWindow = new JPanel();
-        this.cardWindow = new JPanel();
         this.tilePositions = new ArrayList<>();
         actionDialogBox.add(optionsWindow, "Roll options");
-        actionDialogBox.add(cardWindow, "Card");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(tilePositionFilePath)); //FilePath here
             String line;
@@ -135,16 +132,19 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
 
     @Override
     public void showRoll(int[] playerRollAmount){
-        optionsWindow.add(new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]));
+        JLabel roll = new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]);
+        roll.setPreferredSize(new Dimension(300, 300));
+        optionsWindow.add(roll);
+        optionsWindow.revalidate();
+        optionsWindow.repaint();
     }
 
     @Override
     public void showCardDraw(Player player, String cardName, String cardDescription, boolean rollAgain,  boolean isChance) {
         // Clear the options window. as this is different from showResultOfAction
         optionsWindow.removeAll();
-        System.out.println("Showing card draw");
-        System.out.println(cardName);
-        ImageIcon cardImage = new ImageIcon("src/main/resources/assets/cards/" + cardName + ".jpg");
+        ImageIcon cardImage = new ImageIcon(new ImageIcon("src/main/resources/assets/cards/" + cardName + ".jpg")
+                .getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH));
         JLabel cardImageLabel = new JLabel(cardImage);
         // scale the image
         cardImageLabel.setPreferredSize(new Dimension(300, 300)); 
@@ -162,7 +162,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         optionsWindow.repaint();
         optionsWindow.add(otherOptions);
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
-        cardLayout.show(actionDialogBox, "Card");
+        cardLayout.show(actionDialogBox, "Roll options");
     }
 
     @Override
