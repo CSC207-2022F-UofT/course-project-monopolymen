@@ -29,6 +29,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     private int[][] scaledTilePositions;
     private TurnController turnController;
     private JPanel optionsWindow;
+    private JPanel optionsWindowTop;
 
     public MovePlayerPresenter(JLayeredPane board, JPanel actionDialogBox, double scaleFactor, List<Player> playerList,
                                TurnController turnController, String tilePositionFilePath) {
@@ -38,6 +39,9 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         this.scaleFactor = scaleFactor;
         this.turnController = turnController;
         this.optionsWindow = new JPanel();
+        this.optionsWindowTop = new JPanel();
+        this.optionsWindow.setLayout(new BorderLayout());
+        this.optionsWindow.add(optionsWindowTop, BorderLayout.NORTH);
         // read in the tile positions from TilePositions.txt
         this.tilePositions = new ArrayList<>();
         actionDialogBox.add(optionsWindow, "Roll options");
@@ -178,7 +182,10 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
 
     @Override
     public void showRoll(int[] playerRollAmount){
-        optionsWindow.add(new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]));
+        optionsWindowTop.removeAll();
+        optionsWindowTop.add(new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]));
+        CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
+        cardLayout.show(actionDialogBox, "Roll options");
     }
 
     @Override
