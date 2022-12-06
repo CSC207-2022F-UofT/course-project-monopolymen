@@ -32,12 +32,11 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     private JPanel optionsWindowTop;
     private JFrame mainWindow;
 
-    public MovePlayerPresenter(JFrame mainWindow, JLayeredPane board, JPanel actionDialogBox, double scaleFactor, List<Player> playerList,
+    public MovePlayerPresenter(JFrame mainWindow, JLayeredPane board, JPanel actionDialogBox, List<Player> playerList,
                                TurnController turnController, String tilePositionFilePath) {
         this.actionDialogBox = actionDialogBox;
         this.board = board;
         this.playerList = playerList;
-        this.scaleFactor = scaleFactor;
         this.turnController = turnController;
         this.optionsWindow = new JPanel();
         this.optionsWindowTop = new JPanel();
@@ -161,7 +160,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                turnController.endRollDice(player, rollAgain);
+                turnController.endRollDice(rollAgain);
             }
         });
         optionsWindow.add(otherOptions);
@@ -226,7 +225,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                turnController.endRollDice(player, rollAgain);
+                turnController.endRollDice(rollAgain);
             }
         });
         optionsWindow.add(otherOptions);
@@ -245,7 +244,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Temporary turn controller, calls the BuyPropertyUseCase and returns back to "main" action dialog panel
-                    turnController.buyProperty(player, property);
+                    turnController.buyProperty(property);
                 }
             });
             JButton otherOptions = new JButton("Don't buy");
@@ -253,7 +252,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                    turnController.endRollDice(player, doubleRoll);
+                    turnController.endRollDice(doubleRoll);
                 }
             });
             optionsWindow.add(buyButton);
@@ -264,7 +263,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                    turnController.endRollDice(player, doubleRoll);
+                    turnController.endRollDice(doubleRoll);
                 }
             });
             optionsWindow.add(otherOptions);
