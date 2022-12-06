@@ -30,6 +30,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     private int[][] scaledTilePositions;
     private TurnController turnController;
     private JPanel optionsWindow;
+    private JPanel cardWindow;
 
     public MovePlayerPresenter(JLayeredPane board, JPanel actionDialogBox, double scaleFactor, List<Player> playerList,
                                TurnController turnController, String tilePositionFilePath) {
@@ -39,9 +40,10 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         this.scaleFactor = scaleFactor;
         this.turnController = turnController;
         this.optionsWindow = new JPanel();
-        // read in the tile positions from TilePositions.txt
+        this.cardWindow = new JPanel();
         this.tilePositions = new ArrayList<>();
         actionDialogBox.add(optionsWindow, "Roll options");
+        actionDialogBox.add(cardWindow, "Card");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(tilePositionFilePath)); //FilePath here
             String line;
@@ -106,7 +108,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         JLabel playerPanel = players.get(playerList.indexOf(player));
         playerPanel.setBounds(scaledTilePositions[playerPosition][0] + playerOffset[playerList.indexOf(player)][0],
                 scaledTilePositions[playerPosition][1] + playerOffset[playerList.indexOf(player)][1], 50, 50);
-        JButton otherOptions = new JButton("Don't Buy Property");
+        JButton otherOptions = new JButton("Other Options");
         otherOptions.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -140,6 +142,8 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     public void showCardDraw(Player player, String cardName, String cardDescription, boolean rollAgain,  boolean isChance) {
         // Clear the options window. as this is different from showResultOfAction
         optionsWindow.removeAll();
+        System.out.println("Showing card draw");
+        System.out.println(cardName);
         ImageIcon cardImage = new ImageIcon("src/main/resources/assets/cards/" + cardName + ".jpg");
         JLabel cardImageLabel = new JLabel(cardImage);
         // scale the image
@@ -158,12 +162,13 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         optionsWindow.repaint();
         optionsWindow.add(otherOptions);
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
-        cardLayout.show(actionDialogBox, "Roll options");
+        cardLayout.show(actionDialogBox, "Card");
     }
 
     @Override
     public void showBuyableProperty(Player player, Tile tile, boolean buyable, boolean doubleRoll) {
-        // Don't clear the options window, as this will be displayed regardless of the previous action
+        // Clear the options window.
+        optionsWindow.removeAll();
         Property property = (Property) tile;
         if(buyable) {
             JButton buyButton = new JButton("Buy " + property.getTileDisplayName() + " for $"
@@ -175,8 +180,8 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                     turnController.buyProperty(property);
                 }
             });
-            JButton otherOptions = new JButton("Don't buy");
-            otherOptions.addActionListener(new ActionListener() {
+            JButton dontBuy = new JButton("Don't buy");
+            dontBuy.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
@@ -184,6 +189,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 }
             });
             optionsWindow.add(buyButton);
+            optionsWindow.add(dontBuy);
         }
     }
 }
