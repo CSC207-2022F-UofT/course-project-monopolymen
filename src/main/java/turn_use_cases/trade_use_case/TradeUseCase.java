@@ -123,8 +123,8 @@ public class TradeUseCase implements  TradeInputBoundary{
      * @param tradeOffer the details of the trade.
      */
     public void ExecuteOffer(Player player1, Player player2, TradeOffer tradeOffer){
-        player1.addMoney(tradeOffer.getTradeMoney());
-        player2.subtractMoney(tradeOffer.getTradeMoney());
+        player1.subtractMoney(tradeOffer.getTradeMoney());
+        player2.addMoney(tradeOffer.getTradeMoney());
 
         for (Property p : tradeOffer.getPropertiesReceived()){
             player1.addProperty(p);

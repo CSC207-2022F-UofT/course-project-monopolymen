@@ -18,15 +18,15 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TradePresenter implements TradeOutputBoundary, PropertyChangeListener {
+public class TradePresenter implements TradeOutputBoundary {
 
     private final TurnController turnController;
     private final JPanel mainPanel;
     private final CardLayout cardLayout;
     private final JPanel optionsPanel;
 
-    public TradePresenter( JPanel mainPanel, CardLayout cardLayout){
-        this.turnController = null;
+    public TradePresenter( JPanel mainPanel, CardLayout cardLayout, TurnController turnController){
+        this.turnController = turnController;
         this.mainPanel = mainPanel;
         this.cardLayout =  cardLayout;
         this.optionsPanel = new JPanel();
@@ -124,17 +124,29 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
 
         optionsPanel.add(propertiesRequestedText);
 
-        int tradeMoney = 0;
+        JPanel tradeMoneyPanel = new JPanel();
+        tradeMoneyPanel.setLayout(new BoxLayout(tradeMoneyPanel, BoxLayout.Y_AXIS));
+        tradeMoneyPanel.add(new JLabel("<html><body>"+"Money offered if + <br>Money requested if -"+"</body></html>"));
+
+        final int[] tradeMoney = {0};
         JFormattedTextField tradeMoneyField = new JFormattedTextField(NumberFormat.getNumberInstance());
         tradeMoneyField.setEditable(true);
-        tradeMoneyField.setValue(tradeMoney);
+        tradeMoneyField.setValue(0);
         tradeMoneyField.setColumns(15);
 
-        optionsPanel.add(tradeMoneyField);
+        tradeMoneyPanel.add(tradeMoneyField);
+        optionsPanel.add(tradeMoneyPanel);
 
-        JRadioButton noJailCard = new JRadioButton("No JC");
-        JRadioButton offerJailCard = new JRadioButton("Offer JC");
-        JRadioButton requestJailCard = new JRadioButton("<html><body>"+"Request JC"+"</body></html>");
+        tradeMoneyField.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                tradeMoney[0] = ((Number)tradeMoneyField.getValue()).intValue();
+            }
+        });
+
+        JRadioButton noJailCard = new JRadioButton("<html><body>"+"No Jail Card"+"</body></html>");
+        JRadioButton offerJailCard = new JRadioButton("<html><body>"+"Offer Jail Card"+"</body></html>");
+        JRadioButton requestJailCard = new JRadioButton("<html><body>"+"Request Jail Card"+"</body></html>");
 
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(noJailCard);
@@ -179,7 +191,7 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TradeOffer tradeOffer = new TradeOffer(tradeMoney, jailCard[0],
+                TradeOffer tradeOffer = new TradeOffer(tradeMoney[0], jailCard[0],
                         propertiesOffered, propertiesReceived, tradeOption.getPlayer1(), tradeOption.getPlayer2() );
 
                 turnController.makeOffer(tradeOption.getPlayer1(), tradeOption.getPlayer2(), tradeOffer);
@@ -254,7 +266,9 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
             for (Property property: tradeOffer.getPropertiesOffered()){
                 propertiesOffered = propertiesOffered + property.getTileDisplayName() + ", ";
             }
-            propertiesOffered = propertiesOffered.substring(0, propertiesOffered.length() - 2);
+            if(propertiesOffered.length() > 3){
+                propertiesOffered = propertiesOffered.substring(0, propertiesOffered.length() - 2);
+            }
 
             optionsPanel.add(new JLabel("<html><body>"+"Properties Offered: " + propertiesOffered +"</body></html>"));
 
@@ -263,7 +277,10 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
             for (Property property: tradeOffer.getPropertiesReceived()){
                 propertiesRequested = propertiesRequested + property.getTileDisplayName() + ", ";
             }
-            propertiesRequested = propertiesRequested.substring(0, propertiesRequested.length() - 2);
+
+            if(propertiesRequested.length() > 3){
+                propertiesRequested = propertiesRequested.substring(0, propertiesRequested.length() - 2);
+            }
 
             optionsPanel.add(new JLabel("<html><body>"+"Properties Requested: " + propertiesRequested +"</body></html>"));
 
@@ -364,18 +381,5 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
         optionsPanel.validate();
         optionsPanel.repaint();
         cardLayout.show(mainPanel, "Options Panel");
-    }
-
-
-    /**
-     * This method gets called when a bound property is changed.
-     *
-     * @param evt A PropertyChangeEvent object describing the event source
-     *            and the property that has changed.
-     */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        Object source = evt.getSource();
-
     }
 }
