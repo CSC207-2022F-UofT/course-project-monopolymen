@@ -112,7 +112,8 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
     @Override
     public void movePlayer(Player player, int rollSum, boolean doubleRoll) {
         int playerBeforePosition = player.getPosition();
-        TileActionResultModel result = board.getTile(player.getPosition() + rollSum).action(player, board);
+        int playerAfterPosition = (player.getPosition() + rollSum) % board.getTilesList().size();
+        TileActionResultModel result = board.getTile(playerAfterPosition).action(player, board);
         if(result instanceof CardActionResultModel) {
             // Player landed on draw card tile
             CardActionResultModel cardResult = (CardActionResultModel) result;
@@ -130,7 +131,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                 }
             } else {
                 // Card didn't move player
-                moveToPosition(player, player.getPosition() + rollSum, doubleRoll, cardResult.getFlavorText());
+                moveToPosition(player, playerAfterPosition, doubleRoll, cardResult.getFlavorText());
                 movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
                         doubleRoll, cardResult.isChance());
             }
@@ -142,7 +143,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                 sendToJail(player);
             } else {
                 // Normal move
-                moveToPosition(player, player.getPosition() + rollSum, doubleRoll, result.getFlavorText());
+                moveToPosition(player, playerAfterPosition, doubleRoll, result.getFlavorText());
                 }
             }
     }
@@ -153,7 +154,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
      * @param player The player object that the action is being performed on
      */
     private void sendToJail(Player player) {
-        movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+        movePlayerOutputBoundary.showResultOfAction(player, board.getJailTilePosition(), false,
                 "You are being sent to jail.");
         endTurnUseCase.forceEndTurn(player);
     }
