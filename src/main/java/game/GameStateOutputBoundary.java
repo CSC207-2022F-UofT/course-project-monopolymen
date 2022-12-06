@@ -33,7 +33,6 @@ public interface GameStateOutputBoundary {
         MORTGAGE,
         TRADE,
         LEAVE_JAIL,
-        VIEW_INVENTORY,
         END_TURN
     }
 }

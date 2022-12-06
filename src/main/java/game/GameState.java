@@ -115,7 +115,6 @@ public class GameState implements Serializable {
         options.add(TurnActions.BUILD_BUILDING);
         options.add(TurnActions.MORTGAGE);
         options.add(TurnActions.TRADE);
-        options.add(TurnActions.VIEW_INVENTORY);
 
         presenter.showTurnActions(currentPlayer(), options);
     }
