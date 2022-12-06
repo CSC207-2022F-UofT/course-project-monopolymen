@@ -1,6 +1,5 @@
 package turn_interface_adapters;
 
-import game.GameState;
 import game_entities.Player;
 import game_entities.tiles.Property;
 import turn_use_cases.trade_use_case.TradeOffer;
@@ -8,12 +7,18 @@ import turn_use_cases.trade_use_case.TradeOption;
 import turn_use_cases.trade_use_case.TradeOutputBoundary;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 
-public class TradePresenter implements TradeOutputBoundary {
+public class TradePresenter implements TradeOutputBoundary, PropertyChangeListener {
 
     private final TurnController turnController;
     private final JPanel mainPanel;
@@ -53,7 +58,7 @@ public class TradePresenter implements TradeOutputBoundary {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
-                    //turnController.startTrade(player, otherPlayer);
+                    turnController.startTrade(player, otherPlayer);
 
                 }
             });
@@ -74,12 +79,144 @@ public class TradePresenter implements TradeOutputBoundary {
     @Override
     public void showTradeOptions(TradeOption tradeOption, String flavorText) {
         optionsPanel.removeAll();
-        optionsPanel.setLayout(cardLayout);
-        optionsPanel.add(new JLabel(flavorText));
+        optionsPanel.setLayout(new GridLayout(1, 6));
+        //optionsPanel.add(new JLabel(flavorText));
 
         ArrayList<String> player1PropertiesDisplay = new ArrayList<>();
         ArrayList<Property> player1Properties = new ArrayList<>();
 
+        for (Property property : tradeOption.getPlayer1Properties()){
+            player1PropertiesDisplay.add(property.getTileDisplayName());
+            player1Properties.add(property);
+        }
+
+        ArrayList<String> player2PropertiesDisplay = new ArrayList<>();
+        ArrayList<Property> player2Properties = new ArrayList<>();
+
+        for (Property property : tradeOption.getPlayer2Properties()){
+            player2PropertiesDisplay.add(property.getTileDisplayName());
+            player2Properties.add(property);
+        }
+
+        ArrayList<Property> propertiesOffered = new ArrayList<>();
+        ArrayList<Property> propertiesReceived= new ArrayList<>();
+
+        JList listP1Properties = new JList<>(player1PropertiesDisplay.toArray());
+        listP1Properties.setVisible(true);
+        listP1Properties.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        JScrollPane propertiesOfferedList = new JScrollPane(listP1Properties);
+
+        JList listP2Properties = new JList<>(player2PropertiesDisplay.toArray());
+        listP2Properties.setVisible(true);
+        listP2Properties.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        JScrollPane propertiesRequestedList = new JScrollPane(listP2Properties);
+
+        optionsPanel.setBorder(BorderFactory.createTitledBorder(
+                "List"));
+        optionsPanel.add(propertiesOfferedList);
+
+        JLabel propertiesOfferedText = new JLabel("Prop. Offered");
+
+        optionsPanel.add(propertiesOfferedText);
+
+        optionsPanel.add(propertiesRequestedList);
+
+        JLabel propertiesRequestedText = new JLabel("Prop. Recieved");
+
+        optionsPanel.add(propertiesRequestedText);
+
+        int tradeMoney = 0;
+        JFormattedTextField tradeMoneyField = new JFormattedTextField(NumberFormat.getNumberInstance());
+        tradeMoneyField.setEditable(true);
+        tradeMoneyField.setValue(tradeMoney);
+        tradeMoneyField.setColumns(15);
+
+        optionsPanel.add(tradeMoneyField);
+
+        JRadioButton noJailCard = new JRadioButton("No JC");
+        JRadioButton offerJailCard = new JRadioButton("Offer JC");
+        JRadioButton requestJailCard = new JRadioButton("Request JC");
+
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(noJailCard);
+        buttonGroup.add(offerJailCard);
+        buttonGroup.add(requestJailCard);
+
+        JPanel jailButtons = new JPanel();
+        jailButtons.setLayout(new BoxLayout(jailButtons,BoxLayout.Y_AXIS));
+        jailButtons.setSize(1,3);
+        jailButtons.add(noJailCard);
+        jailButtons.add(offerJailCard);
+        jailButtons.add(requestJailCard);
+        optionsPanel.add(jailButtons);
+
+        final int[] jailCard = {0};
+
+        noJailCard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jailCard[0] = 0;
+            }
+        });
+
+        offerJailCard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jailCard[0] = 1;
+            }
+        });
+
+        requestJailCard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jailCard[0] = -1;
+            }
+        });
+
+        JButton submit = new JButton("Submit Offer");
+
+        optionsPanel.add(submit);
+
+        submit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TradeOffer tradeOffer = new TradeOffer(tradeMoney, jailCard[0],
+                        propertiesOffered, propertiesReceived, tradeOption.getPlayer1(), tradeOption.getPlayer2() );
+
+                turnController.makeOffer(tradeOption.getPlayer1(), tradeOption.getPlayer2(), tradeOffer);
+            }
+        });
+
+        listP1Properties.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                propertiesOffered.clear();
+                List<String> SelectedProperties = listP1Properties.getSelectedValuesList();
+                for (String propString: SelectedProperties){
+                    int x = player1PropertiesDisplay.indexOf(propString);
+                    propertiesOffered.add(player1Properties.get(x));
+                }
+
+
+
+
+            }
+        });
+
+        listP2Properties.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                propertiesReceived.clear();
+                List<String> SelectedProperties = listP2Properties.getSelectedValuesList();
+                for (String propString: SelectedProperties){
+                    int x = player2PropertiesDisplay.indexOf(propString);
+                    propertiesReceived.add(player2Properties.get(x));
+                }
+
+
+
+            }
+        });
 
         optionsPanel.validate();
         optionsPanel.repaint();
@@ -94,7 +231,95 @@ public class TradePresenter implements TradeOutputBoundary {
      */
     @Override
     public void showTradeOffer(TradeOffer tradeOffer, String flavorText) {
+        optionsPanel.removeAll();
+        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
+        optionsPanel.add(new JLabel(flavorText));
 
+
+        if (!tradeOffer.isValid()){
+            JButton newOffer = new JButton("New Offer");
+            optionsPanel.add(newOffer);
+            newOffer.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    turnController.startTrade(tradeOffer.getPlayer1(), tradeOffer.getPlayer2());
+                }
+            });
+        } else {
+            Player player1 = tradeOffer.getPlayer1();
+            Player player2 = tradeOffer.getPlayer2();
+            String player1Name = player1.getName();
+            String player2Name = player2.getName();
+
+            String propertiesOffered = "";
+
+            for (Property property: tradeOffer.getPropertiesOffered()){
+                propertiesOffered = propertiesOffered + property.getTileDisplayName() + ", ";
+            }
+            propertiesOffered = propertiesOffered.substring(0, propertiesOffered.length() - 2);
+
+            optionsPanel.add(new JLabel("Properties Offered: " + propertiesOffered));
+
+            String propertiesRequested = "";
+
+            for (Property property: tradeOffer.getPropertiesReceived()){
+                propertiesRequested = propertiesRequested + property.getTileDisplayName() + ", ";
+            }
+            propertiesRequested = propertiesRequested.substring(0, propertiesRequested.length() - 2);
+
+            optionsPanel.add(new JLabel("Properties Requested: " + propertiesRequested));
+
+            if (tradeOffer.getTradeMoney() > 0){
+                optionsPanel.add(new JLabel("Money Offered: " + String.valueOf(tradeOffer.getTradeMoney())));
+            } else if (tradeOffer.getTradeMoney() < 0) {
+                optionsPanel.add(new JLabel("Money Requested: " + String.valueOf(tradeOffer.getTradeMoney())));
+            }
+
+            String offerJailCard = "";
+            String receiveJailCard = "";
+
+            if (tradeOffer.getJailCard() > 0){
+                optionsPanel.add(new JLabel(player1Name + " offered a get out of jail free card."));
+            } else if (tradeOffer.getJailCard() < 0) {
+                optionsPanel.add(new JLabel(player1Name + " requested a get out of jail free card."));
+            }
+
+
+            JButton acceptOffer = new JButton("Accept Offer");
+            acceptOffer.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    turnController.acceptTradeOffer(player1, player2, tradeOffer);
+                }
+            });
+
+            JButton declineOffer = new JButton("Decline Offer");
+            declineOffer.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    turnController.declineTradeOffer(player1, player2, tradeOffer);
+                }
+            });
+
+            JButton counterOffer = new JButton("Counter Offer");
+            counterOffer.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    turnController.counterOffer(player1, player2, tradeOffer);
+
+                }
+            });
+
+            optionsPanel.add(acceptOffer);
+            optionsPanel.add(declineOffer);
+            optionsPanel.add(counterOffer);
+
+        }
+
+
+        optionsPanel.validate();
+        optionsPanel.repaint();
+        cardLayout.show(mainPanel, "Options Panel");
     }
 
     /**
@@ -109,8 +334,48 @@ public class TradePresenter implements TradeOutputBoundary {
      */
     @Override
     public void showResultOfTradeOffer(int option, String flavorText) {
+        optionsPanel.removeAll();
+        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
+        optionsPanel.add(new JLabel(flavorText));
 
+        if (option == 1){
+            JButton endTrade = new JButton("End Trade");
+            optionsPanel.add(endTrade);
+            endTrade.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    turnController.endUseCase();
+                }
+            });
+
+        } else if (option == 2) {
+            JButton counterOffer = new JButton("Make Counter Offer");
+            optionsPanel.add(counterOffer);
+
+            counterOffer.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                }
+            });
+
+        }
+
+
+        optionsPanel.validate();
+        optionsPanel.repaint();
+        cardLayout.show(mainPanel, "Options Panel");
     }
 
 
+    /**
+     * This method gets called when a bound property is changed.
+     *
+     * @param evt A PropertyChangeEvent object describing the event source
+     *            and the property that has changed.
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        Object source = evt.getSource();
+
+    }
 }
