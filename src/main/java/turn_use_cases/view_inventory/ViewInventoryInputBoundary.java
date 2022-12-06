@@ -16,5 +16,5 @@ public interface ViewInventoryInputBoundary {
      * @param currentPlayer     The name player whose turn it is
      * @param players           A list of all the players
      */
-    public void displayInfo(String currentPlayer, List<Player> players);
+    public void displayInfo(Player currentPlayer, List<Player> players);
 }

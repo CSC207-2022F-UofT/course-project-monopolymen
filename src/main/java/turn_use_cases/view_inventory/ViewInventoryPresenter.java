@@ -1,10 +1,12 @@
 package turn_use_cases.view_inventory;
 
+import game.GameState;
 import game_entities.Player;
 import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
 import game_entities.tiles.RailroadTile;
 import game_entities.tiles.UtilityTile;
+import turn_interface_adapters.TurnController;
 import turn_use_cases.view_inventory.InventoryData;
 import turn_use_cases.view_inventory.ViewInventoryOutputBoundary;
 
@@ -17,13 +19,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
-    private final JPanel inventorySummaryBox;
+
     private final JPanel chosenPlayerSummaryBox = new JPanel();
-
-    ViewInventoryPresenter(JPanel summeryBox){
-        this.inventorySummaryBox = summeryBox;
-    }
-
     @Override
     public void showInventory(String currentPlayer, List<InventoryData> playersInfo) {
         InventoryData player = playersInfo.get(0);
@@ -80,9 +77,9 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
         }
     }
     @Override
-    public void showInventoryButtons(List<InventoryData> playersInfo) {
+    public void showInventoryButtons(List<Player> playersInfo, TurnController tc, JPanel inventorySummaryBox) {
         GridLayout quad = new GridLayout(2,2);
-        this.inventorySummaryBox.setLayout(quad);
+        inventorySummaryBox.setLayout(quad);
         JPanel player1 = new JPanel();
         JPanel player2 = new JPanel();
         JPanel player3 = new JPanel();
@@ -102,32 +99,32 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
         player1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showInventory(playersInfo.get(0).getName(), playersInfo);
+                tc.showInventory(playersInfo.get(0), playersInfo);
             }
         });
         player2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showInventory(playersInfo.get(1).getName(), playersInfo);
+                tc.showInventory(playersInfo.get(1), playersInfo);
             }
         });
         player3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showInventory(playersInfo.get(2).getName(), playersInfo);
+                tc.showInventory(playersInfo.get(2), playersInfo);
             }
         });
         player3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showInventory(playersInfo.get(3).getName(), playersInfo);
+                tc.showInventory(playersInfo.get(3), playersInfo);
             }
         });
-        this.inventorySummaryBox.add(player1);
-        this.inventorySummaryBox.add(player2);
-        this.inventorySummaryBox.add(player3);
-        this.inventorySummaryBox.add(player4);
-        this.inventorySummaryBox.setVisible(true);
+        inventorySummaryBox.add(player1);
+        inventorySummaryBox.add(player2);
+        inventorySummaryBox.add(player3);
+        inventorySummaryBox.add(player4);
+        inventorySummaryBox.setVisible(true);
 
     }
 

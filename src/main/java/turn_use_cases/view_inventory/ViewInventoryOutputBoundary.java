@@ -1,7 +1,9 @@
 package turn_use_cases.view_inventory;
 
 import game_entities.Player;
+import turn_interface_adapters.TurnController;
 
+import javax.swing.*;
 import java.util.List;
 /**
  * The output boundary for the view inventory use case.
@@ -18,5 +20,5 @@ public interface ViewInventoryOutputBoundary {
     /**
      * Display 4 buttons that when clicked will open a players inventory
      */
-    public void showInventoryButtons(List<InventoryData> playersInfo);
+    public void showInventoryButtons(List<Player> playersInfo, TurnController tc, JPanel rhs);
 }

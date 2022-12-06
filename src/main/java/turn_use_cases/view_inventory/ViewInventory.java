@@ -24,11 +24,11 @@ public class ViewInventory implements ViewInventoryInputBoundary{
      * @param players           A list of all the players
      */
     @Override
-    public void displayInfo(String currentPlayer, List<Player> players) {
+    public void displayInfo(Player currentPlayer, List<Player> players) {
         List<InventoryData> playerData = new ArrayList<InventoryData>();
         for (Player player : players){
             playerData.add(new InventoryData(player));
         }
-        presenter.showInventory(currentPlayer, playerData);
+        presenter.showInventory(currentPlayer.getName(), playerData);
     }
 }
