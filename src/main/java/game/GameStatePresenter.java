@@ -66,7 +66,7 @@ public class GameStatePresenter implements GameStateOutputBoundary {
         for (TurnActions action : validActions) {
             switch (action) {
                 case ROLL_TO_MOVE:
-                    JButton rollDice = new TurnActionButton("Roll Dice");
+                    JButton rollDice = new JButton("Roll Dice");
                     rollDice.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -76,7 +76,7 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                     turnActionButtonsPanel.add(rollDice);
                     break;
                 case LEAVE_JAIL:
-                    JButton leaveJail = new TurnActionButton("Try to leave jail");
+                    JButton leaveJail = new JButton("Try to leave jail");
                     leaveJail.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -86,7 +86,7 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                     turnActionButtonsPanel.add(leaveJail);
                     break;
                 case MORTGAGE:
-                    JButton mortgage = new TurnActionButton("Mortgage properties");
+                    JButton mortgage = new JButton("Mortgage properties");
                     mortgage.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -97,7 +97,7 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                     turnActionButtonsPanel.add(mortgage);
                     break;
                 case BUILD_BUILDING:
-                    JButton buildBuilding = new TurnActionButton("Build houses/hotels");
+                    JButton buildBuilding = new JButton("Build houses/hotels");
                     buildBuilding.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -108,7 +108,7 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                     turnActionButtonsPanel.add(buildBuilding);
                     break;
                 case TRADE:
-                    JButton trade = new TurnActionButton("Trade");
+                    JButton trade = new JButton("Trade");
                     trade.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -118,7 +118,7 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                     turnActionButtonsPanel.add(trade);
                     break;
                 case END_TURN:
-                    JButton endTurn = new TurnActionButton("End your turn");
+                    JButton endTurn = new JButton("End your turn");
                     endTurn.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -183,12 +183,5 @@ public class GameStatePresenter implements GameStateOutputBoundary {
         turnActionButtonsPanel.repaint();
         CardLayout cl = (CardLayout) actionDialogBoxes.getLayout();
         cl.show(actionDialogBoxes, CARD_NAME);
-    }
-
-    static class TurnActionButton extends JButton {
-        public TurnActionButton(String name) {
-            super(name);
-            this.setBackground(new Color(140, 255, 162));
-        }
     }
 }
