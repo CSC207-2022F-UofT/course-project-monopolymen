@@ -183,7 +183,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     public void showCardDraw(Player player, String cardName, String cardDescription, boolean rollAgain,  boolean isChance) {
         // Clear the options window. as this is different from showResultOfAction
         optionsWindow.removeAll();
-        ImageIcon cardImage = new ImageIcon("src/main/resources/assets/cards/" + cardName + ".png");
+        ImageIcon cardImage = new ImageIcon("src/main/resources/assets/cards/" + cardName + ".jpg");
         JLabel cardImageLabel = new JLabel(cardImage);
         // scale the image
         cardImageLabel.setPreferredSize(new Dimension(300, 300)); 
