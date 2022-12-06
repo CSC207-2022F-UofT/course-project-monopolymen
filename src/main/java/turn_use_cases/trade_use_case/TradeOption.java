@@ -1,5 +1,6 @@
 package turn_use_cases.trade_use_case;
 
+import game_entities.Player;
 import game_entities.tiles.Property;
 
 import java.util.ArrayList;
@@ -26,6 +27,12 @@ public class TradeOption {
     // The properties player2 owns.
     private ArrayList<Property> player2Properties;
 
+    // The player who started the trade
+    private Player player1;
+
+    // The player who is receiving the trade
+    private Player player2;
+
     /**
      * Creates a new TradeOption object.
      *
@@ -35,15 +42,19 @@ public class TradeOption {
      * @param player2JailCard whether player2 has a get out of jail card.
      * @param player1Properties the properties player1 owns.
      * @param player2Properties the properties player2 owns.
+     * @param player1 the player who started the trade.
+     * @param player2 the player who is receiving the trade.
      */
     public TradeOption(int player1Money, int player2Money, boolean player1JailCard, boolean player2JailCard,
-                       ArrayList<Property> player1Properties, ArrayList<Property> player2Properties ){
+                       ArrayList<Property> player1Properties, ArrayList<Property> player2Properties, Player player1, Player player2 ){
         this.player1Money = player1Money;
         this.player2Money = player2Money;
         this.player1JailCard = player1JailCard;
         this.player2JailCard = player2JailCard;
         this.player1Properties = player1Properties;
         this.player2Properties = player2Properties;
+        this.player1 = player1;
+        this.player2 = player2;
     }
 
 

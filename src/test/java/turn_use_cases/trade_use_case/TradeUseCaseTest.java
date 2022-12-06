@@ -72,7 +72,7 @@ public class TradeUseCaseTest {
     public void getTradeOptions() {
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
                 player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
-                player1.getProperties(), player2.getProperties());
+                player1.getProperties(), player2.getProperties(), player1, player2);
 
         TradeOption actual = tradeUseCase.getTradeOptions(player1, player2);
 
