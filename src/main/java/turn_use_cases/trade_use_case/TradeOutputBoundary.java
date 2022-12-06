@@ -10,9 +10,10 @@ public interface TradeOutputBoundary {
      * Presents the list of players player can trade with.
      *
      * @param listOfPlayers the list of players player can trade with.
+     * @param player the player initiating the trade
      * @param flavorText    the text describing what is happening.
      */
-    public void showListOfPlayers(ArrayList<Player> listOfPlayers, String flavorText);
+    public void showListOfPlayers(ArrayList<Player> listOfPlayers, Player player, String flavorText);
 
     /**
      * Presents the possible options for player1 to trade with player2.

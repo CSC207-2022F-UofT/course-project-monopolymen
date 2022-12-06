@@ -3,6 +3,7 @@ package turn_use_cases.trade_use_case;
 import game_entities.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The input boundary for the trade use case.
@@ -19,7 +20,7 @@ public interface TradeInputBoundary {
      * @return the list of potential players
      * (return only used for testing, will remove later when presenter is implemented.)
      */
-    public ArrayList<Player> choosePlayer(ArrayList<Player> listOfPlayers, Player player);
+    public ArrayList<Player> choosePlayer(List<Player> listOfPlayers, Player player);
 
     /**
      * Provides the presenter with all potential options for player1 and player2 to trade.

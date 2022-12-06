@@ -4,6 +4,7 @@ import game_entities.Player;
 import game_entities.tiles.Property;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Contains all the functions related to the trading aspect of this game.
@@ -30,13 +31,14 @@ public class TradeUseCase implements  TradeInputBoundary{
      * @return the list of potential players
      */
     @Override
-    public ArrayList<Player> choosePlayer(ArrayList<Player> listOfPlayers, Player player) {
+    public ArrayList<Player> choosePlayer(List<Player> listOfPlayers, Player player) {
 
-        ArrayList<Player> listOfPotentialPlayers = (ArrayList<Player>) listOfPlayers.clone();
+
+        ArrayList<Player> listOfPotentialPlayers = new ArrayList<>(listOfPlayers);
         listOfPotentialPlayers.remove(player);
 
 
-        presenter.showListOfPlayers(listOfPotentialPlayers,
+        presenter.showListOfPlayers(listOfPotentialPlayers, player,
                 player.getName() +  ", please choose who to trade with.");
 
 
@@ -55,7 +57,7 @@ public class TradeUseCase implements  TradeInputBoundary{
     public TradeOption getTradeOptions(Player player1, Player player2) {
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
                 player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
-                player1.getProperties(), player2.getProperties());
+                player1.getProperties(), player2.getProperties(), player1, player2);
 
         presenter.showTradeOptions(tradeOption, "Please choose what you want to trade.");
 
