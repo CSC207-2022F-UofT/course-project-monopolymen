@@ -1,10 +1,14 @@
 package turn_use_cases.move_player_use_case;
 import game_entities.Player;
 import game_entities.tiles.*;
+
+import org.hamcrest.core.IsNull;
+
 import game_entities.Board;
 import turn_use_cases.end_turn_use_case.EndTurnInputBoundary;
 import turn_use_cases.end_turn_use_case.EndTurnUseCase;
 import game_entities.cards.CardActionResultModel;
+
 
 /**
  * move_player_use_case (Class to handle moving the player and all its relevant logic such as passing a tile and landing
@@ -115,42 +119,43 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
     @Override
     public void movePlayer(Player player, int rollSum, boolean doubleRoll) {
         int playerBeforePosition = player.getPosition();
-            TileActionResultModel result = board.getTile(player.getPosition()).action(player, board);
-            if(result instanceof CardActionResultModel) {
-                // Player landed on draw card tile
-                CardActionResultModel cardResult = (CardActionResultModel) result;
-                if(playerBeforePosition != result.getPlayerPosition()){
-                    // Card moved player
-                    if(result.getPlayerPosition() == board.getJailTilePosition()) {
-                        // Player is moving to jail, does not collect "GO" tile money
-                        // player.enterJail() is handled in the card's action
-                        movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
-                                cardResult.getFlavorText(), false, cardResult.isChance());
-                        sendToJail(player);
-                    } else {
-                        // Normal move player card
-                        movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
-                                cardResult.getFlavorText(), doubleRoll, cardResult.isChance());
-                        moveToPosition(player, cardResult.getPlayerPosition(), doubleRoll);
-                    }
-                } else {
-                    // Card didn't move player
-                    movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(), cardResult.getFlavorText(),
-                            doubleRoll, cardResult.isChance());
-                }
-            } else {
-                // Player didn't land on a draw card tile
-                Tile tile = board.getTile(player.getPosition());
-                if (result.getPlayerPosition() == board.getJailTilePosition()) {
-                    // Player landed on "go to jail" and their position should now be in jail
-                    // player.enterJail() is handeled in the tile's action method
+        TileActionResultModel result = board.getTile(player.getPosition() + rollSum).action(player, board);
+        if(result instanceof CardActionResultModel) {
+            // Player landed on draw card tile
+            CardActionResultModel cardResult = (CardActionResultModel) result;
+            if(playerBeforePosition != result.getPlayerPosition()){
+                // Card moved player
+                if(result.getPlayerPosition() == board.getJailTilePosition()) {
+                    // Player is moving to jail, does not collect "GO" tile money
+                    // player.enterJail() is handled in the card's action
+                    movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
+                            cardResult.getFlavorText(), false, cardResult.isChance());
                     sendToJail(player);
                 } else {
-                    // Normal move
-                    System.out.println(rollSum);
-                    moveToPosition(player, player.getPosition() + rollSum, doubleRoll);
+                    // Normal move player card
+                    moveToPosition(player, cardResult.getPlayerPosition(), doubleRoll);
+                    movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
+                            cardResult.getFlavorText(), doubleRoll, cardResult.isChance());
                 }
+            } else {
+                // Card didn't move player
+                moveToPosition(player, player.getPosition() + rollSum, doubleRoll);
+                movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(), cardResult.getFlavorText(),
+                        doubleRoll, cardResult.isChance());
             }
+        } else {
+            // Player didn't land on a draw card tile
+            Tile tile = board.getTile(player.getPosition());
+            if (result.getPlayerPosition() == board.getJailTilePosition()) {
+                // Player landed on "go to jail" and their position should now be in jail
+                // player.enterJail() is handeled in the tile's action method
+                sendToJail(player);
+            } else {
+                // Normal move
+                System.out.println(rollSum);
+                moveToPosition(player, player.getPosition() + rollSum, doubleRoll);
+            }
+        }
     }
 
     /**

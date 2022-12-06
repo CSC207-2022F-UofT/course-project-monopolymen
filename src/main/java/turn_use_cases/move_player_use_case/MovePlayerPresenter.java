@@ -131,7 +131,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         JLabel playerPanel = players.get(playerList.indexOf(player));
         playerPanel.setBounds(scaledTilePositions[playerPosition][0] + playerOffset[playerList.indexOf(player)][0],
                 scaledTilePositions[playerPosition][1] + playerOffset[playerList.indexOf(player)][1], 50, 50);
-        JButton otherOptions = new JButton("OK");
+        JButton otherOptions = new JButton("Other Options");
         otherOptions.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -139,6 +139,8 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 turnController.endRollDice(rollAgain);
             }
         });
+        optionsWindow.revalidate();
+        optionsWindow.repaint();
         optionsWindow.add(otherOptions);
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
         cardLayout.show(actionDialogBox, "Roll options");
@@ -156,14 +158,19 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
 
     @Override
     public void showRoll(int[] playerRollAmount){
-        optionsWindow.add(new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]));
+        JLabel roll = new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]);
+        roll.setPreferredSize(new Dimension(300, 300));
+        optionsWindow.add(roll);
+        optionsWindow.revalidate();
+        optionsWindow.repaint();
     }
 
     @Override
     public void showCardDraw(Player player, String cardName, String cardDescription, boolean rollAgain,  boolean isChance) {
         // Clear the options window. as this is different from showResultOfAction
         optionsWindow.removeAll();
-        ImageIcon cardImage = new ImageIcon("src/main/resources/assets/cards/" + cardName + ".png");
+        ImageIcon cardImage = new ImageIcon(new ImageIcon("src/main/resources/assets/cards/" + cardName + ".jpg")
+                .getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH));
         JLabel cardImageLabel = new JLabel(cardImage);
         // scale the image
         cardImageLabel.setPreferredSize(new Dimension(300, 300)); 
@@ -177,6 +184,8 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 turnController.endRollDice(rollAgain);
             }
         });
+        optionsWindow.revalidate();
+        optionsWindow.repaint();
         optionsWindow.add(otherOptions);
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
         cardLayout.show(actionDialogBox, "Roll options");
@@ -184,7 +193,8 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
 
     @Override
     public void showBuyableProperty(Player player, Tile tile, boolean buyable, boolean doubleRoll) {
-        // Don't clear the options window, as this will be displayed regardless of the previous action
+        // Clear the options window.
+        optionsWindow.removeAll();
         Property property = (Property) tile;
         if(buyable) {
             JButton buyButton = new JButton("Buy " + property.getTileDisplayName() + " for $"
@@ -196,8 +206,8 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                     turnController.buyProperty(property);
                 }
             });
-            JButton otherOptions = new JButton("Don't buy");
-            otherOptions.addActionListener(new ActionListener() {
+            JButton dontBuy = new JButton("Don't buy");
+            dontBuy.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
@@ -205,6 +215,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 }
             });
             optionsWindow.add(buyButton);
+            optionsWindow.add(dontBuy);
         }
     }
 }
