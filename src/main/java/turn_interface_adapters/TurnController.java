@@ -26,7 +26,7 @@ import java.util.List;
  * The Turn Controller also performs delegation to the simpler use case methods.
  */
 public class TurnController {
-    private final GameState gameState;
+    private GameState gameState;
     private BuildBuildingInputBoundary buildBuilding;
     private MortgagePropertyInputBoundary mortgageProperty;
     private MovePlayerInputBoundary movePlayer;
@@ -37,10 +37,10 @@ public class TurnController {
     private EndTurnInputBoundary endTurn;
 
     /**
-     * Construct the TurnController object. Before use, the {@link #setInputBoundaries(BuildBuildingInputBoundary, MortgagePropertyInputBoundary, MovePlayerInputBoundary, TradeInputBoundary, TryToGetOutOfJailInputBoundary, ViewInventoryInputBoundary, LiquidateAssetsInputBoundary, EndTurnInputBoundary)}
+     * Construct the TurnController object. Before use, the {@link #initializeAttributes(GameState, BuildBuildingInputBoundary, MortgagePropertyInputBoundary, MovePlayerInputBoundary, TradeInputBoundary, TryToGetOutOfJailInputBoundary, ViewInventoryInputBoundary, LiquidateAssetsInputBoundary, EndTurnInputBoundary)}
      * method must be called to specify the input boundaries.
      */
-    public TurnController(GameState gameState) {
+    public TurnController() {
         this.buildBuilding = null;
         this.mortgageProperty = null;
         this.movePlayer = null;
@@ -49,20 +49,23 @@ public class TurnController {
         this.viewInventory = null;
         this.liquidateAssets = null;
         this.endTurn = null;
-        this.gameState = gameState;
+        this.gameState = null;
     }
 
     /**
      * Set the input boundaries to use in this controller. Must be called before other methods are called.
+     * The reason this order occurs is that each of the inputBoundaries and gameStates have presenters which need
+     * to refer to this turnController.
      */
-    public void setInputBoundaries(BuildBuildingInputBoundary buildBuilding,
-                                   MortgagePropertyInputBoundary mortgageProperty,
-                                   MovePlayerInputBoundary movePlayer,
-                                   TradeInputBoundary trade,
-                                   TryToGetOutOfJailInputBoundary getOutOfJail,
-                                   ViewInventoryInputBoundary viewInventory,
-                                   LiquidateAssetsInputBoundary liquidateAssets,
-                                   EndTurnInputBoundary endTurn) {
+    public void initializeAttributes(GameState gameState,
+                                     BuildBuildingInputBoundary buildBuilding,
+                                     MortgagePropertyInputBoundary mortgageProperty,
+                                     MovePlayerInputBoundary movePlayer,
+                                     TradeInputBoundary trade,
+                                     TryToGetOutOfJailInputBoundary getOutOfJail,
+                                     ViewInventoryInputBoundary viewInventory,
+                                     LiquidateAssetsInputBoundary liquidateAssets,
+                                     EndTurnInputBoundary endTurn) {
         this.buildBuilding = buildBuilding;
         this.mortgageProperty = mortgageProperty;
         this.movePlayer = movePlayer;
@@ -71,7 +74,7 @@ public class TurnController {
         this.viewInventory = viewInventory;
         this.liquidateAssets = liquidateAssets;
         this.endTurn = endTurn;
-
+        this.gameState = gameState;
     }
 
     /**
