@@ -29,6 +29,6 @@ public class ViewInventory implements ViewInventoryInputBoundary{
         for (Player player : players){
             playerData.add(new InventoryData(player));
         }
-        presenter.showInventory(currentPlayer, playerData);
+        presenter.showInventory(currentPlayer.getName(), playerData);
     }
 }
