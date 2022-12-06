@@ -1,11 +1,13 @@
 package turn_use_cases.try_to_get_out_of_jail_use_case;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
-import turn_interface_adapters.TurnController;
+
 import game_entities.Player;
+import turn_interface_adapters.TurnController;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class TryToGetOutOfJailPresenter implements TryToGetOutOfJailOutputBoundary {
     private JPanel actionDialogBox;
@@ -29,7 +31,7 @@ public class TryToGetOutOfJailPresenter implements TryToGetOutOfJailOutputBounda
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Turn Controller will handle the option and call TryToGetOutOfJailUseCase
-                    turnController.leaveJailWithChoice(player, option);
+                    turnController.leaveJailWithChoice(option);
                 }
             });
             playerOptionsWindow.add(optionButton);

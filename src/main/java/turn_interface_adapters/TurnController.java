@@ -16,7 +16,6 @@ import turn_use_cases.trade_use_case.TradeOffer;
 import turn_use_cases.try_to_get_out_of_jail_use_case.TryToGetOutOfJailInputBoundary;
 import turn_use_cases.view_inventory.ViewInventoryInputBoundary;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,11 +33,9 @@ public class TurnController {
     private TradeInputBoundary trade;
     private TryToGetOutOfJailInputBoundary getOutOfJail;
     private ViewInventoryInputBoundary viewInventory;
-    private EndUseCaseDestination nextEndUseCaseDestination;
-
     private LiquidateAssetsInputBoundary liquidateAssets;
-
     private EndTurnInputBoundary endTurn;
+    private EndUseCaseDestination nextEndUseCaseDestination;
 
     /**
      * Construct the TurnController object. Before use, the {@link #setInputBoundaries(BuildBuildingInputBoundary, MortgagePropertyInputBoundary, MovePlayerInputBoundary, TradeInputBoundary, TryToGetOutOfJailInputBoundary, ViewInventoryInputBoundary, LiquidateAssetsInputBoundary, EndTurnInputBoundary)}
@@ -51,6 +48,8 @@ public class TurnController {
         this.trade = null;
         this.getOutOfJail = null;
         this.viewInventory = null;
+        this.liquidateAssets = null;
+        this.endTurn = null;
         this.gameState = gameState;
         this.nextEndUseCaseDestination = EndUseCaseDestination.DEFAULT_DESTINATION;
     }
@@ -117,70 +116,70 @@ public class TurnController {
     }
 
     /* Move Player/RollDice use case related methods */
-    public void rollDice(Player player) {
-        movePlayer.startAction(player, true);
+    public void rollDice() {
+        movePlayer.startAction(gameState.currentPlayer(), true);
     }
 
-    public void endRollDice(Player player, boolean rollAgain) {
-        if(!rollAgain) {
+    public void endRollDice(boolean rollAgain) {
+        if (!rollAgain) {
             gameState.playerRolledToMove();
         }
         endUseCase();
     }
 
-    public void buyProperty(Player player, Property property) {
-        player.addProperty(property);
-        player.subtractMoney(property.getPurchasePrice());
+    public void buyProperty(Property property) {
+        gameState.currentPlayer().addProperty(property);
+        gameState.currentPlayer().subtractMoney(property.getPurchasePrice());
     }
 
     /* TryToGetOutOfJail use case related methods */
-    public void attemptLeaveJail(Player player) {
+    public void attemptLeaveJail() {
         // Show the player their options for getting out of jail
-        getOutOfJail.getPlayerOptions(player);
+        getOutOfJail.getPlayerOptions(gameState.currentPlayer());
     }
 
-    public void leaveJailWithChoice(Player player, String playerChoice) {
+    public void leaveJailWithChoice(String playerChoice) {
         // Leave jail with the appropriate option.
-        getOutOfJail.startAction(playerChoice, player);
+        getOutOfJail.startAction(playerChoice, gameState.currentPlayer());
     }
 
     /* Mortgage property related methods */
-//    public void showMortgageableProperties(Player player) { mortgageProperty.showMortgageOptions(player); }
+//    public void showMortgageableProperties() { mortgageProperty.showMortgageOptions(gameState.currentPlayer()); }
 
-    public void mortgageProperty(Player player, Property property) {
-        mortgageProperty.mortgage(player, property);
+    public void mortgageProperty(Property property) {
+        mortgageProperty.mortgage(gameState.currentPlayer(), property);
     }
 
-//    public void showUnmortgageableProperties(Player palyer) { mortgageProperty.showUnmortgageOptions(player); }
+//    public void showUnmortgageableProperties() { mortgageProperty.showUnmortgageOptions(gameState.currentPlayer()); }
 
-    public void unmortgageProperty(Player player, Property property) {
-        mortgageProperty.unmortgage(player, property);
+    public void unmortgageProperty(Property property) {
+        mortgageProperty.unmortgage(gameState.currentPlayer(), property);
     }
 
     /* BuildBuilding Related Methods */
-//    public void getBuildableProperties(Player player) { buildBuilding.showBuildingOptions(player); }
+//    public void getBuildableProperties() { buildBuilding.showBuildingOptions(gameState.currentPlayer()); }
 
-    public void buildHouse(Player player, ColorPropertyTile property) {
-        buildBuilding.buildHouse(player, property);
+    public void buildHouse(ColorPropertyTile property) {
+        buildBuilding.buildHouse(gameState.currentPlayer(), property);
     }
 
-    public void buildHotel(Player player, ColorPropertyTile property) {
-        buildBuilding.buildHotel(player, property);
+    public void buildHotel(ColorPropertyTile property) {
+        buildBuilding.buildHotel(gameState.currentPlayer(), property);
     }
 
-//    public void getBuiltOnProperties(Player player) { buildBuilding.showSellOptions(player); }
+//    public void getBuiltOnProperties() { buildBuilding.showSellOptions(gameState.currentPlayer()); }
 
-    public void sellHouse(Player player, ColorPropertyTile property) {
-        buildBuilding.sellHouse(player, property);
+    public void sellHouse(ColorPropertyTile property) {
+        buildBuilding.sellHouse(gameState.currentPlayer(), property);
     }
 
-    public void sellHotel(Player player, ColorPropertyTile property) {
-        buildBuilding.sellHotel(player, property);
+    public void sellHotel(ColorPropertyTile property) {
+        buildBuilding.sellHotel(gameState.currentPlayer(), property);
     }
 
     /* Trade Related Methods */
-    public void showTradablePlayers(Player currentPlayer, List<Player> playerList) {
-        trade.choosePlayer((ArrayList<Player>) playerList, currentPlayer);
+    public void showTradablePlayers() {
+        trade.choosePlayer(gameState.getActivePlayers(), gameState.currentPlayer());
     }
 
     public void startTrade(Player proposing, Player receiving) {
@@ -188,8 +187,6 @@ public class TurnController {
     }
 
     public void makeOffer(Player offering, Player receiving, TradeOffer player1Offer) {
-//        TradeOffer player1Offer = new TradeOffer(player1Money - player2Money, player1JailCard - player2JailCard,
-//                (ArrayList<Property>) player1Property, (ArrayList<Property>) player2Property, offering, receiving);
         trade.makeOffer(player1Offer, offering, receiving);
     }
 
@@ -221,8 +218,8 @@ public class TurnController {
     public void bankruptcy(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
 
     /* ViewInventory Related Methods */
-    public void showInventory(Player currentPlayer, List<Player> playerList) {
-        viewInventory.displayInfo(currentPlayer, playerList);
+    public void showInventory(Player player, List<Player> playerList) {
+        viewInventory.displayInfo(player, playerList);
     }
 
     public void endTurn(Player player){

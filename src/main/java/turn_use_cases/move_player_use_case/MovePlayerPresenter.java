@@ -1,18 +1,19 @@
 package turn_use_cases.move_player_use_case;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
 import game_entities.Player;
-import game_entities.tiles.Tile;
 import game_entities.tiles.Property;
+import game_entities.tiles.Tile;
 import game_entities.tiles.TilePassResultModel;
 import turn_interface_adapters.TurnController;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementation of the MovePlayerOutputBoundary interface.
@@ -133,7 +134,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                turnController.endRollDice(player, rollAgain);
+                turnController.endRollDice(rollAgain);
             }
         });
         optionsWindow.add(otherOptions);
@@ -194,7 +195,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                turnController.endRollDice(player, rollAgain);
+                turnController.endRollDice(rollAgain);
             }
         });
         optionsWindow.add(otherOptions);
@@ -213,7 +214,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Temporary turn controller, calls the BuyPropertyUseCase and returns back to "main" action dialog panel
-                    turnController.buyProperty(player, property);
+                    turnController.buyProperty(property);
                 }
             });
             JButton otherOptions = new JButton("Don't buy");
@@ -221,7 +222,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                    turnController.endRollDice(player, doubleRoll);
+                    turnController.endRollDice(doubleRoll);
                 }
             });
             optionsWindow.add(buyButton);
