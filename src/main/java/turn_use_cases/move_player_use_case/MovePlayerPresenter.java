@@ -226,6 +226,17 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 }
             });
             optionsWindow.add(buyButton);
+            optionsWindow.add(otherOptions);
+        } else {
+            JButton otherOptions = new JButton("Other Options");
+            otherOptions.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
+                    turnController.endRollDice(player, doubleRoll);
+                }
+            });
+            optionsWindow.add(otherOptions);
         }
     }
 }
