@@ -4,6 +4,7 @@ import game_entities.Board;
 import game_entities.FactoryBoard;
 import game_entities.Player;
 import turn_interface_adapters.LiquidateAssetsInterfaceAdapter;
+import turn_interface_adapters.TradePresenter;
 import turn_interface_adapters.TurnController;
 import turn_use_cases.end_turn_use_case.EndTurnInputBoundary;
 import turn_use_cases.end_turn_use_case.EndTurnOutputBoundary;
@@ -16,6 +17,9 @@ import turn_use_cases.move_player_use_case.MovePlayerInputBoundary;
 import turn_use_cases.move_player_use_case.MovePlayerOutputBoundary;
 import turn_use_cases.move_player_use_case.MovePlayerPresenter;
 import turn_use_cases.move_player_use_case.MovePlayerUseCase;
+import turn_use_cases.trade_use_case.TradeInputBoundary;
+import turn_use_cases.trade_use_case.TradeOutputBoundary;
+import turn_use_cases.trade_use_case.TradeUseCase;
 import turn_use_cases.try_to_get_out_of_jail_use_case.TryToGetOutOfJailInputBoundary;
 import turn_use_cases.try_to_get_out_of_jail_use_case.TryToGetOutOfJailOutputBoundary;
 import turn_use_cases.try_to_get_out_of_jail_use_case.TryToGetOutOfJailPresenter;
@@ -102,6 +106,8 @@ public class Game {
         Player player3 = new Player("player3", "thimble", 1500, board);
         Player player4 = new Player("player4", "hat", 1500, board);
 
+        player1.addGetOutOfJailCard();
+
         addPlayer(player1);
         addPlayer(player2);
         addPlayer(player3);
@@ -140,6 +146,9 @@ public class Game {
         LiquidateAssetsOutputBoundary liquidateAssetsPresenter = new LiquidateAssetsInterfaceAdapter(turnController, actionDialogBoxes, (CardLayout) actionDialogBoxes.getLayout());
         LiquidateAssetsInputBoundary liquidateAssets = new LiquidateAssetsUseCase(liquidateAssetsPresenter);
 
-        turnController.initializeAttributes(gameState, null, null, movePlayer, null, leaveJail, viewInventory, liquidateAssets, endTurn);
+        TradeOutputBoundary tradePresenter = new TradePresenter(actionDialogBoxes,(CardLayout) actionDialogBoxes.getLayout(), turnController);
+        TradeInputBoundary trade = new TradeUseCase(tradePresenter);
+
+        turnController.initializeAttributes(gameState, null, null, movePlayer, trade, leaveJail, viewInventory, liquidateAssets, endTurn);
     }
 }

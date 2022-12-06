@@ -59,7 +59,8 @@ public class TradeUseCase implements  TradeInputBoundary{
                 player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
                 player1.getProperties(), player2.getProperties(), player1, player2);
 
-        presenter.showTradeOptions(tradeOption, "Please choose what you want to trade.");
+        presenter.showTradeOptions(tradeOption,"<html><body>"+ player1.getName() +
+                ", please choose what you want to trade."+"</body></html>");
 
         return tradeOption;
     }
@@ -103,13 +104,13 @@ public class TradeUseCase implements  TradeInputBoundary{
 
         if(option == 1){
             ExecuteOffer(player1, player2, tradeOffer);
-            presenter.showResultOfTradeOffer(1, "The Trade was a success!");
+            presenter.showResultOfTradeOffer(1, "The Trade was a success!", player1 , player2);
         } else if (option == 2) {
-            presenter.showResultOfTradeOffer(2, player2.getName() + "wants to make a counter offer!");
+            presenter.showResultOfTradeOffer(2, player2.getName() + "wants to make a counter offer!", player1,  player2);
         } else if (option == 3) {
-            presenter.showResultOfTradeOffer(3, "The offer was declined!");
+            presenter.showResultOfTradeOffer(3, "The offer was declined!", player1, player2);
         } else{
-            presenter.showResultOfTradeOffer(4, "That was an invalid input, please try again.");
+            presenter.showResultOfTradeOffer(4, "That was an invalid input, please try again.", player1 , player2);
         }
 
     }
@@ -122,8 +123,8 @@ public class TradeUseCase implements  TradeInputBoundary{
      * @param tradeOffer the details of the trade.
      */
     public void ExecuteOffer(Player player1, Player player2, TradeOffer tradeOffer){
-        player1.addMoney(tradeOffer.getTradeMoney());
-        player2.subtractMoney(tradeOffer.getTradeMoney());
+        player1.subtractMoney(tradeOffer.getTradeMoney());
+        player2.addMoney(tradeOffer.getTradeMoney());
 
         for (Property p : tradeOffer.getPropertiesReceived()){
             player1.addProperty(p);
