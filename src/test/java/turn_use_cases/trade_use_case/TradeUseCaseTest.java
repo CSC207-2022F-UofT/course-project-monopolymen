@@ -177,8 +177,8 @@ public class TradeUseCaseTest {
 
         tradeUseCase.ExecuteOffer(player1, player2, tradeOffer);
 
-        assertEquals(1600, player1.getMoney());
-        assertEquals(1400, player2.getMoney());
+        assertEquals(1400, player1.getMoney());
+        assertEquals(1600, player2.getMoney());
         assertEquals(player1Properties, player1.getProperties());
         assertEquals(player2Properties, player2.getProperties());
         assertFalse(player1.hasGetOutofJailFreeCard());
@@ -206,8 +206,8 @@ public class TradeUseCaseTest {
 
         tradeUseCase.ExecuteOffer(player1, player2, tradeOffer);
 
-        assertEquals(1600, player1.getMoney());
-        assertEquals(1400, player2.getMoney());
+        assertEquals(1400, player1.getMoney());
+        assertEquals(1600, player2.getMoney());
         assertEquals(player1Properties, player1.getProperties());
         assertEquals(player2Properties, player2.getProperties());
         assertFalse(player1.hasGetOutofJailFreeCard());
@@ -235,8 +235,8 @@ public class TradeUseCaseTest {
 
         tradeUseCase.ExecuteOffer(player1, player2, tradeOffer);
 
-        assertEquals(1600, player1.getMoney());
-        assertEquals(1400, player2.getMoney());
+        assertEquals(1400, player1.getMoney());
+        assertEquals(1600, player2.getMoney());
         assertEquals(player1Properties, player1.getProperties());
         assertEquals(player2Properties, player2.getProperties());
         assertFalse(player2.hasGetOutofJailFreeCard());
