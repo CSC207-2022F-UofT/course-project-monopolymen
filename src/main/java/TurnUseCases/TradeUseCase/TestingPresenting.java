@@ -135,7 +135,7 @@ public class TestingPresenting extends JFrame implements TradeOutputBoundary {
      * @param flavorText    the text describing what is happening.
      */
     @Override
-    public void showListOfPlayers(ArrayList<Player> listOfPlayers, String flavorText) {
+    public void showListOfPlayers(ArrayList<Player> listOfPlayers, Player player, String flavorText) {
 
     }
 
