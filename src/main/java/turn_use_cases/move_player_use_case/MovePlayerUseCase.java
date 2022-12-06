@@ -139,7 +139,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                 }
             } else {
                 // Card didn't move player
-
+                moveToPosition(player, player.getPosition() + rollSum, doubleRoll);
                 movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(), cardResult.getFlavorText(),
                         doubleRoll, cardResult.isChance());
             }
