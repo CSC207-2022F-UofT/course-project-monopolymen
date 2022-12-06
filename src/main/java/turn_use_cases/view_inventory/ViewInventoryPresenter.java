@@ -1,14 +1,11 @@
 package turn_use_cases.view_inventory;
 
-import game.GameState;
 import game_entities.Player;
 import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
 import game_entities.tiles.RailroadTile;
 import game_entities.tiles.UtilityTile;
 import turn_interface_adapters.TurnController;
-import turn_use_cases.view_inventory.InventoryData;
-import turn_use_cases.view_inventory.ViewInventoryOutputBoundary;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,12 +17,22 @@ import java.util.Objects;
 
 public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
 
-    private final JPanel chosenPlayerSummaryBox = new JPanel();
+    private final JPanel inventorySummaryBox;
+    private final List<Player> playersInfo;
+    private final TurnController tc;
+
+    public ViewInventoryPresenter(JPanel inventorySummaryBox, List<Player> playersInfo, TurnController turnController) {
+        this.inventorySummaryBox = inventorySummaryBox;
+        this.playersInfo = playersInfo;
+        this.tc = turnController;
+        showInventoryButtons();
+    }
+
     @Override
     public void showInventory(String currentPlayer, List<InventoryData> playersInfo) {
         InventoryData player = playersInfo.get(0);
-        for (InventoryData x : playersInfo){
-            if (Objects.equals(x.getName(), currentPlayer)){
+        for (InventoryData x : playersInfo) {
+            if (Objects.equals(x.getName(), currentPlayer)) {
                 player = x;
             }
         }
@@ -70,24 +77,25 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
                 System.out.println(path);
                 ImageIcon temp = new ImageIcon(new ImageIcon
                         (path)
-                        .getImage().getScaledInstance((int)(250), (int)(320), Image.SCALE_SMOOTH));
+                        .getImage().getScaledInstance((int) (250), (int) (320), Image.SCALE_SMOOTH));
                 currentPropertySetPanel.add(new JLabel(temp));
             }
             inventoryInfo.add(currentPropertySetPanel);
         }
     }
+
     @Override
-    public void showInventoryButtons(List<Player> playersInfo, TurnController tc, JPanel inventorySummaryBox) {
-        GridLayout quad = new GridLayout(2,2);
+    public void showInventoryButtons() {
+        GridLayout quad = new GridLayout(2, 2);
         inventorySummaryBox.setLayout(quad);
         JPanel player1 = new JPanel();
         JPanel player2 = new JPanel();
         JPanel player3 = new JPanel();
         JPanel player4 = new JPanel();
-        JButton player1Button = new JButton("View "+ playersInfo.get(0).getName() + "s' Inventory");
-        JButton player2Button = new JButton("View "+ playersInfo.get(1).getName() + "s' Inventory");
-        JButton player3Button = new JButton("View "+ playersInfo.get(2).getName() + "s' Inventory");
-        JButton player4Button = new JButton("View "+ playersInfo.get(3).getName() + "s' Inventory");
+        JButton player1Button = new JButton("View " + playersInfo.get(0).getName() + "s' Inventory");
+        JButton player2Button = new JButton("View " + playersInfo.get(1).getName() + "s' Inventory");
+        JButton player3Button = new JButton("View " + playersInfo.get(2).getName() + "s' Inventory");
+        JButton player4Button = new JButton("View " + playersInfo.get(3).getName() + "s' Inventory");
         player1.setBackground(new Color(201, 201, 201));
         player2.setBackground(new Color(158, 158, 158));
         player3.setBackground(new Color(125, 125, 125));

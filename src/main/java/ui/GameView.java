@@ -11,6 +11,7 @@ public class GameView {
     private JPanel bottomBox;
     private JPanel splitRHS;
     private JPanel autosaveInfo;
+    private JPanel inventorySummaryBox;
 
     /**
      * Construct the default GameView
@@ -50,10 +51,12 @@ public class GameView {
 
     private void constructRHSBottom() {
         bottomBox = new JPanel();
-        JLabel bottomLabel = new JLabel("Placeholder");
-        bottomBox.add(bottomLabel);
+        GridLayout verticalSplit = new GridLayout(1, 2);
+        bottomBox.setLayout(verticalSplit);
         autosaveInfo = new JPanel();
         bottomBox.add(autosaveInfo);
+        inventorySummaryBox = new JPanel();
+        bottomBox.add(inventorySummaryBox);
     }
 
     private void constructRHS(JPanel mainContainer, JPanel topHalf, JPanel bottomHalf) {
@@ -91,5 +94,9 @@ public class GameView {
 
     public JPanel getAutosaveInfo() {
         return autosaveInfo;
+    }
+
+    public JPanel getInventorySummaryBox() {
+        return inventorySummaryBox;
     }
 }
