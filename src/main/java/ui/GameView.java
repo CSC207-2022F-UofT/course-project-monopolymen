@@ -29,6 +29,8 @@ public class GameView {
         mainWindow = new JFrame("Monopoly Game");
         mainWindow.setSize(1920, 1080);
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Layout is not recalculated until resizing operation finishes (for performance reasons).
+        mainWindow.getToolkit().setDynamicLayout(false);
     }
 
     private void constructMainContainer(JFrame mainWindow) {
