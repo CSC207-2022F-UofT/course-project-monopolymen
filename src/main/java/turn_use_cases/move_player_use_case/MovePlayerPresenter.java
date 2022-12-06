@@ -106,7 +106,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         JLabel playerPanel = players.get(playerList.indexOf(player));
         playerPanel.setBounds(scaledTilePositions[playerPosition][0] + playerOffset[playerList.indexOf(player)][0],
                 scaledTilePositions[playerPosition][1] + playerOffset[playerList.indexOf(player)][1], 50, 50);
-        JButton otherOptions = new JButton("OK");
+        JButton otherOptions = new JButton("Don't Buy Property");
         otherOptions.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -114,6 +114,8 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 turnController.endRollDice(rollAgain);
             }
         });
+        optionsWindow.revalidate();
+        optionsWindow.repaint();
         optionsWindow.add(otherOptions);
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
         cardLayout.show(actionDialogBox, "Roll options");
@@ -138,7 +140,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     public void showCardDraw(Player player, String cardName, String cardDescription, boolean rollAgain,  boolean isChance) {
         // Clear the options window. as this is different from showResultOfAction
         optionsWindow.removeAll();
-        ImageIcon cardImage = new ImageIcon("src/main/resources/assets/cards/" + cardName + ".png");
+        ImageIcon cardImage = new ImageIcon("src/main/resources/assets/cards/" + cardName + ".jpg");
         JLabel cardImageLabel = new JLabel(cardImage);
         // scale the image
         cardImageLabel.setPreferredSize(new Dimension(300, 300)); 
@@ -152,6 +154,8 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 turnController.endRollDice(rollAgain);
             }
         });
+        optionsWindow.revalidate();
+        optionsWindow.repaint();
         optionsWindow.add(otherOptions);
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
         cardLayout.show(actionDialogBox, "Roll options");
