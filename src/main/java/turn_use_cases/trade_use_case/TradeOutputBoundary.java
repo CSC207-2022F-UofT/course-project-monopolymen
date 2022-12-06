@@ -34,12 +34,14 @@ public interface TradeOutputBoundary {
     /**
      * Presents the result of the trade offer.
      *
-     * @param option the number indicating the result of the trade.
-     *      *               1 - player2 accepted the trade offer.
-     *      *               2 - player2 decided to make a counter offer.
-     *      *               3 - player2 declined the trade offer.
-     *      *               4 - player2's input was not valid and needs to try again.
+     * @param option     the number indicating the result of the trade.
+     *                   *               1 - player2 accepted the trade offer.
+     *                   *               2 - player2 decided to make a counter offer.
+     *                   *               3 - player2 declined the trade offer.
+     *                   *               4 - player2's input was not valid and needs to try again.
      * @param flavorText the text describing what is happening.
+     * @param player1 the player who initiated the trade offer.
+     * @param player2 the player who received the trade offer.
      */
-    public void showResultOfTradeOffer(int option, String flavorText);
+    public void showResultOfTradeOffer(int option, String flavorText, Player player1, Player player2);
 }

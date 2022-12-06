@@ -59,7 +59,8 @@ public class TradeUseCase implements  TradeInputBoundary{
                 player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
                 player1.getProperties(), player2.getProperties(), player1, player2);
 
-        presenter.showTradeOptions(tradeOption, "Please choose what you want to trade.");
+        presenter.showTradeOptions(tradeOption,"<html><body>"+ player1.getName() +
+                ", please choose what you want to trade."+"</body></html>");
 
         return tradeOption;
     }
@@ -103,13 +104,13 @@ public class TradeUseCase implements  TradeInputBoundary{
 
         if(option == 1){
             ExecuteOffer(player1, player2, tradeOffer);
-            presenter.showResultOfTradeOffer(1, "The Trade was a success!");
+            presenter.showResultOfTradeOffer(1, "The Trade was a success!", player1 , player2);
         } else if (option == 2) {
-            presenter.showResultOfTradeOffer(2, player2.getName() + "wants to make a counter offer!");
+            presenter.showResultOfTradeOffer(2, player2.getName() + "wants to make a counter offer!", player1,  player2);
         } else if (option == 3) {
-            presenter.showResultOfTradeOffer(3, "The offer was declined!");
+            presenter.showResultOfTradeOffer(3, "The offer was declined!", player1, player2);
         } else{
-            presenter.showResultOfTradeOffer(4, "That was an invalid input, please try again.");
+            presenter.showResultOfTradeOffer(4, "That was an invalid input, please try again.", player1 , player2);
         }
 
     }
