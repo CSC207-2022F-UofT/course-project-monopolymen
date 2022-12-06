@@ -35,7 +35,6 @@ public class TurnController {
     private ViewInventoryInputBoundary viewInventory;
     private LiquidateAssetsInputBoundary liquidateAssets;
     private EndTurnInputBoundary endTurn;
-    private EndUseCaseDestination nextEndUseCaseDestination;
 
     /**
      * Construct the TurnController object. Before use, the {@link #setInputBoundaries(BuildBuildingInputBoundary, MortgagePropertyInputBoundary, MovePlayerInputBoundary, TradeInputBoundary, TryToGetOutOfJailInputBoundary, ViewInventoryInputBoundary, LiquidateAssetsInputBoundary, EndTurnInputBoundary)}
@@ -51,7 +50,6 @@ public class TurnController {
         this.liquidateAssets = null;
         this.endTurn = null;
         this.gameState = gameState;
-        this.nextEndUseCaseDestination = EndUseCaseDestination.DEFAULT_DESTINATION;
     }
 
     /**
@@ -77,38 +75,10 @@ public class TurnController {
     }
 
     /**
-     * Signifies the end of a use case. The action taken depends on what is set as the nextEndUseCaseDestination
-     * ({@link #setNextEndUseCaseDestination(EndUseCaseDestination) see setter for details }). After this method is called,
-     * the nextEndUseCaseDestination is reset to the DEFAULT_DESTINATION.
+     * Signifies the end of a use case. Shows the player the turn actions.
      */
     public void endUseCase() {
-        switch (nextEndUseCaseDestination) {
-            case DEFAULT_DESTINATION:
-                gameState.showTurnActions();
-                break;
-            case LIQUIDATE_ASSETS:
-                //TODO call to the liquidate assets use case (does not exist yet)
-                break;
-        }
-        nextEndUseCaseDestination = EndUseCaseDestination.DEFAULT_DESTINATION;
-    }
-
-    public EndUseCaseDestination getNextEndUseCaseDestination() {
-        return nextEndUseCaseDestination;
-    }
-
-    /**
-     * Sets which method will be called after the next endUseCase method is called. Destinations:
-     * <ul>
-     *     <li><b>DEFAULT_DESTINATION</b> The endUseCase method will show the player a list of turn action options
-     *          they can take.</li>
-     *     <li><b>LIQUIDATE_ASSETS</b> The endUseCase method will call the LIQUIDATE_ASSETS use case (to be used
-     *          when a use case is called from the LiquidateAssets use case when the player must get money to make
-     *          a payment.</li>
-     * </ul>
-     */
-    public void setNextEndUseCaseDestination(EndUseCaseDestination nextEndUseCaseDestination) {
-        this.nextEndUseCaseDestination = nextEndUseCaseDestination;
+        gameState.showTurnActions();
     }
 
     public void endTurn() {
@@ -224,10 +194,5 @@ public class TurnController {
     /* ViewInventory Related Methods */
     public void showInventory(Player player, List<Player> playerList) {
         viewInventory.displayInfo(player, playerList);
-    }
-
-    enum EndUseCaseDestination {
-        DEFAULT_DESTINATION,
-        LIQUIDATE_ASSETS
     }
 }
