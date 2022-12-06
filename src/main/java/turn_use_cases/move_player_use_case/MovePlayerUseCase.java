@@ -1,14 +1,10 @@
 package turn_use_cases.move_player_use_case;
 import game_entities.Player;
 import game_entities.tiles.*;
-
-import org.hamcrest.core.IsNull;
-
 import game_entities.Board;
 import turn_use_cases.end_turn_use_case.EndTurnInputBoundary;
 import turn_use_cases.end_turn_use_case.EndTurnUseCase;
 import game_entities.cards.CardActionResultModel;
-
 
 /**
  * move_player_use_case (Class to handle moving the player and all its relevant logic such as passing a tile and landing
@@ -130,9 +126,9 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                     sendToJail(player);
                 } else {
                     // Normal move player card
-                    moveToPosition(player, cardResult.getPlayerPosition(), doubleRoll);
                     movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
                             cardResult.getFlavorText(), doubleRoll, cardResult.isChance());
+                    moveToPosition(player, cardResult.getPlayerPosition(), doubleRoll);
                 }
             } else {
                 // Card didn't move player
@@ -142,7 +138,6 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
             }
         } else {
             // Player didn't land on a draw card tile
-            Tile tile = board.getTile(player.getPosition());
             if (result.getPlayerPosition() == board.getJailTilePosition()) {
                 // Player landed on "go to jail" and their position should now be in jail
                 // player.enterJail() is handeled in the tile's action method
@@ -150,8 +145,8 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
             } else {
                 // Normal move
                 moveToPosition(player, player.getPosition() + rollSum, doubleRoll);
+                }
             }
-        }
     }
 
     /**
