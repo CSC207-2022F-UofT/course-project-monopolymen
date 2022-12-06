@@ -30,8 +30,9 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     private TurnController turnController;
     private JPanel optionsWindow;
     private JPanel optionsWindowTop;
+    private JFrame mainWindow;
 
-    public MovePlayerPresenter(JLayeredPane board, JPanel actionDialogBox, double scaleFactor, List<Player> playerList,
+    public MovePlayerPresenter(JFrame mainWindow, JLayeredPane board, JPanel actionDialogBox, double scaleFactor, List<Player> playerList,
                                TurnController turnController, String tilePositionFilePath) {
         this.actionDialogBox = actionDialogBox;
         this.board = board;
@@ -42,6 +43,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         this.optionsWindowTop = new JPanel();
         this.optionsWindow.setLayout(new BorderLayout());
         this.optionsWindow.add(optionsWindowTop, BorderLayout.NORTH);
+        this.mainWindow = mainWindow;
         // read in the tile positions from TilePositions.txt
         this.tilePositions = new ArrayList<>();
         actionDialogBox.add(optionsWindow, "Roll options");
@@ -58,14 +60,34 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             throw new RuntimeException(e);
         }
         this.scaledTilePositions = scaleTilePositions();
-        PopulateBoard();
+        rescale(mainWindow.getWidth());
+        populateBoard();
+        // Resize the board image on window resizing.
+        mainWindow.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                rescale(mainWindow.getWidth());
+            }
+        });
+    }
+
+    private void rescale(int newWidth) {
+        // scaleFactor is half of the newWidth in 100s of pixels over 15.
+        // newWidth has 100 subtracted to give a 50 pixel buffer between the right edge of the board
+        // and the halfway split mark.
+        this.scaleFactor = ((newWidth - 100) / 200.0) / 15.0;
+        this.scaledTilePositions = scaleTilePositions();
+        board.removeAll();
+        populateBoard();
+        board.validate();
+        board.repaint();
     }
 
     /**
      * Creates the board and the players.
      * Does not create "roll dice" button as it is handled by the controller.
      */
-    private void PopulateBoard() {
+    private void populateBoard() {
         // draw the board
         ImageIcon boardImage = new ImageIcon(new ImageIcon("src/main/resources/assets/misc/board.jpg")
                 .getImage().getScaledInstance((int)(1500 * scaleFactor), (int)(1500 * scaleFactor), Image.SCALE_SMOOTH));
