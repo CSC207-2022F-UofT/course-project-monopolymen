@@ -123,11 +123,12 @@ public class Game {
         JPanel actionDialogBoxes = gameView.getActionDialogBoxes();
         JPanel inventorySummaryBox = gameView.getInventorySummaryBox();
         JLayeredPane boardLayeredPane = gameView.getBoardLayeredPane();
+        JFrame mainWindow = gameView.getMainWindow();
 
         EndTurnOutputBoundary endTurnPresenter = new EndTurnPresenter(actionDialogBoxes, turnController);
         EndTurnInputBoundary endTurn = new EndTurnUseCase(endTurnPresenter, gameState);
 
-        MovePlayerOutputBoundary movePlayerPresenter = new MovePlayerPresenter(boardLayeredPane, actionDialogBoxes, 9.0 / 15, gameState.getAllPlayers(), turnController, "src/main/resources/TilePositions.txt");
+        MovePlayerOutputBoundary movePlayerPresenter = new MovePlayerPresenter(mainWindow, boardLayeredPane, actionDialogBoxes, gameState.getAllPlayers(), turnController, "src/main/resources/TilePositions.txt");
         MovePlayerInputBoundary movePlayer = new MovePlayerUseCase(movePlayerPresenter, board, endTurn);
 
         TryToGetOutOfJailOutputBoundary leaveJailPresenter = new TryToGetOutOfJailPresenter(actionDialogBoxes, turnController);
