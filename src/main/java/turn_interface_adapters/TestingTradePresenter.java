@@ -103,9 +103,10 @@ public class TestingTradePresenter {
                 player2.hasGetOutofJailFreeCard(), player1.getProperties(), player2.getProperties(), player1, player2);
 
         TradeOffer tradeOffer = new TradeOffer(0, 0, player1.getProperties(), player2.getProperties(), player1, player2);
+        //tradePresenter.showResultOfTradeOffer(2, "Counter offer!", player1, player2);
 
-        tradePresenter.showTradeOffer(tradeOffer, "test");
-        //tradePresenter.showTradeOptions(tradeOption, "");
+        //tradePresenter.showTradeOffer(tradeOffer, "test");
+        //tradePresenter.showTradeOptions(tradeOption, "<html><body>"+ player1.getName() + ", choose what to trade"+"</body></html>");
 
         //tradePresenter.showListOfPlayers(players, player1, "Choose a Player!");
 

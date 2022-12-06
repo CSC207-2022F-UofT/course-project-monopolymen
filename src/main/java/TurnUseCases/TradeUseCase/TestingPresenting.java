@@ -170,9 +170,11 @@ public class TestingPresenting extends JFrame implements TradeOutputBoundary {
      *                   *               3 - player2 declined the trade offer.
      *                   *               4 - player2's input was not valid and needs to try again.
      * @param flavorText the text describing what is happening.
+     * @param player1
+     * @param player2
      */
     @Override
-    public void showResultOfTradeOffer(int option, String flavorText) {
+    public void showResultOfTradeOffer(int option, String flavorText, Player player1, Player player2) {
 
     }
 }

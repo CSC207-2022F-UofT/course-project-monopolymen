@@ -80,8 +80,7 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
     public void showTradeOptions(TradeOption tradeOption, String flavorText) {
         optionsPanel.removeAll();
         optionsPanel.setLayout(new GridLayout(1, 6));
-        //optionsPanel.add(new JLabel(flavorText));
-
+        optionsPanel.add(new JLabel(flavorText));
         ArrayList<String> player1PropertiesDisplay = new ArrayList<>();
         ArrayList<Property> player1Properties = new ArrayList<>();
 
@@ -115,13 +114,13 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
                 "List"));
         optionsPanel.add(propertiesOfferedList);
 
-        JLabel propertiesOfferedText = new JLabel("Prop. Offered");
+        JLabel propertiesOfferedText = new JLabel("<html><body>"+"Properties Offered"+"</body></html>");
 
         optionsPanel.add(propertiesOfferedText);
 
         optionsPanel.add(propertiesRequestedList);
 
-        JLabel propertiesRequestedText = new JLabel("Prop. Recieved");
+        JLabel propertiesRequestedText = new JLabel("<html><body>"+"Properties Requested"+"</body></html>");
 
         optionsPanel.add(propertiesRequestedText);
 
@@ -135,7 +134,7 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
 
         JRadioButton noJailCard = new JRadioButton("No JC");
         JRadioButton offerJailCard = new JRadioButton("Offer JC");
-        JRadioButton requestJailCard = new JRadioButton("Request JC");
+        JRadioButton requestJailCard = new JRadioButton("<html><body>"+"Request JC"+"</body></html>");
 
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(noJailCard);
@@ -173,7 +172,7 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
             }
         });
 
-        JButton submit = new JButton("Submit Offer");
+        JButton submit = new JButton("<html><body>"+"Submit Offer"+"</body></html>");
 
         optionsPanel.add(submit);
 
@@ -233,10 +232,10 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
     public void showTradeOffer(TradeOffer tradeOffer, String flavorText) {
         optionsPanel.removeAll();
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
-        optionsPanel.add(new JLabel(flavorText));
 
 
         if (!tradeOffer.isValid()){
+            optionsPanel.add(new JLabel(flavorText));
             JButton newOffer = new JButton("New Offer");
             optionsPanel.add(newOffer);
             newOffer.addActionListener(new ActionListener() {
@@ -249,7 +248,6 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
             Player player1 = tradeOffer.getPlayer1();
             Player player2 = tradeOffer.getPlayer2();
             String player1Name = player1.getName();
-            String player2Name = player2.getName();
 
             String propertiesOffered = "";
 
@@ -258,7 +256,7 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
             }
             propertiesOffered = propertiesOffered.substring(0, propertiesOffered.length() - 2);
 
-            optionsPanel.add(new JLabel("Properties Offered: " + propertiesOffered));
+            optionsPanel.add(new JLabel("<html><body>"+"Properties Offered: " + propertiesOffered +"</body></html>"));
 
             String propertiesRequested = "";
 
@@ -267,7 +265,7 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
             }
             propertiesRequested = propertiesRequested.substring(0, propertiesRequested.length() - 2);
 
-            optionsPanel.add(new JLabel("Properties Requested: " + propertiesRequested));
+            optionsPanel.add(new JLabel("<html><body>"+"Properties Requested: " + propertiesRequested +"</body></html>"));
 
             if (tradeOffer.getTradeMoney() > 0){
                 optionsPanel.add(new JLabel("Money Offered: " + String.valueOf(tradeOffer.getTradeMoney())));
@@ -275,14 +273,13 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
                 optionsPanel.add(new JLabel("Money Requested: " + String.valueOf(tradeOffer.getTradeMoney())));
             }
 
-            String offerJailCard = "";
-            String receiveJailCard = "";
-
             if (tradeOffer.getJailCard() > 0){
                 optionsPanel.add(new JLabel(player1Name + " offered a get out of jail free card."));
             } else if (tradeOffer.getJailCard() < 0) {
                 optionsPanel.add(new JLabel(player1Name + " requested a get out of jail free card."));
             }
+
+            optionsPanel.add(new JLabel(flavorText));
 
 
             JButton acceptOffer = new JButton("Accept Offer");
@@ -331,14 +328,16 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
      *                   *               3 - player2 declined the trade offer.
      *                   *               4 - player2's input was not valid and needs to try again.
      * @param flavorText the text describing what is happening.
+     * @param player1 the player who initiated the trade offer.
+     * @param player2 the player who received the trade offer.
      */
     @Override
-    public void showResultOfTradeOffer(int option, String flavorText) {
+    public void showResultOfTradeOffer(int option, String flavorText, Player player1, Player player2) {
         optionsPanel.removeAll();
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
         optionsPanel.add(new JLabel(flavorText));
 
-        if (option == 1){
+        if (option == 1 || option == 3){
             JButton endTrade = new JButton("End Trade");
             optionsPanel.add(endTrade);
             endTrade.addActionListener(new ActionListener() {
@@ -355,6 +354,7 @@ public class TradePresenter implements TradeOutputBoundary, PropertyChangeListen
             counterOffer.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    turnController.startTrade(player2, player1);
                 }
             });
 
