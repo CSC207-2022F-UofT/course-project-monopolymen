@@ -129,7 +129,6 @@ public class GameState implements Serializable {
         presenter.showAutosaveStatus(saved);
         // Start the next player's Turn.
         presenter.showNextTurn(currentPlayer());
-        showTurnActions();
     }
 
     /**
