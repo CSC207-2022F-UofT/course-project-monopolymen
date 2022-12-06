@@ -129,9 +129,9 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                         sendToJail(player);
                     } else {
                         // Normal move player card
+                        moveToPosition(player, cardResult.getPlayerPosition(), doubleRoll);
                         movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
                                 cardResult.getFlavorText(), doubleRoll, cardResult.isChance());
-                        moveToPosition(player, cardResult.getPlayerPosition(), doubleRoll);
                     }
                 } else {
                     // Card didn't move player
