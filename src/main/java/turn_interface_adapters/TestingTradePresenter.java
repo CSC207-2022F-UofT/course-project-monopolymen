@@ -2,7 +2,10 @@ package turn_interface_adapters;
 
 import game_entities.Board;
 import game_entities.Player;
+import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Tile;
+import turn_use_cases.trade_use_case.TradeOffer;
+import turn_use_cases.trade_use_case.TradeOption;
 
 import javax.swing.*;
 import java.awt.*;
@@ -84,7 +87,27 @@ public class TestingTradePresenter {
         players.add(player3);
         players.add(player4);
 
-        tradePresenter.showListOfPlayers(players, player1, "Choose a Player!");
+        int[] fakeRent = {};
+
+        ColorPropertyTile fakeStreet = new ColorPropertyTile("red", "fakeStreet",
+                "Fake Street", 500, fakeRent, 0, 0, 0);
+
+
+        ColorPropertyTile otherRoad = new ColorPropertyTile("blue", "otherRoad",
+                "Other Road", 500, fakeRent, 0, 0, 0);
+
+        player1.addProperty(fakeStreet);
+        player2.addProperty(otherRoad);
+
+        TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(), player1.hasGetOutofJailFreeCard(),
+                player2.hasGetOutofJailFreeCard(), player1.getProperties(), player2.getProperties(), player1, player2);
+
+        TradeOffer tradeOffer = new TradeOffer(0, 0, player1.getProperties(), player2.getProperties(), player1, player2);
+
+        tradePresenter.showTradeOffer(tradeOffer, "test");
+        //tradePresenter.showTradeOptions(tradeOption, "");
+
+        //tradePresenter.showListOfPlayers(players, player1, "Choose a Player!");
 
 
     }

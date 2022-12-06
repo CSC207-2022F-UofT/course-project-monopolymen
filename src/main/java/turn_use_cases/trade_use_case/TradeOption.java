@@ -81,4 +81,12 @@ public class TradeOption {
     public ArrayList<Property> getPlayer2Properties() {
         return player2Properties;
     }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
 }

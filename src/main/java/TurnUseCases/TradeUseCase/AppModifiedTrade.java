@@ -267,8 +267,6 @@ public class AppModifiedTrade extends JPanel implements TradeOutputBoundary, Pro
                     }
                 });
 
-                listContainer.add(noJailCard);
-
 
 
                 JButton submit = new JButton("Submit Offer");
