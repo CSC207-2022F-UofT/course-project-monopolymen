@@ -112,7 +112,11 @@ public class TurnController {
     }
 
     public void endTurn() {
-        gameState.endTurn();
+        endTurn.endTurn(gameState.currentPlayer());
+    }
+
+    public void forceEndTurn() {
+        endTurn.forceEndTurn(gameState.currentPlayer());
     }
 
     /* Move Player/RollDice use case related methods */
@@ -220,10 +224,6 @@ public class TurnController {
     /* ViewInventory Related Methods */
     public void showInventory(Player player, List<Player> playerList) {
         viewInventory.displayInfo(player, playerList);
-    }
-
-    public void endTurn(Player player){
-        endTurn.endTurn(player);
     }
 
     enum EndUseCaseDestination {
