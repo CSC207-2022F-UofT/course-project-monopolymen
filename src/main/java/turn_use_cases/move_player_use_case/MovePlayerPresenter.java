@@ -104,31 +104,8 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
 
         // Move the player to the new position.
         JLabel playerPanel = players.get(playerList.indexOf(player));
-        Timer timer = new Timer(0, new ActionListener() {
-            int x = playerPanel.getX();
-            int y = playerPanel.getY();
-            @Override
-            // Moves the player to the next tile
-            public void actionPerformed(ActionEvent e) {
-                if (x < scaledTilePositions[playerPosition][0]) {
-                    x++;
-                }
-                if (x > scaledTilePositions[playerPosition][0]) {
-                    x--;
-                }
-                if (y < scaledTilePositions[playerPosition][1]) {
-                    y++;
-                }
-                if (y > scaledTilePositions[playerPosition][1]) {
-                    y--;
-                }
-                playerPanel.setLocation(x, y);
-                if (x == scaledTilePositions[playerPosition][0] && y == scaledTilePositions[playerPosition][1]) {
-                    ((Timer) e.getSource()).stop();
-                }
-            }
-        });
-        timer.start();
+        playerPanel.setBounds(scaledTilePositions[playerPosition][0] + playerOffset[playerList.indexOf(player)][0],
+                scaledTilePositions[playerPosition][1] + playerOffset[playerList.indexOf(player)][1], 50, 50);
         JButton otherOptions = new JButton("OK");
         otherOptions.addActionListener(new ActionListener() {
             @Override
@@ -147,31 +124,8 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         // Clear the options window.
         optionsWindow.removeAll();
         JLabel playerPanel = players.get(playerList.indexOf(player));
-        Timer timer = new Timer(0, new ActionListener() {
-            int x = playerPanel.getX();
-            int y = playerPanel.getY();
-            @Override
-            // Moves the player to the next tile
-            public void actionPerformed(ActionEvent e) {
-                if (x < scaledTilePositions[playerPosition][0]) {
-                    x++;
-                }
-                if (x > scaledTilePositions[playerPosition][0]) {
-                    x--;
-                }
-                if (y < scaledTilePositions[playerPosition][1]) {
-                    y++;
-                }
-                if (y > scaledTilePositions[playerPosition][1]) {
-                    y--;
-                }
-                playerPanel.setLocation(x, y);
-                if (x == scaledTilePositions[playerPosition][0] && y == scaledTilePositions[playerPosition][1]) {
-                    ((Timer) e.getSource()).stop();
-                }
-            }
-        });
-        timer.start();
+        playerPanel.setBounds(scaledTilePositions[playerPosition][0] + playerOffset[playerList.indexOf(player)][0],
+                scaledTilePositions[playerPosition][1] + playerOffset[playerList.indexOf(player)][1], 50, 50);
         optionsWindow.add(new JLabel(tilePassResultModel.getFlavorText()));
     }
 

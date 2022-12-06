@@ -75,6 +75,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
     private void showAction(Player player, boolean doubleRoll) {
         TileActionResultModel result = board.getTile(player.getPosition()).action(player, board);
         Tile tile = board.getTile(player.getPosition());
+        System.out.println("player position: " + player.getPosition());
         movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
                 result.getFlavorText());
         if (tile instanceof Property) {
@@ -89,6 +90,8 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
     @Override
     public void startAction(Player player, boolean canRollAgain) {
         int[] playerRollAmount = {(int)(Math.random() * 6) + 1, (int)(Math.random() * 6) + 1};
+        System.out.println(playerRollAmount[0]);
+        System.out.println(playerRollAmount[1]);
         movePlayerOutputBoundary.showRoll(playerRollAmount);
         int rollSum = playerRollAmount[0] + playerRollAmount[1];
         boolean doubleRoll = playerRollAmount[0] == playerRollAmount[1];
@@ -144,7 +147,8 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                     sendToJail(player);
                 } else {
                     // Normal move
-                    moveToPosition(player, result.getPlayerPosition(), doubleRoll);
+                    System.out.println(rollSum);
+                    moveToPosition(player, player.getPosition() + rollSum, doubleRoll);
                 }
             }
     }
