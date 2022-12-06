@@ -20,14 +20,12 @@ public class TradePresenter implements TradeOutputBoundary {
     private final CardLayout cardLayout;
     private final JPanel optionsPanel;
 
-    private GameState gameState;
-
-    public TradePresenter(TurnController turnController, JPanel mainPanel, CardLayout cardLayout, GameState gameState){
-        this.turnController = turnController;
+    public TradePresenter( JPanel mainPanel, CardLayout cardLayout){
+        this.turnController = null;
         this.mainPanel = mainPanel;
         this.cardLayout =  cardLayout;
         this.optionsPanel = new JPanel();
-        this.gameState = gameState;
+        this.optionsPanel.setLayout(cardLayout);
         mainPanel.add(optionsPanel, "Options Panel");
     }
 
@@ -37,25 +35,25 @@ public class TradePresenter implements TradeOutputBoundary {
      * Presents the list of players player can trade with.
      *
      * @param listOfPlayers the list of players player can trade with.
+     * @param player the player initiating the trade.
      * @param flavorText    the text describing what is happening.
      */
     @Override
-    public void showListOfPlayers(ArrayList<Player> listOfPlayers, String flavorText) {
+    public void showListOfPlayers(ArrayList<Player> listOfPlayers, Player player, String flavorText) {
         optionsPanel.removeAll();
-        optionsPanel.setLayout(cardLayout);
-        optionsPanel.add(new JLabel(flavorText));
+        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.X_AXIS));
+        optionsPanel.add(new JLabel(flavorText + "      "));
 
 
 
-
-        for (Player player : listOfPlayers){
-            JButton option = new JButton("Pick " + player.getName());
+        for (Player otherPlayer : listOfPlayers){
+            JButton option = new JButton("Pick " + otherPlayer.getName());
 
             option.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
-                    turnController.startTrade(gameState.currentPlayer(), player);
+                    //turnController.startTrade(player, otherPlayer);
 
                 }
             });
@@ -113,4 +111,6 @@ public class TradePresenter implements TradeOutputBoundary {
     public void showResultOfTradeOffer(int option, String flavorText) {
 
     }
+
+
 }
