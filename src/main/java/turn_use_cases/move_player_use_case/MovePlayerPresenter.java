@@ -29,7 +29,6 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     private int[][] scaledTilePositions;
     private TurnController turnController;
     private JPanel optionsWindow;
-    private JPanel optionsWindowTop;
     private JFrame mainWindow;
 
     public MovePlayerPresenter(JFrame mainWindow, JLayeredPane board, JPanel actionDialogBox, List<Player> playerList,
@@ -39,9 +38,6 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         this.playerList = playerList;
         this.turnController = turnController;
         this.optionsWindow = new JPanel();
-        this.optionsWindowTop = new JPanel();
-        this.optionsWindow.setLayout(new BorderLayout());
-        this.optionsWindow.add(optionsWindowTop, BorderLayout.NORTH);
         this.mainWindow = mainWindow;
         // read in the tile positions from TilePositions.txt
         this.tilePositions = new ArrayList<>();
@@ -124,7 +120,6 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     @Override
     public void showResultOfAction(Player player, int playerPosition, boolean rollAgain, String flavorText) {
         // Clear the options window.
-        optionsWindow.removeAll();
         // Show the flavor text.
         JLabel flavorTextLabel = new JLabel(flavorText);
         optionsWindow.add(flavorTextLabel);
@@ -155,7 +150,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             }
         });
         timer.start();
-        JButton otherOptions = new JButton("OK");
+        JButton otherOptions = new JButton("Other options/Don't Buy");
         otherOptions.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -171,7 +166,6 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     @Override
     public void showResultOfPass(Player player, int playerPosition, TilePassResultModel tilePassResultModel) {
         // Clear the options window.
-        optionsWindow.removeAll();
         JLabel playerPanel = players.get(playerList.indexOf(player));
         Timer timer = new Timer(0, new ActionListener() {
             int x = playerPanel.getX();
@@ -203,32 +197,22 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
 
     @Override
     public void showRoll(int[] playerRollAmount){
-        optionsWindowTop.removeAll();
-        optionsWindowTop.add(new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]));
+        // Clear the options window.
+        optionsWindow.removeAll();
+        optionsWindow.add(new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]));
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
         cardLayout.show(actionDialogBox, "Roll options");
     }
 
     @Override
-    public void showCardDraw(Player player, String cardName, String cardDescription, boolean rollAgain,  boolean isChance) {
+    public void showCardDraw(Player player, String cardName, boolean rollAgain,  boolean isChance) {
         // Clear the options window. as this is different from showResultOfAction
-        optionsWindow.removeAll();
         ImageIcon cardImage = new ImageIcon(new ImageIcon("src/main/resources/assets/cards/" + cardName + ".jpg")
                 .getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH));
         JLabel cardImageLabel = new JLabel(cardImage);
         // scale the image
         cardImageLabel.setPreferredSize(new Dimension(300, 300)); 
         optionsWindow.add(cardImageLabel);
-        optionsWindow.add(new JLabel(cardDescription));
-        JButton otherOptions = new JButton("Other Options");
-        otherOptions.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                turnController.endRollDice(rollAgain);
-            }
-        });
-        optionsWindow.add(otherOptions);
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
         cardLayout.show(actionDialogBox, "Roll options");
     }
@@ -247,26 +231,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                     turnController.buyProperty(property);
                 }
             });
-            JButton otherOptions = new JButton("Don't buy");
-            otherOptions.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                    turnController.endRollDice(doubleRoll);
-                }
-            });
             optionsWindow.add(buyButton);
-            optionsWindow.add(otherOptions);
-        } else {
-            JButton otherOptions = new JButton("Other Options");
-            otherOptions.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                    turnController.endRollDice(doubleRoll);
-                }
-            });
-            optionsWindow.add(otherOptions);
         }
     }
 }
