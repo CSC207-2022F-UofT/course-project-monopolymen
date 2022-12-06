@@ -3,14 +3,14 @@ package turn_interface_adapters;
 import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
 import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsOutputBoundary;
-import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsUseCase;
 import turn_use_cases.liquidate_assets_use_case.LiquiditySituation;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBoundary {
 
@@ -53,7 +53,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                 tradeButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        turnController.showTradablePlayers(situation.getAffectedPlayer(), situation.getGameState().getActivePlayers());
+                        turnController.showTradablePlayers();
                     }
                 });
                 optionsPanel.add(tradeButton);
@@ -111,7 +111,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                 public void actionPerformed(ActionEvent e) {
                     optionsPanel.remove(mortgagePropertyButton);
                     optionsPanel.repaint();
-                    turnController.mortgageProperty(situation.getAffectedPlayer(), property);
+                    turnController.mortgageProperty(property);
                 }
             });
             buttonList.add(mortgagePropertyButton);
@@ -142,10 +142,10 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(0 < property.getNumHotels()){
-                        turnController.sellHotel(situation.getAffectedPlayer(), property);
+                        turnController.sellHotel(property);
                     }
                     else {
-                        turnController.sellHouse(situation.getAffectedPlayer(), property);
+                        turnController.sellHouse(property);
                     }
                     //Because selling a house on a property might change whether you can sell a house on another
                     // property, this method needs to be called again for the list to remain accurate
