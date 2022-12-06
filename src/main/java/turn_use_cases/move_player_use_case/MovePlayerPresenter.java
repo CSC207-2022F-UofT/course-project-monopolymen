@@ -100,7 +100,9 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     public void showResultOfAction(Player player, int playerPosition, boolean rollAgain, String flavorText) {
         // Clear the options window.
         optionsWindow.removeAll();
-
+        // Show the flavor text.
+        JLabel flavorTextLabel = new JLabel(flavorText);
+        optionsWindow.add(flavorTextLabel);
         // Move the player to the new position.
         JLabel playerPanel = players.get(playerList.indexOf(player));
         Timer timer = new Timer(0, new ActionListener() {
