@@ -144,7 +144,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                     sendToJail(player);
                 } else {
                     // Normal move
-                    moveToPosition(player, result.getPlayerPosition(), doubleRoll);
+                    moveToPosition(player, rollSum, doubleRoll);
                 }
             }
     }
