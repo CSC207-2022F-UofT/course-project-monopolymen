@@ -4,7 +4,7 @@ repair,card_chance_2,c2,Make general repairs on all your property: For each Hous
 money,card_chance_3,c3,Bank pays your dividend of $50,TRUE,N/A,50,N/A,N/A,N/A,N/A
 money,card_chance_4,c4,Your building loan matures. Collect $150,TRUE,N/A,150,N/A,N/A,N/A,N/A
 advance,card_chance_5,c5,"Advance to Illinois Avenue. If you pass ""Go"" collect $200",TRUE,Illinois Avenue,N/A,N/A,N/A,N/A,N/A
-advance,card_chance_6,c6,Advane to Boardwalk,TRUE,Boardwalk,N/A,N/A,N/A,N/A,N/A
+advance,card_chance_6,c6,Advance to Boardwalk,TRUE,Boardwalk,N/A,N/A,N/A,N/A,N/A
 advanceNear,card_chance_7,c7,Advance to the nearest utility. If unowned you may buy it from the Bank. If owned throw dice and pay owner a total ten times amount thrown,TRUE,N/A,N/A,N/A,N/A,N/A,Utility
 advance,card_chance_8,c8,"Take a trip to Reading Railroad. If you pass ""Go"" collect $200",TRUE,Reading Railroad,N/A,N/A,N/A,N/A,N/A
 advance,card_chance_9,c9,"Advance to St. Charles Place. If you pass ""Go"" collect $200",TRUE,St. Charles Place,N/A,N/A,N/A,N/A,N/A
