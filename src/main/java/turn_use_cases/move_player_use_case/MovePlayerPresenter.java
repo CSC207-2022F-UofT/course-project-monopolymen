@@ -126,7 +126,9 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     public void showResultOfAction(Player player, int playerPosition, boolean rollAgain, String flavorText) {
         // Clear the options window.
         optionsWindow.removeAll();
-
+        // Show the flavor text.
+        JLabel flavorTextLabel = new JLabel(flavorText);
+        optionsWindow.add(flavorTextLabel);
         // Move the player to the new position.
         JLabel playerPanel = players.get(playerList.indexOf(player));
         playerPanel.setBounds(scaledTilePositions[playerPosition][0] + playerOffset[playerList.indexOf(player)][0],
@@ -159,12 +161,10 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     @Override
     public void showRoll(int[] playerRollAmount){
         // Add JLabel showing the roll amount
-        optionsWindow.removeAll();
-        System.out.println("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]);
-
         optionsWindow.revalidate();
         optionsWindow.repaint();
-        optionsWindow.add(new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]));
+        JLabel rollLabel = new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]);
+        optionsWindow.add(rollLabel);
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
         cardLayout.show(actionDialogBox, "Roll options");
     }
