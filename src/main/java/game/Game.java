@@ -3,7 +3,9 @@ package game;
 import game_entities.Board;
 import game_entities.FactoryBoard;
 import game_entities.Player;
+import game_entities.tiles.ColorPropertyTile;
 import turn_interface_adapters.LiquidateAssetsInterfaceAdapter;
+import turn_interface_adapters.TradePresenter;
 import turn_interface_adapters.TurnController;
 import turn_use_cases.end_turn_use_case.EndTurnInputBoundary;
 import turn_use_cases.end_turn_use_case.EndTurnOutputBoundary;
@@ -16,6 +18,9 @@ import turn_use_cases.move_player_use_case.MovePlayerInputBoundary;
 import turn_use_cases.move_player_use_case.MovePlayerOutputBoundary;
 import turn_use_cases.move_player_use_case.MovePlayerPresenter;
 import turn_use_cases.move_player_use_case.MovePlayerUseCase;
+import turn_use_cases.trade_use_case.TradeInputBoundary;
+import turn_use_cases.trade_use_case.TradeOutputBoundary;
+import turn_use_cases.trade_use_case.TradeUseCase;
 import turn_use_cases.try_to_get_out_of_jail_use_case.TryToGetOutOfJailInputBoundary;
 import turn_use_cases.try_to_get_out_of_jail_use_case.TryToGetOutOfJailOutputBoundary;
 import turn_use_cases.try_to_get_out_of_jail_use_case.TryToGetOutOfJailPresenter;
@@ -127,7 +132,7 @@ public class Game {
         EndTurnOutputBoundary endTurnPresenter = new EndTurnPresenter(actionDialogBoxes, turnController);
         EndTurnInputBoundary endTurn = new EndTurnUseCase(endTurnPresenter, gameState);
 
-        MovePlayerOutputBoundary movePlayerPresenter = new MovePlayerPresenter(boardLayeredPane, actionDialogBoxes, 9.0 / 15, gameState.getAllPlayers(), turnController, "src/main/resources/TilePositions.txt");
+        MovePlayerOutputBoundary movePlayerPresenter = new MovePlayerPresenter(boardLayeredPane, actionDialogBoxes, 5.0 / 15, gameState.getAllPlayers(), turnController, "src/main/resources/TilePositions.txt");
         MovePlayerInputBoundary movePlayer = new MovePlayerUseCase(movePlayerPresenter, board, endTurn);
 
         TryToGetOutOfJailOutputBoundary leaveJailPresenter = new TryToGetOutOfJailPresenter(actionDialogBoxes, turnController);
@@ -139,6 +144,9 @@ public class Game {
         LiquidateAssetsOutputBoundary liquidateAssetsPresenter = new LiquidateAssetsInterfaceAdapter(turnController, actionDialogBoxes, (CardLayout) actionDialogBoxes.getLayout());
         LiquidateAssetsInputBoundary liquidateAssets = new LiquidateAssetsUseCase(liquidateAssetsPresenter);
 
-        turnController.initializeAttributes(gameState, null, null, movePlayer, null, leaveJail, viewInventory, liquidateAssets, endTurn);
+        TradeOutputBoundary tradePresenter = new TradePresenter(actionDialogBoxes, (CardLayout) actionDialogBoxes.getLayout(), turnController);
+        TradeInputBoundary trade = new TradeUseCase(tradePresenter);
+
+        turnController.initializeAttributes(gameState, null, null, movePlayer, trade, leaveJail, viewInventory, liquidateAssets, endTurn);
     }
 }
