@@ -96,10 +96,6 @@ public class Game {
             throw new RuntimeException(e);
         }
 
-        JPanel actionDialogBoxes = gameView.getActionDialogBoxes();
-        JPanel autosaveInfo = gameView.getAutosaveInfo();
-        JLayeredPane boardLayeredPane = gameView.getBoardLayeredPane();
-
         //Currently constructs default players for testing
         Player player1 = new Player("player1", "battleship", 1500, board);
         Player player2 = new Player("player2", "car", 1500, board);
@@ -115,25 +111,29 @@ public class Game {
         LoadGameState load = new LoadGameStateSerialize(saves_directory);
 
         turnController = new TurnController();
-        GameStatePresenter gameStatePresenter = new GameStatePresenter(actionDialogBoxes, turnController, autosaveInfo);
+        GameStatePresenter gameStatePresenter = new GameStatePresenter(gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
         gameState = new GameState(players, "gameName1", save, gameStatePresenter);
-        GameStateOutputBoundary presenter = new GameStatePresenter(actionDialogBoxes, turnController, autosaveInfo);
+        GameStateOutputBoundary presenter = new GameStatePresenter(gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
         gameState.setPresenter(presenter);
 
-        constructUseCases(turnController, gameState, board, boardLayeredPane, actionDialogBoxes);
+        constructUseCases(turnController, gameState, board);
     }
 
-    private void constructUseCases(TurnController turnController, GameState gameState, Board board, JLayeredPane jLayeredPane, JPanel actionDialogBoxes) {
+    private void constructUseCases(TurnController turnController, GameState gameState, Board board) {
+        JPanel actionDialogBoxes = gameView.getActionDialogBoxes();
+        JPanel inventorySummaryBox = gameView.getInventorySummaryBox();
+        JLayeredPane boardLayeredPane = gameView.getBoardLayeredPane();
+
         EndTurnOutputBoundary endTurnPresenter = new EndTurnPresenter(actionDialogBoxes, turnController);
         EndTurnInputBoundary endTurn = new EndTurnUseCase(endTurnPresenter, gameState);
 
-        MovePlayerOutputBoundary movePlayerPresenter = new MovePlayerPresenter(jLayeredPane, actionDialogBoxes, 9.0 / 15, gameState.getAllPlayers(), turnController, "src/main/resources/TilePositions.txt");
+        MovePlayerOutputBoundary movePlayerPresenter = new MovePlayerPresenter(boardLayeredPane, actionDialogBoxes, 9.0 / 15, gameState.getAllPlayers(), turnController, "src/main/resources/TilePositions.txt");
         MovePlayerInputBoundary movePlayer = new MovePlayerUseCase(movePlayerPresenter, board, endTurn);
 
         TryToGetOutOfJailOutputBoundary leaveJailPresenter = new TryToGetOutOfJailPresenter(actionDialogBoxes, turnController);
         TryToGetOutOfJailInputBoundary leaveJail = new TryToGetOutOfJailUseCase(leaveJailPresenter, board, endTurn, movePlayer, movePlayerPresenter);
 
-        ViewInventoryOutputBoundary viewInventoryPresenter = new ViewInventoryPresenter();
+        ViewInventoryOutputBoundary viewInventoryPresenter = new ViewInventoryPresenter(inventorySummaryBox, gameState.getAllPlayers(), turnController);
         ViewInventoryInputBoundary viewInventory = new ViewInventory(viewInventoryPresenter);
 
         LiquidateAssetsOutputBoundary liquidateAssetsPresenter = new LiquidateAssetsInterfaceAdapter(turnController, actionDialogBoxes, (CardLayout) actionDialogBoxes.getLayout());
