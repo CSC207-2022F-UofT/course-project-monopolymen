@@ -29,6 +29,7 @@ import turn_use_cases.view_inventory.ViewInventoryInputBoundary;
 import turn_use_cases.view_inventory.ViewInventoryOutputBoundary;
 import turn_use_cases.view_inventory.ViewInventoryPresenter;
 import ui.GameView;
+import ui.GameView.PlayerIcon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -64,6 +65,7 @@ public class Game {
      * Starts the game and shows the main window.
      */
     public void startGame() {
+        constructUseCases(turnController, gameState, board);
         gameState.startGame();
         gameView.getMainWindow().setVisible(true);
     }
@@ -84,7 +86,17 @@ public class Game {
         return players;
     }
 
-    public void addPlayer(Player player) {
+    /**
+     * Adds a new Player to the game.
+     *
+     * @param playerName The player's name. Must be unique between players.
+     * @param playerIcon The icon representing the player.
+     * @param money      The starting money the player has.
+     */
+    public void addPlayer(String playerName, PlayerIcon playerIcon, int money) {
+        Player player = new Player(playerName, playerIcon.name().toLowerCase(), money, board);
+        player.setGameState(gameState);
+        player.setTurnController(turnController);
         players.add(player);
     }
 
@@ -100,19 +112,6 @@ public class Game {
             throw new RuntimeException(e);
         }
 
-        //Currently constructs default players for testing
-        Player player1 = new Player("player1", "battleship", 1500, board);
-        Player player2 = new Player("player2", "car", 1, board);
-        Player player3 = new Player("player3", "thimble", 1500, board);
-        Player player4 = new Player("player4", "hat", 1500, board);
-
-        player1.addGetOutOfJailCard();
-
-        addPlayer(player1);
-        addPlayer(player2);
-        addPlayer(player3);
-        addPlayer(player4);
-
         SaveGameState save = new SaveGameStateSerialize(saves_directory);
         LoadGameState load = new LoadGameStateSerialize(saves_directory);
 
@@ -120,13 +119,7 @@ public class Game {
         GameStatePresenter gameStatePresenter = new GameStatePresenter(gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
         gameState = new GameState(players, "gameName1", save, gameStatePresenter);
         GameStateOutputBoundary presenter = new GameStatePresenter(gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
-        player1.setGameState(gameState);
-        player2.setGameState(gameState);
-        player3.setGameState(gameState);
-        player4.setGameState(gameState);
         gameState.setPresenter(presenter);
-
-        constructUseCases(turnController, gameState, board);
     }
 
     private void constructUseCases(TurnController turnController, GameState gameState, Board board) {
@@ -154,10 +147,5 @@ public class Game {
         TradeInputBoundary trade = new TradeUseCase(tradePresenter);
 
         turnController.initializeAttributes(gameState, null, null, movePlayer, trade, leaveJail, viewInventory, liquidateAssets, endTurn);
-        players.get(0).setTurnController(turnController);
-        players.get(1).setTurnController(turnController);
-        players.get(2).setTurnController(turnController);
-        players.get(3).setTurnController(turnController);
-
     }
 }

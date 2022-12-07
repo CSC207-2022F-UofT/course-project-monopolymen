@@ -101,4 +101,15 @@ public class GameView {
     public JPanel getInventorySummaryBox() {
         return inventorySummaryBox;
     }
+
+    public enum PlayerIcon {
+        BATTLESHIP,
+        CAR,
+        DOG,
+        HAT,
+        IRON,
+        SHOE,
+        THIMBLE,
+        WHEELBARROW
+    }
 }

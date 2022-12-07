@@ -37,9 +37,9 @@ public class GameState implements Serializable {
      */
     public GameState(List<Player> players, String gameName, SaveGameState saveGameState, GameStateOutputBoundary presenter) {
         this.allPlayers = players;
-        this.activePlayers = new ArrayList<>(players); // Shallow copy
+        this.activePlayers = new ArrayList<>();
         this.currentPlayer = 0;
-        this.numPlayers = activePlayers.size();
+        this.numPlayers = allPlayers.size();
         this.saveGameState = saveGameState;
         this.turnCounter = 0;
         this.gameName = gameName;
@@ -81,6 +81,7 @@ public class GameState implements Serializable {
      * </ul>
      */
     public void startGame() {
+        activePlayers.addAll(allPlayers);
         // Shallow method to avoid possible confusion about needing to start each turn by method call every time.
         showTurnActions();
     }
