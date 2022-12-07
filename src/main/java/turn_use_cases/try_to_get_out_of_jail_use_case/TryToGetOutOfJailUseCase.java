@@ -40,6 +40,7 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
 
     @Override
     public void startAction(String playerOption, Player player) {
+        System.out.println(playerOption);
         if(playerOption.equals("Roll")) {
             // This is different from movePlayerUseCase as it doesn't take into account previous double rolls
             int[] playerRollAmount = {(int)(Math.random() * 6) + 1, (int)(Math.random() * 6) + 1};
@@ -52,7 +53,7 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
             } else {
                 // Player didn't roll double, force ending their turn
                 player.addTurnInJail();
-                endTurnUseCase.forceEndTurn(player);
+                tryToGetOutOfJailOutputBoundary.showRoll(playerRollAmount);
             }
         } else if (playerOption.equals("Pay")) {
             player.subtractMoney(50);
@@ -69,6 +70,7 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
 
     @Override
     public void getPlayerOptions(Player player) {
+        System.out.println(player.numGetOutofJailFreeCards());
         ArrayList<String> playerOptions = new ArrayList<String>();
         playerOptions.add("Roll");
         if(player.getMoney() >= 50) {
