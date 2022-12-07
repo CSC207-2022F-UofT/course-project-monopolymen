@@ -1,5 +1,7 @@
 package game;
 
+import turn_interface_adapters.TurnController;
+
 public interface LoadGameState {
     /**
      * Load the GameState object. Assumes the save exists.
@@ -11,7 +13,7 @@ public interface LoadGameState {
      * @param presenter     The presenter object for GameState.
      * @return The GameState object loaded in the save.
      */
-    GameState load(String saveName, SaveGameState saveGameState, GameStateOutputBoundary presenter);
+    GameState load(String saveName, SaveGameState saveGameState, GameStateOutputBoundary presenter, TurnController turnController);
 
     /**
      * Check if the save exists.
