@@ -25,11 +25,10 @@ public class TestDrawCardTile {
     @Test
     public void action() {
         Player player1 = new Player("Test", "test", 1500, board);
-        board.addCommunityCard(card);
         drawCard.setBoard(board);
-        TileActionResultModel test = drawCard.action(player1, board);
-        assertEquals(test.getFlavorText(), card.getCardDescription());
-        assertEquals(test.getPlayer(), player1);
-        assertEquals(test.getPlayerPosition(), player1.getPosition());
+        board.addCommunityCard(card);
+        CardActionResultModel test1 = card.action(player1);
+        TileActionResultModel test2 = drawCard.action(player1, board);
+        assertEquals(test1, test2);
     }
 }
