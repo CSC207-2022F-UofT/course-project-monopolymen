@@ -4,6 +4,8 @@ import game_entities.Player;
 import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
 
+import java.util.ArrayList;
+
 public interface BuildBuildingInputBoundary {
     /**
      * Check if player can build buildings
@@ -12,6 +14,13 @@ public interface BuildBuildingInputBoundary {
      * @param property the property on which player wants to build buildings.
      */
     public boolean isBuildable (Player player, Property property);
+
+    /**
+     * A list of properties on which can build a building.
+     *
+     * @param player the player who wants to build buildings.
+     */
+    public void showBuildOption (Player player);
 
     /**
      * Build a house on the property.
@@ -36,6 +45,13 @@ public interface BuildBuildingInputBoundary {
      * @param property the property on which player wants to sell buildings.
      */
     public boolean isSellable(Player player, Property property);
+
+    /**
+     * A list of properties which has building can be sold.
+     *
+     * @param player the player who wants to sell buildings.
+     */
+    public void showSellOption (Player player);
 
     /**
      * Selling a building on the property.
