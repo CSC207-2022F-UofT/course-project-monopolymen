@@ -151,12 +151,12 @@ public class Game {
         TradeOutputBoundary tradePresenter = new TradePresenter(actionDialogBoxes,(CardLayout) actionDialogBoxes.getLayout(), turnController);
         TradeInputBoundary trade = new TradeUseCase(tradePresenter);
 
-        turnController.initializeAttributes(gameState, null, null, movePlayer, trade, leaveJail, viewInventory, liquidateAssets, endTurn);
-
         MortgagePropertyOutputBoundary mortgagePropertyPresenter = new MortgagePropertyPresenter(actionDialogBoxes, (CardLayout) actionDialogBoxes.getLayout(), turnController);
         MortgagePropertyInputBoundary mortgage = new MortgageProperty(mortgagePropertyPresenter);
 
         BuildBuildingOutputBoundary buildBuildingPresenter = new BuildBuildingPresenter(actionDialogBoxes, (CardLayout) actionDialogBoxes.getLayout(), turnController);
         BuildBuildingInputBoundary buildBuilding = new BuildBuildings(buildBuildingPresenter, board);
+
+        turnController.initializeAttributes(gameState, buildBuilding, mortgage, movePlayer, trade, leaveJail, viewInventory, liquidateAssets, endTurn);
     }
 }

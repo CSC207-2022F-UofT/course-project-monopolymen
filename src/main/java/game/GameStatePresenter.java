@@ -90,7 +90,7 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                     mortgage.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-//                            controller.showMortgageableProperties();
+                            controller.showMortgageableProperties();
                         }
                     });
                     turnActionButtonsPanel.add(mortgage);
@@ -100,7 +100,7 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                     unmortgage.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-//                            controller.showunmortgageableProperties();
+                            controller.showUnmortgageableProperties();
                         }
                     });
                     turnActionButtonsPanel.add(unmortgage);
@@ -111,7 +111,7 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             System.out.println("No behavior, waiting for buildBuildingsPresenter");
-//                            controller.showBuildableProperties();
+                            controller.showBuildableProperties();
                         }
                     });
                     turnActionButtonsPanel.add(buildBuilding);
@@ -122,7 +122,7 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             System.out.println("No behavior, waiting for buildBuildingsPresenter");
-//                            controller.showBuiltOnProperties();
+                            controller.showBuiltOnProperties();
                         }
                     });
                     turnActionButtonsPanel.add(sellBuilding);

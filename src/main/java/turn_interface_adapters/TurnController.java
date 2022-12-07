@@ -134,7 +134,7 @@ public class TurnController {
     }
 
     /* BuildBuilding Related Methods */
-    public void getBuildableProperties() { buildBuilding.showBuildOption(gameState.currentPlayer()); }
+    public void showBuildableProperties() { buildBuilding.showBuildOption(gameState.currentPlayer()); }
 
     public void buildHouse(ColorPropertyTile property) {
         buildBuilding.buildHouse(gameState.currentPlayer(), property);
@@ -144,7 +144,7 @@ public class TurnController {
         buildBuilding.buildHotel(gameState.currentPlayer(), property);
     }
 
-    public void getBuiltOnProperties() { buildBuilding.showSellOption(gameState.currentPlayer()); }
+    public void showBuiltOnProperties() { buildBuilding.showSellOption(gameState.currentPlayer()); }
 
     public void sellHouse(ColorPropertyTile property) {
         buildBuilding.sellHouse(gameState.currentPlayer(), property);
