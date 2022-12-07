@@ -41,7 +41,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         }
         ColorPropertyTile colorProperty = (ColorPropertyTile) property;
 
-        if(!colorProperty.allColoredPropertySetOwned(colorProperty.getColor(), board.getPropertyTiles())) {
+        if(!colorProperty.checkSetOwned(board.getPropertyTiles())) {
             return false;
         }
 
