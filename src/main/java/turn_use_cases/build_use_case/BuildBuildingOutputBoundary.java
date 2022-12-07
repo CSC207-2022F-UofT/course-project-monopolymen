@@ -2,8 +2,19 @@ package turn_use_cases.build_use_case;
 
 import game_entities.Player;
 import game_entities.tiles.ColorPropertyTile;
+import game_entities.tiles.Property;
+
+import java.util.ArrayList;
 
 public interface BuildBuildingOutputBoundary {
+    /**
+     * Presents the list properties which would build a building.
+     *
+     * @param properties the property which would build a building or sell a building.
+     * @param flavorText the text describing what is happening.
+     */
+    public void showBuildOption(ArrayList<Property> properties, String flavorText);
+
     /**
      * Presents the property which would build a building.
      *
@@ -21,5 +32,13 @@ public interface BuildBuildingOutputBoundary {
      * @param flavorText the text describing what is happening.
      */
     public void showSellBuilding(Player player, ColorPropertyTile property, String flavorText);
+
+    /**
+     * Presents the list properties which would sell a building.
+     *
+     * @param properties the property which would build a building or sell a building.
+     * @param flavorText the text describing what is happening.
+     */
+    public void showSellOption(ArrayList<Property> properties, String flavorText);
 
 }
