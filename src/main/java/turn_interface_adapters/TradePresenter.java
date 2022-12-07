@@ -336,7 +336,7 @@ public class TradePresenter implements TradeOutputBoundary {
             if (tradeOffer.getTradeMoney() > 0){
                 optionsPanel.add(new JLabel("Money Offered: " + String.valueOf(tradeOffer.getTradeMoney())));
             } else if (tradeOffer.getTradeMoney() < 0) {
-                optionsPanel.add(new JLabel("Money Requested: " + String.valueOf(tradeOffer.getTradeMoney())));
+                optionsPanel.add(new JLabel("Money Requested: " + String.valueOf(- tradeOffer.getTradeMoney())));
             }
 
             if (tradeOffer.getJailCard() > 0){
