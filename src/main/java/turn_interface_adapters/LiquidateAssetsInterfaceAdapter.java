@@ -120,7 +120,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
         //Making the various buttons that are the possible properties player can mortgage
         for(int i = 0; i < mortgageableProperties.size(); i++){
             Property property = mortgageableProperties.get(i);
-            JButton mortgagePropertyButton = new JButton(property.getTileDisplayName() + ": $" + property.getMortgageValue());
+            JButton mortgagePropertyButton = new JButton(property.getTileName() + ": $" + property.getMortgageValue());
             mortgagePropertyButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -152,7 +152,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
         //Making the various buttons that are the properties that have houses that can be sold
         for(int i = 0; i < propertiesWithHouses.size(); i++){
             ColorPropertyTile property = propertiesWithHouses.get(i);
-            JButton sellHouse = new JButton(property.getTileDisplayName() + ": $" + property.getBuildingCost() * 0.5);
+            JButton sellHouse = new JButton(property.getTileName() + ": $" + property.getBuildingCost() * 0.5);
             sellHouse.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
