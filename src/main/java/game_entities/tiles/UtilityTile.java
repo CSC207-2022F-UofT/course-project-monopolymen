@@ -75,7 +75,7 @@ public class UtilityTile extends Property {
             diceRollSum += value;
         }
 
-        return rentFactor[numOwned] * diceRollSum;
+        return rentFactor[numOwned + 1] * diceRollSum;
     }
 
     /**
