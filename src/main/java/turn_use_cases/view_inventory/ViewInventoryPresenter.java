@@ -96,10 +96,10 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
         JButton player2Button = new JButton("View " + playersInfo.get(1).getName() + "s' Inventory");
         JButton player3Button = new JButton("View " + playersInfo.get(2).getName() + "s' Inventory");
         JButton player4Button = new JButton("View " + playersInfo.get(3).getName() + "s' Inventory");
-        player1.setBackground(new Color(201, 201, 201));
-        player2.setBackground(new Color(158, 158, 158));
-        player3.setBackground(new Color(125, 125, 125));
-        player4.setBackground(new Color(107, 106, 106));
+        player1.setBackground(new Color(44,168,219));
+        player2.setBackground(new Color(219, 212, 63));
+        player3.setBackground(new Color(219, 42, 74));
+        player4.setBackground(new Color(143, 34, 54));
         player1.add(player1Button);
         player2.add(player2Button);
         player3.add(player3Button);
@@ -122,7 +122,7 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
                 tc.showInventory(playersInfo.get(2), playersInfo);
             }
         });
-        player3Button.addActionListener(new ActionListener() {
+        player4Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 tc.showInventory(playersInfo.get(3), playersInfo);
