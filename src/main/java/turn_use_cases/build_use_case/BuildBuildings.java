@@ -40,38 +40,60 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             return false;
         }
         ColorPropertyTile colorProperty = (ColorPropertyTile) property;
-
-        if(!colorProperty.allColoredPropertySetOwned(colorProperty.getColor(), board.getPropertyTiles())) {
+        if(!colorProperty.checkSetOwned(board.getPropertyTiles())){
             return false;
         }
-
-        // Selecting ColorPropertyTile from player's properties.
-        ArrayList<ColorPropertyTile> colorProperties = new ArrayList<>();
         ArrayList<Property> properties = player.getProperties();
-        for (int i = 0; i < properties.size(); i++){
-            if(properties.get(i) instanceof ColorPropertyTile){
+        ArrayList<ColorPropertyTile> colorProperties = new ArrayList<>();
+        for(int i = 0; i < properties.size(); i++){
+            if((properties.get(i) instanceof ColorPropertyTile)
+                    && ((ColorPropertyTile) properties.get(i)).getColor().equals(colorProperty.getColor())){
                 colorProperties.add((ColorPropertyTile) properties.get(i));
             }
         }
-        // Selecting ColorPropertyTile with the same color.
-        String color = colorProperty.getColor();
-        ArrayList<ColorPropertyTile> sameColorProperties = new ArrayList<>();
-        for (int i = 0; i < colorProperties.size(); i++){
-            if(colorProperties.get(i).getColor().equals(color)) {
-                sameColorProperties.add(colorProperties.get(i));
-            }
-        }
-
-        //Player has to build equally – this means player can’t build a second house on a property unless player has a house on all the other properties.
-        for (ColorPropertyTile sameColorProperty : sameColorProperties) {
-            int a = sameColorProperty.getNumHouses() + sameColorProperty.getNumHotels();
-            // need to add two methods getHouse and getHotel in ColorPropertyTile class to get the number of houses and hotels.
+        for (int i = 0; i < colorProperties.size(); i++) {
+            int a = colorProperties.get(i).getNumHouses() + colorProperties.get(i).getNumHotels();
             int b = colorProperty.getNumHouses() + colorProperty.getNumHotels();
             if (b > a) {
                 return false;
             }
         }
+        // Selecting ColorPropertyTile from player's properties.
+        //ArrayList<ColorPropertyTile> colorProperties = new ArrayList<>();
+        //ArrayList<Property> properties = player.getProperties();
+        //for (int i = 0; i < properties.size(); i++){
+        //if(properties.get(i) instanceof ColorPropertyTile){
+        //colorProperties.add((ColorPropertyTile) properties.get(i));
+        //}
+        //}
+        // Selecting ColorPropertyTile with the same color.
+        //String color = colorProperty.getColor();
+        //ArrayList<ColorPropertyTile> sameColorProperties = new ArrayList<>();
+        //for (int i = 0; i < colorProperties.size(); i++){
+        //if(colorProperties.get(i).getColor().equals(color)) {
+        //sameColorProperties.add(colorProperties.get(i));
+        //}
+        //}
+        //Player has to build equally – this means player can’t build a second house on a property unless player has a house on all the other properties.
         return true;
+    }
+
+    /**
+     * A list of properties on which can build a building.
+     *
+     * @param player the player who wants to build buildings.
+     */
+    @Override
+    public void showBuildOption (Player player){
+        ArrayList<Property> properties = player.getProperties();
+        ArrayList<Property> buildOptions = new ArrayList<>();
+        for (int i = 0; i < properties.size(); i++){
+            if(isBuildable(player,properties.get(i))){
+                buildOptions.add(properties.get(i));
+            }
+        }
+        String text = "This is a list of properties you can build a building.";
+        presenter.showBuildOption(buildOptions, text);
     }
 
     /**
@@ -153,6 +175,25 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             }
         }
         return true;
+    }
+
+    /**
+     * A list of properties which has building can be sold.
+     *
+     * @param player the player who wants to sell buildings.
+     * @return the list of properties.
+     */
+    @Override
+    public void showSellOption (Player player){
+        ArrayList<Property> properties = player.getProperties();
+        ArrayList<Property> sellOptions = new ArrayList<>();
+        for (int i = 0; i < properties.size(); i++){
+            if(isSellable(player,properties.get(i))){
+                sellOptions.add(properties.get(i));
+            }
+        }
+        String text = "This is a list of properties you can sell a building.";
+        presenter.showSellOption(sellOptions, text);
     }
 
     /**
