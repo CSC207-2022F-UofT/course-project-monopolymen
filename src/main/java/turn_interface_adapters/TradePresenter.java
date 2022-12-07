@@ -31,7 +31,7 @@ public class TradePresenter implements TradeOutputBoundary {
         this.cardLayout =  cardLayout;
         this.optionsPanel = new JPanel();
         this.optionsPanel.setLayout(cardLayout);
-        mainPanel.add(optionsPanel, "Options Panel");
+        mainPanel.add(optionsPanel, "Trade Panel");
     }
 
 
@@ -65,9 +65,18 @@ public class TradePresenter implements TradeOutputBoundary {
             optionsPanel.add(option);
         }
 
+        JButton cancelTrade = new JButton("Cancel Trade");
+        optionsPanel.add(cancelTrade);
+        cancelTrade.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                turnController.endUseCase();
+            }
+        });
+
         optionsPanel.validate();
         optionsPanel.repaint();
-        cardLayout.show(mainPanel, "Options Panel");
+        cardLayout.show(mainPanel, "Trade Panel");
     }
 
     /**
@@ -114,33 +123,57 @@ public class TradePresenter implements TradeOutputBoundary {
                 "List"));
         optionsPanel.add(propertiesOfferedList);
 
-        JLabel propertiesOfferedText = new JLabel("<html><body>"+"Properties Offered"+"</body></html>");
+        JLabel propertiesOfferedText = new JLabel("<html><body>"+"Properties offered to " +
+                tradeOption.getPlayer2().getName() +"</body></html>");
 
         optionsPanel.add(propertiesOfferedText);
 
         optionsPanel.add(propertiesRequestedList);
 
-        JLabel propertiesRequestedText = new JLabel("<html><body>"+"Properties Requested"+"</body></html>");
+        JLabel propertiesRequestedText = new JLabel("<html><body>"+"Properties requested from "+ tradeOption.getPlayer2().getName() +"</body></html>");
 
         optionsPanel.add(propertiesRequestedText);
 
         JPanel tradeMoneyPanel = new JPanel();
         tradeMoneyPanel.setLayout(new BoxLayout(tradeMoneyPanel, BoxLayout.Y_AXIS));
-        tradeMoneyPanel.add(new JLabel("<html><body>"+"Money offered if + <br>Money requested if -"+"</body></html>"));
+        tradeMoneyPanel.add(new JLabel("<html><body>"+"Money offered to "+ tradeOption.getPlayer2().getName()
+                +"</body></html>"));
 
         final int[] tradeMoney = {0};
-        JFormattedTextField tradeMoneyField = new JFormattedTextField(NumberFormat.getNumberInstance());
-        tradeMoneyField.setEditable(true);
-        tradeMoneyField.setValue(0);
-        tradeMoneyField.setColumns(15);
+        final int[] tradeMoneyOffered = {0};
+        final int[] tradeMoneyReceived = {0};
 
-        tradeMoneyPanel.add(tradeMoneyField);
+        JFormattedTextField tradeMoneyOfferedField = new JFormattedTextField(NumberFormat.getNumberInstance());
+        tradeMoneyOfferedField.setEditable(true);
+        tradeMoneyOfferedField.setValue(0);
+        tradeMoneyOfferedField.setColumns(15);
+
+        tradeMoneyPanel.add(tradeMoneyOfferedField);
+
+        tradeMoneyPanel.add(new JLabel("<html><body>"+"Money requested from "+ tradeOption.getPlayer2().getName()
+                +"</body></html>"));
+
+        JFormattedTextField tradeMoneyReceivedField = new JFormattedTextField(NumberFormat.getNumberInstance());
+        tradeMoneyReceivedField.setEditable(true);
+        tradeMoneyReceivedField.setValue(0);
+        tradeMoneyReceivedField.setColumns(15);
+
+        tradeMoneyPanel.add(tradeMoneyReceivedField);
+
+
         optionsPanel.add(tradeMoneyPanel);
 
-        tradeMoneyField.addPropertyChangeListener(new PropertyChangeListener() {
+        tradeMoneyOfferedField.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                tradeMoney[0] = ((Number)tradeMoneyField.getValue()).intValue();
+                tradeMoneyOffered[0] = ((Number) tradeMoneyOfferedField.getValue()).intValue();
+            }
+        });
+
+        tradeMoneyReceivedField.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                tradeMoneyReceived[0] = ((Number) tradeMoneyReceivedField.getValue()).intValue();
             }
         });
 
@@ -184,17 +217,33 @@ public class TradePresenter implements TradeOutputBoundary {
             }
         });
 
-        JButton submit = new JButton("<html><body>"+"Submit Offer"+"</body></html>");
+        JPanel endPanel = new JPanel();
+        endPanel.setLayout(new GridLayout(2, 1));
 
-        optionsPanel.add(submit);
+
+        JButton submit = new JButton("<html><body>"+"Submit Offer"+"</body></html>");
+        endPanel.add(submit);
+
+        JButton cancelTrade = new JButton("<html><body>"+"Cancel Trade"+"</body></html>");
+        endPanel.add(cancelTrade);
+
+        optionsPanel.add(endPanel);
 
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                tradeMoney[0] = tradeMoneyOffered[0] - tradeMoneyReceived[0];
                 TradeOffer tradeOffer = new TradeOffer(tradeMoney[0], jailCard[0],
                         propertiesOffered, propertiesReceived, tradeOption.getPlayer1(), tradeOption.getPlayer2() );
 
                 turnController.makeOffer(tradeOption.getPlayer1(), tradeOption.getPlayer2(), tradeOffer);
+            }
+        });
+
+        cancelTrade.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                turnController.endUseCase();
             }
         });
 
@@ -231,7 +280,7 @@ public class TradePresenter implements TradeOutputBoundary {
 
         optionsPanel.validate();
         optionsPanel.repaint();
-        cardLayout.show(mainPanel, "Options Panel");
+        cardLayout.show(mainPanel, "Trade Panel");
     }
 
     /**
@@ -333,7 +382,7 @@ public class TradePresenter implements TradeOutputBoundary {
 
         optionsPanel.validate();
         optionsPanel.repaint();
-        cardLayout.show(mainPanel, "Options Panel");
+        cardLayout.show(mainPanel, "Trade Panel");
     }
 
     /**
@@ -380,6 +429,6 @@ public class TradePresenter implements TradeOutputBoundary {
 
         optionsPanel.validate();
         optionsPanel.repaint();
-        cardLayout.show(mainPanel, "Options Panel");
+        cardLayout.show(mainPanel, "Trade Panel");
     }
 }
