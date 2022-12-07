@@ -110,7 +110,6 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                     buildBuilding.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            System.out.println("No behavior, waiting for buildBuildingsPresenter");
                             controller.showBuildableProperties();
                         }
                     });
@@ -121,7 +120,6 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                     sellBuilding.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            System.out.println("No behavior, waiting for buildBuildingsPresenter");
                             controller.showBuiltOnProperties();
                         }
                     });
