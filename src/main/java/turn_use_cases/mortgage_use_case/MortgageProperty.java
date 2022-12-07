@@ -6,6 +6,8 @@ import game_entities.tiles.Property;
 import game_entities.tiles.RailroadTile;
 import game_entities.tiles.UtilityTile;
 
+import java.util.ArrayList;
+
 /**
  * All methods related to mortgage.
  */
@@ -20,6 +22,47 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
      */
     public MortgageProperty(MortgagePropertyOutputBoundary presenter){
         this.presenter = presenter;
+    }
+
+    /**
+     * Provides a list of properties which can be mortgaged.
+     *
+     * @param player the player who wants mortgages property.
+     */
+    @Override
+    public void showMortgageOption(Player player){
+        ArrayList<Property> properties = player.getProperties();
+        ArrayList<Property> mortgageable = new ArrayList<>();
+        for (int i = 0; i < properties.size(); i++){
+            if (properties.get(i) instanceof ColorPropertyTile
+                    && ((ColorPropertyTile) properties.get(i)).getNumHouses() == 0
+                    && ((ColorPropertyTile) properties.get(i)).getNumHotels() == 0){
+                mortgageable.add(properties.get(i));
+            } else if (properties.get(i) instanceof RailroadTile
+                    || properties.get(i) instanceof UtilityTile) {
+                mortgageable.add(properties.get(i));
+            }
+        }
+        String text = "This is the list of properties which you can mortgage.";
+        presenter.showMortgagePropertyList(mortgageable, text);
+    }
+
+    /**
+     * Provides a list of properties which can be unmortgaged.
+     *
+     * @param player the player who wants unmortgages property.
+     */
+    @Override
+    public void showUnmortgageOption(Player player){
+        ArrayList<Property> properties = player.getProperties();
+        ArrayList<Property> unmortgageable = new ArrayList<>();
+        for (int i = 0; i < properties.size(); i++){
+            if (properties.get(i).isMortgaged()){
+                unmortgageable.add(properties.get(i));
+            }
+        }
+        String text = "This is the list of properties which you can unmortgage.";
+        presenter.showUnmortgagePropertyList(unmortgageable, text);
     }
 
     /**
@@ -39,7 +82,7 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
             String text = player.getName() + "mortgaged " + property.getTileName() + "and get $" + mortgageValue;
             presenter.showMortgageProperty(player, property, text);
         } else if (player.ownsProperty(property) && property instanceof RailroadTile
-        || property instanceof UtilityTile){
+                || property instanceof UtilityTile){
             player.addMoney(property.mortgage());
             int mortgageValue = property.getMortgageValue();
             String text = player.getName() + "mortgaged " + property.getTileName() + "and get $" + mortgageValue;
@@ -68,7 +111,7 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
             presenter.showMortgageProperty(player, property, text);
         } else {
             String text = player.getName() + "cannot unmortgage " + property.getTileName();
-            presenter.showMortgageProperty(player, property, text);
+            presenter.showUnmortgageProperty(player, property, text);
         }
     }
 }
