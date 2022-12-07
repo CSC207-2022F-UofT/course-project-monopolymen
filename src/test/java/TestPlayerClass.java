@@ -86,7 +86,7 @@ public class TestPlayerClass {
         testPlayer.addMoney(100);
         assertEquals(testPlayer.getMoney(), 1600);
         testPlayer.subtractMoney(1700);
-        assertEquals(testPlayer.getMoney(), 1500);
+        assertEquals(testPlayer.getMoney(), -100);
     }
     @Test
     public void jail(){
