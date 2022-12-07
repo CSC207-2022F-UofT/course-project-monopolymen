@@ -50,7 +50,7 @@ public class Game {
     /**
      * Construct the default game
      */
-    public Game() {
+    public Game(String gameName) {
         String PROPERTY_CSV = "src/main/resources/Data/property_csvs/Color Properties Monopoly.csv";
         String RR_CSV = "src/main/resources/Data/property_csvs/Station Properties Monopoly.csv";
         String UTILITY_CSV = "src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv";
@@ -58,7 +58,7 @@ public class Game {
         String SAVES_DIRECTORY = "./saves";
         gameView = new GameView();
         this.players = new ArrayList<>();
-        constructDefaultGame(PROPERTY_CSV, RR_CSV, UTILITY_CSV, CARDS_CSV, SAVES_DIRECTORY, gameView);
+        constructDefaultGame(PROPERTY_CSV, RR_CSV, UTILITY_CSV, CARDS_CSV, SAVES_DIRECTORY, gameView, gameName);
     }
 
     /**
@@ -104,7 +104,7 @@ public class Game {
         return gameView;
     }
 
-    private void constructDefaultGame(String property_csv, String rr_csv, String utility_csv, String cards_csv, String saves_directory, GameView gameView) {
+    private void constructDefaultGame(String property_csv, String rr_csv, String utility_csv, String cards_csv, String saves_directory, GameView gameView, String gameName) {
         try {
             board = FactoryBoard.boardMaker(property_csv, utility_csv, rr_csv, cards_csv);
         } catch (IOException e) {
@@ -117,7 +117,7 @@ public class Game {
 
         turnController = new TurnController();
         GameStatePresenter gameStatePresenter = new GameStatePresenter(gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
-        gameState = new GameState(players, "gameName1", save, gameStatePresenter);
+        gameState = new GameState(players, gameName, save, gameStatePresenter);
         GameStateOutputBoundary presenter = new GameStatePresenter(gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
         gameState.setPresenter(presenter);
     }
