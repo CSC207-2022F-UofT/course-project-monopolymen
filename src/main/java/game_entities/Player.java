@@ -152,6 +152,7 @@ public class Player implements Serializable {
      */
     public void addProperty(Property add){
         this.properties.add(add);
+        add.setOwner(this);
     }
 
     /**
