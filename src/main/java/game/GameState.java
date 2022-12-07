@@ -2,6 +2,7 @@ package game;
 
 import game.GameStateOutputBoundary.TurnActions;
 import game_entities.Player;
+import turn_interface_adapters.TurnController;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -58,10 +59,13 @@ public class GameState implements Serializable {
      * @return The Deserialized GameState object.
      */
     public static GameState deserialize(ObjectInputStream objectIn, SaveGameState saveGameState,
-                                        GameStateOutputBoundary presenter) throws ClassNotFoundException, IOException {
+                                        GameStateOutputBoundary presenter, TurnController turnController) throws ClassNotFoundException, IOException {
         GameState gameState = (GameState) objectIn.readObject();
         gameState.setSaveGameState(saveGameState);
         gameState.setPresenter(presenter);
+        for (Player player : gameState.allPlayers) {
+            player.setTurnController(turnController);
+        }
         return gameState;
     }
 
