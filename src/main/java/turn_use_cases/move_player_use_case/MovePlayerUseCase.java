@@ -78,11 +78,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
                 flavorText);
         if (tile instanceof Property) {
-            if (((Property) tile).getOwner() == null) {
-                movePlayerOutputBoundary.showBuyableProperty(player, tile, true, doubleRoll);
-            } else {
-                movePlayerOutputBoundary.showBuyableProperty(player, tile, false, doubleRoll);
-            }
+            movePlayerOutputBoundary.showBuyableProperty(player, tile, !((Property) tile).isOwned(), doubleRoll);
         }
     }
 

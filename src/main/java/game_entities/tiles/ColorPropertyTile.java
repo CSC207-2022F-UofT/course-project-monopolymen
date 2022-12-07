@@ -34,8 +34,6 @@ public class ColorPropertyTile extends Property{
      * @param buildingCost        Cost it takes to upgrade to the next house or hotel level
      * @param mortgageValue       The value of this property for mortgage purposes
      * @param unMortgageValue     The amount it takes to unMortgage
-     * @param numHouses           The number of houses in a given colored property tile
-     * @param numHotels           The number of hotels in a given colored property tile
      * @see game_entities.tiles.Property
      */
     public ColorPropertyTile(String color, String propertyName, String propertyDisplayName, int purchasePrice,
@@ -148,12 +146,12 @@ public class ColorPropertyTile extends Property{
     @Override
     public TileActionResultModel action(Player player, Board board) {
         if (!isOwned()){
-            return new TileActionResultModel("Would you Like to Purchase " + getTileDisplayName() + " for" + getPurchasePrice() + " ?" , player, player.getPosition());
+            return new TileActionResultModel("Would you Like to Purchase " + getTileName() + " for " + getPurchasePrice() + " ?" , player, player.getPosition());
         }
         else{
             player.subtractMoney(getRent(player, board.getPropertyTiles()));
             getOwner().addMoney(getRent(player, board.getPropertyTiles()));
-            return new TileActionResultModel("You Paid" + getRent(player, board.getPropertyTiles()) + " to" + getOwner(), player, player.getPosition());
+            return new TileActionResultModel("You Paid " + getRent(player, board.getPropertyTiles()) + " to " + getOwner().getName(), player, player.getPosition());
         }
     }
 
