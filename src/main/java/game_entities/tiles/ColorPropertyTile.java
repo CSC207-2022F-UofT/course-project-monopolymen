@@ -5,8 +5,7 @@ import game_entities.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.Math.min;
+import java.util.Objects;
 
 public class ColorPropertyTile extends Property{
     private String color;
@@ -159,23 +158,22 @@ public class ColorPropertyTile extends Property{
         return buildingCost;
     }
 
-    public boolean checkSetOwned(Property[] arr) {
-        boolean ownSet = true;
-        ArrayList<Player> playerArr = new ArrayList<Player>();
+    public boolean checkSetOwned(List<Property> arr) {
+        ArrayList<Player> playerArr = new ArrayList<>();
         for (Property property : arr) {
-            if(property instanceof ColorPropertyTile) {
-                if(((ColorPropertyTile) property).getColor() == this.color) {
+            if (property instanceof ColorPropertyTile) {
+                if (Objects.equals(((ColorPropertyTile) property).getColor(), this.color)) {
                     playerArr.add(property.getOwner());
                 }
             }
         }
         Player firstPlayer = playerArr.get(0);
-        for(Player player: playerArr) {
-            if(!player.equals(firstPlayer)) {
-                ownSet = false;
+        for (Player player : playerArr) {
+            if (!player.equals(firstPlayer)) {
+                return false;
             }
         }
-        return ownSet;
+        return true;
     }
 }
 
