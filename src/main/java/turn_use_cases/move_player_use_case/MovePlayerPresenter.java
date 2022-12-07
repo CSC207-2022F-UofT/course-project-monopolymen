@@ -88,7 +88,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 .getImage().getScaledInstance((int)(1500 * scaleFactor), (int)(1500 * scaleFactor), Image.SCALE_SMOOTH));
         JLabel boardImageLabel = new JLabel(boardImage);
         boardImageLabel.setBounds(0, 0, (int)(1500 * scaleFactor), (int)(1500 * scaleFactor));
-        board.add(boardImageLabel, 0);
+        board.add(boardImageLabel, new Integer(0));
         this.players = new ArrayList<>();
         for (int i = 0; i < playerList.size(); i++) {
             // draw a square with the image from assets
@@ -99,7 +99,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             player.setBounds(scaledTilePositions[0][0] + playerOffset[i][0], scaledTilePositions[0][1]
                     + playerOffset[i][1], 50, 50);
             player.setLayout(new BorderLayout());
-            board.add(player,1);
+            board.add(player,new Integer(1));
             players.add(player);
         }
     }
