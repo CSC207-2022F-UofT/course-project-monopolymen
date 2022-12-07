@@ -1,5 +1,6 @@
 package game;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -34,6 +35,13 @@ public class SaveGameStateSerialize implements SaveGameState {
      */
     @Override
     public boolean save(GameState gameState, String saveName) {
+        File savesDirectoryFile = new File(savesDirectory);
+        if (!savesDirectoryFile.isDirectory()) {
+            if (!savesDirectoryFile.mkdir()) {
+                return false;
+            }
+        }
+
         try {
             FileOutputStream fileOut = new FileOutputStream(savesDirectory + saveName + ".ser");
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
