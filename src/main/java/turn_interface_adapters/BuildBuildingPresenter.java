@@ -13,20 +13,18 @@ import java.util.ArrayList;
 
 public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
 
-    private final JPanel mainPanel;
+    private final JPanel actionDialogBoxes;
     private final JPanel optionsPanel;
     private final TurnController controller;
     private final CardLayout cardLayout;
 
-    public BuildBuildingPresenter(JPanel mainPanel, CardLayout cardLayout, TurnController controller) {
+    public BuildBuildingPresenter(JPanel actionDialogBoxes, CardLayout cardLayout, TurnController controller) {
         this.controller = controller;
         this.cardLayout = cardLayout;
+        this.actionDialogBoxes = actionDialogBoxes;
 
-        this.mainPanel = new JPanel();
         this.optionsPanel = new JPanel();
-        this.optionsPanel.setLayout(cardLayout);
-        mainPanel.add(optionsPanel, "Options Panel");
-
+        actionDialogBoxes.add(optionsPanel, "Options Panel");
     }
 
     /**
@@ -55,7 +53,7 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
         }
 
         showOptionsPanel();
-        cardLayout.show(mainPanel, "Options Panel");
+        cardLayout.show(actionDialogBoxes, "Options Panel");
     }
 
     /**
@@ -77,7 +75,6 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
         });
         optionsPanel.add(endButton);
         showOptionsPanel();
-        cardLayout.show(mainPanel, "Options Panel");
     }
 
     /**
@@ -99,7 +96,6 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
         });
         optionsPanel.add(endButton);
         showOptionsPanel();
-        cardLayout.show(mainPanel, "Options Panel");
     }
 
     /**
@@ -128,7 +124,6 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
         }
 
         showOptionsPanel();
-        cardLayout.show(mainPanel, "Options Panel");
     }
 
     private void resetOptionsPanel() {
@@ -139,5 +134,7 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
     private void showOptionsPanel() {
         optionsPanel.revalidate();
         optionsPanel.repaint();
+        CardLayout cl = (CardLayout) actionDialogBoxes.getLayout();
+        cl.show(actionDialogBoxes, "Option Panel");
     }
 }

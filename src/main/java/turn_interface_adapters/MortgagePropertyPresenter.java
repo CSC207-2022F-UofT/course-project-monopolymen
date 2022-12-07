@@ -12,7 +12,7 @@ import javax.swing.*;
 
 public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary {
 
-    private final JPanel mainPanel;
+    private final JPanel actionDialogBoxes;
     private final JPanel optionsPanel;
     private final TurnController controller;
     private final CardLayout cardLayout;
@@ -20,14 +20,13 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
 
 
 
-    public MortgagePropertyPresenter(JPanel mainPanel, CardLayout cardLayout, TurnController controller) {
+    public MortgagePropertyPresenter(JPanel actionDialogBoxes, CardLayout cardLayout, TurnController controller) {
         this.controller = controller;
         this.cardLayout = cardLayout;
+        this.actionDialogBoxes = actionDialogBoxes;
 
-        this.mainPanel = new JPanel();
         this.optionsPanel = new JPanel();
-        this.optionsPanel.setLayout(cardLayout);
-        mainPanel.add(optionsPanel, "Options Panel");
+        actionDialogBoxes.add(optionsPanel, "Options Panel");
 
     }
 
@@ -54,7 +53,6 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
         }
 
         showOptionsPanel();
-        cardLayout.show(mainPanel, "Options Panel");
     }
 
 
@@ -80,7 +78,6 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
         }
 
         showOptionsPanel();
-        cardLayout.show(mainPanel, "Options Panel");
     }
 
 
@@ -104,7 +101,6 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
         });
         optionsPanel.add(endButton);
         showOptionsPanel();
-        cardLayout.show(mainPanel, "Options Panel");
     }
 
 
@@ -128,7 +124,6 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
         });
         optionsPanel.add(endButton);
         showOptionsPanel();
-        cardLayout.show(mainPanel, "Options Panel");
     }
 
     private void resetOptionsPanel() {
@@ -139,6 +134,8 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
     private void showOptionsPanel() {
         optionsPanel.revalidate();
         optionsPanel.repaint();
+        CardLayout cl = (CardLayout) actionDialogBoxes.getLayout();
+        cl.show(actionDialogBoxes, "Option Panel");
     }
 
 }
