@@ -104,22 +104,6 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
         player2.add(player2Button);
         player3.add(player3Button);
         player4.add(player4Button);
-        JLabel player1Money = new JLabel("Money: " + playersInfo.get(0).getMoney());
-        JLabel player2Money = new JLabel("Money: " + playersInfo.get(0).getMoney());
-        JLabel player3Money = new JLabel("Money: " + playersInfo.get(0).getMoney());
-        JLabel player4Money = new JLabel("Money: " + playersInfo.get(0).getMoney());
-        player1.add(player1Money);
-        player2.add(player2Money);
-        player3.add(player3Money);
-        player4.add(player4Money);
-        JLabel gojCardP1 = new JLabel("Get out of Jail Free:" + playersInfo.get(0).numGetOutofJailFreeCards());
-        JLabel gojCardP2 = new JLabel("Get out of Jail Free:" + playersInfo.get(1).numGetOutofJailFreeCards());
-        JLabel gojCardP3 = new JLabel("Get out of Jail Free:" + playersInfo.get(2).numGetOutofJailFreeCards());
-        JLabel gojCardP4 = new JLabel("Get out of Jail Free:" + playersInfo.get(3).numGetOutofJailFreeCards());
-        player1.add(gojCardP1);
-        player2.add(gojCardP2);
-        player3.add(gojCardP3);
-        player4.add(gojCardP4);
         player1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -138,7 +122,7 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
                 tc.showInventory(playersInfo.get(2), playersInfo);
             }
         });
-        player3Button.addActionListener(new ActionListener() {
+        player4Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 tc.showInventory(playersInfo.get(3), playersInfo);
