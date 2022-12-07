@@ -76,8 +76,13 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
     private void showAction(Player player, boolean doubleRoll, String flavorText) {
         Tile tile = board.getTile(player.getPosition());
         if(tile.isOwnable()) {
-            movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
-                    flavorText, "Don't Buy");
+            if(((Property)tile).getOwner() == null) {
+                movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                        flavorText, "Don't Buy");
+            } else {
+                movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                        flavorText, "Other Options");
+            }
         } else {
             movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
                     flavorText, "Other Options");

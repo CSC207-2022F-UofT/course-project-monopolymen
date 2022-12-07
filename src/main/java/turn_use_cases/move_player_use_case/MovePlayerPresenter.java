@@ -20,7 +20,7 @@ import javax.swing.*;
 public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     private ArrayList<int[]> tilePositions;
     // Player offsets from eachother so all players can be seen on the board.
-    private int[][] playerOffset = {{0,0}, {10, 0}, {0, 10}, {10, 10}};
+    private int[][] playerOffset = {{0,0}, {20, 0}, {0, 20}, {20, 20}};
     private JLayeredPane board;
     private JPanel actionDialogBox;
     private ArrayList<JLabel> players;
