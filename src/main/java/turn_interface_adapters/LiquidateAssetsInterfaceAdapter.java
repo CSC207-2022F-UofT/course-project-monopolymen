@@ -20,6 +20,10 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
 
     private JPanel optionsPanel;
     private JLabel moneyTracker;
+    private JFrame liquidatePopUp;
+    private JPanel mainLiq;
+    private CardLayout layoutLiq;
+    private boolean visible = false;
 
     public LiquidateAssetsInterfaceAdapter(TurnController turnController, JPanel mainPanel, CardLayout cardLayout){
         this.turnController = turnController;
@@ -28,6 +32,15 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
         this.optionsPanel = new JPanel();
         this.moneyTracker = new JLabel();
         mainPanel.add(optionsPanel, "Options Panel");
+
+        //new code
+        liquidatePopUp = new JFrame("Liquidate Assets");
+        liquidatePopUp.setMinimumSize(new Dimension(800, 400));
+        mainLiq = new JPanel();
+        layoutLiq = new CardLayout();
+        mainLiq.setLayout(layoutLiq);
+        mainLiq.add(optionsPanel, "Options Panel");
+        liquidatePopUp.add(mainLiq);
 
     }
 
@@ -44,6 +57,8 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                         //This will need to be changed so that it goes through the controller?
                         situation.getAffectedPlayer().subtractMoney(situation.getOwedMoney());
                         situation.getOwedPlayer().addMoney(situation.getOwedMoney());
+                        visible = false;
+                        liquidatePopUp.dispose();
                     }
                 });
                 optionsPanel.add(payButton);
@@ -171,8 +186,8 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
     public void showTransferOfAssets(LiquiditySituation situation) {
         optionsPanel.removeAll();
         if(situation.getOwedPlayer() == null){
-            optionsPanel.add(new JLabel("The bank bankrupted " +situation.getAffectedPlayer()+ ". " +
-                    "All of " +situation.getAffectedPlayer()+ " properties and money have been recovered by the bank."));
+            optionsPanel.add(new JLabel("The bank bankrupted " +situation.getAffectedPlayer().getName()+ ". " +
+                    "All of " +situation.getAffectedPlayer().getName()+ " properties and money have been recovered by the bank."));
         }
         else{
             optionsPanel.add(new JLabel(situation.getOwedPlayer().getName()+ " bankrupted " +situation.getAffectedPlayer().getName()+
@@ -190,6 +205,11 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
     public void showPanel(){
         optionsPanel.validate();
         optionsPanel.repaint();
-        cardLayout.show(mainPanel, "Options Panel");
+        liquidatePopUp.repaint();
+        layoutLiq.show(mainLiq, "Options Panel");
+        if (!visible) {
+            visible = true;
+            liquidatePopUp.setVisible(true);
+        }
     }
 }

@@ -137,7 +137,7 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
                 }
                 property.setOwner(null);
             }
-            //gameState.removePlayer(bankruptPlayer);
+            gameState.removePlayer(bankruptPlayer);
 
         }
         else {
@@ -148,7 +148,7 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
                 bankruptPlayer.getProperties().get(i).setOwner(owedPlayer);
 
             }
-            //gameState.removePlayer(bankruptPlayer);
+            gameState.removePlayer(bankruptPlayer);
         }
         presenter.showTransferOfAssets(situation);
 

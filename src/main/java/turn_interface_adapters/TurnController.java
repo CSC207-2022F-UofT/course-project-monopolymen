@@ -188,11 +188,11 @@ public class TurnController {
         liquidateAssets.getPlayerOptions(situation);
     }
 
-    public void getMortgageableProperties(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+    public void getMortgageableProperties(LiquiditySituation situation) {liquidateAssets.getMortgageableProperties(situation);}
 
-    public void getPropertiesWithHouses(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+    public void getPropertiesWithHouses(LiquiditySituation situation) { liquidateAssets.getPropertiesWithHouses(situation); }
 
-    public void bankruptcy(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+    public void bankruptcy(LiquiditySituation situation) { liquidateAssets.bankruptcy(situation); }
 
     /* ViewInventory Related Methods */
     public void showInventory(Player player, List<Player> playerList) {
