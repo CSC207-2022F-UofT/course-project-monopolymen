@@ -64,46 +64,18 @@ public class ColorPropertyTile extends Property{
     }
     public void subtractHouse(int subtract){
         this.numHouses -= subtract;
+        if (this.numHouses < 0){
+            this.numHouses = 0;
+        }
     }
     public void subtractHotel(int subtract){
         this.numHotels -= subtract;
+        if (this.numHotels < 0){
+            this.numHotels = 0;
+        }
 
     }
-    /**
-     * Returns whether all of the colored property in a specific colored set are owned.
-     * Does not count this property if it is not in propertyList
-     * If there is no owner, returns false.
-     *
-     * @param propertyList The list of Property objects to search through
-     * @return a boolean describing whether all of the colored property set is owned or not.
-     */
-    public boolean allColoredPropertySetOwned(String myColor, List<Property> propertyList) {
-        if (!isOwned()) {
-            return false;
-        }
-        int numOwned = 0;
-        for (Property property : propertyList) {
-            if (property instanceof ColorPropertyTile &&
-                    property.isOwned() && getColor().equals(myColor) &&
-                    property.getOwner().equals(getOwner())) {
-                numOwned++;
-            }
-        }
-        switch (myColor) {
-            case "Brown":
-                if (numOwned == 2) {
-                    return true;
-                    }
-            case "Dark Blue":
-                if (numOwned == 2) {
-                    return true;
-                }
-        }
-        if (numOwned == 3){
-            return true;
-        }
-        return false;
-    }
+
     /**
      * Return the rent for this ColorPropertyTile property.
      * ColorPropertyTile rent is influenced by whether the owner owns all the properties in a set and how many
@@ -119,7 +91,7 @@ public class ColorPropertyTile extends Property{
         if (!isOwned()){
             return -1;
         }
-        if ((getNumHotels() == 0 && getNumHouses() == 0) & allColoredPropertySetOwned(getColor(),propertyList)){
+        if ((getNumHotels() == 0 && getNumHouses() == 0) & checkSetOwned(propertyList)){
             return rentPrice[1];
         }
         switch(getNumHouses()){
@@ -159,7 +131,7 @@ public class ColorPropertyTile extends Property{
         return buildingCost;
     }
 
-    public boolean checkSetOwned(Property[] arr) {
+    public boolean checkSetOwned(List<Property> arr) {
         boolean ownSet = true;
         ArrayList<Player> playerArr = new ArrayList<Player>();
         for (Property property : arr) {

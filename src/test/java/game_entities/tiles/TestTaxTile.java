@@ -1,6 +1,6 @@
-package GameEntities.Tiles;
-import GameEntities.Board;
-import GameEntities.Player;
+package game_entities.tiles;
+import game_entities.Board;
+import game_entities.Player;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -19,9 +19,10 @@ public class TestTaxTile {
     public void action() {
         Player player1 = new Player("Test", "test", 1500, board);
         TileActionResultModel test = taxTile.action(player1, board);
-        assertEquals(test.getFlavorText(), "You paid $" + 100 + " Tax Tile" + " !");
+        assertEquals(test.getFlavorText(), "You paid $" + 100 + "Tax Tile" + " !");
         assertEquals(test.getPlayer(), player1);
         assertEquals(test.getPlayerPosition(), board.getTilePosition("TaxTile"));
+        assertEquals(player1.getMoney(), 1400);
 
     }
 }

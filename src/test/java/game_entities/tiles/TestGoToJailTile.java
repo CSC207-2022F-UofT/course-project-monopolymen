@@ -1,6 +1,6 @@
-package GameEntities.Tiles;
-import GameEntities.Board;
-import GameEntities.Player;
+package game_entities.tiles;
+import game_entities.Board;
+import game_entities.Player;
 import org.junit.Test;
 
 import java.util.ArrayList;

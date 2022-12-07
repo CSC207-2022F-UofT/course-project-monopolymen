@@ -23,6 +23,46 @@ public class TestPlayerClass {
         assertEquals(testPlayer.getLastRoll()[1], 3);
     }
     @Test
+    public void LastRoll1(){
+        //test the setters and getters for the LastRoll
+        testPlayer.setLastRoll(1,4);
+        int[] expected = {1,4};
+        assertEquals(testPlayer.getLastRoll()[0], 1);
+        assertEquals(testPlayer.getLastRoll()[1], 4);
+    }
+    @Test
+    public void LastRoll2(){
+        //test the setters and getters for the LastRoll
+        testPlayer.setLastRoll(2,2);
+        int[] expected = {2,2};
+        assertEquals(testPlayer.getLastRoll()[0], 2);
+        assertEquals(testPlayer.getLastRoll()[1], 2);
+    }
+    @Test
+    public void LastRoll3(){
+        //test the setters and getters for the LastRoll
+        testPlayer.setLastRoll(5,3);
+        int[] expected = {5,3};
+        assertEquals(testPlayer.getLastRoll()[0], 5);
+        assertEquals(testPlayer.getLastRoll()[1], 3);
+    }
+    @Test
+    public void LastRoll4(){
+        //test the setters and getters for the LastRoll
+        testPlayer.setLastRoll(6,1);
+        int[] expected = {6,1};
+        assertEquals(testPlayer.getLastRoll()[0], 6);
+        assertEquals(testPlayer.getLastRoll()[1], 1);
+    }
+    @Test
+    public void LastRoll5(){
+        //test the setters and getters for the LastRoll
+        testPlayer.setLastRoll(3,3);
+        int[] expected = {3,3};
+        assertEquals(testPlayer.getLastRoll()[0], 3);
+        assertEquals(testPlayer.getLastRoll()[1], 3);
+    }
+    @Test
     public void properties(){
         //test the methods that are related to the players owned property ArrayList
         testPlayer.addProperty(testProperty);
@@ -38,6 +78,14 @@ public class TestPlayerClass {
         testPlayer.addMoney(100);
         assertEquals(testPlayer.getMoney(), 1600);
         testPlayer.subtractMoney(100);
+        assertEquals(testPlayer.getMoney(), 1500);
+    }
+    @Test
+    public void moneySubtract(){
+        //test what happens when the player subtracts a certain amount of money that exceeds the current money owned
+        testPlayer.addMoney(100);
+        assertEquals(testPlayer.getMoney(), 1600);
+        testPlayer.subtractMoney(1700);
         assertEquals(testPlayer.getMoney(), 1500);
     }
     @Test
