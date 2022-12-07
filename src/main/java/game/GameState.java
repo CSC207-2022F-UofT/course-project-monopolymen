@@ -82,6 +82,7 @@ public class GameState implements Serializable {
      */
     public void startGame() {
         activePlayers.addAll(allPlayers);
+        numPlayers = activePlayers.size();
         // Shallow method to avoid possible confusion about needing to start each turn by method call every time.
         showTurnActions();
     }
