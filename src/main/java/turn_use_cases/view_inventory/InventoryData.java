@@ -24,6 +24,8 @@ public class InventoryData {
     final ArrayList<Property> properties;
     final String name;
 
+    final String icon;
+
     /**
      * Create an Object consisting of the information that we need to display for a given player
      *
@@ -34,6 +36,7 @@ public class InventoryData {
         this.getOutofJailFree = player.numGetOutofJailFreeCards();
         this.properties = player.getProperties();
         this.name = player.getName();
+        this.icon = player.getIcon();
     }
 
     /**
@@ -85,5 +88,9 @@ public class InventoryData {
             returnList.add(new InventoryData(player));
         }
         return returnList;
+    }
+
+    public int getGetOutofJailFree() {
+        return getOutofJailFree;
     }
 }
