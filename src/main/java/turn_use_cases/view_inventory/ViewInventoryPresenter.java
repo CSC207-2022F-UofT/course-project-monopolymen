@@ -54,7 +54,11 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
         });
         TextField money = new TextField("Money: " + String.valueOf(player.getMoney()));
         money.setEditable(false);
+        TextField getOutOfJailFree = new TextField("Get Out of Jail Free Cards: " +
+                String.valueOf(player.getGetOutofJailFree()));
+        getOutOfJailFree.setEditable(false);
         inventoryInfo.add(money);
+        inventoryInfo.add(getOutOfJailFree);
         List<List<Property>> displayProperties = new ArrayList<List<Property>>();
         displayProperties = InventoryData.sortProperties(player);
         for (List<Property> currentPropertyList : displayProperties){
@@ -104,6 +108,22 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
         player2.add(player2Button);
         player3.add(player3Button);
         player4.add(player4Button);
+        ImageIcon player1Icon = new ImageIcon(new ImageIcon
+                ("src/main/resources/assets/misc/pieces/" + playersInfo.get(0).getIcon() + ".png")
+                .getImage().getScaledInstance((int) (100), (int) (100), Image.SCALE_SMOOTH));
+        player1.add(new JLabel(player1Icon));
+        ImageIcon player2Icon = new ImageIcon(new ImageIcon
+                ("src/main/resources/assets/misc/pieces/" + playersInfo.get(1).getIcon() + ".png")
+                .getImage().getScaledInstance((int) (100), (int) (100), Image.SCALE_SMOOTH));
+        player2.add(new JLabel(player2Icon));
+        ImageIcon player3Icon = new ImageIcon(new ImageIcon
+                ("src/main/resources/assets/misc/pieces/" + playersInfo.get(2).getIcon() + ".png")
+                .getImage().getScaledInstance((int) (100), (int) (100), Image.SCALE_SMOOTH));
+        player3.add(new JLabel(player3Icon));
+        ImageIcon player4Icon = new ImageIcon(new ImageIcon
+                ("src/main/resources/assets/misc/pieces/" + playersInfo.get(3).getIcon() + ".png")
+                .getImage().getScaledInstance((int) (100), (int) (100), Image.SCALE_SMOOTH));
+        player4.add(new JLabel(player4Icon));
         player1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -121,20 +121,20 @@ public class TurnController {
     }
 
     /* Mortgage property related methods */
-//    public void showMortgageableProperties() { mortgageProperty.showMortgageOption(gameState.currentPlayer()); }
+    public void showMortgageableProperties() { mortgageProperty.showMortgageOption(gameState.currentPlayer()); }
 
     public void mortgageProperty(Property property) {
         mortgageProperty.mortgage(gameState.currentPlayer(), property);
     }
 
-//    public void showUnmortgageableProperties() { mortgageProperty.showUnmortgageOption(gameState.currentPlayer()); }
+    public void showUnmortgageableProperties() { mortgageProperty.showUnmortgageOption(gameState.currentPlayer()); }
 
     public void unmortgageProperty(Property property) {
         mortgageProperty.unmortgage(gameState.currentPlayer(), property);
     }
 
     /* BuildBuilding Related Methods */
-//    public void showBuildableProperties() { buildBuilding.showBuildingOptions(gameState.currentPlayer()); }
+    public void showBuildableProperties() { buildBuilding.showBuildOption(gameState.currentPlayer()); }
 
     public void buildHouse(ColorPropertyTile property) {
         buildBuilding.buildHouse(gameState.currentPlayer(), property);
@@ -144,7 +144,7 @@ public class TurnController {
         buildBuilding.buildHotel(gameState.currentPlayer(), property);
     }
 
-//    public void showBuiltOnProperties() { buildBuilding.showSellOptions(gameState.currentPlayer()); }
+    public void showBuiltOnProperties() { buildBuilding.showSellOption(gameState.currentPlayer()); }
 
     public void sellHouse(ColorPropertyTile property) {
         buildBuilding.sellHouse(gameState.currentPlayer(), property);
