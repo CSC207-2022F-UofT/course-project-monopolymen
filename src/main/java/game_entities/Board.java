@@ -8,6 +8,7 @@ import game_entities.tiles.Tile;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Board implements Serializable {
@@ -115,6 +116,11 @@ public class Board implements Serializable {
             }
         }
         return sameColorList;
+    }
+
+    public void shuffleCards(){
+        Collections.shuffle(communityCards);
+        Collections.shuffle(chanceCards);
     }
 
 }
