@@ -2,7 +2,7 @@ import game.Game;
 import ui.GameView.PlayerIcon;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Game game = new Game("Sample Game");
 
         game.addPlayer("Player1", PlayerIcon.BATTLESHIP, 1500);
