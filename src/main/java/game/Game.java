@@ -3,9 +3,10 @@ package game;
 import game_entities.Board;
 import game_entities.FactoryBoard;
 import game_entities.Player;
-import turn_interface_adapters.LiquidateAssetsInterfaceAdapter;
-import turn_interface_adapters.TradePresenter;
-import turn_interface_adapters.TurnController;
+import turn_interface_adapters.*;
+import turn_use_cases.build_use_case.BuildBuildingInputBoundary;
+import turn_use_cases.build_use_case.BuildBuildingOutputBoundary;
+import turn_use_cases.build_use_case.BuildBuildings;
 import turn_use_cases.end_turn_use_case.EndTurnInputBoundary;
 import turn_use_cases.end_turn_use_case.EndTurnOutputBoundary;
 import turn_use_cases.end_turn_use_case.EndTurnPresenter;
@@ -13,6 +14,9 @@ import turn_use_cases.end_turn_use_case.EndTurnUseCase;
 import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsInputBoundary;
 import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsOutputBoundary;
 import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsUseCase;
+import turn_use_cases.mortgage_use_case.MortgageProperty;
+import turn_use_cases.mortgage_use_case.MortgagePropertyInputBoundary;
+import turn_use_cases.mortgage_use_case.MortgagePropertyOutputBoundary;
 import turn_use_cases.move_player_use_case.MovePlayerInputBoundary;
 import turn_use_cases.move_player_use_case.MovePlayerOutputBoundary;
 import turn_use_cases.move_player_use_case.MovePlayerPresenter;
@@ -147,6 +151,12 @@ public class Game {
         TradeOutputBoundary tradePresenter = new TradePresenter(actionDialogBoxes,(CardLayout) actionDialogBoxes.getLayout(), turnController);
         TradeInputBoundary trade = new TradeUseCase(tradePresenter);
 
-        turnController.initializeAttributes(gameState, null, null, movePlayer, trade, leaveJail, viewInventory, liquidateAssets, endTurn);
+        MortgagePropertyOutputBoundary mortgagePropertyPresenter = new MortgagePropertyPresenter(actionDialogBoxes, (CardLayout) actionDialogBoxes.getLayout(), turnController);
+        MortgagePropertyInputBoundary mortgage = new MortgageProperty(mortgagePropertyPresenter);
+
+        BuildBuildingOutputBoundary buildBuildingPresenter = new BuildBuildingPresenter(actionDialogBoxes, (CardLayout) actionDialogBoxes.getLayout(), turnController);
+        BuildBuildingInputBoundary buildBuilding = new BuildBuildings(buildBuildingPresenter, board);
+
+        turnController.initializeAttributes(gameState, buildBuilding, mortgage, movePlayer, trade, leaveJail, viewInventory, liquidateAssets, endTurn);
     }
 }

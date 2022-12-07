@@ -99,7 +99,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             player.setBounds(scaledTilePositions[0][0] + playerOffset[i][0], scaledTilePositions[0][1]
                     + playerOffset[i][1], 50, 50);
             player.setLayout(new BorderLayout());
-            board.add(player, new Integer(1));
+            board.add(player,new Integer(1));
             players.add(player);
         }
     }
@@ -118,7 +118,8 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     }
 
     @Override
-    public void showResultOfAction(Player player, int playerPosition, boolean rollAgain, String flavorText) {
+    public void showResultOfAction(Player player, int playerPosition, boolean rollAgain, String flavorText,
+                                   String buttonText) {
         // Clear the options window.
         // Show the flavor text.
         JLabel flavorTextLabel = new JLabel(flavorText);
@@ -128,7 +129,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         // Move the player to the new position.
         playerPanel.setBounds(scaledTilePositions[playerPosition][0] + playerOffset[playerList.indexOf(player)][0],
                 scaledTilePositions[playerPosition][1] + playerOffset[playerList.indexOf(player)][1], 50, 50);
-        JButton otherOptions = new JButton("Other options/Don't Buy");
+        JButton otherOptions = new JButton(buttonText);
         otherOptions.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

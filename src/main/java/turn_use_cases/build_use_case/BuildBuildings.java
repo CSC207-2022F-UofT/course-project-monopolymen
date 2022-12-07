@@ -40,9 +40,9 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             return false;
         }
         ColorPropertyTile colorProperty = (ColorPropertyTile) property;
-        if(!colorProperty.checkSetOwned(board.getPropertyTiles())){
-            return false;
-        }
+//        if(!colorProperty.checkSetOwned(board.getPropertyTiles())){
+//            return false;
+//        }
         ArrayList<Property> properties = player.getProperties();
         ArrayList<ColorPropertyTile> colorProperties = new ArrayList<>();
         for(int i = 0; i < properties.size(); i++){
