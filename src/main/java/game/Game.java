@@ -102,7 +102,7 @@ public class Game {
 
         //Currently constructs default players for testing
         Player player1 = new Player("player1", "battleship", 1500, board);
-        Player player2 = new Player("player2", "car", 1500, board);
+        Player player2 = new Player("player2", "car", 1, board);
         Player player3 = new Player("player3", "thimble", 1500, board);
         Player player4 = new Player("player4", "hat", 1500, board);
 
@@ -120,6 +120,10 @@ public class Game {
         GameStatePresenter gameStatePresenter = new GameStatePresenter(gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
         gameState = new GameState(players, "gameName1", save, gameStatePresenter);
         GameStateOutputBoundary presenter = new GameStatePresenter(gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
+        player1.setGameState(gameState);
+        player2.setGameState(gameState);
+        player3.setGameState(gameState);
+        player4.setGameState(gameState);
         gameState.setPresenter(presenter);
 
         constructUseCases(turnController, gameState, board);
@@ -150,6 +154,10 @@ public class Game {
         TradeInputBoundary trade = new TradeUseCase(tradePresenter);
 
         turnController.initializeAttributes(gameState, null, null, movePlayer, trade, leaveJail, viewInventory, liquidateAssets, endTurn);
+        players.get(0).setTurnController(turnController);
+        players.get(1).setTurnController(turnController);
+        players.get(2).setTurnController(turnController);
+        players.get(3).setTurnController(turnController);
 
     }
 }
