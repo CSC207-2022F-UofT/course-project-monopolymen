@@ -17,4 +17,10 @@ public interface TryToGetOutOfJailOutputBoundary {
      * @param options String arraylist for what the player can choose
      */
     public void showOptions(Player player, ArrayList<String> options);
+
+    /**
+     * Shows what the player rolled
+     * @param playerRollAmount int array of what the player rolled
+     */
+    public void showRoll(int[] playerRollAmount);
 }

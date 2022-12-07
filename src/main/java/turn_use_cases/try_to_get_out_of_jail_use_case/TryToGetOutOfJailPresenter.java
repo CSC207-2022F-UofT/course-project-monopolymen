@@ -13,10 +13,14 @@ public class TryToGetOutOfJailPresenter implements TryToGetOutOfJailOutputBounda
     private JPanel actionDialogBox;
     private JPanel playerOptionsWindow;
     private TurnController turnController;
+    private JPanel jailRollWindow;
 
     public TryToGetOutOfJailPresenter(JPanel actionDialogBox, TurnController turnController) {
         this.actionDialogBox = actionDialogBox;
         this.playerOptionsWindow = new JPanel();
+        this.turnController = turnController;
+        this.jailRollWindow = new JPanel();
+        this.actionDialogBox.add(jailRollWindow, "Jail Roll");
         actionDialogBox.add(playerOptionsWindow, "Player Jail Options");
 
     }
@@ -40,5 +44,25 @@ public class TryToGetOutOfJailPresenter implements TryToGetOutOfJailOutputBounda
         actionDialogBox.repaint();
         CardLayout cl = (CardLayout) actionDialogBox.getLayout();
         cl.show(actionDialogBox, "Player Jail Options");
+    }
+
+    @Override
+    public void showRoll(int[] playerRollAmount) {
+        System.out.println("asd");
+        jailRollWindow.removeAll();
+        JLabel rollLabel = new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]);
+        jailRollWindow.add(rollLabel);
+        JButton rollButton = new JButton("End Turn");
+        rollButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                turnController.endTurn();
+            }
+        });
+        jailRollWindow.add(rollButton);
+        actionDialogBox.revalidate();
+        actionDialogBox.repaint();
+        CardLayout cl = (CardLayout) actionDialogBox.getLayout();
+        cl.show(actionDialogBox, "Jail Roll");
     }
 }
