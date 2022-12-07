@@ -178,13 +178,15 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         // Don't clear the options window, as this will be displayed regardless of the previous action
         Property property = (Property) tile;
         if(buyable) {
-            JButton buyButton = new JButton("Buy " + property.getTileDisplayName() + " for $"
+            JButton buyButton = new JButton("Buy " + property.getTileName() + " for $"
                     + property.getPurchasePrice());
             buyButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Temporary turn controller, calls the BuyPropertyUseCase and returns back to "main" action dialog panel
                     turnController.buyProperty(property);
+                    turnController.endRollDice(doubleRoll);
+
                 }
             });
             optionsWindow.add(buyButton);

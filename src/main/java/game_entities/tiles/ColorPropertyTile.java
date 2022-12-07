@@ -34,8 +34,6 @@ public class ColorPropertyTile extends Property{
      * @param buildingCost        Cost it takes to upgrade to the next house or hotel level
      * @param mortgageValue       The value of this property for mortgage purposes
      * @param unMortgageValue     The amount it takes to unMortgage
-     * @param numHouses           The number of houses in a given colored property tile
-     * @param numHotels           The number of hotels in a given colored property tile
      * @see game_entities.tiles.Property
      */
     public ColorPropertyTile(String color, String propertyName, String propertyDisplayName, int purchasePrice,
@@ -66,18 +64,46 @@ public class ColorPropertyTile extends Property{
     }
     public void subtractHouse(int subtract){
         this.numHouses -= subtract;
-        if (this.numHouses < 0){
-            this.numHouses = 0;
-        }
     }
     public void subtractHotel(int subtract){
         this.numHotels -= subtract;
-        if (this.numHotels < 0){
-            this.numHotels = 0;
-        }
 
     }
-
+    /**
+     * Returns whether all of the colored property in a specific colored set are owned.
+     * Does not count this property if it is not in propertyList
+     * If there is no owner, returns false.
+     *
+     * @param propertyList The list of Property objects to search through
+     * @return a boolean describing whether all of the colored property set is owned or not.
+     */
+    public boolean allColoredPropertySetOwned(String myColor, List<Property> propertyList) {
+        if (!isOwned()) {
+            return false;
+        }
+        int numOwned = 0;
+        for (Property property : propertyList) {
+            if (property instanceof ColorPropertyTile &&
+                    property.isOwned() && getColor().equals(myColor) &&
+                    property.getOwner().equals(getOwner())) {
+                numOwned++;
+            }
+        }
+        switch (myColor) {
+            case "Brown":
+                if (numOwned == 2) {
+                    return true;
+                    }
+            case "Dark Blue":
+                if (numOwned == 2) {
+                    return true;
+                }
+        }
+        if (numOwned == 3){
+            return true;
+        }
+        return false;
+    }
     /**
      * Return the rent for this ColorPropertyTile property.
      * ColorPropertyTile rent is influenced by whether the owner owns all the properties in a set and how many
@@ -93,7 +119,7 @@ public class ColorPropertyTile extends Property{
         if (!isOwned()){
             return -1;
         }
-        if ((getNumHotels() == 0 && getNumHouses() == 0) & checkSetOwned(propertyList)){
+        if ((getNumHotels() == 0 && getNumHouses() == 0) & allColoredPropertySetOwned(getColor(),propertyList)){
             return rentPrice[1];
         }
         switch(getNumHouses()){
@@ -120,12 +146,12 @@ public class ColorPropertyTile extends Property{
     @Override
     public TileActionResultModel action(Player player, Board board) {
         if (!isOwned()){
-            return new TileActionResultModel("Would you Like to Purchase " + getTileDisplayName() + " for" + getPurchasePrice() + " ?" , player, player.getPosition());
+            return new TileActionResultModel("Would you Like to Purchase " + getTileName() + " for " + getPurchasePrice() + " ?" , player, player.getPosition());
         }
         else{
             player.subtractMoney(getRent(player, board.getPropertyTiles()));
             getOwner().addMoney(getRent(player, board.getPropertyTiles()));
-            return new TileActionResultModel("You Paid" + getRent(player, board.getPropertyTiles()) + " to" + getOwner().getName(), player, player.getPosition());
+            return new TileActionResultModel("You Paid " + getRent(player, board.getPropertyTiles()) + " to " + getOwner().getName(), player, player.getPosition());
         }
     }
 
@@ -133,7 +159,7 @@ public class ColorPropertyTile extends Property{
         return buildingCost;
     }
 
-    public boolean checkSetOwned(List<Property> arr) {
+    public boolean checkSetOwned(Property[] arr) {
         boolean ownSet = true;
         ArrayList<Player> playerArr = new ArrayList<Player>();
         for (Property property : arr) {
