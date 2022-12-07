@@ -168,7 +168,12 @@ public class Player implements Serializable {
      * This method will be called every turn a player is in the jail to update the in jail turn tracker
      */
     public void addTurnInJail(){
-        this.turnsInJail += 1;
+        if (this.turnsInJail == 2){
+            this.turnsInJail = -1;
+            this.resetConsecutiveDoubles();
+        }else {
+            this.turnsInJail += 1;
+        }
     }
 
     /**

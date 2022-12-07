@@ -124,3 +124,6 @@ gradle-wrapper.jar
 gradle-wrapper.properties
 gradlew
 gradlew.bat
+
+# Ignore saves directory
+saves/*
