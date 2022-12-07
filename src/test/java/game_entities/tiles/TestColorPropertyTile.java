@@ -17,13 +17,6 @@ public class TestColorPropertyTile {
     }};
     Board board = new Board(test);
     @Test
-    public void checkSetOwned() {
-        List<Property> propertyList = new ArrayList<>();
-        propertyList.add(colorPropertyTile);
-        boolean test = colorPropertyTile.checkSetOwned(propertyList);
-        assertEquals(test, false);
-    }
-    @Test
     public void getRent() {
         // Test if the correct rent price is obtained when the getRent method is called
         Player player1 = new Player("Test", "test", 1500, board);
