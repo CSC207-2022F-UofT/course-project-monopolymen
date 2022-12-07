@@ -30,7 +30,9 @@ public interface GameStateOutputBoundary {
     enum TurnActions {
         ROLL_TO_MOVE,
         BUILD_BUILDING,
+        SELL_BUILDING,
         MORTGAGE,
+        UNMORTGAGE,
         TRADE,
         LEAVE_JAIL,
         END_TURN

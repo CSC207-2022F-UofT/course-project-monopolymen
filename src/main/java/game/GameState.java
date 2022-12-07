@@ -119,7 +119,9 @@ public class GameState implements Serializable {
 
         // Potentially Logic to hide building buildings or mortgaging until conditions met.
         options.add(TurnActions.BUILD_BUILDING);
+        options.add(TurnActions.SELL_BUILDING);
         options.add(TurnActions.MORTGAGE);
+        options.add(TurnActions.UNMORTGAGE);
         options.add(TurnActions.TRADE);
 
         presenter.showTurnActions(currentPlayer(), options);

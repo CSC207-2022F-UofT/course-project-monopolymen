@@ -90,11 +90,20 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                     mortgage.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            System.out.println("No Behavior, waiting for mortgagePresenter");
-//                            controller.showUnmortgageableProperties();
+//                            controller.showMortgageableProperties();
                         }
                     });
                     turnActionButtonsPanel.add(mortgage);
+                    break;
+                case UNMORTGAGE:
+                    JButton unmortgage = new JButton("Unmortgage properties");
+                    unmortgage.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+//                            controller.showunmortgageableProperties();
+                        }
+                    });
+                    turnActionButtonsPanel.add(unmortgage);
                     break;
                 case BUILD_BUILDING:
                     JButton buildBuilding = new JButton("Build houses/hotels");
@@ -106,6 +115,17 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                         }
                     });
                     turnActionButtonsPanel.add(buildBuilding);
+                    break;
+                case SELL_BUILDING:
+                    JButton sellBuilding = new JButton("Sell houses/hotels");
+                    sellBuilding.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("No behavior, waiting for buildBuildingsPresenter");
+//                            controller.showBuiltOnProperties();
+                        }
+                    });
+                    turnActionButtonsPanel.add(sellBuilding);
                     break;
                 case TRADE:
                     JButton trade = new JButton("Trade");
