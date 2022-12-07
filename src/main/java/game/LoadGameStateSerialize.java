@@ -1,5 +1,7 @@
 package game;
 
+import turn_interface_adapters.TurnController;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,10 +38,10 @@ public class LoadGameStateSerialize implements LoadGameState {
      * @return The GameState object loaded in the save.
      */
     @Override
-    public GameState load(String saveName, SaveGameState saveGameState, GameStateOutputBoundary presenter) {
+    public GameState load(String saveName, SaveGameState saveGameState, GameStateOutputBoundary presenter, TurnController turnController) {
         try (FileInputStream fileIn = new FileInputStream(savesDirectory + saveName + ".ser")) {
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            return GameState.deserialize(objectIn, saveGameState, presenter);
+            return GameState.deserialize(objectIn, saveGameState, presenter, turnController);
         } catch (IOException e) {
             throw new RuntimeException("Save Not Found", e);
         } catch (ClassNotFoundException e) {

@@ -2,6 +2,7 @@ package game;
 
 import game.GameStateOutputBoundary.TurnActions;
 import game_entities.Player;
+import turn_interface_adapters.TurnController;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -37,9 +38,9 @@ public class GameState implements Serializable {
      */
     public GameState(List<Player> players, String gameName, SaveGameState saveGameState, GameStateOutputBoundary presenter) {
         this.allPlayers = players;
-        this.activePlayers = new ArrayList<>(players); // Shallow copy
+        this.activePlayers = new ArrayList<>();
         this.currentPlayer = 0;
-        this.numPlayers = activePlayers.size();
+        this.numPlayers = allPlayers.size();
         this.saveGameState = saveGameState;
         this.turnCounter = 0;
         this.gameName = gameName;
@@ -58,10 +59,13 @@ public class GameState implements Serializable {
      * @return The Deserialized GameState object.
      */
     public static GameState deserialize(ObjectInputStream objectIn, SaveGameState saveGameState,
-                                        GameStateOutputBoundary presenter) throws ClassNotFoundException, IOException {
+                                        GameStateOutputBoundary presenter, TurnController turnController) throws ClassNotFoundException, IOException {
         GameState gameState = (GameState) objectIn.readObject();
         gameState.setSaveGameState(saveGameState);
         gameState.setPresenter(presenter);
+        for (Player player : gameState.allPlayers) {
+            player.setTurnController(turnController);
+        }
         return gameState;
     }
 
@@ -81,6 +85,8 @@ public class GameState implements Serializable {
      * </ul>
      */
     public void startGame() {
+        activePlayers.addAll(allPlayers);
+        numPlayers = activePlayers.size();
         // Shallow method to avoid possible confusion about needing to start each turn by method call every time.
         showTurnActions();
     }

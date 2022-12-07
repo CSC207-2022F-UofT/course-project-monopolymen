@@ -27,7 +27,7 @@ public class Player implements Serializable {
 
     private Board board;
 
-    private TurnController turnController;
+    private transient TurnController turnController;
 
     public void setTurnController(TurnController turnController) {
         this.turnController = turnController;
