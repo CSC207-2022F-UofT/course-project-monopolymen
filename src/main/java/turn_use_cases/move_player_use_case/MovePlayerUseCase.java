@@ -75,8 +75,13 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
      */
     private void showAction(Player player, boolean doubleRoll, String flavorText) {
         Tile tile = board.getTile(player.getPosition());
-        movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
-                flavorText);
+        if(tile.isOwnable()) {
+            movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                    flavorText, "Don't Buy");
+        } else {
+            movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                    flavorText, "Other Options");
+        }
         if (tile instanceof Property) {
             movePlayerOutputBoundary.showBuyableProperty(player, tile, !((Property) tile).isOwned(), doubleRoll);
         }
@@ -98,7 +103,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         if (player.getConsecutiveDoubles() == 3) {
             player.enterJail();
             movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
-                    "You are going to jail for rolling three consecutive doubles.");
+                    "You are going to jail for rolling three consecutive doubles.", "Other Options");
             endTurnUseCase.forceEndTurn(player);
         } else {
             movePlayer(player, rollSum, doubleRoll);
@@ -151,9 +156,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
      */
     private void sendToJail(Player player) {
         movePlayerOutputBoundary.showResultOfAction(player, board.getJailTilePosition(), false,
-                "You are being sent to jail.");
+                "You are being sent to jail.", "Other Options");
         endTurnUseCase.forceEndTurn(player);
     }
-
-
 }

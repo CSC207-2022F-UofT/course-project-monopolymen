@@ -12,8 +12,10 @@ public interface MovePlayerOutputBoundary {
      * @param playerPosition The end position the player is supposed to be
      * @param rollAgain Boolean indicating if the player rolled a double and is able to roll again
      * @param flavorText The string showing a description of the action
+     * @param buttonText Text for the button depending on if they ca buy or not
      */
-    public void showResultOfAction(Player player, int playerPosition, boolean rollAgain, String flavorText);
+    public void showResultOfAction(Player player, int playerPosition, boolean rollAgain, String flavorText,
+                                   String buttonText);
 
     /**
      * Shows the result of player passing the tile
