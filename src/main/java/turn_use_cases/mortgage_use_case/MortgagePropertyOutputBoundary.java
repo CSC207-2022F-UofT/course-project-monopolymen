@@ -11,10 +11,10 @@ import java.util.ArrayList;
  */
 public interface MortgagePropertyOutputBoundary {
     /**
-     * Presents the property which is mortgaged or unmortgaged by player.
+     * Presents the property which is mortgaged by player.
      *
-     * @param player the player who wants to mortgage or unmortgage property.
-     * @param property The property which is mortgaged or unmortgaged by player.
+     * @param player the player who wants to mortgage property.
+     * @param property The property which is mortgaged by player.
      * @param flavorText the text describing what is happening.
      */
     public void showMortgageProperty(Player player, Property property, String flavorText);
@@ -29,9 +29,9 @@ public interface MortgagePropertyOutputBoundary {
     public void showUnmortgageProperty(Player player, Property property, String flavorText);
 
     /**
-     * Presents the properties which can be mortgaged or unmortgaged.
+     * Presents the properties which can be mortgaged.
      *
-     * @param properties a list of properties which can be mortgaged or unmortgaged.
+     * @param properties a list of properties which can be mortgaged.
      * @param flavorText the text describing what is happening.
      */
     public void showMortgagePropertyList(ArrayList<Property> properties, String flavorText);
