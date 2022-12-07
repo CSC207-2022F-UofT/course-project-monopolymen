@@ -150,6 +150,6 @@ public class Game {
         TradeInputBoundary trade = new TradeUseCase(tradePresenter);
 
         turnController.initializeAttributes(gameState, null, null, movePlayer, trade, leaveJail, viewInventory, liquidateAssets, endTurn);
-        movePlayer.movePlayer(players.get(0), 30, false);
+
     }
 }
