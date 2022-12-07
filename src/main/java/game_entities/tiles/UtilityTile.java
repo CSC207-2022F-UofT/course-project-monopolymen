@@ -92,7 +92,7 @@ public class UtilityTile extends Property {
         else{
             player.subtractMoney(getRent(player, board.getPropertyTiles()));
             getOwner().addMoney(getRent(player, board.getPropertyTiles()));
-            return new TileActionResultModel("You Paid" + getRent(player, board.getPropertyTiles()) + " to" + getOwner(), player, player.getPosition());
+            return new TileActionResultModel("You Paid" + getRent(player, board.getPropertyTiles()) + " to" + getOwner().getName(), player, player.getPosition());
         }
     }
 }
