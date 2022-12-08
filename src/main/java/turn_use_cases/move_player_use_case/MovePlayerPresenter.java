@@ -222,9 +222,9 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             System.out.println(path);
             ImageIcon temp = new ImageIcon(new ImageIcon
                     (path)
-                    .getImage().getScaledInstance((int) (250), (int) (320), Image.SCALE_SMOOTH));
+                    .getImage().getScaledInstance((int) (150), (int) (192), Image.SCALE_SMOOTH));
             propertyImage.setIcon(temp);
-            propertyImage.setPreferredSize(new Dimension(250, 320));
+            propertyImage.setPreferredSize(new Dimension(150, 192));
             optionsWindow.add(propertyImage);
         }
     }
