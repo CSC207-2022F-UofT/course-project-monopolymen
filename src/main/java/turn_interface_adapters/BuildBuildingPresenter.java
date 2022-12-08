@@ -48,22 +48,43 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
             choicesPanel.add(optionsButton);
             showOptionsPanel();
         } else {
-            resetOptionsPanel();
             choicesPanel.add(new JLabel(flavorText));
-            for (Property property : properties){
-                JButton optionsButton = new JButton("Pick " + property.getTileDisplayName());
-                optionsButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if(((ColorPropertyTile) property).getNumHouses() < 4){
-                            controller.buildHouse((ColorPropertyTile) property);
+            JComboBox<String> comboBox = new JComboBox<String>();
+            for (ColorPropertyTile property : properties){
+                comboBox.addItem(property.getTileDisplayName());
+            }
+            choicesPanel.add(comboBox);
+            JButton pickButton = new JButton("Pick");
+            pickButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for (ColorPropertyTile pickedProperty : properties){
+                        if (pickedProperty.getTileDisplayName().equals(comboBox.getSelectedItem())){
+                            if(pickedProperty.getNumHouses() < 4){
+                            controller.buildHouse(pickedProperty);
                         } else {
-                            controller.buildHotel((ColorPropertyTile) property);
+                            controller.buildHotel(pickedProperty);
+                        }
                         }
                     }
-                });
-                choicesPanel.add(optionsButton);
-            }
+                }
+            });
+            choicesPanel.add(pickButton);
+//            choicesPanel.add(new JLabel(flavorText));
+//            for (Property property : properties){
+//                JButton optionsButton = new JButton("Pick " + property.getTileName());
+//                optionsButton.addActionListener(new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        if(((ColorPropertyTile) property).getNumHouses() < 4){
+//                            controller.buildHouse((ColorPropertyTile) property);
+//                        } else {
+//                            controller.buildHotel((ColorPropertyTile) property);
+//                        }
+//                    }
+//                });
+//                choicesPanel.add(optionsButton);
+//            }
             JButton backButton = new JButton("Cancel");
             backButton.addActionListener(new ActionListener() {
                 @Override
@@ -140,20 +161,42 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
             showOptionsPanel();
         } else {
             choicesPanel.add(new JLabel(flavorText));
-            for (Property property : properties){
-                JButton optionsButton = new JButton("Pick " + property.getTileDisplayName());
-                optionsButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if(((ColorPropertyTile) property).getNumHotels() > 0){
-                            controller.sellHotel((ColorPropertyTile) property);
-                        } else {
-                            controller.sellHouse((ColorPropertyTile) property);
+            JComboBox<String> comboBox = new JComboBox<String>();
+            for (ColorPropertyTile property : properties){
+                comboBox.addItem(property.getTileDisplayName());
+            }
+            choicesPanel.add(comboBox);
+            JButton pickButton = new JButton("Pick");
+            pickButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for (ColorPropertyTile pickedProperty : properties){
+                        if (pickedProperty.getTileDisplayName().equals(comboBox.getSelectedItem())){
+                            if(pickedProperty.getNumHotels() > 0){
+                                controller.sellHotel(pickedProperty);
+                            } else {
+                                controller.sellHouse(pickedProperty);
+                            }
                         }
                     }
-                });
-                choicesPanel.add(optionsButton);
-            }
+                }
+            });
+            choicesPanel.add(pickButton);
+//            choicesPanel.add(new JLabel(flavorText));
+//            for (Property property : properties){
+//                JButton optionsButton = new JButton("Pick " + property.getTileName());
+//                optionsButton.addActionListener(new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        if(((ColorPropertyTile) property).getNumHotels() > 0){
+//                            controller.sellHotel((ColorPropertyTile) property);
+//                        } else {
+//                            controller.sellHouse((ColorPropertyTile) property);
+//                        }
+//                    }
+//                });
+//                choicesPanel.add(optionsButton);
+//            }
             JButton backButton = new JButton("Cancel");
             backButton.addActionListener(new ActionListener() {
                 @Override
