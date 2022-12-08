@@ -51,6 +51,11 @@ public class TradeUseCaseTest {
             player2.removeGetOutOfJailCard();
         }
 
+        presenter.testTradeOption = null;
+        presenter.testPlayerList = null;
+        presenter.testTradeOffer = null;
+        presenter.testOption = 0;
+
     }
 
     @Test
@@ -62,8 +67,9 @@ public class TradeUseCaseTest {
         ArrayList<Player> potentialPlayers = new ArrayList<>();
         potentialPlayers.add(player2);
 
+        tradeUseCase.choosePlayer(listOfPlayers, player1);
+        ArrayList<Player> actual = presenter.testPlayerList;
 
-        ArrayList<Player> actual = tradeUseCase.choosePlayer(listOfPlayers, player1);
         assertEquals(potentialPlayers, actual);
 
     }
@@ -74,7 +80,9 @@ public class TradeUseCaseTest {
                 player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
                 player1.getProperties(), player2.getProperties(), player1, player2);
 
-        TradeOption actual = tradeUseCase.getTradeOptions(player1, player2);
+
+        tradeUseCase.getTradeOptions(player1, player2);
+        TradeOption actual = presenter.testTradeOption;
 
         assertEquals(tradeOption.getPlayer1Money(), actual.getPlayer1Money());
         assertEquals(tradeOption.getPlayer2Money(), actual.getPlayer2Money());
@@ -94,6 +102,8 @@ public class TradeUseCaseTest {
 
         tradeUseCase.makeOffer(tradeOffer, player1, player2);
 
+        assertEquals(tradeOffer, presenter.testTradeOffer);
+
     }
 
     @Test
@@ -106,6 +116,8 @@ public class TradeUseCaseTest {
                 propertiesOffered, propertiesReceived, player1, player2);
 
         tradeUseCase.makeOffer(tradeOffer, player1, player2);
+
+        assertEquals(tradeOffer, presenter.testTradeOffer);
 
     }
 
@@ -133,6 +145,8 @@ public class TradeUseCaseTest {
 
         tradeUseCase.getResultOfTradeOffer(2, player1, player2, tradeOffer);
 
+        assertEquals(2, presenter.testOption);
+
     }
 
     @Test
@@ -146,6 +160,8 @@ public class TradeUseCaseTest {
 
         tradeUseCase.getResultOfTradeOffer(3, player1, player2, tradeOffer);
 
+        assertEquals(3, presenter.testOption);
+
     }
 
     @Test
@@ -158,6 +174,8 @@ public class TradeUseCaseTest {
                 propertiesOffered, propertiesReceived, player1, player2);
 
         tradeUseCase.getResultOfTradeOffer(4, player1, player2, tradeOffer);
+
+        assertEquals(4, presenter.testOption);
 
     }
 
@@ -177,8 +195,8 @@ public class TradeUseCaseTest {
 
         tradeUseCase.ExecuteOffer(player1, player2, tradeOffer);
 
-        assertEquals(1600, player1.getMoney());
-        assertEquals(1400, player2.getMoney());
+        assertEquals(1400, player1.getMoney());
+        assertEquals(1600, player2.getMoney());
         assertEquals(player1Properties, player1.getProperties());
         assertEquals(player2Properties, player2.getProperties());
         assertFalse(player1.hasGetOutofJailFreeCard());
@@ -206,8 +224,8 @@ public class TradeUseCaseTest {
 
         tradeUseCase.ExecuteOffer(player1, player2, tradeOffer);
 
-        assertEquals(1600, player1.getMoney());
-        assertEquals(1400, player2.getMoney());
+        assertEquals(1400, player1.getMoney());
+        assertEquals(1600, player2.getMoney());
         assertEquals(player1Properties, player1.getProperties());
         assertEquals(player2Properties, player2.getProperties());
         assertFalse(player1.hasGetOutofJailFreeCard());
@@ -235,8 +253,8 @@ public class TradeUseCaseTest {
 
         tradeUseCase.ExecuteOffer(player1, player2, tradeOffer);
 
-        assertEquals(1600, player1.getMoney());
-        assertEquals(1400, player2.getMoney());
+        assertEquals(1400, player1.getMoney());
+        assertEquals(1600, player2.getMoney());
         assertEquals(player1Properties, player1.getProperties());
         assertEquals(player2Properties, player2.getProperties());
         assertFalse(player2.hasGetOutofJailFreeCard());

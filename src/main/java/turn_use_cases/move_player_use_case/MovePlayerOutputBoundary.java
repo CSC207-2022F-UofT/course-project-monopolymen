@@ -12,8 +12,10 @@ public interface MovePlayerOutputBoundary {
      * @param playerPosition The end position the player is supposed to be
      * @param rollAgain Boolean indicating if the player rolled a double and is able to roll again
      * @param flavorText The string showing a description of the action
+     * @param buttonText Text for the button depending on if they ca buy or not
      */
-    public void showResultOfAction(Player player, int playerPosition, boolean rollAgain, String flavorText);
+    public void showResultOfAction(Player player, int playerPosition, boolean rollAgain, String flavorText,
+                                   String buttonText);
 
     /**
      * Shows the result of player passing the tile
@@ -33,11 +35,10 @@ public interface MovePlayerOutputBoundary {
      * Shows the card the player drew and if they moved or not
      * @param player The player object the action is being performed on
      * @param cardName Card's name
-     * @param cardDescription Card's description
      * @param rollAgain If the player can roll again
      * @param isChance If the card is a chance or community card
      */
-    public void showCardDraw(Player player, String cardName, String cardDescription, boolean rollAgain,
+    public void showCardDraw(Player player, String cardName, boolean rollAgain,
                              boolean isChance);
 
     /**

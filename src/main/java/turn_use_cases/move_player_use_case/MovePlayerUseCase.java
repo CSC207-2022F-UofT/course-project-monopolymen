@@ -36,9 +36,10 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
      * @param player The player object that the action is being performed on
      * @param absolutePosition the position the player will move to
      * @param doubleRoll If the player rolled a double
+     * @param flavorText FlavorText
      */
 
-    private void moveToPosition(Player player, int absolutePosition, boolean doubleRoll) {
+    private void moveToPosition(Player player, int absolutePosition, boolean doubleRoll, String flavorText) {
         // There is only 1 case when the player moves back by the card and its 3 spaces
         int steps = absolutePosition - player.getPosition();
         if(steps == -3) {
@@ -55,7 +56,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                     movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
                 }
             }
-            showAction(player, doubleRoll);
+            showAction(player, doubleRoll, flavorText);
         } else {
             int positiveSteps = (steps + board.getTilesList().size()) % board.getTilesList().size();
             for (int i = 0; i < positiveSteps; i++) {
@@ -63,7 +64,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                 TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
                 movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
             }
-            showAction(player, doubleRoll);
+            showAction(player, doubleRoll, flavorText);
         }
     }
 
@@ -72,17 +73,22 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
      * @param player The player object that the action is being performed on
      * @param doubleRoll If the player rolled a double
      */
-    private void showAction(Player player, boolean doubleRoll) {
-        TileActionResultModel result = board.getTile(player.getPosition()).action(player, board);
+    private void showAction(Player player, boolean doubleRoll, String flavorText) {
         Tile tile = board.getTile(player.getPosition());
-        movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
-                result.getFlavorText());
-        if (tile instanceof Property) {
-            if (((Property) tile).getOwner() == null) {
-                movePlayerOutputBoundary.showBuyableProperty(player, tile, true, doubleRoll);
+        if(tile.isOwnable()) {
+            if(((Property)tile).getOwner() == null) {
+                movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                        flavorText, "Don't Buy");
             } else {
-                movePlayerOutputBoundary.showBuyableProperty(player, tile, false, doubleRoll);
+                movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                        flavorText, "Other Options");
             }
+        } else {
+            movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                    flavorText, "Other Options");
+        }
+        if (tile instanceof Property) {
+            movePlayerOutputBoundary.showBuyableProperty(player, tile, !((Property) tile).isOwned(), doubleRoll);
         }
     }
 
@@ -102,7 +108,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         if (player.getConsecutiveDoubles() == 3) {
             player.enterJail();
             movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
-                    "You are going to jail for rolling three consecutive doubles.");
+                    "You are going to jail for rolling three consecutive doubles.", "Other Options");
             endTurnUseCase.forceEndTurn(player);
         } else {
             movePlayer(player, rollSum, doubleRoll);
@@ -112,39 +118,38 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
     @Override
     public void movePlayer(Player player, int rollSum, boolean doubleRoll) {
         int playerBeforePosition = player.getPosition();
-            TileActionResultModel result = board.getTile(player.getPosition()).action(player, board);
-            if(result instanceof CardActionResultModel) {
-                // Player landed on draw card tile
-                CardActionResultModel cardResult = (CardActionResultModel) result;
-                if(playerBeforePosition != result.getPlayerPosition()){
-                    // Card moved player
-                    if(result.getPlayerPosition() == board.getJailTilePosition()) {
-                        // Player is moving to jail, does not collect "GO" tile money
-                        // player.enterJail() is handled in the card's action
-                        movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
-                                cardResult.getFlavorText(), false, cardResult.isChance());
-                        sendToJail(player);
-                    } else {
-                        // Normal move player card
-                        movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
-                                cardResult.getFlavorText(), doubleRoll, cardResult.isChance());
-                        moveToPosition(player, cardResult.getPlayerPosition(), doubleRoll);
-                    }
-                } else {
-                    // Card didn't move player
-                    movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(), cardResult.getFlavorText(),
-                            doubleRoll, cardResult.isChance());
-                }
-            } else {
-                // Player didn't land on a draw card tile
-                Tile tile = board.getTile(player.getPosition());
-                if (result.getPlayerPosition() == board.getJailTilePosition()) {
-                    // Player landed on "go to jail" and their position should now be in jail
-                    // player.enterJail() is handeled in the tile's action method
+        int playerAfterPosition = (player.getPosition() + rollSum) % board.getTilesList().size();
+        TileActionResultModel result = board.getTile(playerAfterPosition).action(player, board);
+        if(result instanceof CardActionResultModel) {
+            // Player landed on draw card tile
+            CardActionResultModel cardResult = (CardActionResultModel) result;
+            if(playerBeforePosition != result.getPlayerPosition()){
+                // Card moved player
+                if(result.getPlayerPosition() == board.getJailTilePosition()) {
+                    // Player is moving to jail, does not collect "GO" tile money
+                    // player.enterJail() is handled in the card's action
+                    movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(), false, cardResult.isChance());
                     sendToJail(player);
                 } else {
-                    // Normal move
-                    moveToPosition(player, result.getPlayerPosition(), doubleRoll);
+                    // Normal move player card
+                    movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(), doubleRoll, cardResult.isChance());
+                    moveToPosition(player, cardResult.getPlayerPosition(), doubleRoll, cardResult.getFlavorText());
+                }
+            } else {
+                // Card didn't move player
+                moveToPosition(player, playerAfterPosition, doubleRoll, cardResult.getFlavorText());
+                movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
+                        doubleRoll, cardResult.isChance());
+            }
+        } else {
+            // Player didn't land on a draw card tile
+            if (result.getPlayerPosition() == board.getJailTilePosition()) {
+                // Player landed on "go to jail" and their position should now be in jail
+                // player.enterJail() is handeled in the tile's action method
+                sendToJail(player);
+            } else {
+                // Normal move
+                moveToPosition(player, playerAfterPosition, doubleRoll, result.getFlavorText());
                 }
             }
     }
@@ -155,10 +160,8 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
      * @param player The player object that the action is being performed on
      */
     private void sendToJail(Player player) {
-        movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
-                "You are being sent to jail.");
+        movePlayerOutputBoundary.showResultOfAction(player, board.getJailTilePosition(), false,
+                "You are being sent to jail.", "Other Options");
         endTurnUseCase.forceEndTurn(player);
     }
-
-
 }

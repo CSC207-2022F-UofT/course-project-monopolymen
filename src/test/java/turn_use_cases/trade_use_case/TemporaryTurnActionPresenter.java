@@ -5,6 +5,16 @@ import game_entities.Player;
 import java.util.ArrayList;
 
 public class TemporaryTurnActionPresenter implements  TradeOutputBoundary{
+
+    public ArrayList<Player> testPlayerList = null;
+
+    public TradeOption testTradeOption = null;
+
+    public TradeOffer testTradeOffer = null;
+
+    public int testOption = 0;
+
+
     /**
      * Presents the list of players player can trade with.
      *
@@ -13,6 +23,7 @@ public class TemporaryTurnActionPresenter implements  TradeOutputBoundary{
      */
     @Override
     public void showListOfPlayers(ArrayList<Player> listOfPlayers, Player player, String flavorText) {
+        this.testPlayerList = listOfPlayers;
 
     }
 
@@ -24,6 +35,7 @@ public class TemporaryTurnActionPresenter implements  TradeOutputBoundary{
      */
     @Override
     public void showTradeOptions(TradeOption tradeOption, String flavorText) {
+        this.testTradeOption = tradeOption;
 
     }
 
@@ -35,7 +47,7 @@ public class TemporaryTurnActionPresenter implements  TradeOutputBoundary{
      */
     @Override
     public void showTradeOffer(TradeOffer tradeOffer, String flavorText) {
-
+        this.testTradeOffer = tradeOffer;
     }
 
     /**
@@ -47,9 +59,12 @@ public class TemporaryTurnActionPresenter implements  TradeOutputBoundary{
      *                   *               3 - player2 declined the trade offer.
      *                   *               4 - player2's input was not valid and needs to try again.
      * @param flavorText the text describing what is happening.
+     * @param player1
+     * @param player2
      */
     @Override
-    public void showResultOfTradeOffer(int option, String flavorText) {
+    public void showResultOfTradeOffer(int option, String flavorText, Player player1, Player player2) {
+        this.testOption = option;
 
     }
 }

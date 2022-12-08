@@ -55,20 +55,6 @@ public class MortgagePropertyTest {
     }
 
     @Test
-    public void testMortgagePropertyWithoutBuildings_1(){
-        mortgageProperty.mortgage(player_1, property_1);
-        assertEquals(player_1.getMoney(), 1650);
-        assertEquals(property_1.isMortgaged(), true);
-    }
-
-    @Test
-    public void testMortgagePropertyWithoutBuildings_2(){
-        mortgageProperty.mortgage(player_1, water);
-        assertEquals(player_1.getMoney(), 1600);
-        assertEquals(water.isMortgaged(), true);
-    }
-
-    @Test
     public void testMortgagePropertyWithoutBuildings_3(){
         mortgageProperty.mortgage(player_2, railroad);
         assertEquals(player_2.getMoney(), 1650);

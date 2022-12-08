@@ -32,7 +32,12 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
                 Property property = player.getProperties().get(i);
                 if (!property.isMortgaged()) {
                     if(property instanceof ColorPropertyTile){
-                        if(((ColorPropertyTile) property).getNumHouses() < 1){
+                        int houses = 0;
+                        ArrayList<ColorPropertyTile> sameColor = situation.getBoard().getSameColor(((ColorPropertyTile) property).getColor());
+                        for(int j = 0; j < sameColor.size(); j++){
+                            houses += sameColor.get(j).getNumHouses();
+                        }
+                        if (houses == 0){
                             playerOptions.add("Mortgage Property");
                             break;
                         }
@@ -126,8 +131,9 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
         Player bankruptPlayer = situation.getAffectedPlayer();
         Player owedPlayer = situation.getOwedPlayer();
         if(owedPlayer == null){
-            for(int i = 0; i < bankruptPlayer.getProperties().size(); i++){
-                Property property = bankruptPlayer.getProperties().get(i);
+            bankruptPlayer.subtractMoney(bankruptPlayer.getMoney());
+            while(0 < bankruptPlayer.getProperties().size()){
+                Property property = bankruptPlayer.getProperties().get(0);
                 if(property.isMortgaged()){
                     property.unmortgage();
                 }
@@ -136,19 +142,23 @@ public class LiquidateAssetsUseCase implements LiquidateAssetsInputBoundary{
                     ((ColorPropertyTile) property).subtractHouse(((ColorPropertyTile) property).getNumHouses());
                 }
                 property.setOwner(null);
+                bankruptPlayer.sellProperty(property);
             }
-            //gameState.removePlayer(bankruptPlayer);
+            gameState.removePlayer(bankruptPlayer);
 
         }
         else {
             owedPlayer.addMoney(bankruptPlayer.getMoney());
-            for (int i = 0; i < bankruptPlayer.getProperties().size(); i++) {
+            bankruptPlayer.subtractMoney(bankruptPlayer.getMoney());
+            while(0 < bankruptPlayer.getProperties().size()){
                 //If the owedPlayer inherites a mortgaged property they will have to unmortgage it on
                 //their own turn
-                bankruptPlayer.getProperties().get(i).setOwner(owedPlayer);
-
+                Property property = bankruptPlayer.getProperties().get(0);
+                property.setOwner(owedPlayer);
+                bankruptPlayer.sellProperty(property);
+                owedPlayer.addProperty(property);
             }
-            //gameState.removePlayer(bankruptPlayer);
+            gameState.removePlayer(bankruptPlayer);
         }
         presenter.showTransferOfAssets(situation);
 

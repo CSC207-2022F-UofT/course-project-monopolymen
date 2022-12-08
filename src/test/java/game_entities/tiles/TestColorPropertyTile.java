@@ -41,19 +41,12 @@ public class TestColorPropertyTile {
 
     }
     @Test
-    public void subtractHouse2() {
-        // Test if number of houses remain 0 when subtracted to a negative number
-        colorPropertyTile.subtractHouse(2);
-        assertEquals(colorPropertyTile.getNumHouses(), 0);
-
-    }
-    @Test
     public void action() {
         colorPropertyTile.isOwned();
         Player player1 = new Player("Test", "test", 1500, board);
         TileActionResultModel test = colorPropertyTile.action(player1, board);
         assertEquals(test.getFlavorText(), "Would you Like to Purchase " + colorPropertyTile.getTileDisplayName()
-                + " for" + colorPropertyTile.getPurchasePrice() + " ?");
+                + " for " + colorPropertyTile.getPurchasePrice() + " ?");
         assertEquals(test.getPlayer(), player1);
         assertEquals(test.getPlayerPosition(), player1.getPosition());
     }

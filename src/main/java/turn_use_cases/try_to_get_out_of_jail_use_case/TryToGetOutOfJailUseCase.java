@@ -23,23 +23,20 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
     private MovePlayerOutputBoundary movePlayerOutputBoundary;
     /**
      * @param tryToGetOutOfJailOutputBoundary TryToGetOutOfJailOutputBoundary to handle the display
-     * @param board The board the game is operating on
-     * @param endTurnUseCase Use Case to force end the player's turn if they are sent to jail or failed their roll
      * @param movePlayerUseCase Use Case to move the player if they get out of jail
      * @param movePlayerOutputBoundary Output boundary to display visuals
      */
-    public TryToGetOutOfJailUseCase(TryToGetOutOfJailOutputBoundary tryToGetOutOfJailOutputBoundary, Board board,
-                                    EndTurnInputBoundary endTurnUseCase, MovePlayerInputBoundary movePlayerUseCase,
+    public TryToGetOutOfJailUseCase(TryToGetOutOfJailOutputBoundary tryToGetOutOfJailOutputBoundary,
+                                    MovePlayerInputBoundary movePlayerUseCase,
                                     MovePlayerOutputBoundary movePlayerOutputBoundary) {
         this.tryToGetOutOfJailOutputBoundary = tryToGetOutOfJailOutputBoundary;
-        this.board = board;
-        this.endTurnUseCase = endTurnUseCase;
         this.movePlayerUseCase = movePlayerUseCase;
         this.movePlayerOutputBoundary = movePlayerOutputBoundary;
     }
 
     @Override
     public void startAction(String playerOption, Player player) {
+        System.out.println(playerOption);
         if(playerOption.equals("Roll")) {
             // This is different from movePlayerUseCase as it doesn't take into account previous double rolls
             int[] playerRollAmount = {(int)(Math.random() * 6) + 1, (int)(Math.random() * 6) + 1};
@@ -52,7 +49,7 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
             } else {
                 // Player didn't roll double, force ending their turn
                 player.addTurnInJail();
-                endTurnUseCase.forceEndTurn(player);
+                tryToGetOutOfJailOutputBoundary.showRoll(playerRollAmount);
             }
         } else if (playerOption.equals("Pay")) {
             player.subtractMoney(50);
@@ -69,6 +66,7 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
 
     @Override
     public void getPlayerOptions(Player player) {
+        System.out.println(player.numGetOutofJailFreeCards());
         ArrayList<String> playerOptions = new ArrayList<String>();
         playerOptions.add("Roll");
         if(player.getMoney() >= 50) {

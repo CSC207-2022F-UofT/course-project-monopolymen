@@ -2,7 +2,6 @@ package turn_use_cases.trade_use_case;
 
 import game_entities.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,20 +16,16 @@ public interface TradeInputBoundary {
      *
      * @param listOfPlayers list of all the players in the game.
      * @param player        the player who wants to make a trade.
-     * @return the list of potential players
-     * (return only used for testing, will remove later when presenter is implemented.)
      */
-    public ArrayList<Player> choosePlayer(List<Player> listOfPlayers, Player player);
+    public void choosePlayer(List<Player> listOfPlayers, Player player);
 
     /**
      * Provides the presenter with all potential options for player1 and player2 to trade.
      *
      * @param player1 the player who wants to make a trade
      * @param player2 the player who player1 wants to trade with
-     * @return a TradeOption object that contains the potential options for the trade.
-     * (return only used for testing, will remove later when presenter is implemented.)
      */
-    public TradeOption getTradeOptions(Player player1, Player player2);
+    public void getTradeOptions(Player player1, Player player2);
 
     /**
      * Provides the presenter with the details of the trade offer and whether it is valid.

@@ -9,7 +9,7 @@ import java.util.List;
  */
 class TestableGameStatePresenter implements GameStateOutputBoundary {
     @Override
-    public void showNextTurn(Player newPlayer) {
+    public void showNextTurn(Player newPlayer, int turnNumber) {
 
     }
 

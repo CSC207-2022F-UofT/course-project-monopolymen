@@ -27,21 +27,12 @@ public class TestUtilityTile {
         assertEquals(test, 0);
     }
     @Test
-    public void getRent() {
-        // Test if the correct rent price is obtained when the getRent method is called
-        Player player1 = new Player("Test", "test", 1500, board);
-        player1.setLastRoll(3, 2);
-        List<Property> propertyList = board.getPropertyTiles();
-        int test = utilityTile.getRent(player1, propertyList);
-        assertEquals(test, 100);
-    }
-    @Test
     public void action() {
         utilityTile.isOwned();
         Player player1 = new Player("Test", "test", 1500, board);
         TileActionResultModel test = utilityTile.action(player1, board);
         assertEquals(test.getFlavorText(), "Would you Like to Purchase " + utilityTile.getTileDisplayName()
-                + " for" + utilityTile.getPurchasePrice() + " ?");
+                + " for " + utilityTile.getPurchasePrice() + " ?");
         assertEquals(test.getPlayer(), player1);
         assertEquals(test.getPlayerPosition(), player1.getPosition());
     }

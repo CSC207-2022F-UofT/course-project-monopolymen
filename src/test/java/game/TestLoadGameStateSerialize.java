@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import turn_interface_adapters.TurnController;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class TestLoadGameStateSerialize {
         players.add(player3);
         players.add(player4);
 
-        gameState = new GameState(players, "gameName1", save, presenter);
+        gameState = new GameState(players, "gameName1", board, save, presenter);
     }
 
     @Test
@@ -64,7 +65,7 @@ public class TestLoadGameStateSerialize {
         String SAVE_NAME = "loadableGameState";
         save.save(gameState, SAVE_NAME);
 
-        GameState loadedGameState = load.load(SAVE_NAME, save, new TestableGameStatePresenter());
+        GameState loadedGameState = load.load(SAVE_NAME, save, new TestableGameStatePresenter(), new TurnController());
 
         assertEquals(loadedGameState, gameState);
     }

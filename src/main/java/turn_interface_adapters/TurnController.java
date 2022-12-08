@@ -16,7 +16,6 @@ import turn_use_cases.trade_use_case.TradeOffer;
 import turn_use_cases.try_to_get_out_of_jail_use_case.TryToGetOutOfJailInputBoundary;
 import turn_use_cases.view_inventory.ViewInventoryInputBoundary;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,45 +26,46 @@ import java.util.List;
  * The Turn Controller also performs delegation to the simpler use case methods.
  */
 public class TurnController {
-    private final GameState gameState;
+    private GameState gameState;
     private BuildBuildingInputBoundary buildBuilding;
     private MortgagePropertyInputBoundary mortgageProperty;
     private MovePlayerInputBoundary movePlayer;
     private TradeInputBoundary trade;
     private TryToGetOutOfJailInputBoundary getOutOfJail;
     private ViewInventoryInputBoundary viewInventory;
-    private EndUseCaseDestination nextEndUseCaseDestination;
-
     private LiquidateAssetsInputBoundary liquidateAssets;
-
     private EndTurnInputBoundary endTurn;
 
     /**
-     * Construct the TurnController object. Before use, the {@link #setInputBoundaries(BuildBuildingInputBoundary, MortgagePropertyInputBoundary, MovePlayerInputBoundary, TradeInputBoundary, TryToGetOutOfJailInputBoundary, ViewInventoryInputBoundary, LiquidateAssetsInputBoundary, EndTurnInputBoundary)}
+     * Construct the TurnController object. Before use, the {@link #initializeAttributes(GameState, BuildBuildingInputBoundary, MortgagePropertyInputBoundary, MovePlayerInputBoundary, TradeInputBoundary, TryToGetOutOfJailInputBoundary, ViewInventoryInputBoundary, LiquidateAssetsInputBoundary, EndTurnInputBoundary)}
      * method must be called to specify the input boundaries.
      */
-    public TurnController(GameState gameState) {
+    public TurnController() {
         this.buildBuilding = null;
         this.mortgageProperty = null;
         this.movePlayer = null;
         this.trade = null;
         this.getOutOfJail = null;
         this.viewInventory = null;
-        this.gameState = gameState;
-        this.nextEndUseCaseDestination = EndUseCaseDestination.DEFAULT_DESTINATION;
+        this.liquidateAssets = null;
+        this.endTurn = null;
+        this.gameState = null;
     }
 
     /**
      * Set the input boundaries to use in this controller. Must be called before other methods are called.
+     * The reason this order occurs is that each of the inputBoundaries and gameStates have presenters which need
+     * to refer to this turnController.
      */
-    public void setInputBoundaries(BuildBuildingInputBoundary buildBuilding,
-                                   MortgagePropertyInputBoundary mortgageProperty,
-                                   MovePlayerInputBoundary movePlayer,
-                                   TradeInputBoundary trade,
-                                   TryToGetOutOfJailInputBoundary getOutOfJail,
-                                   ViewInventoryInputBoundary viewInventory,
-                                   LiquidateAssetsInputBoundary liquidateAssets,
-                                   EndTurnInputBoundary endTurn) {
+    public void initializeAttributes(GameState gameState,
+                                     BuildBuildingInputBoundary buildBuilding,
+                                     MortgagePropertyInputBoundary mortgageProperty,
+                                     MovePlayerInputBoundary movePlayer,
+                                     TradeInputBoundary trade,
+                                     TryToGetOutOfJailInputBoundary getOutOfJail,
+                                     ViewInventoryInputBoundary viewInventory,
+                                     LiquidateAssetsInputBoundary liquidateAssets,
+                                     EndTurnInputBoundary endTurn) {
         this.buildBuilding = buildBuilding;
         this.mortgageProperty = mortgageProperty;
         this.movePlayer = movePlayer;
@@ -74,113 +74,90 @@ public class TurnController {
         this.viewInventory = viewInventory;
         this.liquidateAssets = liquidateAssets;
         this.endTurn = endTurn;
-
+        this.gameState = gameState;
     }
 
     /**
-     * Signifies the end of a use case. The action taken depends on what is set as the nextEndUseCaseDestination
-     * ({@link #setNextEndUseCaseDestination(EndUseCaseDestination) see setter for details }). After this method is called,
-     * the nextEndUseCaseDestination is reset to the DEFAULT_DESTINATION.
+     * Signifies the end of a use case. Shows the player the turn actions.
      */
     public void endUseCase() {
-        switch (nextEndUseCaseDestination) {
-            case DEFAULT_DESTINATION:
-                gameState.showTurnActions();
-                break;
-            case LIQUIDATE_ASSETS:
-                //TODO call to the liquidate assets use case (does not exist yet)
-                break;
-        }
-        nextEndUseCaseDestination = EndUseCaseDestination.DEFAULT_DESTINATION;
-    }
-
-    public EndUseCaseDestination getNextEndUseCaseDestination() {
-        return nextEndUseCaseDestination;
-    }
-
-    /**
-     * Sets which method will be called after the next endUseCase method is called. Destinations:
-     * <ul>
-     *     <li><b>DEFAULT_DESTINATION</b> The endUseCase method will show the player a list of turn action options
-     *          they can take.</li>
-     *     <li><b>LIQUIDATE_ASSETS</b> The endUseCase method will call the LIQUIDATE_ASSETS use case (to be used
-     *          when a use case is called from the LiquidateAssets use case when the player must get money to make
-     *          a payment.</li>
-     * </ul>
-     */
-    public void setNextEndUseCaseDestination(EndUseCaseDestination nextEndUseCaseDestination) {
-        this.nextEndUseCaseDestination = nextEndUseCaseDestination;
+        gameState.showTurnActions();
     }
 
     public void endTurn() {
-        gameState.endTurn();
+        endTurn.endTurn(gameState.currentPlayer());
+    }
+
+    public void forceEndTurn() {
+        endTurn.forceEndTurn(gameState.currentPlayer());
     }
 
     /* Move Player/RollDice use case related methods */
-    public void rollDice(Player player) {
-        movePlayer.startAction(player, true);
+    public void rollDice() {
+        movePlayer.startAction(gameState.currentPlayer(), true);
     }
 
-    public void endRollDice(Player player, boolean rollAgain) {
-        if(!rollAgain) {
+    public void endRollDice(boolean rollAgain) {
+        if (!rollAgain) {
             gameState.playerRolledToMove();
         }
         endUseCase();
     }
 
-    public void buyProperty(Player player, Property property) {
-        player.addProperty(property);
-        player.subtractMoney(property.getPurchasePrice());
+    public void buyProperty(Property property) {
+        gameState.currentPlayer().addProperty(property);
+        gameState.currentPlayer().subtractMoney(property.getPurchasePrice());
     }
 
     /* TryToGetOutOfJail use case related methods */
-    public void attemptLeaveJail(Player player) {
+    public void attemptLeaveJail() {
         // Show the player their options for getting out of jail
-        getOutOfJail.getPlayerOptions(player);
+        getOutOfJail.getPlayerOptions(gameState.currentPlayer());
     }
 
-    public void leaveJailWithChoice(Player player, String playerChoice) {
+    public void leaveJailWithChoice(String playerChoice) {
         // Leave jail with the appropriate option.
-        getOutOfJail.startAction(playerChoice, player);
+        getOutOfJail.startAction(playerChoice, gameState.currentPlayer());
+        gameState.playerAttemptedLeaveJail();
     }
 
     /* Mortgage property related methods */
-//    public void showMortgageableProperties(Player player) { mortgageProperty.showMortgageOptions(player); }
+    public void showMortgageableProperties() { mortgageProperty.showMortgageOption(gameState.currentPlayer()); }
 
-    public void mortgageProperty(Player player, Property property) {
-        mortgageProperty.mortgage(player, property);
+    public void mortgageProperty(Property property) {
+        mortgageProperty.mortgage(gameState.currentPlayer(), property);
     }
 
-//    public void showUnmortgageableProperties(Player palyer) { mortgageProperty.showUnmortgageOptions(player); }
+    public void showUnmortgageableProperties() { mortgageProperty.showUnmortgageOption(gameState.currentPlayer()); }
 
-    public void unmortgageProperty(Player player, Property property) {
-        mortgageProperty.unmortgage(player, property);
+    public void unmortgageProperty(Property property) {
+        mortgageProperty.unmortgage(gameState.currentPlayer(), property);
     }
 
     /* BuildBuilding Related Methods */
-//    public void getBuildableProperties(Player player) { buildBuilding.showBuildingOptions(player); }
+    public void showBuildableProperties() { buildBuilding.showBuildOption(gameState.currentPlayer()); }
 
-    public void buildHouse(Player player, ColorPropertyTile property) {
-        buildBuilding.buildHouse(player, property);
+    public void buildHouse(ColorPropertyTile property) {
+        buildBuilding.buildHouse(gameState.currentPlayer(), property);
     }
 
-    public void buildHotel(Player player, ColorPropertyTile property) {
-        buildBuilding.buildHotel(player, property);
+    public void buildHotel(ColorPropertyTile property) {
+        buildBuilding.buildHotel(gameState.currentPlayer(), property);
     }
 
-//    public void getBuiltOnProperties(Player player) { buildBuilding.showSellOptions(player); }
+    public void showBuiltOnProperties() { buildBuilding.showSellOption(gameState.currentPlayer()); }
 
-    public void sellHouse(Player player, ColorPropertyTile property) {
-        buildBuilding.sellHouse(player, property);
+    public void sellHouse(ColorPropertyTile property) {
+        buildBuilding.sellHouse(gameState.currentPlayer(), property);
     }
 
-    public void sellHotel(Player player, ColorPropertyTile property) {
-        buildBuilding.sellHotel(player, property);
+    public void sellHotel(ColorPropertyTile property) {
+        buildBuilding.sellHotel(gameState.currentPlayer(), property);
     }
 
     /* Trade Related Methods */
-    public void showTradablePlayers(Player currentPlayer, List<Player> playerList) {
-        trade.choosePlayer((ArrayList<Player>) playerList, currentPlayer);
+    public void showTradablePlayers() {
+        trade.choosePlayer(gameState.getActivePlayers(), gameState.currentPlayer());
     }
 
     public void startTrade(Player proposing, Player receiving) {
@@ -188,8 +165,6 @@ public class TurnController {
     }
 
     public void makeOffer(Player offering, Player receiving, TradeOffer player1Offer) {
-//        TradeOffer player1Offer = new TradeOffer(player1Money - player2Money, player1JailCard - player2JailCard,
-//                (ArrayList<Property>) player1Property, (ArrayList<Property>) player2Property, offering, receiving);
         trade.makeOffer(player1Offer, offering, receiving);
     }
 
@@ -214,23 +189,14 @@ public class TurnController {
         liquidateAssets.getPlayerOptions(situation);
     }
 
-    public void getMortgageableProperties(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+    public void getMortgageableProperties(LiquiditySituation situation) {liquidateAssets.getMortgageableProperties(situation);}
 
-    public void getPropertiesWithHouses(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+    public void getPropertiesWithHouses(LiquiditySituation situation) { liquidateAssets.getPropertiesWithHouses(situation); }
 
-    public void bankruptcy(LiquiditySituation situation) { liquidateAssets.getPlayerOptions(situation); }
+    public void bankruptcy(LiquiditySituation situation) { liquidateAssets.bankruptcy(situation); }
 
     /* ViewInventory Related Methods */
-    public void showInventory(Player currentPlayer, List<Player> playerList) {
-        viewInventory.displayInfo(currentPlayer, playerList);
-    }
-
-    public void endTurn(Player player){
-        endTurn.endTurn(player);
-    }
-
-    enum EndUseCaseDestination {
-        DEFAULT_DESTINATION,
-        LIQUIDATE_ASSETS
+    public void showInventory(Player player, List<Player> playerList) {
+        viewInventory.displayInfo(player, playerList);
     }
 }
