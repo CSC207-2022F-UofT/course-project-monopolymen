@@ -118,6 +118,7 @@ public class TurnController {
     public void leaveJailWithChoice(String playerChoice) {
         // Leave jail with the appropriate option.
         getOutOfJail.startAction(playerChoice, gameState.currentPlayer());
+        gameState.playerAttemptedLeaveJail();
     }
 
     /* Mortgage property related methods */
