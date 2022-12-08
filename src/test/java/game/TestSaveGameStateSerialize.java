@@ -54,7 +54,7 @@ public class TestSaveGameStateSerialize {
         players.add(player3);
         players.add(player4);
 
-        gameState = new GameState(players, "gameName1", save, presenter);
+        gameState = new GameState(players, "gameName1", board, save, presenter);
     }
 
     @Test
