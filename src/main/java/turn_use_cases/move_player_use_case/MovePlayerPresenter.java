@@ -132,15 +132,27 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         // Move the player to the new position.
         playerPanel.setBounds(scaledTilePositions[playerPosition][0] + playerOffset[playerList.indexOf(player)][0],
                 scaledTilePositions[playerPosition][1] + playerOffset[playerList.indexOf(player)][1], 50, 50);
-        JButton otherOptions = new JButton(buttonText);
-        otherOptions.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                turnController.endRollDice(rollAgain);
-            }
-        });
-        optionsWindow.add(otherOptions);
+        if(player.getTurnsInJail() == -1) {
+            JButton otherOptions = new JButton(buttonText);
+            otherOptions.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
+                    turnController.endRollDice(rollAgain);
+                }
+            });
+            optionsWindow.add(otherOptions);
+        } else {
+            JButton otherOptions = new JButton("End Turn");
+            otherOptions.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
+                    turnController.endTurn();
+                }
+            });
+            optionsWindow.add(otherOptions);
+        }
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
         cardLayout.show(actionDialogBox, "Roll options");
     }
