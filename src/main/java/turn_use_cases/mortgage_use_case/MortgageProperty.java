@@ -36,10 +36,12 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
         for (int i = 0; i < properties.size(); i++){
             if (properties.get(i) instanceof ColorPropertyTile
                     && ((ColorPropertyTile) properties.get(i)).getNumHouses() == 0
-                    && ((ColorPropertyTile) properties.get(i)).getNumHotels() == 0){
+                    && ((ColorPropertyTile) properties.get(i)).getNumHotels() == 0
+                    && !properties.get(i).isMortgaged()){
                 mortgageable.add(properties.get(i));
             } else if (properties.get(i) instanceof RailroadTile
-                    || properties.get(i) instanceof UtilityTile) {
+                    || properties.get(i) instanceof UtilityTile
+                    && !properties.get(i).isMortgaged()) {
                 mortgageable.add(properties.get(i));
             }
         }
