@@ -8,9 +8,10 @@ public interface GameStateOutputBoundary {
     /**
      * Show that it is the next player's turn.
      *
-     * @param newPlayer The player whose turn it now is.
+     * @param newPlayer  The player whose turn it now is.
+     * @param turnNumber The current Turn Number.
      */
-    void showNextTurn(Player newPlayer);
+    void showNextTurn(Player newPlayer, int turnNumber);
 
     /**
      * Show the current player the valid Turn Actions they can take. These TurnActions link to TurnController methods.
