@@ -161,7 +161,7 @@ public class Game {
         MovePlayerInputBoundary movePlayer = new MovePlayerUseCase(movePlayerPresenter, board, endTurn);
 
         TryToGetOutOfJailOutputBoundary leaveJailPresenter = new TryToGetOutOfJailPresenter(actionDialogBoxes, turnController);
-        TryToGetOutOfJailInputBoundary leaveJail = new TryToGetOutOfJailUseCase(leaveJailPresenter, board, endTurn, movePlayer, movePlayerPresenter);
+        TryToGetOutOfJailInputBoundary leaveJail = new TryToGetOutOfJailUseCase(leaveJailPresenter, movePlayer, movePlayerPresenter);
 
         ViewInventoryOutputBoundary viewInventoryPresenter = new ViewInventoryPresenter(inventorySummaryBox, gameState.getAllPlayers(), turnController);
         ViewInventoryInputBoundary viewInventory = new ViewInventory(viewInventoryPresenter);

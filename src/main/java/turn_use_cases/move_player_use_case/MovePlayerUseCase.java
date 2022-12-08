@@ -136,14 +136,11 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         if(result instanceof CardActionResultModel) {
             // Player landed on draw card tile
             CardActionResultModel cardResult = (CardActionResultModel) result;
-            System.out.println(playerBeforePosition);
-            System.out.println(cardResult.getPlayerPosition());
             if(playerBeforePosition != result.getPlayerPosition()){
                 // Card moved player
                 if(result.getPlayerPosition() == board.getJailTilePosition()) {
                     // Player is moving to jail, does not collect "GO" tile money
                     // player.enterJail() is handled in the card's action
-                    System.out.println("Enter jail");
                     movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(), false, cardResult.isChance());
                     sendToJail(player);
                 } else {
