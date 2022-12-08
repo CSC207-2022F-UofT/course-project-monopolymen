@@ -180,10 +180,10 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     public void showCardDraw(Player player, String cardName, boolean rollAgain,  boolean isChance) {
         // Clear the options window. as this is different from showResultOfAction
         ImageIcon cardImage = new ImageIcon(new ImageIcon("src/main/resources/assets/cards/" + cardName + ".jpg")
-                .getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH));
+                .getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
         JLabel cardImageLabel = new JLabel(cardImage);
         // scale the image
-        cardImageLabel.setPreferredSize(new Dimension(300, 300)); 
+        cardImageLabel.setPreferredSize(new Dimension(150, 150));
         optionsWindow.add(cardImageLabel);
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
         cardLayout.show(actionDialogBox, "Roll options");
