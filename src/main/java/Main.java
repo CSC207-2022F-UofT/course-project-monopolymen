@@ -1,4 +1,5 @@
 import game.Game;
+import game_entities.tiles.Property;
 import ui.GameView.PlayerIcon;
 
 public class Main {
@@ -14,5 +15,9 @@ public class Main {
 //        Game game = new Game("Sample Game", "./saves/");
 
         game.startGame();
+        for (Property prop : game.getBoard().getPropertyTiles()) {
+            prop.setOwner(game.getPlayers().get(0));
+            game.getPlayers().get(0).addProperty(prop);
+        }
     }
 }

@@ -51,7 +51,7 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
             resetOptionsPanel();
             choicesPanel.add(new JLabel(flavorText));
             for (Property property : properties){
-                JButton optionsButton = new JButton("Pick " + property.getTileName());
+                JButton optionsButton = new JButton("Pick " + property.getTileDisplayName());
                 optionsButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -141,7 +141,7 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
         } else {
             choicesPanel.add(new JLabel(flavorText));
             for (Property property : properties){
-                JButton optionsButton = new JButton("Pick " + property.getTileName());
+                JButton optionsButton = new JButton("Pick " + property.getTileDisplayName());
                 optionsButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {

@@ -1,15 +1,13 @@
 package game_entities;
-import static org.junit.Assert.*;
 
-import game_entities.Board;
-import game_entities.FactoryBoard;
 import game_entities.tiles.*;
-
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 public class TestFactoryClassBoard {
     @Test
     public void testOrder() throws FileNotFoundException {
@@ -22,7 +20,7 @@ public class TestFactoryClassBoard {
         ArrayList<Tile> test = FactoryBoard.order(colorProperties, railroadProperties, utilityProperties);
         assertEquals(test.size(), 40);
         assertEquals(test.get(0).getTileName(), "GoTile");
-        assertEquals(test.get(39).getTileName(), "Boardwalk");
+        assertEquals(test.get(39).getTileName(), "boardwalk");
     }
     @Test
     public void testBoardMaker() throws FileNotFoundException {

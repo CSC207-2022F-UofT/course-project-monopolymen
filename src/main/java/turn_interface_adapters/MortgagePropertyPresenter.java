@@ -1,14 +1,14 @@
 package turn_interface_adapters;
 
-import game.GameState;
 import game_entities.Player;
 import game_entities.tiles.Property;
 import turn_use_cases.mortgage_use_case.MortgagePropertyOutputBoundary;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary {
 
@@ -54,7 +54,7 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
         } else {
             mortgagePanel.add(new JLabel(flavorText));
             for (Property property : properties){
-                JButton optionsButton = new JButton("Pick " + property.getTileName());
+                JButton optionsButton = new JButton("Pick " + property.getTileDisplayName());
                 optionsButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -99,7 +99,7 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
         } else {
             mortgagePanel.add(new JLabel(flavorText));
             for (Property property : properties){
-                JButton optionsButton = new JButton("Pick " + property.getTileName());
+                JButton optionsButton = new JButton("Pick " + property.getTileDisplayName());
                 optionsButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {

@@ -81,16 +81,16 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
                 && ((ColorPropertyTile) property).getNumHotels() == 0) {
             player.addMoney(property.mortgage());
             int mortgageValue = property.getMortgageValue();
-            String text = player.getName() + " mortgaged " + property.getTileName() + " and get $" + mortgageValue;
+            String text = player.getName() + " mortgaged " + property.getTileDisplayName() + " and get $" + mortgageValue;
             presenter.showMortgageProperty(player, property, text);
         } else if (player.ownsProperty(property) && property instanceof RailroadTile
                 || property instanceof UtilityTile){
             player.addMoney(property.mortgage());
             int mortgageValue = property.getMortgageValue();
-            String text = player.getName() + " mortgaged " + property.getTileName() + " and get $" + mortgageValue;
+            String text = player.getName() + " mortgaged " + property.getTileDisplayName() + " and get $" + mortgageValue;
             presenter.showMortgageProperty(player, property, text);
         } else {
-            String text = player.getName() + " cannot mortgage " + property.getTileName();
+            String text = player.getName() + " cannot mortgage " + property.getTileDisplayName();
             presenter.showMortgageProperty(player, property, text);
         }
     }

@@ -114,10 +114,10 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             //need to add a method addHouse in ColorPropertyTile class to add the number of house.
             String color = property.getColor();
             player.subtractMoney(property.getBuildingCost());
-            String text = player.getName() + " built a house on " + property.getTileName();
+            String text = player.getName() + " built a house on " + property.getTileDisplayName();
             presenter.showBuildBuilding(player, property, text);
         }
-        String text = player.getName() + " cannot build a house on " + property.getTileName();
+        String text = player.getName() + " cannot build a house on " + property.getTileDisplayName();
         presenter.showBuildBuilding(player, property, text);
     }
 
@@ -134,10 +134,10 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             //need to add a method addHotel in ColorPropertyTile class to add the number of hotel.
             String color = property.getColor();
             player.subtractMoney(property.getBuildingCost());
-            String text = player.getName() + " built a hotel on " + property.getTileName();
+            String text = player.getName() + " built a hotel on " + property.getTileDisplayName();
             presenter.showBuildBuilding(player, property, text);
         }
-        String text = player.getName() + " cannot build a hotel on " + property.getTileName();
+        String text = player.getName() + " cannot build a hotel on " + property.getTileDisplayName();
         presenter.showBuildBuilding(player, property, text);
     }
 
@@ -211,10 +211,10 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             int value = 0;
             value = (int) (0.5*property.getBuildingCost());
             player.addMoney(value);
-            String text = player.getName() + " sold a house on " + property.getTileName();
+            String text = player.getName() + " sold a house on " + property.getTileDisplayName();
             presenter.showSellBuilding(player, property, text);
         }
-        String text = player.getName() + " cannot sell a house on " + property.getTileName();
+        String text = player.getName() + " cannot sell a house on " + property.getTileDisplayName();
         presenter.showSellBuilding(player, property, text);
     }
 
@@ -231,10 +231,10 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             int value = 0;
             value = (int) (0.5*property.getBuildingCost());
             player.addMoney(value);
-            String text = player.getName() + " sold a hotel on " + property.getTileName();
+            String text = player.getName() + " sold a hotel on " + property.getTileDisplayName();
             presenter.showSellBuilding(player, property, text);
         }
-        String text = player.getName() + " cannot sell a hotel on " + property.getTileName();
+        String text = player.getName() + " cannot sell a hotel on " + property.getTileDisplayName();
         presenter.showSellBuilding(player, property, text);
     }
 }
