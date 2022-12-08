@@ -122,8 +122,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         if (player.getConsecutiveDoubles() == 3) {
             player.enterJail();
             movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
-                    "You are going to jail for rolling three consecutive doubles.", "Other Options");
-            endTurnUseCase.forceEndTurn(player);
+                    "You are going to jail for rolling three consecutive doubles.", "End Turn");
         } else {
             movePlayer(player, rollSum, doubleRoll);
         }
