@@ -28,10 +28,9 @@ public class TradeUseCase implements  TradeInputBoundary{
      *
      * @param listOfPlayers list of all the players in the game.
      * @param player        the player who wants to make a trade.
-     * @return the list of potential players
      */
     @Override
-    public ArrayList<Player> choosePlayer(List<Player> listOfPlayers, Player player) {
+    public void choosePlayer(List<Player> listOfPlayers, Player player) {
 
 
         ArrayList<Player> listOfPotentialPlayers = new ArrayList<>(listOfPlayers);
@@ -42,7 +41,6 @@ public class TradeUseCase implements  TradeInputBoundary{
                 player.getName() +  ", please choose who to trade with.");
 
 
-        return listOfPotentialPlayers;
     }
 
 
@@ -51,10 +49,9 @@ public class TradeUseCase implements  TradeInputBoundary{
      *
      * @param player1 the player who wants to make a trade
      * @param player2 the player who player1 wants to trade with
-     * @return a TradeOption object that contains the potential options for the trade.
      */
     @Override
-    public TradeOption getTradeOptions(Player player1, Player player2) {
+    public void getTradeOptions(Player player1, Player player2) {
         TradeOption tradeOption = new TradeOption(player1.getMoney(), player2.getMoney(),
                 player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
                 player1.getProperties(), player2.getProperties(), player1, player2);
@@ -62,7 +59,6 @@ public class TradeUseCase implements  TradeInputBoundary{
         presenter.showTradeOptions(tradeOption,"<html><body>"+ player1.getName() +
                 ", please choose what you want to trade."+"</body></html>");
 
-        return tradeOption;
     }
 
 

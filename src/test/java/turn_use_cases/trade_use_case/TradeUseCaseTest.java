@@ -51,6 +51,9 @@ public class TradeUseCaseTest {
             player2.removeGetOutOfJailCard();
         }
 
+        presenter.testTradeOption = null;
+        presenter.testPlayerList = null;
+
     }
 
     @Test
@@ -62,8 +65,9 @@ public class TradeUseCaseTest {
         ArrayList<Player> potentialPlayers = new ArrayList<>();
         potentialPlayers.add(player2);
 
+        tradeUseCase.choosePlayer(listOfPlayers, player1);
+        ArrayList<Player> actual = presenter.testPlayerList;
 
-        ArrayList<Player> actual = tradeUseCase.choosePlayer(listOfPlayers, player1);
         assertEquals(potentialPlayers, actual);
 
     }
@@ -74,7 +78,9 @@ public class TradeUseCaseTest {
                 player1.hasGetOutofJailFreeCard(), player2.hasGetOutofJailFreeCard(),
                 player1.getProperties(), player2.getProperties(), player1, player2);
 
-        TradeOption actual = tradeUseCase.getTradeOptions(player1, player2);
+
+        tradeUseCase.getTradeOptions(player1, player2);
+        TradeOption actual = presenter.testTradeOption;
 
         assertEquals(tradeOption.getPlayer1Money(), actual.getPlayer1Money());
         assertEquals(tradeOption.getPlayer2Money(), actual.getPlayer2Money());
