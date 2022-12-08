@@ -88,6 +88,13 @@ public class BuildBuildingTest {
     }
 
     @Test
+    public void testIsBuildable_4(){
+        boolean flag = buildBuildings.isBuildable(player_1, property_4);
+        assertEquals(flag, false);
+    }
+
+
+    @Test
     public void testBuildBuilding_1(){
         buildBuildings.buildHouse(player_1, property_1);
         int i = property_1.getNumHouses();
@@ -104,6 +111,16 @@ public class BuildBuildingTest {
     }
 
     @Test
+    public void testBuildBuilding_3(){
+        property_1.addHouse(3);
+        property_2.addHouse(4);
+        System.out.println(buildBuildings.isBuildable(player_1, property_1));
+        buildBuildings.buildHotel(player_1, property_1);
+        int i = property_1.getNumHotels();
+        assertEquals(i, 0);
+    }
+
+    @Test
     public void testIsSellable_1(){
         property_1.addHouse(4);
         property_2.addHouse(4);
@@ -115,6 +132,12 @@ public class BuildBuildingTest {
     public void testIsSellable_2(){
         property_1.addHouse(3);
         property_2.addHouse(4);
+        boolean flag = buildBuildings.isSellable(player_1, property_1);
+        assertEquals(flag, false);
+    }
+
+    @Test
+    public void testIsSellable_3(){
         boolean flag = buildBuildings.isSellable(player_1, property_1);
         assertEquals(flag, false);
     }

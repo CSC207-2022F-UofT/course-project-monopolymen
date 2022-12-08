@@ -51,6 +51,7 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
             });
             showOptionsPanel();
         } else {
+            resetOptionsPanel();
             mortgagePanel.add(new JLabel(flavorText));
             for (Property property : properties){
                 JButton optionsButton = new JButton("Pick " + property.getTileName());
