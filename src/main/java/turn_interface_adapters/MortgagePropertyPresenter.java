@@ -53,16 +53,33 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
             showOptionsPanel();
         } else {
             mortgagePanel.add(new JLabel(flavorText));
+            JComboBox<String> comboBox = new JComboBox<String>();
             for (Property property : properties){
-                JButton optionsButton = new JButton("Pick " + property.getTileName());
-                optionsButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        controller.mortgageProperty(property);
-                    }
-                });
-                mortgagePanel.add(optionsButton);
+                comboBox.addItem(property.getTileDisplayName());
             }
+            mortgagePanel.add(comboBox);
+            JButton pickButton = new JButton("Pick");
+            pickButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for (Property property : properties){
+                        if (property.getTileDisplayName().equals(comboBox.getSelectedItem())){
+                            controller.mortgageProperty(property);
+                        }
+                    }
+                }
+            });
+            mortgagePanel.add(pickButton);
+//            for (Property property : properties){
+//                JButton optionsButton = new JButton("Pick " + property.getTileName());
+//                optionsButton.addActionListener(new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        controller.mortgageProperty(property);
+//                    }
+//                });
+//                mortgagePanel.add(optionsButton);
+//            }
             JButton backButton = new JButton("Cancel");
             backButton.addActionListener(new ActionListener() {
                 @Override
@@ -98,16 +115,34 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
             showOptionsPanel();
         } else {
             mortgagePanel.add(new JLabel(flavorText));
+            JComboBox<String> comboBox = new JComboBox<String>();
             for (Property property : properties){
-                JButton optionsButton = new JButton("Pick " + property.getTileName());
-                optionsButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        controller.unmortgageProperty(property);
-                    }
-                });
-                mortgagePanel.add(optionsButton);
+                comboBox.addItem(property.getTileDisplayName());
             }
+            mortgagePanel.add(comboBox);
+            JButton pickButton = new JButton("Pick");
+            pickButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for (Property property : properties){
+                        if (property.getTileDisplayName().equals(comboBox.getSelectedItem())){
+                            controller.unmortgageProperty(property);
+                        }
+                    }
+                }
+            });
+            mortgagePanel.add(pickButton);
+//            mortgagePanel.add(new JLabel(flavorText));
+//            for (Property property : properties){
+//                JButton optionsButton = new JButton("Pick " + property.getTileName());
+//                optionsButton.addActionListener(new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        controller.unmortgageProperty(property);
+//                    }
+//                });
+//                mortgagePanel.add(optionsButton);
+//            }
             JButton backButton = new JButton("Cancel");
             backButton.addActionListener(new ActionListener() {
                 @Override
