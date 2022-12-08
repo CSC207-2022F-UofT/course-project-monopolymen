@@ -17,7 +17,7 @@ public class AdvanceCardTest {
     public void cardAction() throws FileNotFoundException {
         Board testBoard = TestObjects.testBoardReal();
         AdvanceCard goToJailCard = new AdvanceCard("", "", "",
-                true, -1, "JailTile", null);
+                true, -1, "JailTile", testBoard);
         Player testPlayer1 = TestObjects.testPlayerRB();
         goToJailCard.action(testPlayer1);
         assertEquals(testBoard.getJailTilePosition(), testPlayer1.getPosition());

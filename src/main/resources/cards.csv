@@ -9,7 +9,7 @@ advanceNear,card_chance_7,c7,Advance to the nearest utility. If unowned you may 
 advance,card_chance_8,c8,"Take a trip to Reading Railroad. If you pass ""Go"" collect $200",TRUE,Reading Railroad,N/A,N/A,N/A,N/A,N/A
 advance,card_chance_9,c9,"Advance to St. Charles Place. If you pass ""Go"" collect $200",TRUE,St. Charles Place,N/A,N/A,N/A,N/A,N/A
 money,card_chance_10,c10,Speeding Fine $15,TRUE,N/A,-15,N/A,N/A,N/A,N/A
-advance,card_chance_11,c11,"Go to Jail. Go directly to Jail. Do not pass ""Go"". Do not collect $200. ",TRUE,Jail,N/A,N/A,N/A,N/A,N/A
+advance,card_chance_11,c11,"Go to Jail. Go directly to Jail. Do not pass ""Go"". Do not collect $200. ",TRUE,JailTile,N/A,N/A,N/A,N/A,N/A
 moveBack,card_chance_12,c12,Go back three spaces,TRUE,N/A,N/A,N/A,N/A,-3,N/A
 advanceNear,card_chance_13,c13,Advance to the nearest railroad. If unowned you may buy it from the Bank. If owned pay owner twice the rental to which they are otherwise entitles,TRUE,N/A,N/A,N/A,N/A,N/A,Railroad
 advanceNear,card_chance_14,c14,Advance to the nearest railroad. If unowned you may buy it from the Bank. If owned pay owner twice the rental to which they are otherwise entitles,TRUE,N/A,N/A,N/A,N/A,N/A,Railroad
@@ -22,8 +22,8 @@ money,card_chest_4,c20,From sale of stock you get $50,FALSE,N/A,50,N/A,N/A,N/A,N
 money,card_chest_5,c21,You inherit $100,FALSE,N/A,100,N/A,N/A,N/A,N/A
 money,card_chest_6,c22,Income tax refund. Collect $20,FALSE,N/A,20,N/A,N/A,N/A,N/A
 money,card_chest_7,c23,Pay hospital fees of $100,FALSE,N/A,-100,N/A,N/A,N/A,N/A
-money,card_chest_8,c24,Holiday fund matures. Revieve $100,FALSE,N/A,100,N/A,N/A,N/A,N/A
-advance,card_chest_9,c25,"Go to Jail. Go directly to Jail. Do not pass ""Go"". Do not collect $200. ",FALSE,Jail,N/A,N/A,N/A,N/A,N/A
+money,card_chest_8,c24,Holiday fund matures. Receive $100,FALSE,N/A,100,N/A,N/A,N/A,N/A
+advance,card_chest_9,c25,"Go to Jail. Go directly to Jail. Do not pass ""Go"". Do not collect $200. ",FALSE,JailTile,N/A,N/A,N/A,N/A,N/A
 jail,card_chest_10,c26,Get Out Of Jail Free.This card may be kept until needed or traded,FALSE,N/A,N/A,N/A,N/A,N/A,N/A
 money,card_chest_11,c27,Doctor's fees. Pay $50,FALSE,N/A,-50,N/A,N/A,N/A,N/A
 money,card_chest_12,c28,Receive $25 consultancy fee,FALSE,N/A,25,N/A,N/A,N/A,N/A
