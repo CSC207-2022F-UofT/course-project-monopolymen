@@ -172,6 +172,9 @@ public class ColorPropertyTile extends Property{
         }
         Player firstPlayer = playerArr.get(0);
         for(Player player: playerArr) {
+            if(player == null){
+                return false;
+            }
             if(!player.equals(firstPlayer)) {
                 ownSet = false;
             }

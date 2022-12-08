@@ -1,6 +1,7 @@
 package game;
 
 import game.GameStateOutputBoundary.TurnActions;
+import game_entities.Board;
 import game_entities.Player;
 import turn_interface_adapters.TurnController;
 
@@ -21,6 +22,7 @@ public class GameState implements Serializable {
     private final List<Player> allPlayers;
     private final List<Player> activePlayers;
     private final String gameName;
+    private final Board board;
     private int numPlayers;
     private transient SaveGameState saveGameState;
     private transient GameStateOutputBoundary presenter;
@@ -33,16 +35,18 @@ public class GameState implements Serializable {
      *
      * @param players       The list of Players in the game specifying the order that the players play in.
      * @param gameName      The name of this game. Also used for the save name.
+     * @param board         The board associated with this gameState
      * @param saveGameState The SaveGameState object that handles saving the game.
      * @param presenter     The Presenter object for this game state.
      */
-    public GameState(List<Player> players, String gameName, SaveGameState saveGameState, GameStateOutputBoundary presenter) {
+    public GameState(List<Player> players, String gameName, Board board, SaveGameState saveGameState, GameStateOutputBoundary presenter) {
         this.allPlayers = players;
         this.activePlayers = new ArrayList<>();
         this.currentPlayer = 0;
         this.numPlayers = allPlayers.size();
         this.saveGameState = saveGameState;
         this.turnCounter = 0;
+        this.board = board;
         this.gameName = gameName;
         this.presenter = presenter;
         this.playerAllowedToEndTurn = false;
@@ -133,7 +137,7 @@ public class GameState implements Serializable {
      */
     public void endTurn() {
         nextPlayer();
-        boolean saved = saveGameState.save(this, "save_" + gameName + "_turn_" + turnCounter);
+        boolean saved = saveGameState.save(this, "save_" + gameName);
         presenter.showAutosaveStatus(saved);
         // Start the next player's Turn.
         presenter.showNextTurn(currentPlayer());
@@ -206,6 +210,10 @@ public class GameState implements Serializable {
      */
     public List<Player> getActivePlayers() {
         return activePlayers;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     /**
