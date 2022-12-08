@@ -116,7 +116,7 @@ public class ColorPropertyTile extends Property{
     @Override
     public int getRent(Player rentPayer, List<Property> propertyList) {
         if (!isOwned()){
-            return -1;
+            return 0;
         }
         if ((getNumHotels() == 0 && getNumHouses() == 0) & allColoredPropertySetOwned(getColor(),propertyList)){
             return rentPrice[1];
@@ -148,8 +148,10 @@ public class ColorPropertyTile extends Property{
             return new TileActionResultModel("Would you Like to Purchase " + getTileName() + " for " + getPurchasePrice() + " ?" , player, player.getPosition());
         }
         else{
-            player.subtractMoney(getRent(player, board.getPropertyTiles()));
-            getOwner().addMoney(getRent(player, board.getPropertyTiles()));
+            if(getRent(player, board.getPropertyTiles()) <= player.getMoney()){
+                getOwner().addMoney(getRent(player, board.getPropertyTiles()));
+            }
+            player.subtractMoney(getRent(player, board.getPropertyTiles()), getOwner());
             return new TileActionResultModel("You Paid " + getRent(player, board.getPropertyTiles()) + " to " + getOwner().getName(), player, player.getPosition());
         }
     }
@@ -159,21 +161,22 @@ public class ColorPropertyTile extends Property{
     }
 
     public boolean checkSetOwned(List<Property> arr) {
-        ArrayList<Player> playerArr = new ArrayList<>();
+        boolean ownSet = true;
+        ArrayList<Player> playerArr = new ArrayList<Player>();
         for (Property property : arr) {
-            if (property instanceof ColorPropertyTile) {
-                if (Objects.equals(((ColorPropertyTile) property).getColor(), this.color)) {
+            if(property instanceof ColorPropertyTile) {
+                if(((ColorPropertyTile) property).getColor() == this.color) {
                     playerArr.add(property.getOwner());
                 }
             }
         }
         Player firstPlayer = playerArr.get(0);
-        for (Player player : playerArr) {
-            if (!player.equals(firstPlayer)) {
-                return false;
+        for(Player player: playerArr) {
+            if(!player.equals(firstPlayer)) {
+                ownSet = false;
             }
         }
-        return true;
+        return ownSet;
     }
 }
 
