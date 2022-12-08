@@ -165,7 +165,7 @@ public class LiquidateAssetsInterfaceAdapter implements LiquidateAssetsOutputBou
                     }
                     //Because selling a house on a property might change whether you can sell a house on another
                     // property, this method needs to be called again for the list to remain accurate
-                    turnController.getPlayerOptions(situation);
+                    turnController.getPropertiesWithHouses(situation);
                 }
             });
             optionsPanel.add(sellHouse);
