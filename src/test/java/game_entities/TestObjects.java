@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class TestObjects {
     public static AdvanceCard testAdvanceCard(int testNumber, String testName){
         AdvanceCard testCard = new AdvanceCard("Test Card", "Test Card Display",
-                "This is a test card", false, testNumber, testName);
+                "This is a test card", false, testNumber, testName, null);
         return testCard;
     }
 

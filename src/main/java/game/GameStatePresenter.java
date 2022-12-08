@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class GameStatePresenter implements GameStateOutputBoundary {
+    private final JFrame mainWindow;
     private final JPanel actionDialogBoxes;
     private final JPanel turnActionsPanel;
     private final JPanel turnActionButtonsPanel;
@@ -17,7 +18,8 @@ public class GameStatePresenter implements GameStateOutputBoundary {
     private final String CARD_NAME;
     private final TurnController controller;
 
-    public GameStatePresenter(JPanel actionDialogBoxes, TurnController controller, JPanel autosaveInfoPanel) {
+    public GameStatePresenter(JFrame mainWindow, JPanel actionDialogBoxes, TurnController controller, JPanel autosaveInfoPanel) {
+        this.mainWindow = mainWindow;
         this.actionDialogBoxes = actionDialogBoxes;
         this.controller = controller;
         this.autosaveInfoPanel = autosaveInfoPanel;
@@ -35,10 +37,11 @@ public class GameStatePresenter implements GameStateOutputBoundary {
     /**
      * Show that it is the next player's turn.
      *
-     * @param newPlayer The player whose turn it now is.
+     * @param newPlayer  The player whose turn it now is.
+     * @param turnNumber The current Turn Number. Displayed in title
      */
     @Override
-    public void showNextTurn(Player newPlayer) {
+    public void showNextTurn(Player newPlayer, int turnNumber) {
         resetTurnActionsPanel();
         turnActionsPanel.add(new JLabel("Player " + newPlayer.getName() + ", it's your turn!"), BorderLayout.CENTER);
         JButton acknowledgeButton = new JButton("OK");
@@ -49,6 +52,8 @@ public class GameStatePresenter implements GameStateOutputBoundary {
             }
         });
         turnActionButtonsPanel.add(acknowledgeButton);
+
+        mainWindow.setTitle("Monopoly Game - Turn " + turnNumber + " - Player " + newPlayer.getName());
         showTurnActionsPanel();
     }
 
@@ -110,7 +115,6 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                     buildBuilding.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            System.out.println("No behavior, waiting for buildBuildingsPresenter");
                             controller.showBuildableProperties();
                         }
                     });
@@ -121,7 +125,6 @@ public class GameStatePresenter implements GameStateOutputBoundary {
                     sellBuilding.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            System.out.println("No behavior, waiting for buildBuildingsPresenter");
                             controller.showBuiltOnProperties();
                         }
                     });

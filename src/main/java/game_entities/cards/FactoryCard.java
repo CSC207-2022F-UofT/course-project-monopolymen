@@ -139,7 +139,7 @@ public class FactoryCard {
         boolean chanceCard = Objects.equals(information.get(4), "TRUE");
         String tileName = information.get(5);
         int tileLocation = board.getTilePosition(tileName);
-        return new AdvanceCard(cardName, displayName, text, chanceCard, tileLocation, tileName);
+        return new AdvanceCard(cardName, displayName, text, chanceCard, tileLocation, tileName, board);
     }
 
     /**
@@ -169,6 +169,6 @@ public class FactoryCard {
         String text = information.get(3);
         boolean chanceCard = Objects.equals(information.get(4), "TRUE");
         int move = Integer.parseInt(information.get(9));
-        return new AdvanceCard(cardName, displayName, text, chanceCard, move, "N/A");
+        return new AdvanceCard(cardName, displayName, text, chanceCard, move, "N/A", null);
     }
 }

@@ -13,7 +13,7 @@ import javax.swing.*;
 public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary {
 
     private final JPanel actionDialogBoxes;
-    private final JPanel optionsPanel;
+    private final JPanel mortgagePanel;
     private final TurnController controller;
     private final CardLayout cardLayout;
 
@@ -25,8 +25,8 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
         this.cardLayout = cardLayout;
         this.actionDialogBoxes = actionDialogBoxes;
 
-        this.optionsPanel = new JPanel();
-        actionDialogBoxes.add(optionsPanel, "Options Panel");
+        this.mortgagePanel = new JPanel();
+        actionDialogBoxes.add(mortgagePanel, "Mortgage Panel");
 
     }
 
@@ -40,19 +40,56 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
     @Override
     public void showMortgagePropertyList(ArrayList<Property> properties, String flavorText) {
         resetOptionsPanel();
-        optionsPanel.add(new JLabel(flavorText));
-        for (Property property : properties){
-            JButton optionsButton = new JButton("Pick " + property.getTileName());
-            optionsButton.addActionListener(new ActionListener() {
+        if(properties.size() == 0){
+            mortgagePanel.add(new JLabel("You cannot mortgage a property."));
+            JButton backButton = new JButton("Back");
+            backButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    controller.mortgageProperty(property);
+                    controller.endUseCase();
                 }
             });
-            optionsPanel.add(optionsButton);
+            mortgagePanel.add(backButton);
+            showOptionsPanel();
+        } else {
+            mortgagePanel.add(new JLabel(flavorText));
+            JComboBox<String> comboBox = new JComboBox<String>();
+            for (Property property : properties){
+                comboBox.addItem(property.getTileDisplayName());
+            }
+            mortgagePanel.add(comboBox);
+            JButton pickButton = new JButton("Pick");
+            pickButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for (Property property : properties){
+                        if (property.getTileDisplayName().equals(comboBox.getSelectedItem())){
+                            controller.mortgageProperty(property);
+                        }
+                    }
+                }
+            });
+            mortgagePanel.add(pickButton);
+//            for (Property property : properties){
+//                JButton optionsButton = new JButton("Pick " + property.getTileName());
+//                optionsButton.addActionListener(new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        controller.mortgageProperty(property);
+//                    }
+//                });
+//                mortgagePanel.add(optionsButton);
+//            }
+            JButton backButton = new JButton("Cancel");
+            backButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controller.endUseCase();
+                }
+            });
+            mortgagePanel.add(backButton);
+            showOptionsPanel();
         }
-
-        showOptionsPanel();
     }
 
 
@@ -65,19 +102,57 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
     @Override
     public void showUnmortgagePropertyList(ArrayList<Property> properties, String flavorText) {
         resetOptionsPanel();
-        optionsPanel.add(new JLabel(flavorText));
-        for (Property property : properties){
-            JButton optionsButton = new JButton("Pick " + property.getTileName());
-            optionsButton.addActionListener(new ActionListener() {
+        if(properties.size() == 0){
+            mortgagePanel.add(new JLabel("You cannot unmortgage a property."));
+            JButton backButton = new JButton("Back");
+            backButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    controller.unmortgageProperty(property);
+                    controller.endUseCase();
                 }
             });
-            optionsPanel.add(optionsButton);
+            mortgagePanel.add(backButton);
+            showOptionsPanel();
+        } else {
+            mortgagePanel.add(new JLabel(flavorText));
+            JComboBox<String> comboBox = new JComboBox<String>();
+            for (Property property : properties){
+                comboBox.addItem(property.getTileDisplayName());
+            }
+            mortgagePanel.add(comboBox);
+            JButton pickButton = new JButton("Pick");
+            pickButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for (Property property : properties){
+                        if (property.getTileDisplayName().equals(comboBox.getSelectedItem())){
+                            controller.unmortgageProperty(property);
+                        }
+                    }
+                }
+            });
+            mortgagePanel.add(pickButton);
+//            mortgagePanel.add(new JLabel(flavorText));
+//            for (Property property : properties){
+//                JButton optionsButton = new JButton("Pick " + property.getTileName());
+//                optionsButton.addActionListener(new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        controller.unmortgageProperty(property);
+//                    }
+//                });
+//                mortgagePanel.add(optionsButton);
+//            }
+            JButton backButton = new JButton("Cancel");
+            backButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controller.endUseCase();
+                }
+            });
+            mortgagePanel.add(backButton);
+            showOptionsPanel();
         }
-
-        showOptionsPanel();
     }
 
 
@@ -91,7 +166,7 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
     @Override
     public void showMortgageProperty(Player player, Property property, String flavorText) {
         resetOptionsPanel();
-        optionsPanel.add(new JLabel(flavorText));
+        mortgagePanel.add(new JLabel(flavorText));
         JButton endButton = new JButton("End Mortgage");
         endButton.addActionListener(new ActionListener() {
             @Override
@@ -99,7 +174,7 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
                 controller.endUseCase();
             }
         });
-        optionsPanel.add(endButton);
+        mortgagePanel.add(endButton);
         showOptionsPanel();
     }
 
@@ -114,7 +189,7 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
     @Override
     public void showUnmortgageProperty(Player player, Property property, String flavorText) {
         resetOptionsPanel();
-        optionsPanel.add(new JLabel(flavorText));
+        mortgagePanel.add(new JLabel(flavorText));
         JButton endButton = new JButton("End Unmortgage");
         endButton.addActionListener(new ActionListener() {
             @Override
@@ -122,20 +197,20 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
                 controller.endUseCase();
             }
         });
-        optionsPanel.add(endButton);
+        mortgagePanel.add(endButton);
         showOptionsPanel();
     }
 
     private void resetOptionsPanel() {
-        optionsPanel.removeAll();
-        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.X_AXIS));
+        mortgagePanel.removeAll();
+        mortgagePanel.setLayout(new BoxLayout(mortgagePanel, BoxLayout.X_AXIS));
     }
 
     private void showOptionsPanel() {
-        optionsPanel.revalidate();
-        optionsPanel.repaint();
+        mortgagePanel.revalidate();
+        mortgagePanel.repaint();
         CardLayout cl = (CardLayout) actionDialogBoxes.getLayout();
-        cl.show(actionDialogBoxes, "Option Panel");
+        cl.show(actionDialogBoxes, "Mortgage Panel");
     }
 
 }

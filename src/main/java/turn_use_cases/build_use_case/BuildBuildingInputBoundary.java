@@ -44,7 +44,7 @@ public interface BuildBuildingInputBoundary {
      * @param player the player who wants to sell buildings.
      * @param property the property on which player wants to sell buildings.
      */
-    public boolean isSellable(Player player, Property property);
+    public boolean isSellable(Player player, ColorPropertyTile property);
 
     /**
      * A list of properties which has building can be sold.

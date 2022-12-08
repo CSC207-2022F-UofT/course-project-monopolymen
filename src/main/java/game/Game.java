@@ -62,7 +62,18 @@ public class Game {
         String SAVES_DIRECTORY = "./saves";
         gameView = new GameView();
         this.players = new ArrayList<>();
-        constructDefaultGame(PROPERTY_CSV, RR_CSV, UTILITY_CSV, CARDS_CSV, SAVES_DIRECTORY, gameView, gameName);
+        constructDefaultGame(PROPERTY_CSV, RR_CSV, UTILITY_CSV, CARDS_CSV, SAVES_DIRECTORY, gameName);
+    }
+
+    /**
+     * Load the game specified by <i>gameName</i>
+     * @param gameName The name of the game (check that this game exists first before constructing the Game)
+     * @param savesDirectory The directory where saves are located
+     */
+    public Game(String gameName, String savesDirectory) {
+        gameView = new GameView();
+        this.players = new ArrayList<>();
+        loadSavedGame(savesDirectory, gameName);
     }
 
     /**
@@ -108,7 +119,7 @@ public class Game {
         return gameView;
     }
 
-    private void constructDefaultGame(String property_csv, String rr_csv, String utility_csv, String cards_csv, String saves_directory, GameView gameView, String gameName) {
+    private void constructDefaultGame(String property_csv, String rr_csv, String utility_csv, String cards_csv, String saves_directory, String gameName) {
         try {
             board = FactoryBoard.boardMaker(property_csv, utility_csv, rr_csv, cards_csv);
         } catch (IOException e) {
@@ -118,13 +129,24 @@ public class Game {
         board.shuffleCards();
 
         SaveGameState save = new SaveGameStateSerialize(saves_directory);
-        LoadGameState load = new LoadGameStateSerialize(saves_directory);
 
         turnController = new TurnController();
-        GameStatePresenter gameStatePresenter = new GameStatePresenter(gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
-        gameState = new GameState(players, gameName, save, gameStatePresenter);
-        GameStateOutputBoundary presenter = new GameStatePresenter(gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
-        gameState.setPresenter(presenter);
+        GameStatePresenter gameStatePresenter = new GameStatePresenter(gameView.getMainWindow(), gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
+        gameState = new GameState(players, gameName, board, save, gameStatePresenter);
+    }
+
+    private void loadSavedGame(String saves_directory, String saveName) {
+        String fullSaveName = "save_" + saveName;
+
+        LoadGameState load = new LoadGameStateSerialize(saves_directory);
+        if (!load.saveExists(fullSaveName)) {
+            throw new RuntimeException("Saved game '" + fullSaveName + "' not found when constructing Game");
+        }
+
+        turnController = new TurnController();
+        GameStatePresenter gameStatePresenter = new GameStatePresenter(gameView.getMainWindow(), gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
+        gameState = load.load(fullSaveName, new SaveGameStateSerialize(saves_directory), gameStatePresenter, turnController);
+        board = gameState.getBoard();
     }
 
     private void constructUseCases(TurnController turnController, GameState gameState, Board board) {
@@ -145,7 +167,7 @@ public class Game {
         ViewInventoryOutputBoundary viewInventoryPresenter = new ViewInventoryPresenter(inventorySummaryBox, gameState.getAllPlayers(), turnController);
         ViewInventoryInputBoundary viewInventory = new ViewInventory(viewInventoryPresenter);
 
-        LiquidateAssetsOutputBoundary liquidateAssetsPresenter = new LiquidateAssetsInterfaceAdapter(turnController, actionDialogBoxes, (CardLayout) actionDialogBoxes.getLayout());
+        LiquidateAssetsOutputBoundary liquidateAssetsPresenter = new LiquidateAssetsInterfaceAdapter(turnController);
         LiquidateAssetsInputBoundary liquidateAssets = new LiquidateAssetsUseCase(liquidateAssetsPresenter);
 
         TradeOutputBoundary tradePresenter = new TradePresenter(actionDialogBoxes,(CardLayout) actionDialogBoxes.getLayout(), turnController);

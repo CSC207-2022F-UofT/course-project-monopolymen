@@ -40,9 +40,10 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             return false;
         }
         ColorPropertyTile colorProperty = (ColorPropertyTile) property;
-//        if(!colorProperty.checkSetOwned(board.getPropertyTiles())){
-//            return false;
-//        }
+//        System.out.println(board.getPropertyTiles());
+        if(!colorProperty.checkSetOwned(board.getPropertyTiles())) {
+            return false;
+        }
         ArrayList<Property> properties = player.getProperties();
         ArrayList<ColorPropertyTile> colorProperties = new ArrayList<>();
         for(int i = 0; i < properties.size(); i++){
@@ -52,6 +53,9 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             }
         }
         for (int i = 0; i < colorProperties.size(); i++) {
+            if(colorProperties.get(i).isMortgaged()){
+                return false;
+            }
             int a = colorProperties.get(i).getNumHouses() + colorProperties.get(i).getNumHotels();
             int b = colorProperty.getNumHouses() + colorProperty.getNumHotels();
             if (b > a) {
@@ -74,7 +78,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         //sameColorProperties.add(colorProperties.get(i));
         //}
         //}
-        //Player has to build equally - this means player can't build a second house on a property unless player has a house on all the other properties.
+        //Player has to build equally – this means player can’t build a second house on a property unless player has a house on all the other properties.
         return true;
     }
 
@@ -86,15 +90,19 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
     @Override
     public void showBuildOption (Player player){
         ArrayList<Property> properties = player.getProperties();
-        ArrayList<Property> buildOptions = new ArrayList<>();
+        ArrayList<ColorPropertyTile> buildOptions = new ArrayList<>();
         for (int i = 0; i < properties.size(); i++){
+//            System.out.println(properties.get(i));
             if(isBuildable(player,properties.get(i))){
-                buildOptions.add(properties.get(i));
+                buildOptions.add((ColorPropertyTile) properties.get(i));
             }
         }
         String text = "This is a list of properties you can build a building.";
         presenter.showBuildOption(buildOptions, text);
     }
+
+
+
 
     /**
      * Build a house on the property.
@@ -109,10 +117,10 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             //need to add a method addHouse in ColorPropertyTile class to add the number of house.
             String color = property.getColor();
             player.subtractMoney(property.getBuildingCost());
-            String text = player.getName() + "built a house on " + property.getTileName();
+            String text = player.getName() + " built a house on " + property.getTileDisplayName();
             presenter.showBuildBuilding(player, property, text);
         }
-        String text = player.getName() + "cannot build a house on " + property.getTileName();
+        String text = player.getName() + " cannot build a house on " + property.getTileDisplayName();
         presenter.showBuildBuilding(player, property, text);
     }
 
@@ -129,10 +137,10 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             //need to add a method addHotel in ColorPropertyTile class to add the number of hotel.
             String color = property.getColor();
             player.subtractMoney(property.getBuildingCost());
-            String text = player.getName() + "built a hotel on " + property.getTileName();
+            String text = player.getName() + " built a hotel on " + property.getTileDisplayName();
             presenter.showBuildBuilding(player, property, text);
         }
-        String text = player.getName() + "cannot build a hotel on " + property.getTileName();
+        String text = player.getName() + " cannot build a hotel on " + property.getTileDisplayName();
         presenter.showBuildBuilding(player, property, text);
     }
 
@@ -143,24 +151,25 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
      * @param property the property on which player wants to sell buildings.
      */
     @Override
-    public boolean isSellable(Player player, Property property) {
+    public boolean isSellable(Player player, ColorPropertyTile property) {
         if(!player.ownsProperty(property)){
             return false;
         }
-        if(!(property instanceof ColorPropertyTile)){
+        if(property.getNumHouses() == 0){
             return false;
         }
-        ColorPropertyTile colorProperty = (ColorPropertyTile) property;
-
+        if(property.isMortgaged()){
+            return false;
+        }
         ArrayList<ColorPropertyTile> ColorProperties = new ArrayList<ColorPropertyTile>();
         ArrayList<Property> properties = player.getProperties();
         for (int i = 0; i < properties.size(); i++){
-            if(properties.get(i).getClass().getName().equals("game_entities.tiles.ColorPropertyTile")){
+            if(properties.get(i) instanceof ColorPropertyTile){
                 ColorProperties.add((ColorPropertyTile) properties.get(i));
             }
         }
         // Selecting ColorPropertyTile with the same color.
-        String color = colorProperty.getColor();
+        String color = property.getColor();
         ArrayList<ColorPropertyTile> SameColorProperties = new ArrayList<ColorPropertyTile>();
         for (int i = 0; i < ColorProperties.size(); i++){
             if(ColorProperties.get(i).getColor().equals(color)) {
@@ -169,7 +178,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         }
         for (ColorPropertyTile sameColorProperty : SameColorProperties) {
             int a = sameColorProperty.getNumHouses() + sameColorProperty.getNumHotels();
-            int b = colorProperty.getNumHouses() + colorProperty.getNumHotels();
+            int b = property.getNumHouses() + property.getNumHotels();
             if (b < a) {
                 return false;
             }
@@ -181,15 +190,14 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
      * A list of properties which has building can be sold.
      *
      * @param player the player who wants to sell buildings.
-     * @return the list of properties.
      */
     @Override
     public void showSellOption (Player player){
         ArrayList<Property> properties = player.getProperties();
-        ArrayList<Property> sellOptions = new ArrayList<>();
+        ArrayList<ColorPropertyTile> sellOptions = new ArrayList<>();
         for (int i = 0; i < properties.size(); i++){
-            if(isSellable(player,properties.get(i))){
-                sellOptions.add(properties.get(i));
+            if( properties.get(i) instanceof ColorPropertyTile && isSellable(player, (ColorPropertyTile) properties.get(i))){
+                sellOptions.add((ColorPropertyTile) properties.get(i));
             }
         }
         String text = "This is a list of properties you can sell a building.";
@@ -209,10 +217,10 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             int value = 0;
             value = (int) (0.5*property.getBuildingCost());
             player.addMoney(value);
-            String text = player.getName() + "sold a house on " + property.getTileName();
+            String text = player.getName() + " sold a house on " + property.getTileDisplayName();
             presenter.showSellBuilding(player, property, text);
         }
-        String text = player.getName() + "cannot sell a house on " + property.getTileName();
+        String text = player.getName() + " cannot sell a house on " + property.getTileDisplayName();
         presenter.showSellBuilding(player, property, text);
     }
 
@@ -229,10 +237,10 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             int value = 0;
             value = (int) (0.5*property.getBuildingCost());
             player.addMoney(value);
-            String text = player.getName() + "sold a hotel on " + property.getTileName();
+            String text = player.getName() + " sold a hotel on " + property.getTileDisplayName();
             presenter.showSellBuilding(player, property, text);
         }
-        String text = player.getName() + "cannot sell a hotel on " + property.getTileName();
+        String text = player.getName() + " cannot sell a hotel on " + property.getTileDisplayName();
         presenter.showSellBuilding(player, property, text);
     }
 }

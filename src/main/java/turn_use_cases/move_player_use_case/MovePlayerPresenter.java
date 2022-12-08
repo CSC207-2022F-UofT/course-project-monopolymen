@@ -1,18 +1,19 @@
 package turn_use_cases.move_player_use_case;
 
+import game_entities.Player;
+import game_entities.tiles.*;
+import turn_interface_adapters.TurnController;
+
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import game_entities.Player;
-import game_entities.tiles.Tile;
-import game_entities.tiles.Property;
-import game_entities.tiles.TilePassResultModel;
-import turn_interface_adapters.TurnController;
-
-import javax.swing.*;
 
 /**
  * Implementation of the MovePlayerOutputBoundary interface.
@@ -96,8 +97,9 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                     + playerList.get(i).getIcon() + ".png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
             JLabel player = new JLabel(playerImageScaled);
             player.setPreferredSize(new Dimension(50, 50));
-            player.setBounds(scaledTilePositions[0][0] + playerOffset[i][0], scaledTilePositions[0][1]
-                    + playerOffset[i][1], 50, 50);
+            player.setBounds(scaledTilePositions[playerList.get(i).getPosition()][0] + playerOffset[i][0],
+                    scaledTilePositions[playerList.get(i).getPosition()][1]
+                            + playerOffset[i][1], 50, 50);
             player.setLayout(new BorderLayout());
             board.add(player,new Integer(1));
             players.add(player);
@@ -129,15 +131,27 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         // Move the player to the new position.
         playerPanel.setBounds(scaledTilePositions[playerPosition][0] + playerOffset[playerList.indexOf(player)][0],
                 scaledTilePositions[playerPosition][1] + playerOffset[playerList.indexOf(player)][1], 50, 50);
-        JButton otherOptions = new JButton(buttonText);
-        otherOptions.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                turnController.endRollDice(rollAgain);
-            }
-        });
-        optionsWindow.add(otherOptions);
+        if(player.getTurnsInJail() == -1) {
+            JButton otherOptions = new JButton(buttonText);
+            otherOptions.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
+                    turnController.endRollDice(rollAgain);
+                }
+            });
+            optionsWindow.add(otherOptions);
+        } else {
+            JButton otherOptions = new JButton("End Turn");
+            otherOptions.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
+                    turnController.endTurn();
+                }
+            });
+            optionsWindow.add(otherOptions);
+        }
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
         cardLayout.show(actionDialogBox, "Roll options");
     }
@@ -165,10 +179,10 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
     public void showCardDraw(Player player, String cardName, boolean rollAgain,  boolean isChance) {
         // Clear the options window. as this is different from showResultOfAction
         ImageIcon cardImage = new ImageIcon(new ImageIcon("src/main/resources/assets/cards/" + cardName + ".jpg")
-                .getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH));
+                .getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
         JLabel cardImageLabel = new JLabel(cardImage);
         // scale the image
-        cardImageLabel.setPreferredSize(new Dimension(300, 300)); 
+        cardImageLabel.setPreferredSize(new Dimension(150, 150));
         optionsWindow.add(cardImageLabel);
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
         cardLayout.show(actionDialogBox, "Roll options");
@@ -179,7 +193,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         // Don't clear the options window, as this will be displayed regardless of the previous action
         Property property = (Property) tile;
         if(buyable) {
-            JButton buyButton = new JButton("Buy " + property.getTileName() + " for $"
+            JButton buyButton = new JButton("Buy " + property.getTileDisplayName() + " for $"
                     + property.getPurchasePrice());
             buyButton.addActionListener(new ActionListener() {
                 @Override
@@ -191,6 +205,26 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 }
             });
             optionsWindow.add(buyButton);
+            // Show the property picture
+            JLabel propertyImage = new JLabel();
+            String frontOrBack = "front";
+            String id = "";
+            if (property instanceof UtilityTile){
+                id = "utility_" + property.getTileName() + ".jpg";
+            } else if (property instanceof RailroadTile) {
+                id = "rr_" + property.getTileName() + ".jpg";
+            } else {
+                ColorPropertyTile newTemp = (ColorPropertyTile) property;
+                id = newTemp.getColor().toLowerCase() + "_" + newTemp.getTileName() + ".jpg";
+            }
+            String path = "src/main/resources/assets/property/property_" + frontOrBack + "_" + id;
+            System.out.println(path);
+            ImageIcon temp = new ImageIcon(new ImageIcon
+                    (path)
+                    .getImage().getScaledInstance((int) (150), (int) (192), Image.SCALE_SMOOTH));
+            propertyImage.setIcon(temp);
+            propertyImage.setPreferredSize(new Dimension(150, 192));
+            optionsWindow.add(propertyImage);
         }
     }
 }

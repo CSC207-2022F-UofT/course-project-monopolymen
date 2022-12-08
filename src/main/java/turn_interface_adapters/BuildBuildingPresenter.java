@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
 
     private final JPanel actionDialogBoxes;
-    private final JPanel optionsPanel;
+    private final JPanel choicesPanel;
     private final TurnController controller;
     private final CardLayout cardLayout;
 
@@ -23,8 +23,8 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
         this.cardLayout = cardLayout;
         this.actionDialogBoxes = actionDialogBoxes;
 
-        this.optionsPanel = new JPanel();
-        actionDialogBoxes.add(optionsPanel, "Options Panel");
+        this.choicesPanel = new JPanel();
+        actionDialogBoxes.add(choicesPanel, "Choices Panel");
     }
 
     /**
@@ -34,26 +34,67 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
      * @param flavorText the text describing what is happening.
      */
     @Override
-    public void showBuildOption(ArrayList<Property> properties, String flavorText){
+    public void showBuildOption(ArrayList<ColorPropertyTile> properties, String flavorText){
         resetOptionsPanel();
-        optionsPanel.add(new JLabel(flavorText));
-        for (Property property : properties){
-            JButton optionsButton = new JButton("Pick " + property.getTileName());
+        if (properties.size() == 0) {
+            choicesPanel.add(new JLabel("You cannot build a building."));
+            JButton optionsButton = new JButton("Back");
             optionsButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if(((ColorPropertyTile) property).getNumHouses() < 4){
-                        controller.buildHouse((ColorPropertyTile) property);
-                    } else {
-                        controller.buildHotel((ColorPropertyTile) property);
+                    controller.endUseCase();
+                }
+            });
+            choicesPanel.add(optionsButton);
+            showOptionsPanel();
+        } else {
+            choicesPanel.add(new JLabel(flavorText));
+            JComboBox<String> comboBox = new JComboBox<String>();
+            for (ColorPropertyTile property : properties){
+                comboBox.addItem(property.getTileDisplayName());
+            }
+            choicesPanel.add(comboBox);
+            JButton pickButton = new JButton("Pick");
+            pickButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for (ColorPropertyTile pickedProperty : properties){
+                        if (pickedProperty.getTileDisplayName().equals(comboBox.getSelectedItem())){
+                            if(pickedProperty.getNumHouses() < 4){
+                            controller.buildHouse(pickedProperty);
+                        } else {
+                            controller.buildHotel(pickedProperty);
+                        }
+                        }
                     }
                 }
             });
-            optionsPanel.add(optionsButton);
+            choicesPanel.add(pickButton);
+//            choicesPanel.add(new JLabel(flavorText));
+//            for (Property property : properties){
+//                JButton optionsButton = new JButton("Pick " + property.getTileName());
+//                optionsButton.addActionListener(new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        if(((ColorPropertyTile) property).getNumHouses() < 4){
+//                            controller.buildHouse((ColorPropertyTile) property);
+//                        } else {
+//                            controller.buildHotel((ColorPropertyTile) property);
+//                        }
+//                    }
+//                });
+//                choicesPanel.add(optionsButton);
+//            }
+            JButton backButton = new JButton("Cancel");
+            backButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controller.endUseCase();
+                }
+            });
+            choicesPanel.add(backButton);
+            showOptionsPanel();
         }
-
-        showOptionsPanel();
-        cardLayout.show(actionDialogBoxes, "Options Panel");
     }
 
     /**
@@ -73,7 +114,7 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
                 controller.endUseCase();
             }
         });
-        optionsPanel.add(endButton);
+        choicesPanel.add(endButton);
         showOptionsPanel();
     }
 
@@ -94,7 +135,7 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
                 controller.endUseCase();
             }
         });
-        optionsPanel.add(endButton);
+        choicesPanel.add(endButton);
         showOptionsPanel();
     }
 
@@ -105,36 +146,78 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
      * @param flavorText the text describing what is happening.
      */
     @Override
-    public void showSellOption(ArrayList<Property> properties, String flavorText){
+    public void showSellOption(ArrayList<ColorPropertyTile> properties, String flavorText){
         resetOptionsPanel();
-        optionsPanel.add(new JLabel(flavorText));
-        for (Property property : properties){
-            JButton optionsButton = new JButton("Pick " + property.getTileName());
+        if (properties.size() == 0) {
+            choicesPanel.add(new JLabel("You cannot sell a building."));
+            JButton optionsButton = new JButton("Back");
             optionsButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if(((ColorPropertyTile) property).getNumHotels() > 0){
-                        controller.sellHotel((ColorPropertyTile) property);
-                    } else {
-                        controller.sellHouse((ColorPropertyTile) property);
+                    controller.endUseCase();
+                }
+            });
+            choicesPanel.add(optionsButton);
+            showOptionsPanel();
+        } else {
+            choicesPanel.add(new JLabel(flavorText));
+            JComboBox<String> comboBox = new JComboBox<String>();
+            for (ColorPropertyTile property : properties){
+                comboBox.addItem(property.getTileDisplayName());
+            }
+            choicesPanel.add(comboBox);
+            JButton pickButton = new JButton("Pick");
+            pickButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for (ColorPropertyTile pickedProperty : properties){
+                        if (pickedProperty.getTileDisplayName().equals(comboBox.getSelectedItem())){
+                            if(pickedProperty.getNumHotels() > 0){
+                                controller.sellHotel(pickedProperty);
+                            } else {
+                                controller.sellHouse(pickedProperty);
+                            }
+                        }
                     }
                 }
             });
-            optionsPanel.add(optionsButton);
+            choicesPanel.add(pickButton);
+//            choicesPanel.add(new JLabel(flavorText));
+//            for (Property property : properties){
+//                JButton optionsButton = new JButton("Pick " + property.getTileName());
+//                optionsButton.addActionListener(new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        if(((ColorPropertyTile) property).getNumHotels() > 0){
+//                            controller.sellHotel((ColorPropertyTile) property);
+//                        } else {
+//                            controller.sellHouse((ColorPropertyTile) property);
+//                        }
+//                    }
+//                });
+//                choicesPanel.add(optionsButton);
+//            }
+            JButton backButton = new JButton("Cancel");
+            backButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controller.endUseCase();
+                }
+            });
+            choicesPanel.add(backButton);
+            showOptionsPanel();
         }
-
-        showOptionsPanel();
     }
 
     private void resetOptionsPanel() {
-        optionsPanel.removeAll();
-        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.X_AXIS));
+        choicesPanel.removeAll();
+        choicesPanel.setLayout(new BoxLayout(choicesPanel, BoxLayout.X_AXIS));
     }
 
     private void showOptionsPanel() {
-        optionsPanel.revalidate();
-        optionsPanel.repaint();
+        choicesPanel.revalidate();
+        choicesPanel.repaint();
         CardLayout cl = (CardLayout) actionDialogBoxes.getLayout();
-        cl.show(actionDialogBoxes, "Option Panel");
+        cl.show(actionDialogBoxes, "Choices Panel");
     }
 }

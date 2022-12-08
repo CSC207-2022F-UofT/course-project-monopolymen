@@ -87,11 +87,13 @@ public class UtilityTile extends Property {
     @Override
     public TileActionResultModel action(Player player, Board board) {
         if (!isOwned()){
-            return new TileActionResultModel("Would you Like to Purchase " + getTileName() + " for " + getPurchasePrice() + " ?" , player, player.getPosition());
+            return new TileActionResultModel("Would you Like to Purchase " + getTileDisplayName() + " for " + getPurchasePrice() + " ?", player, player.getPosition());
         }
         else{
-            player.subtractMoney(getRent(player, board.getPropertyTiles()));
-            getOwner().addMoney(getRent(player, board.getPropertyTiles()));
+            if(getRent(player, board.getPropertyTiles()) <= player.getMoney()){
+                getOwner().addMoney(getRent(player, board.getPropertyTiles()));
+            }
+            player.subtractMoney(getRent(player, board.getPropertyTiles()), getOwner());
             return new TileActionResultModel("You Paid " + getRent(player, board.getPropertyTiles()) + " to" + getOwner().getName(), player, player.getPosition());
         }
     }

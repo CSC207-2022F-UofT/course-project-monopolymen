@@ -116,7 +116,7 @@ public class ColorPropertyTile extends Property{
     @Override
     public int getRent(Player rentPayer, List<Property> propertyList) {
         if (!isOwned()){
-            return -1;
+            return 0;
         }
         if ((getNumHotels() == 0 && getNumHouses() == 0) & allColoredPropertySetOwned(getColor(),propertyList)){
             return rentPrice[1];
@@ -145,11 +145,13 @@ public class ColorPropertyTile extends Property{
     @Override
     public TileActionResultModel action(Player player, Board board) {
         if (!isOwned()){
-            return new TileActionResultModel("Would you Like to Purchase " + getTileName() + " for " + getPurchasePrice() + " ?" , player, player.getPosition());
+            return new TileActionResultModel("Would you Like to Purchase " + getTileDisplayName() + " for " + getPurchasePrice() + " ?", player, player.getPosition());
         }
         else{
-            player.subtractMoney(getRent(player, board.getPropertyTiles()));
-            getOwner().addMoney(getRent(player, board.getPropertyTiles()));
+            if(getRent(player, board.getPropertyTiles()) <= player.getMoney()){
+                getOwner().addMoney(getRent(player, board.getPropertyTiles()));
+            }
+            player.subtractMoney(getRent(player, board.getPropertyTiles()), getOwner());
             return new TileActionResultModel("You Paid " + getRent(player, board.getPropertyTiles()) + " to " + getOwner().getName(), player, player.getPosition());
         }
     }
@@ -160,20 +162,39 @@ public class ColorPropertyTile extends Property{
 
     public boolean checkSetOwned(List<Property> arr) {
         ArrayList<Player> playerArr = new ArrayList<>();
-        for (Property property : arr) {
-            if (property instanceof ColorPropertyTile) {
-                if (Objects.equals(((ColorPropertyTile) property).getColor(), this.color)) {
-                    playerArr.add(property.getOwner());
-                }
+        ArrayList<ColorPropertyTile> sameColor = new ArrayList<>();
+        for (int i = 0; i < arr.size(); i++) {
+            if(arr.get(i) instanceof ColorPropertyTile && Objects.equals(((ColorPropertyTile) arr.get(i)).getColor(), this.color)){
+                sameColor.add((ColorPropertyTile) arr.get(i));
+            }
+        }
+        for (int i = 0; i < sameColor.size(); i++) {
+            if(sameColor.get(i).isOwned()){
+                playerArr.add(sameColor.get(i).getOwner());
+            } else {
+                return false;
             }
         }
         Player firstPlayer = playerArr.get(0);
-        for (Player player : playerArr) {
-            if (!player.equals(firstPlayer)) {
+        for(Player player: playerArr) {
+            if(!player.equals(firstPlayer)) {
                 return false;
             }
         }
         return true;
+//        for (int i = 0; i < arr.size(); i++) {
+//            if(arr.get(i) instanceof ColorPropertyTile) {
+//                if(((ColorPropertyTile) arr.get(i)).getColor() == this.color) {
+//                    sameColor.add((ColorPropertyTile) arr.get(i));
+//                    if(!arr.get(i).isOwned()){
+//                        return false;
+//                    } else{
+//                        playerArr.add(arr.get(i).getOwner());
+//                    }
+//                }
+//            }
+//        }
     }
+
 }
 
