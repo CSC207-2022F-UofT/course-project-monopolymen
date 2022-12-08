@@ -163,20 +163,6 @@ public class TradePresenter implements TradeOutputBoundary {
 
         optionsPanel.add(tradeMoneyPanel);
 
-        tradeMoneyOfferedField.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                tradeMoneyOffered[0] = ((Number) tradeMoneyOfferedField.getValue()).intValue();
-            }
-        });
-
-        tradeMoneyReceivedField.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                tradeMoneyReceived[0] = ((Number) tradeMoneyReceivedField.getValue()).intValue();
-            }
-        });
-
         JRadioButton noJailCard = new JRadioButton("<html><body>"+"No Jail Card"+"</body></html>");
         JRadioButton offerJailCard = new JRadioButton("<html><body>"+"Offer Jail Card"+"</body></html>");
         JRadioButton requestJailCard = new JRadioButton("<html><body>"+"Request Jail Card"+"</body></html>");
@@ -195,6 +181,18 @@ public class TradePresenter implements TradeOutputBoundary {
         optionsPanel.add(jailButtons);
 
         final int[] jailCard = {0};
+
+        JPanel endPanel = new JPanel();
+        endPanel.setLayout(new GridLayout(2, 1));
+
+
+        JButton submit = new JButton("<html><body>"+"Submit Offer"+"</body></html>");
+        endPanel.add(submit);
+
+        JButton cancelTrade = new JButton("<html><body>"+"Cancel Trade"+"</body></html>");
+        endPanel.add(cancelTrade);
+
+        optionsPanel.add(endPanel);
 
         noJailCard.addActionListener(new ActionListener() {
             @Override
@@ -217,17 +215,19 @@ public class TradePresenter implements TradeOutputBoundary {
             }
         });
 
-        JPanel endPanel = new JPanel();
-        endPanel.setLayout(new GridLayout(2, 1));
+        tradeMoneyOfferedField.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                tradeMoneyOffered[0] = ((Number) tradeMoneyOfferedField.getValue()).intValue();
+            }
+        });
 
-
-        JButton submit = new JButton("<html><body>"+"Submit Offer"+"</body></html>");
-        endPanel.add(submit);
-
-        JButton cancelTrade = new JButton("<html><body>"+"Cancel Trade"+"</body></html>");
-        endPanel.add(cancelTrade);
-
-        optionsPanel.add(endPanel);
+        tradeMoneyReceivedField.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                tradeMoneyReceived[0] = ((Number) tradeMoneyReceivedField.getValue()).intValue();
+            }
+        });
 
         submit.addActionListener(new ActionListener() {
             @Override
