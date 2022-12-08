@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TestAdvanceCard {
     AdvanceCard advanceCard = new AdvanceCard("AdvanceCard", "Advance Card", "Hello",
-            true, -1, "GoToJail");
+            true, -1, "GoToJail", null);
     ArrayList<Tile> test = new ArrayList<>();
     Board board = new Board(test);
 
