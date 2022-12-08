@@ -53,6 +53,9 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             }
         }
         for (int i = 0; i < colorProperties.size(); i++) {
+            if(colorProperties.get(i).isMortgaged()){
+                return false;
+            }
             int a = colorProperties.get(i).getNumHouses() + colorProperties.get(i).getNumHotels();
             int b = colorProperty.getNumHouses() + colorProperty.getNumHotels();
             if (b > a) {
@@ -153,6 +156,9 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             return false;
         }
         if(property.getNumHouses() == 0){
+            return false;
+        }
+        if(property.isMortgaged()){
             return false;
         }
         ArrayList<ColorPropertyTile> ColorProperties = new ArrayList<ColorPropertyTile>();
