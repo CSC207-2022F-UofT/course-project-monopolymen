@@ -26,7 +26,7 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
         this.actionDialogBoxes = actionDialogBoxes;
 
         this.mortgagePanel = new JPanel();
-        actionDialogBoxes.add(mortgagePanel, "Options Panel");
+        actionDialogBoxes.add(mortgagePanel, "Mortgage Panel");
 
     }
 
@@ -49,9 +49,9 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
                     controller.endUseCase();
                 }
             });
+            mortgagePanel.add(backButton);
             showOptionsPanel();
         } else {
-            resetOptionsPanel();
             mortgagePanel.add(new JLabel(flavorText));
             for (Property property : properties){
                 JButton optionsButton = new JButton("Pick " + property.getTileName());
@@ -158,7 +158,7 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
         mortgagePanel.revalidate();
         mortgagePanel.repaint();
         CardLayout cl = (CardLayout) actionDialogBoxes.getLayout();
-        cl.show(actionDialogBoxes, "Option Panel");
+        cl.show(actionDialogBoxes, "Mortgage Panel");
     }
 
 }
