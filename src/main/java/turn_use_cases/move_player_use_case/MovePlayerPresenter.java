@@ -99,8 +99,10 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                     + playerList.get(i).getIcon() + ".png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
             JLabel player = new JLabel(playerImageScaled);
             player.setPreferredSize(new Dimension(50, 50));
-            player.setBounds(scaledTilePositions[0][0] + playerOffset[i][0], scaledTilePositions[0][1]
-                    + playerOffset[i][1], 50, 50);
+            System.out.println(playerList.get(i).getPosition());
+            player.setBounds(scaledTilePositions[playerList.get(i).getPosition()][0] + playerOffset[i][0],
+                    scaledTilePositions[playerList.get(i).getPosition()][1]
+                            + playerOffset[i][1], 50, 50);
             player.setLayout(new BorderLayout());
             board.add(player,new Integer(1));
             players.add(player);
