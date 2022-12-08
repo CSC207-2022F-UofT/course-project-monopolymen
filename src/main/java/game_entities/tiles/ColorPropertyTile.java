@@ -161,7 +161,6 @@ public class ColorPropertyTile extends Property{
     }
 
     public boolean checkSetOwned(List<Property> arr) {
-        boolean ownSet = true;
         ArrayList<Player> playerArr = new ArrayList<Player>();
         for (Property property : arr) {
             if(property instanceof ColorPropertyTile) {
@@ -176,10 +175,11 @@ public class ColorPropertyTile extends Property{
         Player firstPlayer = playerArr.get(0);
         for(Player player: playerArr) {
             if(!player.equals(firstPlayer)) {
-                ownSet = false;
+                return false;
             }
         }
-        return ownSet;
+        return true;
     }
+
 }
 
