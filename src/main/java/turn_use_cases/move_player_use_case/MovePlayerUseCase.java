@@ -144,6 +144,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                 if(result.getPlayerPosition() == board.getJailTilePosition()) {
                     // Player is moving to jail, does not collect "GO" tile money
                     // player.enterJail() is handled in the card's action
+                    System.out.println("Enter jail");
                     movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(), false, cardResult.isChance());
                     sendToJail(player);
                 } else {
@@ -183,6 +184,5 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
     private void sendToJail(Player player) {
         movePlayerOutputBoundary.showResultOfAction(player, board.getJailTilePosition(), false,
                 "You are being sent to jail.", "Other Options");
-        endTurnUseCase.forceEndTurn(player);
     }
 }
