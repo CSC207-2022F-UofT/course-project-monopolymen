@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import game_entities.Player;
 import game_entities.tiles.Tile;
+import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
+import game_entities.tiles.RailroadTile;
 import game_entities.tiles.TilePassResultModel;
+import game_entities.tiles.UtilityTile;
 import turn_interface_adapters.TurnController;
 
 import javax.swing.*;
@@ -129,15 +132,27 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         // Move the player to the new position.
         playerPanel.setBounds(scaledTilePositions[playerPosition][0] + playerOffset[playerList.indexOf(player)][0],
                 scaledTilePositions[playerPosition][1] + playerOffset[playerList.indexOf(player)][1], 50, 50);
-        JButton otherOptions = new JButton(buttonText);
-        otherOptions.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                turnController.endRollDice(rollAgain);
-            }
-        });
-        optionsWindow.add(otherOptions);
+        if(player.getTurnsInJail() == -1) {
+            JButton otherOptions = new JButton(buttonText);
+            otherOptions.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
+                    turnController.endRollDice(rollAgain);
+                }
+            });
+            optionsWindow.add(otherOptions);
+        } else {
+            JButton otherOptions = new JButton("End Turn");
+            otherOptions.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
+                    turnController.endTurn();
+                }
+            });
+            optionsWindow.add(otherOptions);
+        }
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
         cardLayout.show(actionDialogBox, "Roll options");
     }
@@ -191,6 +206,26 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 }
             });
             optionsWindow.add(buyButton);
+            // Show the property picture
+            JLabel propertyImage = new JLabel();
+            String frontOrBack = "front";
+            String id = "";
+            if (property instanceof UtilityTile){
+                id = "utility_" + property.getTileDisplayName() +".jpg";
+            } else if (property instanceof RailroadTile) {
+                id = "rr_" + property.getTileDisplayName() + ".jpg";
+            } else {
+                ColorPropertyTile newTemp = (ColorPropertyTile) property;
+                id = newTemp.getColor().toLowerCase() + "_" + newTemp.getTileDisplayName() + ".jpg";
+            }
+            String path = "src/main/resources/assets/property/property_" + frontOrBack + "_" + id;
+            System.out.println(path);
+            ImageIcon temp = new ImageIcon(new ImageIcon
+                    (path)
+                    .getImage().getScaledInstance((int) (250), (int) (320), Image.SCALE_SMOOTH));
+            propertyImage.setIcon(temp);
+            propertyImage.setPreferredSize(new Dimension(250, 320));
+            optionsWindow.add(propertyImage);
         }
     }
 }
