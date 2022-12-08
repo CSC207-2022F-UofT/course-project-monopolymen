@@ -10,6 +10,9 @@ public class Main {
         game.addPlayer("player3", PlayerIcon.THIMBLE, 1500);
         game.addPlayer("player4", PlayerIcon.HAT, 1500);
 
+        // Load game code
+//        Game game = new Game("Sample Game", "./saves/");
+
         game.startGame();
     }
 }
