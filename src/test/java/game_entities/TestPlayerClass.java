@@ -83,14 +83,6 @@ public class TestPlayerClass {
         assertEquals(testPlayer.getMoney(), 1500);
     }
     @Test
-    public void moneySubtract(){
-        //test what happens when the player subtracts a certain amount of money that exceeds the current money owned
-        testPlayer.addMoney(100);
-        assertEquals(testPlayer.getMoney(), 1600);
-        testPlayer.subtractMoney(1700);
-        assertEquals(testPlayer.getMoney(), -100);
-    }
-    @Test
     public void jail(){
         //test the methods dealing with the player and jail
         testPlayer.addTurnInJail();
