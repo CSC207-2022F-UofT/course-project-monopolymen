@@ -1,18 +1,9 @@
-import game.Game;
-import ui.GameView.PlayerIcon;
+import game.LoadGameStateSerialize;
+import ui.MainMenu;
 
 public class Main {
     public static void main(String[] args) {
-        Game game = new Game("Sample Game");
-
-        game.addPlayer("Player1", PlayerIcon.BATTLESHIP, 1500);
-        game.addPlayer("player2", PlayerIcon.CAR, 1500);
-        game.addPlayer("player3", PlayerIcon.THIMBLE, 1500);
-        game.addPlayer("player4", PlayerIcon.HAT, 1500);
-
-        // Load game code
-//        Game game = new Game("Sample Game", "./saves/");
-
-        game.startGame();
+        MainMenu mainMenu = new MainMenu(new LoadGameStateSerialize("./saves/"));
+        mainMenu.show();
     }
 }
