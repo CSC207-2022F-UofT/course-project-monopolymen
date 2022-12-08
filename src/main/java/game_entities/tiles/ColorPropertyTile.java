@@ -161,25 +161,40 @@ public class ColorPropertyTile extends Property{
     }
 
     public boolean checkSetOwned(List<Property> arr) {
-        boolean ownSet = true;
-        ArrayList<Player> playerArr = new ArrayList<Player>();
-        for (Property property : arr) {
-            if(property instanceof ColorPropertyTile) {
-                if(((ColorPropertyTile) property).getColor() == this.color) {
-                    playerArr.add(property.getOwner());
-                }
+        ArrayList<Player> playerArr = new ArrayList<>();
+        ArrayList<ColorPropertyTile> sameColor = new ArrayList<>();
+        for (int i = 0; i < arr.size(); i++) {
+            if(arr.get(i) instanceof ColorPropertyTile && Objects.equals(((ColorPropertyTile) arr.get(i)).getColor(), this.color)){
+                sameColor.add((ColorPropertyTile) arr.get(i));
+            }
+        }
+        for (int i = 0; i < sameColor.size(); i++) {
+            if(sameColor.get(i).isOwned()){
+                playerArr.add(sameColor.get(i).getOwner());
+            } else {
+                return false;
             }
         }
         Player firstPlayer = playerArr.get(0);
         for(Player player: playerArr) {
-            if(player == null){
+            if(!player.equals(firstPlayer)) {
                 return false;
             }
-            if(!player.equals(firstPlayer)) {
-                ownSet = false;
-            }
         }
-        return ownSet;
+        return true;
+//        for (int i = 0; i < arr.size(); i++) {
+//            if(arr.get(i) instanceof ColorPropertyTile) {
+//                if(((ColorPropertyTile) arr.get(i)).getColor() == this.color) {
+//                    sameColor.add((ColorPropertyTile) arr.get(i));
+//                    if(!arr.get(i).isOwned()){
+//                        return false;
+//                    } else{
+//                        playerArr.add(arr.get(i).getOwner());
+//                    }
+//                }
+//            }
+//        }
     }
+
 }
 
