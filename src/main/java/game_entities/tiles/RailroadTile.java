@@ -90,7 +90,7 @@ public class RailroadTile extends Property{
                 getOwner().addMoney(getRent(player, board.getPropertyTiles()));
             }
             player.subtractMoney(getRent(player, board.getPropertyTiles()), getOwner());
-            return new TileActionResultModel("You Paid" + getRent(player, board.getPropertyTiles()) + " to" + getOwner(), player, player.getPosition());
+            return new TileActionResultModel("You Paid" + getRent(player, board.getPropertyTiles()) + " to" + getOwner().getName(), player, player.getPosition());
         }
     }
 

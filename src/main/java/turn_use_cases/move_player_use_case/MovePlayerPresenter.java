@@ -1,21 +1,19 @@
 package turn_use_cases.move_player_use_case;
 
+import game_entities.Player;
+import game_entities.tiles.*;
+import turn_interface_adapters.TurnController;
+
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import game_entities.Player;
-import game_entities.tiles.Tile;
-import game_entities.tiles.ColorPropertyTile;
-import game_entities.tiles.Property;
-import game_entities.tiles.RailroadTile;
-import game_entities.tiles.TilePassResultModel;
-import game_entities.tiles.UtilityTile;
-import turn_interface_adapters.TurnController;
-
-import javax.swing.*;
 
 /**
  * Implementation of the MovePlayerOutputBoundary interface.
@@ -195,7 +193,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         // Don't clear the options window, as this will be displayed regardless of the previous action
         Property property = (Property) tile;
         if(buyable) {
-            JButton buyButton = new JButton("Buy " + property.getTileName() + " for $"
+            JButton buyButton = new JButton("Buy " + property.getTileDisplayName() + " for $"
                     + property.getPurchasePrice());
             buyButton.addActionListener(new ActionListener() {
                 @Override
@@ -212,12 +210,12 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             String frontOrBack = "front";
             String id = "";
             if (property instanceof UtilityTile){
-                id = "utility_" + property.getTileDisplayName() +".jpg";
+                id = "utility_" + property.getTileName() + ".jpg";
             } else if (property instanceof RailroadTile) {
-                id = "rr_" + property.getTileDisplayName() + ".jpg";
+                id = "rr_" + property.getTileName() + ".jpg";
             } else {
                 ColorPropertyTile newTemp = (ColorPropertyTile) property;
-                id = newTemp.getColor().toLowerCase() + "_" + newTemp.getTileDisplayName() + ".jpg";
+                id = newTemp.getColor().toLowerCase() + "_" + newTemp.getTileName() + ".jpg";
             }
             String path = "src/main/resources/assets/property/property_" + frontOrBack + "_" + id;
             System.out.println(path);

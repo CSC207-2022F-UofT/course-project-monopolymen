@@ -145,7 +145,7 @@ public class ColorPropertyTile extends Property{
     @Override
     public TileActionResultModel action(Player player, Board board) {
         if (!isOwned()){
-            return new TileActionResultModel("Would you Like to Purchase " + getTileName() + " for " + getPurchasePrice() + " ?" , player, player.getPosition());
+            return new TileActionResultModel("Would you Like to Purchase " + getTileDisplayName() + " for " + getPurchasePrice() + " ?", player, player.getPosition());
         }
         else{
             if(getRent(player, board.getPropertyTiles()) <= player.getMoney()){

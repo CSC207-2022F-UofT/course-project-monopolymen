@@ -1,5 +1,9 @@
 package game_entities.tiles;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +13,7 @@ public class FactoryProperty {
      * Extract and put each property into an ArrayList
      *
      * @param path                          the path of the file that we are trying to extract information from
-     * @return                              returns an ArrayList with all the information needed
+     * @return returns an ArrayList with all the information needed
      * @throws FileNotFoundException        if the file that we are given a url to is not found, this
      *                                      exception is thrown
      */
@@ -40,7 +44,7 @@ public class FactoryProperty {
         colorProperties.remove(0);
         for(List<String> line : colorProperties){
             String color = line.get(0);
-            String name = line.get(1);
+            String displayName = line.get(1);
             int price = Integer.parseInt(line.get(2));
             int rent = Integer.parseInt(line.get(3));
             int rentSet = Integer.parseInt(line.get(4));
@@ -54,7 +58,7 @@ public class FactoryProperty {
             int unMortgage = Integer.parseInt(line.get(12));
             String useName = line.get(13);
             int[] rentArr = {rent, rentSet, rentHouse1, rentHouse2, rentHouse3, rentHouse4, rentHotel};
-            ColorPropertyTile add = new ColorPropertyTile(color, name, useName, price, rentArr, buildingCost,
+            ColorPropertyTile add = new ColorPropertyTile(color, useName, displayName, price, rentArr, buildingCost,
                     mortgage, unMortgage);
             returnProperties.add(add);
         }
@@ -73,7 +77,7 @@ public class FactoryProperty {
         List<RailroadTile> returnProperties= new ArrayList<RailroadTile>();
         railRoad.remove(0);
         for(List<String> line : railRoad){
-            String name = line.get(0);
+            String displayName = line.get(0);
             int price = Integer.parseInt(line.get(1));
             int rentOwn1 = Integer.parseInt(line.get(2));
             int rentOwn2 = Integer.parseInt(line.get(3));
@@ -83,7 +87,7 @@ public class FactoryProperty {
             int unMortgage = Integer.parseInt(line.get(7));
             String useName = line.get(8);
             int[] rentArr = {rentOwn1, rentOwn2, rentOwn3, rentOwn4};
-            RailroadTile add = new RailroadTile(name, useName, price, rentArr, mortgage, unMortgage);
+            RailroadTile add = new RailroadTile(useName, displayName, price, rentArr, mortgage, unMortgage);
             returnProperties.add(add);
         }
         return returnProperties;
@@ -101,7 +105,7 @@ public class FactoryProperty {
         List<UtilityTile> returnProperties= new ArrayList<UtilityTile>();
         utilityProperties.remove(0);
         for(List<String> line : utilityProperties){
-            String name = line.get(0);
+            String displayName = line.get(0);
             int price = Integer.parseInt(line.get(1));
             int rent1 = Integer.parseInt(line.get(2));
             int rent2 = Integer.parseInt(line.get(3));
@@ -109,7 +113,7 @@ public class FactoryProperty {
             int unMortgage = Integer.parseInt(line.get(5));
             String useName = line.get(6);
             int[] rentArr = {rent1, rent2};
-            UtilityTile add = new UtilityTile(name, useName, price, rentArr, mortgage, unMortgage);
+            UtilityTile add = new UtilityTile(useName, displayName, price, rentArr, mortgage, unMortgage);
             returnProperties.add(add);
         }
         return returnProperties;

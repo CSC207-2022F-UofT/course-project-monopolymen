@@ -1,14 +1,11 @@
 package game_entities.tiles;
 
-import static org.junit.Assert.*;
-
-import game_entities.tiles.*;
-
-
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class TestFactoryClassProperty {
     @Test
@@ -53,23 +50,23 @@ public class TestFactoryClassProperty {
         //test if the initializeColorProperties works as expected
         List<ColorPropertyTile> propertyList = FactoryProperty.initializeColorProperties
                 ("src/main/resources/Data/property_csvs/Color Properties Monopoly.csv");
-        assertEquals(propertyList.get(0).getTileName(), "Mediterranean Avenue");
-        assertEquals(propertyList.get(21).getTileName(), "Boardwalk");
+        assertEquals(propertyList.get(0).getTileDisplayName(), "Mediterranean Avenue");
+        assertEquals(propertyList.get(21).getTileDisplayName(), "Boardwalk");
     }
     @Test
     public void testInitializeRailRoadProperties() throws FileNotFoundException {
         //test if the initializeRailRoadProperties works as expected
         List<RailroadTile> propertyList = FactoryProperty.initializeRailRoadProperties
                 ("src/main/resources/Data/property_csvs/Station Properties Monopoly.csv");
-        assertEquals(propertyList.get(0).getTileName(), "Reading Railroad");
-        assertEquals(propertyList.get(3).getTileName(), "Short Line");
+        assertEquals(propertyList.get(0).getTileDisplayName(), "Reading Railroad");
+        assertEquals(propertyList.get(3).getTileDisplayName(), "Short Line");
     }
     @Test
     public void testInitializeUtilityProperties() throws FileNotFoundException {
         //test if the initializeUtilityProprieties works as expected
         List<UtilityTile> propertyList = FactoryProperty.initializeUtilityProperties
                 ("src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv");
-        assertEquals(propertyList.get(0).getTileName(), "Electric Company");
-        assertEquals(propertyList.get(1).getTileName(), "Water Works");
+        assertEquals(propertyList.get(0).getTileDisplayName(), "Electric Company");
+        assertEquals(propertyList.get(1).getTileDisplayName(), "Water Works");
     }
 }
