@@ -2,6 +2,7 @@ package game_entities.cards;
 
 import game_entities.Player;
 
+import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
 
 import java.util.ArrayList;
@@ -21,13 +22,15 @@ public class PropertyRepairCard extends Card{
     public CardActionResultModel action(Player player) {
         int totalHouses = 0;
         int totalHotels = 0;
-        ArrayList<Property> pProperties = player.getProperties();
-//        for(int i = 0; i < pProperties.size(); i++){
-//            totalHouses = totalHouses + pProperties.get(i).getHouses();
-//            totalHotels = totalHotels + pProperties.get(i).getHotels();
-//        } the getHouses and getHotels methods haven't been made yet
-        player.subtractMoney(totalHotels * -this.hotelRepair);
-        player.subtractMoney(totalHouses * -this.houseRepair);
+        ArrayList<Property> properties = player.getProperties();
+        for(int i = 0; i < properties.size(); i++){
+            Property property = properties.get(i);
+            if(property instanceof ColorPropertyTile){
+                totalHouses = totalHouses + ((ColorPropertyTile) property).getNumHouses();
+                totalHotels = totalHotels + ((ColorPropertyTile) property).getNumHotels();
+            }
+        }
+        player.subtractMoney(totalHotels * this.hotelRepair + totalHouses * this.houseRepair);
 
         CardActionResultModel result = new CardActionResultModel(getCardDescription(), player, player.getPosition(),
                 getCardName(), isChanceCard());
