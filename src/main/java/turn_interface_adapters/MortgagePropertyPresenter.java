@@ -94,6 +94,7 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
                     controller.endUseCase();
                 }
             });
+            mortgagePanel.add(backButton);
             showOptionsPanel();
         } else {
             mortgagePanel.add(new JLabel(flavorText));

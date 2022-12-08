@@ -79,16 +79,16 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
                 && ((ColorPropertyTile) property).getNumHotels() == 0) {
             player.addMoney(property.mortgage());
             int mortgageValue = property.getMortgageValue();
-            String text = player.getName() + "mortgaged " + property.getTileName() + "and get $" + mortgageValue;
+            String text = player.getName() + " mortgaged " + property.getTileName() + " and get $" + mortgageValue;
             presenter.showMortgageProperty(player, property, text);
         } else if (player.ownsProperty(property) && property instanceof RailroadTile
                 || property instanceof UtilityTile){
             player.addMoney(property.mortgage());
             int mortgageValue = property.getMortgageValue();
-            String text = player.getName() + "mortgaged " + property.getTileName() + "and get $" + mortgageValue;
+            String text = player.getName() + " mortgaged " + property.getTileName() + " and get $" + mortgageValue;
             presenter.showMortgageProperty(player, property, text);
         } else {
-            String text = player.getName() + "cannot mortgage " + property.getTileName();
+            String text = player.getName() + " cannot mortgage " + property.getTileName();
             presenter.showMortgageProperty(player, property, text);
         }
     }
@@ -107,10 +107,10 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
         if (player.ownsProperty(property)) {
             player.subtractMoney(unmortgageValue);
             property.unmortgage();
-            String text = player.getName() + "unmortgaged " + property.getTileName() + "and subtract $" + unmortgageValue;
+            String text = player.getName() + " unmortgaged " + property.getTileName() + " and subtract $" + unmortgageValue;
             presenter.showMortgageProperty(player, property, text);
         } else {
-            String text = player.getName() + "cannot unmortgage " + property.getTileName();
+            String text = player.getName() + " cannot unmortgage " + property.getTileName();
             presenter.showUnmortgageProperty(player, property, text);
         }
     }
