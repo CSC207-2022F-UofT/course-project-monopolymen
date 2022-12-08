@@ -111,7 +111,6 @@ public class Game {
     public void addPlayer(String playerName, PlayerIcon playerIcon, int money) {
         Player player = new Player(playerName, playerIcon.name().toLowerCase(), money, board);
         player.setGameState(gameState);
-        player.setTurnController(turnController);
         players.add(player);
     }
 
@@ -178,6 +177,10 @@ public class Game {
 
         BuildBuildingOutputBoundary buildBuildingPresenter = new BuildBuildingPresenter(actionDialogBoxes, (CardLayout) actionDialogBoxes.getLayout(), turnController);
         BuildBuildingInputBoundary buildBuilding = new BuildBuildings(buildBuildingPresenter, board);
+
+        for (Player player : gameState.getAllPlayers()){
+            player.setLiquidateAssetsInputBoundary(liquidateAssets);
+        }
 
         turnController.initializeAttributes(gameState, buildBuilding, mortgage, movePlayer, trade, leaveJail, viewInventory, liquidateAssets, endTurn);
     }
