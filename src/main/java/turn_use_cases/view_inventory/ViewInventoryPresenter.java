@@ -70,12 +70,12 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
                 }
                 String id = "";
                 if (currentProperty instanceof UtilityTile){
-                    id = "utility_" + currentProperty.getTileDisplayName() +".jpg";
+                    id = "utility_" + currentProperty.getTileName() + ".jpg";
                 } else if (currentProperty instanceof RailroadTile) {
-                    id = "rr_" + currentProperty.getTileDisplayName() + ".jpg";
+                    id = "rr_" + currentProperty.getTileName() + ".jpg";
                 } else {
                     ColorPropertyTile newTemp = (ColorPropertyTile) currentProperty;
-                    id = newTemp.getColor().toLowerCase() + "_" + newTemp.getTileDisplayName() + ".jpg";
+                    id = newTemp.getColor().toLowerCase() + "_" + newTemp.getTileName() + ".jpg";
                 }
                 String path = "src/main/resources/assets/property/property_" + frontOrBack + "_" + id;
                 System.out.println(path);

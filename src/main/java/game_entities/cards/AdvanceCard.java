@@ -22,7 +22,7 @@ public class AdvanceCard extends Card{
 
     @Override
     public CardActionResultModel action(Player player) {
-        if(tileName.equals("Jail")){
+        if (tileName.equals("JailTile")) {
             player.enterJail();
             return new CardActionResultModel(getCardDescription(), player, board.getJailTilePosition(), getCardName(),
                     isChanceCard());

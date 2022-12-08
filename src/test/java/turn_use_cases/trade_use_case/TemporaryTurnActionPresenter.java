@@ -5,6 +5,12 @@ import game_entities.Player;
 import java.util.ArrayList;
 
 public class TemporaryTurnActionPresenter implements  TradeOutputBoundary{
+
+    public ArrayList<Player> testPlayerList = null;
+
+    public TradeOption testTradeOption = null;
+
+
     /**
      * Presents the list of players player can trade with.
      *
@@ -13,6 +19,7 @@ public class TemporaryTurnActionPresenter implements  TradeOutputBoundary{
      */
     @Override
     public void showListOfPlayers(ArrayList<Player> listOfPlayers, Player player, String flavorText) {
+        this.testPlayerList = listOfPlayers;
 
     }
 
@@ -24,6 +31,7 @@ public class TemporaryTurnActionPresenter implements  TradeOutputBoundary{
      */
     @Override
     public void showTradeOptions(TradeOption tradeOption, String flavorText) {
+        this.testTradeOption = tradeOption;
 
     }
 
