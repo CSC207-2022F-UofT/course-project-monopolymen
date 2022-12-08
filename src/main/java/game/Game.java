@@ -126,7 +126,7 @@ public class Game {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        board.shuffleCards();
+
 
         SaveGameState save = new SaveGameStateSerialize(saves_directory);
 

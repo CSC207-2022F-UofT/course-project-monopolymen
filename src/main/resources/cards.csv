@@ -15,6 +15,7 @@ advanceNear,card_chance_13,c13,Advance to the nearest railroad. If unowned you m
 advanceNear,card_chance_14,c14,Advance to the nearest railroad. If unowned you may buy it from the Bank. If owned pay owner twice the rental to which they are otherwise entitles,TRUE,N/A,N/A,N/A,N/A,N/A,Railroad
 advance,card_chance_15,c15,"Advance to ""Go"". (Collect $200)",TRUE,Go,N/A,N/A,N/A,N/A,N/A
 advance,card_chance_16,c16,"Advance to ""Go"". (Collect $200)",TRUE,Go,N/A,N/A,N/A,N/A,N/A
+advance,card_chest_9,c25,"Go to Jail. Go directly to Jail. Do not pass ""Go"". Do not collect $200. ",FALSE,Jail,N/A,N/A,N/A,N/A,N/A
 repair,card_chest_1,c17,You are assessed for street repairs: $40 per house and $115 per hotel,FALSE,N/A,N/A,115,40,N/A,N/A
 money,card_chest_2,c18,You have won second prize in a beauty contest. Collect $10,FALSE,N/A,10,N/A,N/A,N/A,N/A
 money,card_chest_3,c19,Pay school fees of $50,FALSE,N/A,-50,N/A,N/A,N/A,N/A
