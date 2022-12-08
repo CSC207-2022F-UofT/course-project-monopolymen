@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import game_entities.Player;
 import game_entities.tiles.Tile;
+import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
+import game_entities.tiles.RailroadTile;
 import game_entities.tiles.TilePassResultModel;
+import game_entities.tiles.UtilityTile;
 import turn_interface_adapters.TurnController;
 
 import javax.swing.*;
@@ -191,6 +194,26 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 }
             });
             optionsWindow.add(buyButton);
+            // Show the property picture
+            JLabel propertyImage = new JLabel();
+            String frontOrBack = "front";
+            String id = "";
+            if (property instanceof UtilityTile){
+                id = "utility_" + property.getTileDisplayName() +".jpg";
+            } else if (property instanceof RailroadTile) {
+                id = "rr_" + property.getTileDisplayName() + ".jpg";
+            } else {
+                ColorPropertyTile newTemp = (ColorPropertyTile) property;
+                id = newTemp.getColor().toLowerCase() + "_" + newTemp.getTileDisplayName() + ".jpg";
+            }
+            String path = "src/main/resources/assets/property/property_" + frontOrBack + "_" + id;
+            System.out.println(path);
+            ImageIcon temp = new ImageIcon(new ImageIcon
+                    (path)
+                    .getImage().getScaledInstance((int) (250), (int) (320), Image.SCALE_SMOOTH));
+            propertyImage.setIcon(temp);
+            propertyImage.setPreferredSize(new Dimension(250, 320));
+            optionsWindow.add(propertyImage);
         }
     }
 }
