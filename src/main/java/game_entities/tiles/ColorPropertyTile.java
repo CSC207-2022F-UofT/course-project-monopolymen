@@ -116,7 +116,7 @@ public class ColorPropertyTile extends Property{
     @Override
     public int getRent(Player rentPayer, List<Property> propertyList) {
         if (!isOwned()){
-            return -1;
+            return 0;
         }
         if ((getNumHotels() == 0 && getNumHouses() == 0) & allColoredPropertySetOwned(getColor(),propertyList)){
             return rentPrice[1];
