@@ -40,7 +40,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             return false;
         }
         ColorPropertyTile colorProperty = (ColorPropertyTile) property;
-        System.out.println(colorProperty.checkSetOwned(board.getPropertyTiles()));
+//        System.out.println(board.getPropertyTiles());
         if(!colorProperty.checkSetOwned(board.getPropertyTiles())) {
             return false;
         }
@@ -89,8 +89,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         ArrayList<Property> properties = player.getProperties();
         ArrayList<ColorPropertyTile> buildOptions = new ArrayList<>();
         for (int i = 0; i < properties.size(); i++){
-            System.out.println(properties.get(i));
-            System.out.println(isBuildable(player,properties.get(i)));
+//            System.out.println(properties.get(i));
             if(isBuildable(player,properties.get(i))){
                 buildOptions.add((ColorPropertyTile) properties.get(i));
             }
@@ -191,7 +190,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         ArrayList<Property> properties = player.getProperties();
         ArrayList<ColorPropertyTile> sellOptions = new ArrayList<>();
         for (int i = 0; i < properties.size(); i++){
-            if(isSellable(player, (ColorPropertyTile) properties.get(i)) && properties.get(i) instanceof ColorPropertyTile){
+            if( properties.get(i) instanceof ColorPropertyTile && isSellable(player, (ColorPropertyTile) properties.get(i))){
                 sellOptions.add((ColorPropertyTile) properties.get(i));
             }
         }
