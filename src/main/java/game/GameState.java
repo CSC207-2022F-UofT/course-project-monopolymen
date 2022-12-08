@@ -45,7 +45,7 @@ public class GameState implements Serializable {
         this.currentPlayer = 0;
         this.numPlayers = allPlayers.size();
         this.saveGameState = saveGameState;
-        this.turnCounter = 0;
+        this.turnCounter = 1;
         this.board = board;
         this.gameName = gameName;
         this.presenter = presenter;
@@ -140,7 +140,7 @@ public class GameState implements Serializable {
         boolean saved = saveGameState.save(this, "save_" + gameName);
         presenter.showAutosaveStatus(saved);
         // Start the next player's Turn.
-        presenter.showNextTurn(currentPlayer());
+        presenter.showNextTurn(currentPlayer(), turnCounter);
     }
 
     /**

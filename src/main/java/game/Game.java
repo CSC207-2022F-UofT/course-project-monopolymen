@@ -131,7 +131,7 @@ public class Game {
         SaveGameState save = new SaveGameStateSerialize(saves_directory);
 
         turnController = new TurnController();
-        GameStatePresenter gameStatePresenter = new GameStatePresenter(gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
+        GameStatePresenter gameStatePresenter = new GameStatePresenter(gameView.getMainWindow(), gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
         gameState = new GameState(players, gameName, board, save, gameStatePresenter);
     }
 
@@ -144,7 +144,7 @@ public class Game {
         }
 
         turnController = new TurnController();
-        GameStatePresenter gameStatePresenter = new GameStatePresenter(gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
+        GameStatePresenter gameStatePresenter = new GameStatePresenter(gameView.getMainWindow(), gameView.getActionDialogBoxes(), turnController, gameView.getAutosaveInfo());
         gameState = load.load(fullSaveName, new SaveGameStateSerialize(saves_directory), gameStatePresenter, turnController);
         board = gameState.getBoard();
     }
