@@ -64,6 +64,7 @@ public class BuildBuildingTest {
     @Test
     public void testIsBuildable(){
         System.out.println(board.getPropertyTiles());
+        System.out.println(property_4.isOwned());
         boolean a = property_1.checkSetOwned(board.getPropertyTiles());
         System.out.println(a);
     }
