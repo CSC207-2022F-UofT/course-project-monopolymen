@@ -53,6 +53,8 @@ public class TradeUseCaseTest {
 
         presenter.testTradeOption = null;
         presenter.testPlayerList = null;
+        presenter.testTradeOffer = null;
+        presenter.testOption = 0;
 
     }
 
@@ -100,6 +102,8 @@ public class TradeUseCaseTest {
 
         tradeUseCase.makeOffer(tradeOffer, player1, player2);
 
+        assertEquals(tradeOffer, presenter.testTradeOffer);
+
     }
 
     @Test
@@ -112,6 +116,8 @@ public class TradeUseCaseTest {
                 propertiesOffered, propertiesReceived, player1, player2);
 
         tradeUseCase.makeOffer(tradeOffer, player1, player2);
+
+        assertEquals(tradeOffer, presenter.testTradeOffer);
 
     }
 
@@ -139,6 +145,8 @@ public class TradeUseCaseTest {
 
         tradeUseCase.getResultOfTradeOffer(2, player1, player2, tradeOffer);
 
+        assertEquals(2, presenter.testOption);
+
     }
 
     @Test
@@ -152,6 +160,8 @@ public class TradeUseCaseTest {
 
         tradeUseCase.getResultOfTradeOffer(3, player1, player2, tradeOffer);
 
+        assertEquals(3, presenter.testOption);
+
     }
 
     @Test
@@ -164,6 +174,8 @@ public class TradeUseCaseTest {
                 propertiesOffered, propertiesReceived, player1, player2);
 
         tradeUseCase.getResultOfTradeOffer(4, player1, player2, tradeOffer);
+
+        assertEquals(4, presenter.testOption);
 
     }
 
