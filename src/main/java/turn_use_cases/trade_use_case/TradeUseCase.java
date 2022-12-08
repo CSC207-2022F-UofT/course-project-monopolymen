@@ -57,7 +57,7 @@ public class TradeUseCase implements  TradeInputBoundary{
                 player1.getProperties(), player2.getProperties(), player1, player2);
 
         presenter.showTradeOptions(tradeOption,"<html><body>"+ player1.getName() +
-                ", please choose what you want to trade."+"</body></html>");
+                ", please choose what you want to trade. (Ctrl + Click to select multiple properties)"+"</body></html>");
 
     }
 
