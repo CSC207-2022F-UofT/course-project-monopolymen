@@ -25,9 +25,9 @@ public class JailTile extends Tile{
         String inJail = "You are in jail";
         String notInJail = "You are just visiting";
         if(player.getTurnsInJail() != -1) {
-            return new TileActionResultModel(inJail, player, -1);
+            return new TileActionResultModel(inJail, player, board.getJailTilePosition());
         } else {
-            return new TileActionResultModel(notInJail, player, -1);
+            return new TileActionResultModel(notInJail, player, board.getJailTilePosition());
         }
     }
 }
