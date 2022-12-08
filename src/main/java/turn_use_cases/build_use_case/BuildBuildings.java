@@ -40,6 +40,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             return false;
         }
         ColorPropertyTile colorProperty = (ColorPropertyTile) property;
+        System.out.println(colorProperty.checkSetOwned(board.getPropertyTiles()));
         if(!colorProperty.checkSetOwned(board.getPropertyTiles())) {
             return false;
         }
@@ -86,15 +87,20 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
     @Override
     public void showBuildOption (Player player){
         ArrayList<Property> properties = player.getProperties();
-        ArrayList<Property> buildOptions = new ArrayList<>();
+        ArrayList<ColorPropertyTile> buildOptions = new ArrayList<>();
         for (int i = 0; i < properties.size(); i++){
+            System.out.println(properties.get(i));
+            System.out.println(isBuildable(player,properties.get(i)));
             if(isBuildable(player,properties.get(i))){
-                buildOptions.add(properties.get(i));
+                buildOptions.add((ColorPropertyTile) properties.get(i));
             }
         }
         String text = "This is a list of properties you can build a building.";
         presenter.showBuildOption(buildOptions, text);
     }
+
+
+
 
     /**
      * Build a house on the property.
@@ -143,24 +149,22 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
      * @param property the property on which player wants to sell buildings.
      */
     @Override
-    public boolean isSellable(Player player, Property property) {
+    public boolean isSellable(Player player, ColorPropertyTile property) {
         if(!player.ownsProperty(property)){
             return false;
         }
-        if(!(property instanceof ColorPropertyTile)){
+        if(property.getNumHouses() == 0){
             return false;
         }
-        ColorPropertyTile colorProperty = (ColorPropertyTile) property;
-
         ArrayList<ColorPropertyTile> ColorProperties = new ArrayList<ColorPropertyTile>();
         ArrayList<Property> properties = player.getProperties();
         for (int i = 0; i < properties.size(); i++){
-            if(properties.get(i).getClass().getName().equals("game_entities.tiles.ColorPropertyTile")){
+            if(properties.get(i) instanceof ColorPropertyTile){
                 ColorProperties.add((ColorPropertyTile) properties.get(i));
             }
         }
         // Selecting ColorPropertyTile with the same color.
-        String color = colorProperty.getColor();
+        String color = property.getColor();
         ArrayList<ColorPropertyTile> SameColorProperties = new ArrayList<ColorPropertyTile>();
         for (int i = 0; i < ColorProperties.size(); i++){
             if(ColorProperties.get(i).getColor().equals(color)) {
@@ -169,7 +173,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         }
         for (ColorPropertyTile sameColorProperty : SameColorProperties) {
             int a = sameColorProperty.getNumHouses() + sameColorProperty.getNumHotels();
-            int b = colorProperty.getNumHouses() + colorProperty.getNumHotels();
+            int b = property.getNumHouses() + property.getNumHotels();
             if (b < a) {
                 return false;
             }
@@ -181,15 +185,14 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
      * A list of properties which has building can be sold.
      *
      * @param player the player who wants to sell buildings.
-     * @return the list of properties.
      */
     @Override
     public void showSellOption (Player player){
         ArrayList<Property> properties = player.getProperties();
-        ArrayList<Property> sellOptions = new ArrayList<>();
+        ArrayList<ColorPropertyTile> sellOptions = new ArrayList<>();
         for (int i = 0; i < properties.size(); i++){
-            if(isSellable(player,properties.get(i))){
-                sellOptions.add(properties.get(i));
+            if(isSellable(player, (ColorPropertyTile) properties.get(i)) && properties.get(i) instanceof ColorPropertyTile){
+                sellOptions.add((ColorPropertyTile) properties.get(i));
             }
         }
         String text = "This is a list of properties you can sell a building.";

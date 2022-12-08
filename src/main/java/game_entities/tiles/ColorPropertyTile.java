@@ -166,15 +166,15 @@ public class ColorPropertyTile extends Property{
         for (Property property : arr) {
             if(property instanceof ColorPropertyTile) {
                 if(((ColorPropertyTile) property).getColor() == this.color) {
+                    if(!property.isOwned()){
+                        return false;
+                    }
                     playerArr.add(property.getOwner());
                 }
             }
         }
         Player firstPlayer = playerArr.get(0);
         for(Player player: playerArr) {
-            if(player == null){
-                return false;
-            }
             if(!player.equals(firstPlayer)) {
                 ownSet = false;
             }

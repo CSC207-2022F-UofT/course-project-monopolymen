@@ -13,7 +13,7 @@ public interface BuildBuildingOutputBoundary {
      * @param properties the property which would build a building or sell a building.
      * @param flavorText the text describing what is happening.
      */
-    public void showBuildOption(ArrayList<Property> properties, String flavorText);
+    public void showBuildOption(ArrayList<ColorPropertyTile> properties, String flavorText);
 
     /**
      * Presents the property which would build a building.
@@ -39,6 +39,6 @@ public interface BuildBuildingOutputBoundary {
      * @param properties the property which would build a building or sell a building.
      * @param flavorText the text describing what is happening.
      */
-    public void showSellOption(ArrayList<Property> properties, String flavorText);
+    public void showSellOption(ArrayList<ColorPropertyTile> properties, String flavorText);
 
 }

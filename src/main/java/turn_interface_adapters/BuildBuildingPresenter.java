@@ -34,7 +34,7 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
      * @param flavorText the text describing what is happening.
      */
     @Override
-    public void showBuildOption(ArrayList<Property> properties, String flavorText){
+    public void showBuildOption(ArrayList<ColorPropertyTile> properties, String flavorText){
         resetOptionsPanel();
         if (properties.size() == 0) {
             choicesPanel.add(new JLabel("You cannot build a building."));
@@ -117,7 +117,7 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
      * @param flavorText the text describing what is happening.
      */
     @Override
-    public void showSellOption(ArrayList<Property> properties, String flavorText){
+    public void showSellOption(ArrayList<ColorPropertyTile> properties, String flavorText){
         resetOptionsPanel();
         if (properties.size() == 0) {
             choicesPanel.add(new JLabel("You cannot sell a building."));
