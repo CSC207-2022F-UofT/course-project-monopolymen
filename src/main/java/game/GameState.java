@@ -67,9 +67,6 @@ public class GameState implements Serializable {
         GameState gameState = (GameState) objectIn.readObject();
         gameState.setSaveGameState(saveGameState);
         gameState.setPresenter(presenter);
-        for (Player player : gameState.allPlayers) {
-            player.setTurnController(turnController);
-        }
         return gameState;
     }
 

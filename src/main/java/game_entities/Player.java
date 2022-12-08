@@ -2,7 +2,9 @@ package game_entities;
 
 import game.GameState;
 import game_entities.tiles.Property;
-import turn_interface_adapters.TurnController;
+import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsInputBoundary;
+import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsUseCase;
+import turn_use_cases.liquidate_assets_use_case.LiquiditySituation;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,12 +29,7 @@ public class Player implements Serializable {
 
     private Board board;
 
-    private transient TurnController turnController;
-
-    public void setTurnController(TurnController turnController) {
-        this.turnController = turnController;
-    }
-
+    private transient LiquidateAssetsInputBoundary liquidateAssetsInputBoundary;
     private GameState gameState;
 
     /**
@@ -51,6 +48,10 @@ public class Player implements Serializable {
         this.icon = iconInput;
         this.money = money;
         this.board = board;
+    }
+
+    public void setLiquidateAssetsInputBoundary(LiquidateAssetsInputBoundary liquidateAssetsInputBoundary) {
+        this.liquidateAssetsInputBoundary = liquidateAssetsInputBoundary;
     }
 
     public void setGameState(GameState gameState) {
@@ -130,7 +131,8 @@ public class Player implements Serializable {
             this.money -= subtract;
         }
         else{
-            turnController.getPlayerOptions(this, owedPlayer, subtract, this.gameState, this.board);
+            LiquiditySituation situation = new LiquiditySituation(this, owedPlayer, subtract, this.gameState, this.board);
+            liquidateAssetsInputBoundary.getPlayerOptions(situation);
         }
     }
 
