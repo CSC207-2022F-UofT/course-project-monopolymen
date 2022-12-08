@@ -10,6 +10,10 @@ public class TemporaryTurnActionPresenter implements  TradeOutputBoundary{
 
     public TradeOption testTradeOption = null;
 
+    public TradeOffer testTradeOffer = null;
+
+    public int testOption = 0;
+
 
     /**
      * Presents the list of players player can trade with.
@@ -43,7 +47,7 @@ public class TemporaryTurnActionPresenter implements  TradeOutputBoundary{
      */
     @Override
     public void showTradeOffer(TradeOffer tradeOffer, String flavorText) {
-
+        this.testTradeOffer = tradeOffer;
     }
 
     /**
@@ -60,6 +64,7 @@ public class TemporaryTurnActionPresenter implements  TradeOutputBoundary{
      */
     @Override
     public void showResultOfTradeOffer(int option, String flavorText, Player player1, Player player2) {
+        this.testOption = option;
 
     }
 }
