@@ -28,7 +28,7 @@ NOTE:
 
 <p>
   <img src="src/main/resources/assets/property/property_front_blue_boardwalk.jpg" width="400" alt="Monopoly Board Image"/>
-  <img src="src/main/resources/assets/property/property_front_rr_pennsylvania.jpg" width="400" alt="Monopoly Board Image"/>
+  <img src="src/main/resources/assets/property/property_front_rr_pennsylvaniarr.jpg" width="400" alt="Monopoly Board Image"/>
 </p>
 
 ## Asset Credit
@@ -68,3 +68,5 @@ modified Icons:
 - <a href="https://www.flaticon.com/free-icons/dog" title="dog icons">Dog icons created by Icongeek26 - Flaticon</a>
 - <a href="https://www.flaticon.com/free-icons/wheelbarrow" title="wheelbarrow icons">Wheelbarrow icons created by
   Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/monopoly" title="monopoly icons">Monopoly icons created by Freepik -
+  Flaticon</a>

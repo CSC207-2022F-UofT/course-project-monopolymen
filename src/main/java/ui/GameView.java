@@ -31,6 +31,7 @@ public class GameView {
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Layout is not recalculated until resizing operation finishes (for performance reasons).
         mainWindow.getToolkit().setDynamicLayout(false);
+        mainWindow.setIconImage(new ImageIcon("src/main/resources/assets/misc/monopoly_board_icon.png").getImage());
     }
 
     private void constructMainContainer(JFrame mainWindow) {
