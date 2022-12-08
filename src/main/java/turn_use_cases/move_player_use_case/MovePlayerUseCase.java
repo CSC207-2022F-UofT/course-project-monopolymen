@@ -141,7 +141,6 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
             System.out.println(cardResult.getPlayerPosition());
             if(playerBeforePosition != result.getPlayerPosition()){
                 // Card moved player
-
                 if(result.getPlayerPosition() == board.getJailTilePosition()) {
                     // Player is moving to jail, does not collect "GO" tile money
                     // player.enterJail() is handled in the card's action
@@ -161,9 +160,14 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         } else {
             // Player didn't land on a draw card tile
             if (result.getPlayerPosition() == board.getJailTilePosition()) {
-                // Player landed on "go to jail" and their position should now be in jail
-                // player.enterJail() is handeled in the tile's action method
-                sendToJail(player);
+                if(player.getTurnsInJail() != -1) {
+                    // Player landed on "go to jail" and their position should now be in jail
+                    // player.enterJail() is handeled in the tile's action method
+                    sendToJail(player);
+                } else {
+                    // Player landed on "jail" tile and is just visiting
+                    moveToPosition(player, playerAfterPosition, doubleRoll, result.getFlavorText(), false);
+                }
             } else {
                 // Normal move
                 moveToPosition(player, playerAfterPosition, doubleRoll, result.getFlavorText(), false);
