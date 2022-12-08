@@ -37,14 +37,15 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
      * @param absolutePosition the position the player will move to
      * @param doubleRoll If the player rolled a double
      * @param flavorText FlavorText
+     * @param cardMovedPlayer If the player is moving by a card
      */
 
-    private void moveToPosition(Player player, int absolutePosition, boolean doubleRoll, String flavorText) {
+    private void moveToPosition(Player player, int absolutePosition, boolean doubleRoll, String flavorText, boolean cardMovedPlayer) {
         // There is only 1 case when the player moves back by the card and its 3 spaces
         int steps = absolutePosition - player.getPosition();
         if(steps == -3) {
             // Only move backwards case
-            for (int i = 0; i < steps; i++) {
+            for (int i = 0; i > steps; i--) {
                 player.updatePosition(-1);
                 if(board.getTile(player.getPosition()) instanceof GoTile) {
                     // Player will pass but not collect money from "GO"
@@ -56,15 +57,28 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                     movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
                 }
             }
+            board.getTile(player.getPosition()).action(player, board);
             showAction(player, doubleRoll, flavorText);
         } else {
-            int positiveSteps = (steps + board.getTilesList().size()) % board.getTilesList().size();
-            for (int i = 0; i < positiveSteps; i++) {
-                player.updatePosition(1);
-                TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
-                movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
+            if(cardMovedPlayer) {
+                int positiveSteps = (steps + board.getTilesList().size()) % board.getTilesList().size();
+                for (int i = 0; i < positiveSteps; i++) {
+                    player.updatePosition(1);
+                    TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
+                    movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
+                }
+                // Since the player is moving by a card, the action will be called in tile the player lands on
+                board.getTile(player.getPosition()).action(player, board);
+                showAction(player, doubleRoll, flavorText);
+            } else {
+                int positiveSteps = (steps + board.getTilesList().size()) % board.getTilesList().size();
+                for (int i = 0; i < positiveSteps; i++) {
+                    player.updatePosition(1);
+                    TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
+                    movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
+                }
+                showAction(player, doubleRoll, flavorText);
             }
-            showAction(player, doubleRoll, flavorText);
         }
     }
 
@@ -76,8 +90,13 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
     private void showAction(Player player, boolean doubleRoll, String flavorText) {
         Tile tile = board.getTile(player.getPosition());
         if(tile.isOwnable()) {
-            movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
-                    flavorText, "Don't Buy");
+            if(((Property) tile).isOwned()) {
+                movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                    flavorText, "Other Options");
+            } else {
+                movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
+                        flavorText, "Don't Buy");
+            }
         } else {
             movePlayerOutputBoundary.showResultOfAction(player, player.getPosition(), false,
                     flavorText, "Other Options");
@@ -118,8 +137,11 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         if(result instanceof CardActionResultModel) {
             // Player landed on draw card tile
             CardActionResultModel cardResult = (CardActionResultModel) result;
+            System.out.println(playerBeforePosition);
+            System.out.println(cardResult.getPlayerPosition());
             if(playerBeforePosition != result.getPlayerPosition()){
                 // Card moved player
+
                 if(result.getPlayerPosition() == board.getJailTilePosition()) {
                     // Player is moving to jail, does not collect "GO" tile money
                     // player.enterJail() is handled in the card's action
@@ -128,11 +150,11 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                 } else {
                     // Normal move player card
                     movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(), doubleRoll, cardResult.isChance());
-                    moveToPosition(player, cardResult.getPlayerPosition(), doubleRoll, cardResult.getFlavorText());
+                    moveToPosition(player, cardResult.getPlayerPosition(), doubleRoll, cardResult.getFlavorText(), true);
                 }
             } else {
                 // Card didn't move player
-                moveToPosition(player, playerAfterPosition, doubleRoll, cardResult.getFlavorText());
+                moveToPosition(player, playerAfterPosition, doubleRoll, cardResult.getFlavorText(), false);
                 movePlayerOutputBoundary.showCardDraw(player, cardResult.getCardName(),
                         doubleRoll, cardResult.isChance());
             }
@@ -144,7 +166,7 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
                 sendToJail(player);
             } else {
                 // Normal move
-                moveToPosition(player, playerAfterPosition, doubleRoll, result.getFlavorText());
+                moveToPosition(player, playerAfterPosition, doubleRoll, result.getFlavorText(), false);
                 }
             }
     }
