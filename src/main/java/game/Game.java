@@ -145,7 +145,7 @@ public class Game {
         ViewInventoryOutputBoundary viewInventoryPresenter = new ViewInventoryPresenter(inventorySummaryBox, gameState.getAllPlayers(), turnController);
         ViewInventoryInputBoundary viewInventory = new ViewInventory(viewInventoryPresenter);
 
-        LiquidateAssetsOutputBoundary liquidateAssetsPresenter = new LiquidateAssetsInterfaceAdapter(turnController, actionDialogBoxes, (CardLayout) actionDialogBoxes.getLayout());
+        LiquidateAssetsOutputBoundary liquidateAssetsPresenter = new LiquidateAssetsInterfaceAdapter(turnController);
         LiquidateAssetsInputBoundary liquidateAssets = new LiquidateAssetsUseCase(liquidateAssetsPresenter);
 
         TradeOutputBoundary tradePresenter = new TradePresenter(actionDialogBoxes,(CardLayout) actionDialogBoxes.getLayout(), turnController);
