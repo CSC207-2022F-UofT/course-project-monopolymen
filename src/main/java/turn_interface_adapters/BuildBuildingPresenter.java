@@ -64,6 +64,14 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
                 });
                 choicesPanel.add(optionsButton);
             }
+            JButton backButton = new JButton("Cancel");
+            backButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controller.endUseCase();
+                }
+            });
+            choicesPanel.add(backButton);
             showOptionsPanel();
         }
     }
@@ -146,6 +154,14 @@ public class BuildBuildingPresenter implements BuildBuildingOutputBoundary {
                 });
                 choicesPanel.add(optionsButton);
             }
+            JButton backButton = new JButton("Cancel");
+            backButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controller.endUseCase();
+                }
+            });
+            choicesPanel.add(backButton);
             showOptionsPanel();
         }
     }

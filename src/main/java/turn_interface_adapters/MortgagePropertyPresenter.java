@@ -63,6 +63,14 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
                 });
                 mortgagePanel.add(optionsButton);
             }
+            JButton backButton = new JButton("Cancel");
+            backButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controller.endUseCase();
+                }
+            });
+            mortgagePanel.add(backButton);
             showOptionsPanel();
         }
     }
@@ -86,6 +94,7 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
                     controller.endUseCase();
                 }
             });
+            mortgagePanel.add(backButton);
             showOptionsPanel();
         } else {
             mortgagePanel.add(new JLabel(flavorText));
@@ -99,6 +108,14 @@ public class MortgagePropertyPresenter implements MortgagePropertyOutputBoundary
                 });
                 mortgagePanel.add(optionsButton);
             }
+            JButton backButton = new JButton("Cancel");
+            backButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controller.endUseCase();
+                }
+            });
+            mortgagePanel.add(backButton);
             showOptionsPanel();
         }
     }

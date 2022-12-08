@@ -36,10 +36,12 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
         for (int i = 0; i < properties.size(); i++){
             if (properties.get(i) instanceof ColorPropertyTile
                     && ((ColorPropertyTile) properties.get(i)).getNumHouses() == 0
-                    && ((ColorPropertyTile) properties.get(i)).getNumHotels() == 0){
+                    && ((ColorPropertyTile) properties.get(i)).getNumHotels() == 0
+                    && !properties.get(i).isMortgaged()){
                 mortgageable.add(properties.get(i));
             } else if (properties.get(i) instanceof RailroadTile
-                    || properties.get(i) instanceof UtilityTile) {
+                    || properties.get(i) instanceof UtilityTile
+                    && !properties.get(i).isMortgaged()) {
                 mortgageable.add(properties.get(i));
             }
         }
@@ -79,16 +81,16 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
                 && ((ColorPropertyTile) property).getNumHotels() == 0) {
             player.addMoney(property.mortgage());
             int mortgageValue = property.getMortgageValue();
-            String text = player.getName() + "mortgaged " + property.getTileName() + "and get $" + mortgageValue;
+            String text = player.getName() + " mortgaged " + property.getTileName() + " and get $" + mortgageValue;
             presenter.showMortgageProperty(player, property, text);
         } else if (player.ownsProperty(property) && property instanceof RailroadTile
                 || property instanceof UtilityTile){
             player.addMoney(property.mortgage());
             int mortgageValue = property.getMortgageValue();
-            String text = player.getName() + "mortgaged " + property.getTileName() + "and get $" + mortgageValue;
+            String text = player.getName() + " mortgaged " + property.getTileName() + " and get $" + mortgageValue;
             presenter.showMortgageProperty(player, property, text);
         } else {
-            String text = player.getName() + "cannot mortgage " + property.getTileName();
+            String text = player.getName() + " cannot mortgage " + property.getTileName();
             presenter.showMortgageProperty(player, property, text);
         }
     }
@@ -107,10 +109,10 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
         if (player.ownsProperty(property)) {
             player.subtractMoney(unmortgageValue);
             property.unmortgage();
-            String text = player.getName() + "unmortgaged " + property.getTileName() + "and subtract $" + unmortgageValue;
+            String text = player.getName() + " unmortgaged " + property.getTileName() + " and subtract $" + unmortgageValue;
             presenter.showMortgageProperty(player, property, text);
         } else {
-            String text = player.getName() + "cannot unmortgage " + property.getTileName();
+            String text = player.getName() + " cannot unmortgage " + property.getTileName();
             presenter.showUnmortgageProperty(player, property, text);
         }
     }
