@@ -40,7 +40,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
             return false;
         }
         ColorPropertyTile colorProperty = (ColorPropertyTile) property;
-        if(!colorProperty.checkSetOwned(board.getPropertyTiles())){
+        if(!colorProperty.checkSetOwned(board.getPropertyTiles())) {
             return false;
         }
         ArrayList<Property> properties = player.getProperties();
@@ -74,7 +74,7 @@ public class BuildBuildings implements BuildBuildingInputBoundary{
         //sameColorProperties.add(colorProperties.get(i));
         //}
         //}
-        //Player has to build equally - this means player can't build a second house on a property unless player has a house on all the other properties.
+        //Player has to build equally – this means player can’t build a second house on a property unless player has a house on all the other properties.
         return true;
     }
 
