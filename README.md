@@ -7,9 +7,19 @@ Toronto.
 
 Implemented with the Clean Architecture and SOLID design principles.
 
+## Design Process:
+
+After creating CRC cards to help identify the major classes required, a UML chart was made. This chart helps understand the relationship between the classes, interfaces and abstrac classes. The chart also clearly differentiates between Entities, Use Cases, Inreface Adapters and Frameworks/Drivers. After finishing the UML chart, implementation began.
+The Tile Entities were the first elements to get implemented (two abstract classes, one for Tile and one for Property and nine different tiles). 
+After finishing the Tiles, the implementation of the Use Cases began (eight Use Cases each having their own input/output boundary inrerfaces)
+After finishing the Use Cases, each team member implemented the presenter for the Use Case they implemented. 
+There are many more implementations that are not listed above (such as GameState, Turn, Card, Player, Save, Load...), feel free to look at the JDocs for more information on these!
 ## Build & Run Instructions:
 
 WIP
+
+## Test Coverege 
+  
 
 ## Sample Images
 
