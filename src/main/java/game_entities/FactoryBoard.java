@@ -1,6 +1,7 @@
 package game_entities;
 
-import game_entities.cards.*;
+import game_entities.cards.Card;
+import game_entities.cards.FactoryCard;
 import game_entities.tiles.*;
 
 import java.io.FileNotFoundException;
@@ -34,7 +35,7 @@ public class FactoryBoard {
         List<Tile> orderedTileList = order(colorProperties, railRoadProperties, utilityProperties);
         ArrayList<Tile> orderTileArrayList = new ArrayList<>(orderedTileList);
         Board board = new Board(orderTileArrayList);
-        ArrayList<Card>[] cards = FactoryCard.getCards(cardCSV, board);
+        ArrayList<ArrayList<Card>> cards = FactoryCard.getCards(cardCSV, board);
         cardUpdate(cards, board);
         return board;
     }
@@ -99,16 +100,17 @@ public class FactoryBoard {
         return tileList;
     }
 
-    /** Take in  an ArrayList of cards and add them to the board
+    /**
+     * Take in  an ArrayList of cards and add them to the board
      *
-     * @param cards     The ArrayList of cards that we are trying to add
-     * @param board     The board that we are trying to add the cards to
+     * @param cards The ArrayList of cards that we are trying to add
+     * @param board The board that we are trying to add the cards to
      */
-    public static void cardUpdate(ArrayList<Card>[] cards, Board board) {
-        for (Card chanceCard : cards[0]){
+    public static void cardUpdate(ArrayList<ArrayList<Card>> cards, Board board) {
+        for (Card chanceCard : cards.get(0)) {
             board.addChanceCard(chanceCard);
         }
-        for (Card communityCard : cards[1]){
+        for (Card communityCard : cards.get(1)) {
             board.addCommunityCard(communityCard);
         }
     }
