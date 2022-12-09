@@ -18,8 +18,10 @@ There are many more implementations that are not listed above (such as GameState
 
 WIP
 
-## Test Coverege 
-  
+## Test Coverage 
+  <img src="src/main/resources/assets/misc/test.png" width="800" alt="Test Coverage"/>
+  The reason for the low test coverage percentage is that the user interface cannot really be tested using tests.
+  Other than the UI, all of the complex (methods that are not getters/setters or easy to implement are not tested) are tested thoroughly thanks to more     than one hundred tests. 
 
 ## Sample Images
 
