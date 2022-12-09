@@ -1,7 +1,6 @@
 package turn_use_cases.mortgage_use_case;
 
 import game_entities.Player;
-import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
 
 import java.util.ArrayList;

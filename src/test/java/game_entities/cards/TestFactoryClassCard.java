@@ -1,21 +1,19 @@
 package game_entities.cards;
-import static org.junit.Assert.*;
 
 import game_entities.Board;
-import game_entities.cards.*;
 import game_entities.FactoryBoard;
-import game_entities.tiles.*;
-
-
+import game_entities.tiles.FactoryProperty;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.*;
+
 public class TestFactoryClassCard {
     @Test
-    public void TestOutOfJailFreeCard() throws FileNotFoundException {
+    public void TestOutOfJailFreeCard() {
         //test the OutOfJailFreeCard method
         List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/cards.csv");
         cardLines.remove(0);
@@ -26,7 +24,7 @@ public class TestFactoryClassCard {
         assertEquals(test.getCardName(), "card_chance_1");
     }
     @Test
-    public void TestRepairCard() throws FileNotFoundException {
+    public void TestRepairCard() {
         //test the RepairCard method
         List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/cards.csv");
         cardLines.remove(0);
@@ -37,7 +35,7 @@ public class TestFactoryClassCard {
                 "Make general repairs on all your property: For each House pay $25 and For each Hotel pay $100");
     }
     @Test
-    public void testMoneyCard() throws FileNotFoundException {
+    public void testMoneyCard() {
         //test the MoneyCard method
         List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/cards.csv");
         cardLines.remove(0);
@@ -48,7 +46,7 @@ public class TestFactoryClassCard {
                 "Bank pays your dividend of $50");
     }
     @Test
-    public void testMoveBackCard() throws FileNotFoundException {
+    public void testMoveBackCard() {
         //test the MoveBackCard
         List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/cards.csv");
         cardLines.remove(0);
@@ -59,7 +57,7 @@ public class TestFactoryClassCard {
                 "Go back three spaces");
     }
     @Test
-    public void testCommunityCard() throws FileNotFoundException {
+    public void testCommunityCard() {
         List<List<String>> cardLines = FactoryProperty.extractor("src/main/resources/cards.csv");
         cardLines.remove(0);
         MoneyCard test = FactoryCard.moneyCard(cardLines.get(31));

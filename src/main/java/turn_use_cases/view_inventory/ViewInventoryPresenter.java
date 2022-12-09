@@ -9,9 +9,6 @@ import turn_interface_adapters.TurnController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,20 +43,15 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
         JButton closeTab = new JButton("Close Inventory");
         popUpInventory.setVisible(true);
         inventoryInfo.add(closeTab);
-        closeTab.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                popUpInventory.setVisible(false);
-            }
-        });
-        TextField money = new TextField("Money: " + String.valueOf(player.getMoney()));
+        closeTab.addActionListener(e -> popUpInventory.setVisible(false));
+        TextField money = new TextField("Money: " + player.getMoney());
         money.setEditable(false);
         TextField getOutOfJailFree = new TextField("Get Out of Jail Free Cards: " +
-                String.valueOf(player.getGetOutofJailFree()));
+                player.getGetOutofJailFree());
         getOutOfJailFree.setEditable(false);
         inventoryInfo.add(money);
         inventoryInfo.add(getOutOfJailFree);
-        List<List<Property>> displayProperties = new ArrayList<List<Property>>();
+        List<List<Property>> displayProperties;
         displayProperties = InventoryData.sortProperties(player);
         for (List<Property> currentPropertyList : displayProperties){
             JPanel currentPropertySetPanel = new JPanel();
@@ -68,7 +60,7 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
                 if (currentProperty.isMortgaged()){
                     frontOrBack = "mortgaged";
                 }
-                String id = "";
+                String id;
                 if (currentProperty instanceof UtilityTile){
                     id = "utility_" + currentProperty.getTileName() + ".jpg";
                 } else if (currentProperty instanceof RailroadTile) {
@@ -81,7 +73,7 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
                 System.out.println(path);
                 ImageIcon temp = new ImageIcon(new ImageIcon
                         (path)
-                        .getImage().getScaledInstance((int) (250), (int) (320), Image.SCALE_SMOOTH));
+                        .getImage().getScaledInstance(250, 320, Image.SCALE_SMOOTH));
                 currentPropertySetPanel.add(new JLabel(temp));
             }
             inventoryInfo.add(currentPropertySetPanel);
@@ -114,14 +106,9 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
             player3.add(player3Button);
             ImageIcon player3Icon = new ImageIcon(new ImageIcon
                     ("src/main/resources/assets/misc/pieces/" + playersInfo.get(2).getIcon() + ".png")
-                    .getImage().getScaledInstance((int) (100), (int) (100), Image.SCALE_SMOOTH));
+                    .getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
             player3.add(new JLabel(player3Icon));
-            player3Button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    tc.showInventory(playersInfo.get(2), playersInfo);
-                }
-            });
+            player3Button.addActionListener(e -> tc.showInventory(playersInfo.get(2), playersInfo));
             inventorySummaryBox.add(player3);
         } else if (playersInfo.size() == 4) {
             JPanel player3 = new JPanel();
@@ -130,14 +117,9 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
             player3.add(player3Button);
             ImageIcon player3Icon = new ImageIcon(new ImageIcon
                     ("src/main/resources/assets/misc/pieces/" + playersInfo.get(2).getIcon() + ".png")
-                    .getImage().getScaledInstance((int) (100), (int) (100), Image.SCALE_SMOOTH));
+                    .getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
             player3.add(new JLabel(player3Icon));
-            player3Button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    tc.showInventory(playersInfo.get(2), playersInfo);
-                }
-            });
+            player3Button.addActionListener(e -> tc.showInventory(playersInfo.get(2), playersInfo));
             inventorySummaryBox.add(player3);
             JPanel player4 = new JPanel();
             JButton player4Button = new JButton("View " + playersInfo.get(3).getName() + "s' Inventory");
@@ -145,36 +127,21 @@ public class ViewInventoryPresenter implements ViewInventoryOutputBoundary {
             player4.add(player4Button);
             ImageIcon player4Icon = new ImageIcon(new ImageIcon
                     ("src/main/resources/assets/misc/pieces/" + playersInfo.get(3).getIcon() + ".png")
-                    .getImage().getScaledInstance((int) (100), (int) (100), Image.SCALE_SMOOTH));
+                    .getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
             player4.add(new JLabel(player4Icon));
-            player4Button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    tc.showInventory(playersInfo.get(3), playersInfo);
-                }
-            });
+            player4Button.addActionListener(e -> tc.showInventory(playersInfo.get(3), playersInfo));
             inventorySummaryBox.add(player4);
         }
         ImageIcon player1Icon = new ImageIcon(new ImageIcon
                 ("src/main/resources/assets/misc/pieces/" + playersInfo.get(0).getIcon() + ".png")
-                .getImage().getScaledInstance((int) (100), (int) (100), Image.SCALE_SMOOTH));
+                .getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
         player1.add(new JLabel(player1Icon));
         ImageIcon player2Icon = new ImageIcon(new ImageIcon
                 ("src/main/resources/assets/misc/pieces/" + playersInfo.get(1).getIcon() + ".png")
-                .getImage().getScaledInstance((int) (100), (int) (100), Image.SCALE_SMOOTH));
+                .getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
         player2.add(new JLabel(player2Icon));
-        player1Button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tc.showInventory(playersInfo.get(0), playersInfo);
-            }
-        });
-        player2Button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tc.showInventory(playersInfo.get(1), playersInfo);
-            }
-        });
+        player1Button.addActionListener(e -> tc.showInventory(playersInfo.get(0), playersInfo));
+        player2Button.addActionListener(e -> tc.showInventory(playersInfo.get(1), playersInfo));
         inventorySummaryBox.setVisible(true);
 
     }

@@ -2,7 +2,6 @@ package turn_use_cases.build_building_use_case;
 
 import game_entities.Player;
 import game_entities.tiles.ColorPropertyTile;
-import game_entities.tiles.Property;
 import turn_use_cases.build_use_case.BuildBuildingOutputBoundary;
 
 import java.util.ArrayList;

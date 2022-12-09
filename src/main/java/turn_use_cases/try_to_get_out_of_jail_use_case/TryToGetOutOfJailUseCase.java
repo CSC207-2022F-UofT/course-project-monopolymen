@@ -1,14 +1,12 @@
 package turn_use_cases.try_to_get_out_of_jail_use_case;
+
 import game_entities.Board;
 import game_entities.Player;
-import game_entities.tiles.*;
 import turn_use_cases.end_turn_use_case.EndTurnInputBoundary;
 import turn_use_cases.move_player_use_case.MovePlayerInputBoundary;
 import turn_use_cases.move_player_use_case.MovePlayerOutputBoundary;
-import turn_use_cases.move_player_use_case.MovePlayerUseCase;
-import turn_use_cases.end_turn_use_case.EndTurnUseCase;
+
 import java.util.ArrayList;
-import game_entities.cards.CardActionResultModel;
 
 /**
  * try_to_get_out_of_jail_use_case (Class to handle the player's actions when they are in jail)
@@ -16,11 +14,11 @@ import game_entities.cards.CardActionResultModel;
  * If the player rolls a double in jail, they will move the distance they rolled, but they cannot roll again
  */
 public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary {
-    private TryToGetOutOfJailOutputBoundary tryToGetOutOfJailOutputBoundary;
+    private final TryToGetOutOfJailOutputBoundary tryToGetOutOfJailOutputBoundary;
     private Board board;
     private EndTurnInputBoundary endTurnUseCase;
-    private MovePlayerInputBoundary movePlayerUseCase;
-    private MovePlayerOutputBoundary movePlayerOutputBoundary;
+    private final MovePlayerInputBoundary movePlayerUseCase;
+    private final MovePlayerOutputBoundary movePlayerOutputBoundary;
     /**
      * @param tryToGetOutOfJailOutputBoundary TryToGetOutOfJailOutputBoundary to handle the display
      * @param movePlayerUseCase Use Case to move the player if they get out of jail
@@ -37,37 +35,41 @@ public class TryToGetOutOfJailUseCase implements TryToGetOutOfJailInputBoundary 
     @Override
     public void startAction(String playerOption, Player player) {
         System.out.println(playerOption);
-        if(playerOption.equals("Roll")) {
-            // This is different from movePlayerUseCase as it doesn't take into account previous double rolls
-            int[] playerRollAmount = {(int)(Math.random() * 6) + 1, (int)(Math.random() * 6) + 1};
-            movePlayerOutputBoundary.showRoll(playerRollAmount);
-            if(playerRollAmount[0] == playerRollAmount[1]) {
-                // player rolled a double and are free
+        switch (playerOption) {
+            case "Roll":
+                // This is different from movePlayerUseCase as it doesn't take into account previous double rolls
+                int[] playerRollAmount = {(int) (Math.random() * 6) + 1, (int) (Math.random() * 6) + 1};
+                movePlayerOutputBoundary.showRoll(playerRollAmount);
+                if (playerRollAmount[0] == playerRollAmount[1]) {
+                    // player rolled a double and are free
+                    player.resetTurnInJail();
+                    int rollSum = playerRollAmount[0] + playerRollAmount[1];
+                    movePlayerUseCase.movePlayer(player, rollSum, false);
+                } else {
+                    // Player didn't roll double, force ending their turn
+                    player.addTurnInJail();
+                    tryToGetOutOfJailOutputBoundary.showRoll(playerRollAmount);
+                }
+                break;
+            case "Pay":
+                player.subtractMoney(50);
                 player.resetTurnInJail();
-                int rollSum = playerRollAmount[0] + playerRollAmount[1];
-                movePlayerUseCase.movePlayer(player, rollSum, false);
-            } else {
-                // Player didn't roll double, force ending their turn
-                player.addTurnInJail();
-                tryToGetOutOfJailOutputBoundary.showRoll(playerRollAmount);
-            }
-        } else if (playerOption.equals("Pay")) {
-            player.subtractMoney(50);
-            player.resetTurnInJail();
-            // Normal roll dice move
-            movePlayerUseCase.startAction(player, true);
-        } else if (playerOption.equals("Card")) {
-            player.removeGetOutOfJailCard();
-            player.resetTurnInJail();
-            // Normal roll dice move
-            movePlayerUseCase.startAction(player, true);
+                // Normal roll dice move
+                movePlayerUseCase.startAction(player, true);
+                break;
+            case "Card":
+                player.removeGetOutOfJailCard();
+                player.resetTurnInJail();
+                // Normal roll dice move
+                movePlayerUseCase.startAction(player, true);
+                break;
         }
     }
 
     @Override
     public void getPlayerOptions(Player player) {
         System.out.println(player.numGetOutofJailFreeCards());
-        ArrayList<String> playerOptions = new ArrayList<String>();
+        ArrayList<String> playerOptions = new ArrayList<>();
         playerOptions.add("Roll");
         if(player.getMoney() >= 50) {
             playerOptions.add("Pay");

@@ -1,15 +1,15 @@
 package turn_use_cases.end_turn_use_case;
-import java.awt.*;
-import java.awt.event.*;
-import turn_interface_adapters.TurnController;
+
 import game_entities.Player;
+import turn_interface_adapters.TurnController;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class EndTurnPresenter implements EndTurnOutputBoundary {
-    private JPanel actionDialogBox;
-    private TurnController turnController;
-    private JPanel endTurnWindow;
+    private final JPanel actionDialogBox;
+    private final TurnController turnController;
+    private final JPanel endTurnWindow;
 
     public EndTurnPresenter(JPanel actionDialogBox, TurnController turnController) {
         this.actionDialogBox = actionDialogBox;
@@ -24,12 +24,7 @@ public class EndTurnPresenter implements EndTurnOutputBoundary {
         JLabel flavorTextLabel = new JLabel(player.getName() + flavorText);
         endTurnWindow.add(flavorTextLabel);
         JButton returnToGameButton = new JButton("Return to Game");
-        returnToGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                turnController.endTurn();
-            }
-        });
+        returnToGameButton.addActionListener(e -> turnController.endTurn());
         endTurnWindow.add(returnToGameButton);
         actionDialogBox.revalidate();
         actionDialogBox.repaint();

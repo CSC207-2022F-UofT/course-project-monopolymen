@@ -3,7 +3,6 @@ package game_entities;
 import game.GameState;
 import game_entities.tiles.Property;
 import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsInputBoundary;
-import turn_use_cases.liquidate_assets_use_case.LiquidateAssetsUseCase;
 import turn_use_cases.liquidate_assets_use_case.LiquiditySituation;
 
 import java.io.Serializable;
@@ -16,18 +15,18 @@ import java.util.Objects;
  * their money, position and so on...
  */
 public class Player implements Serializable {
-    private String name;
+    private final String name;
     private int money;
-    private ArrayList<Property> properties = new ArrayList<Property>();
+    private final ArrayList<Property> properties = new ArrayList<>();
     private int turnsInJail = -1;
     private int position = 0;
-    private String icon;
-    private int[] lastRoll = {0, 0};
+    private final String icon;
+    private final int[] lastRoll = {0, 0};
     private int consecutiveDoubles = 0;
 
     private int getOutOfJailFree = 0;
 
-    private Board board;
+    private final Board board;
 
     private transient LiquidateAssetsInputBoundary liquidateAssetsInputBoundary;
     private GameState gameState;
@@ -120,7 +119,6 @@ public class Player implements Serializable {
      * Attempt to subtract an amount of money from the players total
      *
      * @param subtract      int representing the amount of money we are trying to subtract
-     * @return              return true if the player had enough money to make the payment and false if they do not
      */
 
     public void subtractMoney(int subtract){

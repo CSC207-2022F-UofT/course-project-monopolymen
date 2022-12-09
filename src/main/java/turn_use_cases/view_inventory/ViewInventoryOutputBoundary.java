@@ -11,10 +11,10 @@ public interface ViewInventoryOutputBoundary {
      * @param currentName       The name of the current player
      * @param playersInfo       A List of Inventory Data objects for all the players in the game
      */
-    public void showInventory(String currentName, List<InventoryData> playersInfo);
+    void showInventory(String currentName, List<InventoryData> playersInfo);
 
     /**
      * Display 4 buttons that when clicked will open a players inventory
      */
-    public void showInventoryButtons();
+    void showInventoryButtons();
 }

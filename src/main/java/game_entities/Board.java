@@ -50,9 +50,9 @@ public class Board implements Serializable {
 
     public List<Property> getPropertyTiles(){
         List<Property> propertyTiles = new ArrayList<>();
-        for(int i = 0; i < tilesList.size(); i++){
-            if(tilesList.get(i) instanceof Property){
-                propertyTiles.add((Property) tilesList.get(i));
+        for (Tile tile : tilesList) {
+            if (tile instanceof Property) {
+                propertyTiles.add((Property) tile);
             }
         }
         return propertyTiles;
@@ -60,9 +60,9 @@ public class Board implements Serializable {
 
     public List<ColorPropertyTile> getColorPropertyTiles(){
         List<ColorPropertyTile> propertyTiles = new ArrayList<>();
-        for(int i = 0; i < tilesList.size(); i++){
-            if(tilesList.get(i) instanceof ColorPropertyTile){
-                propertyTiles.add((ColorPropertyTile) tilesList.get(i));
+        for (Tile tile : tilesList) {
+            if (tile instanceof ColorPropertyTile) {
+                propertyTiles.add((ColorPropertyTile) tile);
             }
         }
         return propertyTiles;
@@ -88,23 +88,22 @@ public class Board implements Serializable {
     }
 
     public Card pickCard(boolean chanceCard){
+        Card returnCard;
         if(chanceCard){
             //chooses a card off the top
-            Card returnCard = chanceCards.get(0);
+            returnCard = chanceCards.get(0);
             //moves the card to the back of the deck
             chanceCards.remove(0);
             chanceCards.add(returnCard);
 
-            return returnCard;
-
         }
 
         else{
-            Card returnCard = communityCards.get(0);
+            returnCard = communityCards.get(0);
             communityCards.remove(0);
             communityCards.add(returnCard);
-            return returnCard;
         }
+        return returnCard;
     }
 
     public ArrayList<ColorPropertyTile> getSameColor(String color){

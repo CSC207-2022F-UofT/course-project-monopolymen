@@ -3,7 +3,6 @@ package turn_use_cases.build_building_use_case;
 import game_entities.Board;
 import game_entities.Player;
 import game_entities.tiles.ColorPropertyTile;
-import game_entities.tiles.Property;
 import game_entities.tiles.Tile;
 import game_entities.tiles.UtilityTile;
 import org.junit.After;
@@ -14,7 +13,7 @@ import turn_use_cases.build_use_case.BuildBuildings;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class BuildBuildingTest {
 
@@ -46,7 +45,7 @@ public class BuildBuildingTest {
     BuildBuildings buildBuildings = new BuildBuildings(presenter, board);
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         player_1.addProperty(property_1);
         player_1.addProperty(property_2);
         player_1.addProperty(property_3);
@@ -54,7 +53,7 @@ public class BuildBuildingTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         player_1.sellProperty(property_1);
         player_1.sellProperty(property_2);
         player_1.sellProperty(property_3);
@@ -72,26 +71,26 @@ public class BuildBuildingTest {
     @Test
     public void testIsBuildable_1(){
         boolean flag = buildBuildings.isBuildable(player_1, property_1);
-        assertEquals(flag, true);
+        assertTrue(flag);
     }
 
     @Test
     public void testIsBuildable_2(){
         boolean flag = buildBuildings.isBuildable(player_1, property_3);
-        assertEquals(flag, false);
+        assertFalse(flag);
     }
 
     @Test
     public void testIsBuildable_3(){
         property_1.addHouse(2);
         boolean flag = buildBuildings.isBuildable(player_1, property_1);
-        assertEquals(flag, false);
+        assertFalse(flag);
     }
 
     @Test
     public void testIsBuildable_4(){
         boolean flag = buildBuildings.isBuildable(player_1, property_4);
-        assertEquals(flag, false);
+        assertFalse(flag);
     }
 
 
@@ -126,7 +125,7 @@ public class BuildBuildingTest {
         property_1.addHouse(4);
         property_2.addHouse(4);
         boolean flag = buildBuildings.isSellable(player_1, property_1);
-        assertEquals(flag, true);
+        assertTrue(flag);
     }
 
     @Test
@@ -134,13 +133,13 @@ public class BuildBuildingTest {
         property_1.addHouse(3);
         property_2.addHouse(4);
         boolean flag = buildBuildings.isSellable(player_1, property_1);
-        assertEquals(flag, false);
+        assertFalse(flag);
     }
 
     @Test
     public void testIsSellable_3(){
         boolean flag = buildBuildings.isSellable(player_1, property_1);
-        assertEquals(flag, false);
+        assertFalse(flag);
     }
 
     @Test

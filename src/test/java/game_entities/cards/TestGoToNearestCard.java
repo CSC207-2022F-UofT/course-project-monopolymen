@@ -1,18 +1,14 @@
 package game_entities.cards;
+
 import game_entities.Board;
 import game_entities.Player;
-import game_entities.cards.*;
-import game_entities.FactoryBoard;
-import game_entities.tiles.*;
-
-
+import game_entities.tiles.Tile;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestGoToNearestCard {
     ArrayList<Tile> test = new ArrayList<>();
@@ -28,6 +24,6 @@ public class TestGoToNearestCard {
         assertEquals(test.getPlayerPosition(), 0);
         assertEquals(test.getCardName(), "GoToNearest");
         assertEquals(test.getPlayer(), player1);
-        assertEquals(test.isChance(), true);
+        assertTrue(test.isChance());
     }
 }

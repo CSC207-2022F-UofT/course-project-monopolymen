@@ -25,7 +25,7 @@ public class ViewInventory implements ViewInventoryInputBoundary{
      */
     @Override
     public void displayInfo(Player currentPlayer, List<Player> players) {
-        List<InventoryData> playerData = new ArrayList<InventoryData>();
+        List<InventoryData> playerData = new ArrayList<>();
         for (Player player : players){
             playerData.add(new InventoryData(player));
         }

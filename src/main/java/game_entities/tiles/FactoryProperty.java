@@ -1,7 +1,6 @@
 package game_entities.tiles;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,10 +13,8 @@ public class FactoryProperty {
      *
      * @param path                          the path of the file that we are trying to extract information from
      * @return returns an ArrayList with all the information needed
-     * @throws FileNotFoundException        if the file that we are given a url to is not found, this
-     *                                      exception is thrown
      */
-    public static List<List<String>> extractor(String path) throws FileNotFoundException{
+    public static List<List<String>> extractor(String path) {
         List<List<String>> properties = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
             String line;
@@ -36,11 +33,10 @@ public class FactoryProperty {
      *
      * @param path                          the CSV location of the properties
      * @return                              return an ArrayList which includes all the Color Property tiles
-     * @throws FileNotFoundException        if the given file is not found throw this exception
      */
-    public static List<ColorPropertyTile> initializeColorProperties(String path) throws FileNotFoundException {
+    public static List<ColorPropertyTile> initializeColorProperties(String path) {
         List<List<String>> colorProperties = extractor(path);
-        List<ColorPropertyTile> returnProperties= new ArrayList<ColorPropertyTile>();
+        List<ColorPropertyTile> returnProperties= new ArrayList<>();
         colorProperties.remove(0);
         for(List<String> line : colorProperties){
             String color = line.get(0);
@@ -70,11 +66,10 @@ public class FactoryProperty {
      *
      * @param path                          the CSV location of the properties
      * @return                              return an ArrayList which includes all the Color Property tiles
-     * @throws FileNotFoundException        if the given file is not found throw this exception
      */
-    public static List<RailroadTile> initializeRailRoadProperties(String path) throws FileNotFoundException {
+    public static List<RailroadTile> initializeRailRoadProperties(String path) {
         List<List<String>> railRoad = extractor(path);
-        List<RailroadTile> returnProperties= new ArrayList<RailroadTile>();
+        List<RailroadTile> returnProperties= new ArrayList<>();
         railRoad.remove(0);
         for(List<String> line : railRoad){
             String displayName = line.get(0);
@@ -98,11 +93,10 @@ public class FactoryProperty {
      *
      * @param path                          the CSV location of the properties
      * @return                              return an ArrayList which includes all the Color Property tiles
-     * @throws FileNotFoundException        if the given file is not found throw this exception
      */
-    public static List<UtilityTile> initializeUtilityProperties(String path) throws FileNotFoundException {
+    public static List<UtilityTile> initializeUtilityProperties(String path) {
         List<List<String>> utilityProperties = extractor(path);
-        List<UtilityTile> returnProperties= new ArrayList<UtilityTile>();
+        List<UtilityTile> returnProperties= new ArrayList<>();
         utilityProperties.remove(0);
         for(List<String> line : utilityProperties){
             String displayName = line.get(0);

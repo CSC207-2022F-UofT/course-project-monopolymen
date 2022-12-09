@@ -5,15 +5,13 @@ import turn_interface_adapters.TurnController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class TryToGetOutOfJailPresenter implements TryToGetOutOfJailOutputBoundary {
-    private JPanel actionDialogBox;
-    private JPanel playerOptionsWindow;
-    private TurnController turnController;
-    private JPanel jailRollWindow;
+    private final JPanel actionDialogBox;
+    private final JPanel playerOptionsWindow;
+    private final TurnController turnController;
+    private final JPanel jailRollWindow;
 
     public TryToGetOutOfJailPresenter(JPanel actionDialogBox, TurnController turnController) {
         this.actionDialogBox = actionDialogBox;
@@ -31,12 +29,9 @@ public class TryToGetOutOfJailPresenter implements TryToGetOutOfJailOutputBounda
         playerOptionsWindow.setLayout(new GridLayout(options.size(), 1));
         for (String option : options) {
             JButton optionButton = new JButton(option);
-            optionButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Turn Controller will handle the option and call TryToGetOutOfJailUseCase
-                    turnController.leaveJailWithChoice(option);
-                }
+            optionButton.addActionListener(e -> {
+                // Turn Controller will handle the option and call TryToGetOutOfJailUseCase
+                turnController.leaveJailWithChoice(option);
             });
             playerOptionsWindow.add(optionButton);
         }
@@ -53,12 +48,7 @@ public class TryToGetOutOfJailPresenter implements TryToGetOutOfJailOutputBounda
         JLabel rollLabel = new JLabel("You rolled a " + playerRollAmount[0] + " and a " + playerRollAmount[1]);
         jailRollWindow.add(rollLabel);
         JButton rollButton = new JButton("End Turn");
-        rollButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                turnController.endTurn();
-            }
-        });
+        rollButton.addActionListener(e -> turnController.endTurn());
         jailRollWindow.add(rollButton);
         actionDialogBox.revalidate();
         actionDialogBox.repaint();

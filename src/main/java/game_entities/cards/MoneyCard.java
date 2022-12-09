@@ -4,7 +4,7 @@ import game_entities.Player;
 
 public class MoneyCard extends Card{
 
-    private int money; //This number can be positive or negative depending on whether you gain
+    private final int money; //This number can be positive or negative depending on whether you gain
     //or lose money
     public MoneyCard(String cardName, String cardDisplayName, String flavourText,
                         boolean chanceCard, int money) {

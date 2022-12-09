@@ -1,27 +1,26 @@
 package game_entities.cards;
+
 import game_entities.Board;
 import game_entities.tiles.FactoryProperty;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
 public class FactoryCard {
-    /** Populate two ArrayLists with cards given a CSV file
+    /**
+     * Populate two ArrayLists with cards given a CSV file
      *
-     * @param filePath      The path of the CSV file that we are trying to use to make our Card objects
-     *
-     * @param board         The board that the game is being played on, this is used to get the location of the tiles
-     *
-     * @return              Returns an array of ArrayLists, The first ArrayList includes all the chance cards and the
-     *                      second ArrayList includes all the community cards
+     * @param filePath The path of the CSV file that we are trying to use to make our Card objects
+     * @param board    The board that the game is being played on, this is used to get the location of the tiles
+     * @return Returns an array of ArrayLists, The first ArrayList includes all the chance cards and the
+     * second ArrayList includes all the community cards
      */
-    public static ArrayList<Card>[] getCards(String filePath, Board board) throws FileNotFoundException {
-        ArrayList<Card> chance = new ArrayList<Card>();
-        ArrayList<Card> community = new ArrayList<Card>();
-        ArrayList<Card> [] combined = new ArrayList[2];
+    public static ArrayList[] getCards(String filePath, Board board) {
+        ArrayList<Card> chance = new ArrayList<>();
+        ArrayList<Card> community = new ArrayList<>();
+        ArrayList[] combined = new ArrayList[2];
         List<List<String>> lines = FactoryProperty.extractor(filePath);
         lines.remove(0);
         for(List<String> line : lines){

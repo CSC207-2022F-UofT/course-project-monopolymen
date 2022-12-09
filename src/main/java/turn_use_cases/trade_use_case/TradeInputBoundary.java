@@ -17,7 +17,7 @@ public interface TradeInputBoundary {
      * @param listOfPlayers list of all the players in the game.
      * @param player        the player who wants to make a trade.
      */
-    public void choosePlayer(List<Player> listOfPlayers, Player player);
+    void choosePlayer(List<Player> listOfPlayers, Player player);
 
     /**
      * Provides the presenter with all potential options for player1 and player2 to trade.
@@ -25,7 +25,7 @@ public interface TradeInputBoundary {
      * @param player1 the player who wants to make a trade
      * @param player2 the player who player1 wants to trade with
      */
-    public void getTradeOptions(Player player1, Player player2);
+    void getTradeOptions(Player player1, Player player2);
 
     /**
      * Provides the presenter with the details of the trade offer and whether it is valid.
@@ -34,7 +34,7 @@ public interface TradeInputBoundary {
      * @param player1 the player making the trade offer
      * @param player2 the player receiving the trade offer
      */
-    public void makeOffer(TradeOffer tradeOffer, Player player1, Player player2);
+    void makeOffer(TradeOffer tradeOffer, Player player1, Player player2);
 
     /**
      * Provides the presenter with the result of the trade and rearranges player1's and player 2's inventory
@@ -49,7 +49,7 @@ public interface TradeInputBoundary {
      * @param player2 the player who received the trade offer.
      * @param tradeOffer the details of the trade.
      */
-    public void getResultOfTradeOffer(int option, Player player1, Player player2, TradeOffer tradeOffer);
+    void getResultOfTradeOffer(int option, Player player1, Player player2, TradeOffer tradeOffer);
 
 
 

@@ -7,13 +7,7 @@ import turn_use_cases.trade_use_case.TradeOption;
 import turn_use_cases.trade_use_case.TradeOutputBoundary;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,25 +48,13 @@ public class TradePresenter implements TradeOutputBoundary {
         for (Player otherPlayer : listOfPlayers){
             JButton option = new JButton("Pick " + otherPlayer.getName());
 
-            option.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                    turnController.startTrade(player, otherPlayer);
-
-                }
-            });
+            option.addActionListener(e -> turnController.startTrade(player, otherPlayer));
             optionsPanel.add(option);
         }
 
         JButton cancelTrade = new JButton("Cancel Trade");
         optionsPanel.add(cancelTrade);
-        cancelTrade.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                turnController.endUseCase();
-            }
-        });
+        cancelTrade.addActionListener(e -> turnController.endUseCase());
 
         optionsPanel.validate();
         optionsPanel.repaint();
@@ -109,12 +91,12 @@ public class TradePresenter implements TradeOutputBoundary {
         ArrayList<Property> propertiesOffered = new ArrayList<>();
         ArrayList<Property> propertiesReceived= new ArrayList<>();
 
-        JList listP1Properties = new JList<>(player1PropertiesDisplay.toArray());
+        JList<Object> listP1Properties = new JList<>(player1PropertiesDisplay.toArray());
         listP1Properties.setVisible(true);
         listP1Properties.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         JScrollPane propertiesOfferedList = new JScrollPane(listP1Properties);
 
-        JList listP2Properties = new JList<>(player2PropertiesDisplay.toArray());
+        JList<Object> listP2Properties = new JList<>(player2PropertiesDisplay.toArray());
         listP2Properties.setVisible(true);
         listP2Properties.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         JScrollPane propertiesRequestedList = new JScrollPane(listP2Properties);
@@ -194,88 +176,49 @@ public class TradePresenter implements TradeOutputBoundary {
 
         optionsPanel.add(endPanel);
 
-        noJailCard.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jailCard[0] = 0;
-            }
+        noJailCard.addActionListener(e -> jailCard[0] = 0);
+
+        offerJailCard.addActionListener(e -> jailCard[0] = 1);
+
+        requestJailCard.addActionListener(e -> jailCard[0] = -1);
+
+        tradeMoneyOfferedField.addPropertyChangeListener(evt -> tradeMoneyOffered[0] = ((Number) tradeMoneyOfferedField.getValue()).intValue());
+
+        tradeMoneyReceivedField.addPropertyChangeListener(evt -> tradeMoneyReceived[0] = ((Number) tradeMoneyReceivedField.getValue()).intValue());
+
+        submit.addActionListener(e -> {
+            tradeMoney[0] = tradeMoneyOffered[0] - tradeMoneyReceived[0];
+            TradeOffer tradeOffer = new TradeOffer(tradeMoney[0], jailCard[0],
+                    propertiesOffered, propertiesReceived, tradeOption.getPlayer1(), tradeOption.getPlayer2() );
+
+            turnController.makeOffer(tradeOption.getPlayer1(), tradeOption.getPlayer2(), tradeOffer);
         });
 
-        offerJailCard.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jailCard[0] = 1;
+        cancelTrade.addActionListener(e -> turnController.endUseCase());
+
+        listP1Properties.addListSelectionListener(e -> {
+            propertiesOffered.clear();
+            List<Object> SelectedProperties = listP1Properties.getSelectedValuesList();
+            for (Object propString: SelectedProperties){
+                int x = player1PropertiesDisplay.indexOf(propString);
+                propertiesOffered.add(player1Properties.get(x));
             }
+
+
+
+
         });
 
-        requestJailCard.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jailCard[0] = -1;
+        listP2Properties.addListSelectionListener(e -> {
+            propertiesReceived.clear();
+            List<Object> SelectedProperties = listP2Properties.getSelectedValuesList();
+            for (Object propString: SelectedProperties){
+                int x = player2PropertiesDisplay.indexOf(propString);
+                propertiesReceived.add(player2Properties.get(x));
             }
-        });
-
-        tradeMoneyOfferedField.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                tradeMoneyOffered[0] = ((Number) tradeMoneyOfferedField.getValue()).intValue();
-            }
-        });
-
-        tradeMoneyReceivedField.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                tradeMoneyReceived[0] = ((Number) tradeMoneyReceivedField.getValue()).intValue();
-            }
-        });
-
-        submit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tradeMoney[0] = tradeMoneyOffered[0] - tradeMoneyReceived[0];
-                TradeOffer tradeOffer = new TradeOffer(tradeMoney[0], jailCard[0],
-                        propertiesOffered, propertiesReceived, tradeOption.getPlayer1(), tradeOption.getPlayer2() );
-
-                turnController.makeOffer(tradeOption.getPlayer1(), tradeOption.getPlayer2(), tradeOffer);
-            }
-        });
-
-        cancelTrade.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                turnController.endUseCase();
-            }
-        });
-
-        listP1Properties.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                propertiesOffered.clear();
-                List<String> SelectedProperties = listP1Properties.getSelectedValuesList();
-                for (String propString: SelectedProperties){
-                    int x = player1PropertiesDisplay.indexOf(propString);
-                    propertiesOffered.add(player1Properties.get(x));
-                }
 
 
 
-
-            }
-        });
-
-        listP2Properties.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                propertiesReceived.clear();
-                List<String> SelectedProperties = listP2Properties.getSelectedValuesList();
-                for (String propString: SelectedProperties){
-                    int x = player2PropertiesDisplay.indexOf(propString);
-                    propertiesReceived.add(player2Properties.get(x));
-                }
-
-
-
-            }
         });
 
         optionsPanel.validate();
@@ -299,44 +242,39 @@ public class TradePresenter implements TradeOutputBoundary {
             optionsPanel.add(new JLabel(flavorText));
             JButton newOffer = new JButton("New Offer");
             optionsPanel.add(newOffer);
-            newOffer.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turnController.startTrade(tradeOffer.getPlayer1(), tradeOffer.getPlayer2());
-                }
-            });
+            newOffer.addActionListener(e -> turnController.startTrade(tradeOffer.getPlayer1(), tradeOffer.getPlayer2()));
         } else {
             Player player1 = tradeOffer.getPlayer1();
             Player player2 = tradeOffer.getPlayer2();
             String player1Name = player1.getName();
 
-            String propertiesOffered = "";
+            StringBuilder propertiesOffered = new StringBuilder();
 
             for (Property property: tradeOffer.getPropertiesOffered()){
-                propertiesOffered = propertiesOffered + property.getTileDisplayName() + ", ";
+                propertiesOffered.append(property.getTileDisplayName()).append(", ");
             }
             if(propertiesOffered.length() > 3){
-                propertiesOffered = propertiesOffered.substring(0, propertiesOffered.length() - 2);
+                propertiesOffered = new StringBuilder(propertiesOffered.substring(0, propertiesOffered.length() - 2));
             }
 
             optionsPanel.add(new JLabel("<html><body>"+"Properties Offered: " + propertiesOffered +"</body></html>"));
 
-            String propertiesRequested = "";
+            StringBuilder propertiesRequested = new StringBuilder();
 
             for (Property property: tradeOffer.getPropertiesReceived()){
-                propertiesRequested = propertiesRequested + property.getTileDisplayName() + ", ";
+                propertiesRequested.append(property.getTileDisplayName()).append(", ");
             }
 
             if(propertiesRequested.length() > 3){
-                propertiesRequested = propertiesRequested.substring(0, propertiesRequested.length() - 2);
+                propertiesRequested = new StringBuilder(propertiesRequested.substring(0, propertiesRequested.length() - 2));
             }
 
             optionsPanel.add(new JLabel("<html><body>"+"Properties Requested: " + propertiesRequested +"</body></html>"));
 
             if (tradeOffer.getTradeMoney() > 0){
-                optionsPanel.add(new JLabel("Money Offered: " + String.valueOf(tradeOffer.getTradeMoney())));
+                optionsPanel.add(new JLabel("Money Offered: " + tradeOffer.getTradeMoney()));
             } else if (tradeOffer.getTradeMoney() < 0) {
-                optionsPanel.add(new JLabel("Money Requested: " + String.valueOf(- tradeOffer.getTradeMoney())));
+                optionsPanel.add(new JLabel("Money Requested: " + -tradeOffer.getTradeMoney()));
             }
 
             if (tradeOffer.getJailCard() > 0){
@@ -349,29 +287,13 @@ public class TradePresenter implements TradeOutputBoundary {
 
 
             JButton acceptOffer = new JButton("Accept Offer");
-            acceptOffer.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turnController.acceptTradeOffer(player1, player2, tradeOffer);
-                }
-            });
+            acceptOffer.addActionListener(e -> turnController.acceptTradeOffer(player1, player2, tradeOffer));
 
             JButton declineOffer = new JButton("Decline Offer");
-            declineOffer.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turnController.declineTradeOffer(player1, player2, tradeOffer);
-                }
-            });
+            declineOffer.addActionListener(e -> turnController.declineTradeOffer(player1, player2, tradeOffer));
 
             JButton counterOffer = new JButton("Counter Offer");
-            counterOffer.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turnController.counterOffer(player1, player2, tradeOffer);
-
-                }
-            });
+            counterOffer.addActionListener(e -> turnController.counterOffer(player1, player2, tradeOffer));
 
             optionsPanel.add(acceptOffer);
             optionsPanel.add(declineOffer);
@@ -406,23 +328,13 @@ public class TradePresenter implements TradeOutputBoundary {
         if (option == 1 || option == 3){
             JButton endTrade = new JButton("End Trade");
             optionsPanel.add(endTrade);
-            endTrade.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turnController.endUseCase();
-                }
-            });
+            endTrade.addActionListener(e -> turnController.endUseCase());
 
         } else if (option == 2) {
             JButton counterOffer = new JButton("Make Counter Offer");
             optionsPanel.add(counterOffer);
 
-            counterOffer.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turnController.startTrade(player2, player1);
-                }
-            });
+            counterOffer.addActionListener(e -> turnController.startTrade(player2, player1));
 
         }
 

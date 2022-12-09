@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 public class TestFactoryClassBoard {
     @Test
-    public void testOrder() throws FileNotFoundException {
+    public void testOrder() {
         List<ColorPropertyTile> colorProperties = FactoryProperty.initializeColorProperties
                 ("src/main/resources/Data/property_csvs/Color Properties Monopoly.csv");
         List<RailroadTile> railroadProperties = FactoryProperty.initializeRailRoadProperties

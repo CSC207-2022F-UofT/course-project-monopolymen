@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class TradeOfferTest {
-    ArrayList<Tile> temp1 = new ArrayList<Tile>();
+    ArrayList<Tile> temp1 = new ArrayList<>();
     Board board = new Board(temp1);
     Player player1 = new Player("player1", "player1", 1500, board);
 
@@ -30,13 +30,13 @@ public class TradeOfferTest {
             "Other Road", 500, fakeRent, 0, 0, 0);
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         player1.addProperty(fakeStreet);
         player2.addProperty(otherRoad);
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         player1.sellProperty(fakeStreet);
         player2.sellProperty(otherRoad);
     }

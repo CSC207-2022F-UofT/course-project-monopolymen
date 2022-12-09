@@ -32,7 +32,7 @@ public class BoardTest {
     }
 
     @Test
-    public void getPropertyTiles() throws FileNotFoundException {
+    public void getPropertyTiles() {
     }
 
     @Test

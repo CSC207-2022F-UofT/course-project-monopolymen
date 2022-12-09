@@ -10,7 +10,7 @@ public interface MovePlayerInputBoundary {
      * @param player The player object that the action is being performed on
      * @param canRollAgain Default value is true. If true, the player will be prompted to roll again if they roll a double.
      */
-    public void startAction(Player player, boolean canRollAgain);
+    void startAction(Player player, boolean canRollAgain);
 
     /**
      * This is only called by startAction when it lands on a draw card tile that will move the player
@@ -18,5 +18,5 @@ public interface MovePlayerInputBoundary {
      * @param rollSum The sum of the dice roll
      * @param doubleRoll If the player rolled a double
      */
-    public void movePlayer(Player player, int rollSum, boolean doubleRoll);
+    void movePlayer(Player player, int rollSum, boolean doubleRoll);
 }

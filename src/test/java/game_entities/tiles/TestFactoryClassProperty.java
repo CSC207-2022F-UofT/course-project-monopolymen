@@ -2,14 +2,13 @@ package game_entities.tiles;
 
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 public class TestFactoryClassProperty {
     @Test
-    public void testExtractorColorProperty() throws FileNotFoundException {
+    public void testExtractorColorProperty() {
         //test that the extractor class works for color property csv file
         List<List<String>> colorProperty = FactoryProperty.extractor
                 ("src/main/resources/Data/property_csvs/Color Properties Monopoly.csv");
@@ -22,7 +21,7 @@ public class TestFactoryClassProperty {
         assertEquals(colorProperty.get(10).get(8), "750");
     }
     @Test
-    public void testExtractorRailRoad() throws  FileNotFoundException {
+    public void testExtractorRailRoad() {
         //test that the extractor class works for RailRoad property csv file
         List<List<String>> railRoadProperty = FactoryProperty.extractor
                 ("src/main/resources/Data/property_csvs/Station Properties Monopoly.csv");
@@ -33,7 +32,7 @@ public class TestFactoryClassProperty {
         assertEquals(railRoadProperty.get(4).get(8), "shortline");
     }
     @Test
-    public void testExtractorUtility() throws FileNotFoundException {
+    public void testExtractorUtility() {
         //tests that the extractor class works for utility property csv file
         List<List<String>> utilityTile = FactoryProperty.extractor
                 ("src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv");
@@ -46,7 +45,7 @@ public class TestFactoryClassProperty {
         assertEquals(utilityTile.get(2).get(6), "water");
     }
     @Test
-    public void testInitializeColorProperties() throws FileNotFoundException {
+    public void testInitializeColorProperties() {
         //test if the initializeColorProperties works as expected
         List<ColorPropertyTile> propertyList = FactoryProperty.initializeColorProperties
                 ("src/main/resources/Data/property_csvs/Color Properties Monopoly.csv");
@@ -54,7 +53,7 @@ public class TestFactoryClassProperty {
         assertEquals(propertyList.get(21).getTileDisplayName(), "Boardwalk");
     }
     @Test
-    public void testInitializeRailRoadProperties() throws FileNotFoundException {
+    public void testInitializeRailRoadProperties() {
         //test if the initializeRailRoadProperties works as expected
         List<RailroadTile> propertyList = FactoryProperty.initializeRailRoadProperties
                 ("src/main/resources/Data/property_csvs/Station Properties Monopoly.csv");
@@ -62,7 +61,7 @@ public class TestFactoryClassProperty {
         assertEquals(propertyList.get(3).getTileDisplayName(), "Short Line");
     }
     @Test
-    public void testInitializeUtilityProperties() throws FileNotFoundException {
+    public void testInitializeUtilityProperties() {
         //test if the initializeUtilityProprieties works as expected
         List<UtilityTile> propertyList = FactoryProperty.initializeUtilityProperties
                 ("src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv");
