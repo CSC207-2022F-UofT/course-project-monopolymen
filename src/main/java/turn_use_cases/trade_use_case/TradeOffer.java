@@ -1,6 +1,7 @@
 package turn_use_cases.trade_use_case;
 
 import game_entities.Player;
+import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
 
 import java.util.ArrayList;
@@ -13,27 +14,27 @@ public class TradeOffer {
 
     // The amount of money player1 is offering player2 if positive,
     // the amount of money player1 wants from player2 if negative.
-    private int tradeMoney;
+    private final int tradeMoney;
 
     // If 1, player1 is offering a get out of jail card to player2.
     // If 0, player1 is not offering or requesting a get out of jail card from player2.
     // If -1, player1 is requesting a get out of jail card from player2.
-    private int jailCard;
+    private final int jailCard;
 
     // The list of properties player1 is offering to player2.
-    private ArrayList<Property> propertiesOffered;
+    private final ArrayList<Property> propertiesOffered;
 
     // The list of properties player1 wants to receive from player2.
-    private ArrayList<Property> propertiesReceived;
+    private final ArrayList<Property> propertiesReceived;
 
     // The player who is making the trade offer.
-    private Player player1;
+    private final Player player1;
 
     // The player who is receiving the trade offer.
-    private Player player2;
+    private final Player player2;
 
     // Says if this trade offer is valid or not.
-    private boolean isValid;
+    private final boolean isValid;
 
     /**
      * Creates a new TradeOffer.
@@ -90,6 +91,12 @@ public class TradeOffer {
         for (Property p : propertiesOffered){
             if(!player1.getProperties().contains(p)){
                 return false;
+            } else if (p instanceof ColorPropertyTile) {
+                ColorPropertyTile cp = (ColorPropertyTile) p;
+                if (cp.getNumHouses() > 0 || cp.getNumHotels() > 0) {
+                    return false;
+                }
+                
             }
         }
 
