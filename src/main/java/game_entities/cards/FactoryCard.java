@@ -17,13 +17,13 @@ public class FactoryCard {
      * @return Returns an array of ArrayLists, The first ArrayList includes all the chance cards and the
      * second ArrayList includes all the community cards
      */
-    public static ArrayList[] getCards(String filePath, Board board) {
+    public static ArrayList<ArrayList<Card>> getCards(String filePath, Board board) {
         ArrayList<Card> chance = new ArrayList<>();
         ArrayList<Card> community = new ArrayList<>();
-        ArrayList[] combined = new ArrayList[2];
+        ArrayList<ArrayList<Card>> combined = new ArrayList<>();
         List<List<String>> lines = FactoryProperty.extractor(filePath);
         lines.remove(0);
-        for(List<String> line : lines){
+        for (List<String> line : lines) {
             switch (line.get(0)) {
                 case "jail":
                     Card jailC = OutOfJailFreeCard(line);
@@ -75,8 +75,8 @@ public class FactoryCard {
                     break;
             }
         }
-        combined[0] = chance;
-        combined[1] = community;
+        combined.add(chance);
+        combined.add(community);
         return combined;
     }
 

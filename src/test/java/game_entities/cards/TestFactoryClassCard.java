@@ -95,14 +95,14 @@ public class TestFactoryClassCard {
                         "src/main/resources/Data/property_csvs/Utility Properties Monopoly.csv",
                         "src/main/resources/Data/property_csvs/Station Properties Monopoly.csv",
                         "src/main/resources/cards.csv");
-        ArrayList<Card>[] list = FactoryCard.getCards("src/main/resources/cards.csv", temp);
+        ArrayList<ArrayList<Card>> list = FactoryCard.getCards("src/main/resources/cards.csv", temp);
         int chanceNum = 0;
         int communityNum = 0;
-        for (Card chance : list[0]){
+        for (Card chance : list.get(0)) {
             assertTrue(chance.isChanceCard());
             chanceNum++;
         }
-        for (Card chance : list[1]){
+        for (Card chance : list.get(1)) {
             assertFalse(chance.isChanceCard());
             communityNum++;
         }
