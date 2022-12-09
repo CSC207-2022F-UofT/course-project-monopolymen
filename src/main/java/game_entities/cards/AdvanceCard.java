@@ -5,11 +5,11 @@ import game_entities.Player;
 //import game_entities.TurnUserCases.move_player_use_case;
 
 public class AdvanceCard extends Card{
-    private int tileNumber;
+    private final int tileNumber;
 
-    private String tileName; //This is more for the benefit of the coder so they know what tile the
+    private final String tileName; //This is more for the benefit of the coder so they know what tile the
     //tile number refers to. May Remove later.
-    private Board board;
+    private final Board board;
 
     public AdvanceCard(String cardName, String cardDisplayName, String flavourText,
                        boolean chanceCard, int tileNumber, String tileName,

@@ -14,7 +14,7 @@ public interface MovePlayerOutputBoundary {
      * @param flavorText The string showing a description of the action
      * @param buttonText Text for the button depending on if they ca buy or not
      */
-    public void showResultOfAction(Player player, int playerPosition, boolean rollAgain, String flavorText,
+    void showResultOfAction(Player player, int playerPosition, boolean rollAgain, String flavorText,
                                    String buttonText);
 
     /**
@@ -23,13 +23,13 @@ public interface MovePlayerOutputBoundary {
      * @param playerPosition The player's position
      * @param tilePassResultModel The data model of what happens when a player passes the tile
      */
-    public void showResultOfPass(Player player, int playerPosition, TilePassResultModel tilePassResultModel);
+    void showResultOfPass(Player player, int playerPosition, TilePassResultModel tilePassResultModel);
 
     /**
      * Shows the roll the player made
      * @param playerRollAmount The array of two elements representing the players rolls
      */
-    public void showRoll(int[] playerRollAmount);
+    void showRoll(int[] playerRollAmount);
 
     /**
      * Shows the card the player drew and if they moved or not
@@ -38,7 +38,7 @@ public interface MovePlayerOutputBoundary {
      * @param rollAgain If the player can roll again
      * @param isChance If the card is a chance or community card
      */
-    public void showCardDraw(Player player, String cardName, boolean rollAgain,
+    void showCardDraw(Player player, String cardName, boolean rollAgain,
                              boolean isChance);
 
     /**
@@ -48,5 +48,5 @@ public interface MovePlayerOutputBoundary {
      * @param buyable If the tile is buyable
      * @param rollAgain If the player rolled a double
      */
-    public void showBuyableProperty(Player player, Tile tile, boolean buyable, boolean rollAgain);
+    void showBuyableProperty(Player player, Tile tile, boolean buyable, boolean rollAgain);
 }

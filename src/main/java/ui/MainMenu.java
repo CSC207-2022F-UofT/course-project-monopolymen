@@ -6,8 +6,6 @@ import game.LoadGameState;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class MainMenu {
@@ -17,9 +15,9 @@ public class MainMenu {
     private JPanel mainMenuPanel;
     private JPanel newGameMenu;
     private JPanel loadGameMenu;
-    private Font size36;
-    private Font size48;
-    private Font size24;
+    private final Font size36;
+    private final Font size48;
+    private final Font size24;
     private final LoadGameState loadGameState;
 
     /**
@@ -78,32 +76,17 @@ public class MainMenu {
 
         JButton newGameButton = new JButton("New Game");
         newGameButton.setFont(size36);
-        newGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainMenuCards.show(mainMenuContainer, "newGame");
-            }
-        });
+        newGameButton.addActionListener(e -> mainMenuCards.show(mainMenuContainer, "newGame"));
         buttonChoices.add(newGameButton);
 
         JButton loadGameButton = new JButton("Load Game");
         loadGameButton.setFont(size36);
-        loadGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainMenuCards.show(mainMenuContainer, "loadGame");
-            }
-        });
+        loadGameButton.addActionListener(e -> mainMenuCards.show(mainMenuContainer, "loadGame"));
         buttonChoices.add(loadGameButton);
 
         JButton quitGame = new JButton("Quit");
         quitGame.setFont(size36);
-        quitGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        quitGame.addActionListener(e -> System.exit(0));
         buttonChoices.add(quitGame);
     }
 
@@ -156,33 +139,27 @@ public class MainMenu {
         userInputPanel.add(playerCreationManagementPanel, locationSpecifier);
         JButton addPlayerButton = new JButton("Add Player");
         addPlayerButton.setFont(size36);
-        addPlayerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (playerCreationPanel.getComponents().length == 4) {
-                    warningText.setText("4 Players Maximum");
-                } else {
-                    warningText.setText("");
-                    playerCreationPanel.add(newPlayerPanel());
-                    playerCreationPanel.revalidate();
-                    playerCreationPanel.repaint();
-                }
+        addPlayerButton.addActionListener(e -> {
+            if (playerCreationPanel.getComponents().length == 4) {
+                warningText.setText("4 Players Maximum");
+            } else {
+                warningText.setText("");
+                playerCreationPanel.add(newPlayerPanel());
+                playerCreationPanel.revalidate();
+                playerCreationPanel.repaint();
             }
         });
         playerCreationManagementPanel.add(addPlayerButton);
         JButton removePlayerButton = new JButton("Remove Player");
         removePlayerButton.setFont(size36);
-        removePlayerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (playerCreationPanel.getComponents().length == 2) {
-                    warningText.setText("2 Players Minimum");
-                } else {
-                    warningText.setText("");
-                    playerCreationPanel.remove(playerCreationPanel.getComponents().length - 1);
-                    playerCreationPanel.revalidate();
-                    playerCreationPanel.repaint();
-                }
+        removePlayerButton.addActionListener(e -> {
+            if (playerCreationPanel.getComponents().length == 2) {
+                warningText.setText("2 Players Minimum");
+            } else {
+                warningText.setText("");
+                playerCreationPanel.remove(playerCreationPanel.getComponents().length - 1);
+                playerCreationPanel.revalidate();
+                playerCreationPanel.repaint();
             }
         });
         playerCreationManagementPanel.add(removePlayerButton);
@@ -193,43 +170,35 @@ public class MainMenu {
         newGameMenu.add(submitArea, BorderLayout.SOUTH);
         JButton submitButton = new JButton("Start");
         submitButton.setFont(size36);
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    Game game = new Game(gameNameInput.getText());
-                    for (Component playerComponent : playerCreationPanel.getComponents()) {
-                        JPanel playerPanel = (JPanel) playerComponent;
-                        JTextField playerName = (JTextField) playerPanel.getComponent(1);
+        submitButton.addActionListener(e -> {
+            try {
+                Game game = new Game(gameNameInput.getText());
+                for (Component playerComponent : playerCreationPanel.getComponents()) {
+                    JPanel playerPanel = (JPanel) playerComponent;
+                    JTextField playerName = (JTextField) playerPanel.getComponent(1);
 
-                        // This method knows that the component is of type JComboBox<PlayerIcon> as the ComboBox is created
-                        // in the newPlayerPanel() method in this class.
-                        @SuppressWarnings("unchecked")
-                        JComboBox<GameView.PlayerIcon> playerIcon = (JComboBox<GameView.PlayerIcon>) playerPanel.getComponent(3);
-                        if (playerIcon.getSelectedItem() == null) {
-                            // Unexpected behavior, a playerIcon should be selected at all times.
-                            throw new RuntimeException("Player " + playerName + " has no selected playerIcon");
-                        }
-                        game.addPlayer(playerName.getText(), (GameView.PlayerIcon) playerIcon.getSelectedItem(), 1500);
+                    // This method knows that the component is of type JComboBox<PlayerIcon> as the ComboBox is created
+                    // in the newPlayerPanel() method in this class.
+                    @SuppressWarnings("unchecked")
+                    JComboBox<GameView.PlayerIcon> playerIcon = (JComboBox<GameView.PlayerIcon>) playerPanel.getComponent(3);
+                    if (playerIcon.getSelectedItem() == null) {
+                        // Unexpected behavior, a playerIcon should be selected at all times.
+                        throw new RuntimeException("Player " + playerName + " has no selected playerIcon");
                     }
-                    game.startGame();
-                    mainMenuWindow.setVisible(false);
-                } catch (RuntimeException err) {
-                    err.printStackTrace();
-                    ErrorWindow.showErrorWindow(err.getMessage());
+                    game.addPlayer(playerName.getText(), (GameView.PlayerIcon) playerIcon.getSelectedItem(), 1500);
                 }
+                game.startGame();
+                mainMenuWindow.setVisible(false);
+            } catch (RuntimeException err) {
+                err.printStackTrace();
+                ErrorWindow.showErrorWindow(err.getMessage());
             }
         });
         submitArea.add(submitButton);
 
         JButton returnButton = new JButton("Return");
         returnButton.setFont(size36);
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainMenuCards.show(mainMenuContainer, "mainMenuPanel");
-            }
-        });
+        returnButton.addActionListener(e -> mainMenuCards.show(mainMenuContainer, "mainMenuPanel"));
         submitArea.add(returnButton);
     }
 
@@ -294,17 +263,14 @@ public class MainMenu {
 
             JButton submitButton = new JButton("Submit");
             submitButton.setFont(size36);
-            submitButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    try {
-                        Game game = new Game((String) saveOptions.getSelectedItem(), loadGameState.getSavesDirectory());
-                        game.startGame();
-                        mainMenuWindow.setVisible(false);
-                    } catch (RuntimeException err) {
-                        err.printStackTrace();
-                        ErrorWindow.showErrorWindow(err.getMessage());
-                    }
+            submitButton.addActionListener(e -> {
+                try {
+                    Game game = new Game((String) saveOptions.getSelectedItem(), loadGameState.getSavesDirectory());
+                    game.startGame();
+                    mainMenuWindow.setVisible(false);
+                } catch (RuntimeException err) {
+                    err.printStackTrace();
+                    ErrorWindow.showErrorWindow(err.getMessage());
                 }
             });
             loadGameMenu.add(submitButton, rowSpecifier);
@@ -312,12 +278,7 @@ public class MainMenu {
         }
         JButton returnButton = new JButton("Return");
         returnButton.setFont(size36);
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainMenuCards.show(mainMenuContainer, "mainMenuPanel");
-            }
-        });
+        returnButton.addActionListener(e -> mainMenuCards.show(mainMenuContainer, "mainMenuPanel"));
         loadGameMenu.add(returnButton, rowSpecifier);
     }
 

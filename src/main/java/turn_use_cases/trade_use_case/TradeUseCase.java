@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 public class TradeUseCase implements  TradeInputBoundary{
-    private TradeOutputBoundary presenter;
+    private final TradeOutputBoundary presenter;
 
     /**
      * Creates an instance of the trade class with the provided presenter.

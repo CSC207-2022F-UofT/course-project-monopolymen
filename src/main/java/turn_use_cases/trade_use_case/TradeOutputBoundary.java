@@ -13,7 +13,7 @@ public interface TradeOutputBoundary {
      * @param player the player initiating the trade
      * @param flavorText    the text describing what is happening.
      */
-    public void showListOfPlayers(ArrayList<Player> listOfPlayers, Player player, String flavorText);
+    void showListOfPlayers(ArrayList<Player> listOfPlayers, Player player, String flavorText);
 
     /**
      * Presents the possible options for player1 to trade with player2.
@@ -21,7 +21,7 @@ public interface TradeOutputBoundary {
      * @param tradeOption details the possible options for the trade
      * @param flavorText the text describing what is happening.
      */
-    public void showTradeOptions(TradeOption tradeOption, String flavorText);
+    void showTradeOptions(TradeOption tradeOption, String flavorText);
 
     /**
      * Presents the trade offer.
@@ -29,7 +29,7 @@ public interface TradeOutputBoundary {
      * @param tradeOffer details what would happen during the trade.
      * @param flavorText the text describing what is happening.
      */
-    public void showTradeOffer(TradeOffer tradeOffer, String flavorText);
+    void showTradeOffer(TradeOffer tradeOffer, String flavorText);
 
     /**
      * Presents the result of the trade offer.
@@ -43,5 +43,5 @@ public interface TradeOutputBoundary {
      * @param player1 the player who initiated the trade offer.
      * @param player2 the player who received the trade offer.
      */
-    public void showResultOfTradeOffer(int option, String flavorText, Player player1, Player player2);
+    void showResultOfTradeOffer(int option, String flavorText, Player player1, Player player2);
 }

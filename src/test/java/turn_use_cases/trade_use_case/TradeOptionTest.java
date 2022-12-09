@@ -9,14 +9,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class TradeOptionTest {
-    ArrayList<Tile> temp1 = new ArrayList<Tile>();
+    ArrayList<Tile> temp1 = new ArrayList<>();
     Board board = new Board(temp1);
     Player player1 = new Player("player1", "player1", 1500, board);
 

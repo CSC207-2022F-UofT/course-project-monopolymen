@@ -33,16 +33,16 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
     public void showMortgageOption(Player player){
         ArrayList<Property> properties = player.getProperties();
         ArrayList<Property> mortgageable = new ArrayList<>();
-        for (int i = 0; i < properties.size(); i++){
-            if (properties.get(i) instanceof ColorPropertyTile
-                    && ((ColorPropertyTile) properties.get(i)).getNumHouses() == 0
-                    && ((ColorPropertyTile) properties.get(i)).getNumHotels() == 0
-                    && !properties.get(i).isMortgaged()){
-                mortgageable.add(properties.get(i));
-            } else if (properties.get(i) instanceof RailroadTile
-                    || properties.get(i) instanceof UtilityTile
-                    && !properties.get(i).isMortgaged()) {
-                mortgageable.add(properties.get(i));
+        for (Property property : properties) {
+            if (property instanceof ColorPropertyTile
+                    && ((ColorPropertyTile) property).getNumHouses() == 0
+                    && ((ColorPropertyTile) property).getNumHotels() == 0
+                    && !property.isMortgaged()) {
+                mortgageable.add(property);
+            } else if (property instanceof RailroadTile
+                    || property instanceof UtilityTile
+                    && !property.isMortgaged()) {
+                mortgageable.add(property);
             }
         }
         String text = "This is the list of properties which you can mortgage.";
@@ -58,9 +58,9 @@ public class MortgageProperty implements MortgagePropertyInputBoundary{
     public void showUnmortgageOption(Player player){
         ArrayList<Property> properties = player.getProperties();
         ArrayList<Property> unmortgageable = new ArrayList<>();
-        for (int i = 0; i < properties.size(); i++){
-            if (properties.get(i).isMortgaged()){
-                unmortgageable.add(properties.get(i));
+        for (Property property : properties) {
+            if (property.isMortgaged()) {
+                unmortgageable.add(property);
             }
         }
         String text = "This is the list of properties which you can unmortgage.";

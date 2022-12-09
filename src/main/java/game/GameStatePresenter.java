@@ -5,8 +5,6 @@ import turn_interface_adapters.TurnController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class GameStatePresenter implements GameStateOutputBoundary {
@@ -45,12 +43,7 @@ public class GameStatePresenter implements GameStateOutputBoundary {
         resetTurnActionsPanel();
         turnActionsPanel.add(new JLabel("Player " + newPlayer.getName() + ", it's your turn!"), BorderLayout.CENTER);
         JButton acknowledgeButton = new JButton("OK");
-        acknowledgeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.endUseCase();
-            }
-        });
+        acknowledgeButton.addActionListener(e -> controller.endUseCase());
         turnActionButtonsPanel.add(acknowledgeButton);
 
         mainWindow.setTitle("Monopoly Game - Turn " + turnNumber + " - Player " + newPlayer.getName());
@@ -72,82 +65,42 @@ public class GameStatePresenter implements GameStateOutputBoundary {
             switch (action) {
                 case ROLL_TO_MOVE:
                     JButton rollDice = new JButton("Roll Dice");
-                    rollDice.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            controller.rollDice();
-                        }
-                    });
+                    rollDice.addActionListener(e -> controller.rollDice());
                     turnActionButtonsPanel.add(rollDice);
                     break;
                 case LEAVE_JAIL:
                     JButton leaveJail = new JButton("Try to leave jail");
-                    leaveJail.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            controller.attemptLeaveJail();
-                        }
-                    });
+                    leaveJail.addActionListener(e -> controller.attemptLeaveJail());
                     turnActionButtonsPanel.add(leaveJail);
                     break;
                 case MORTGAGE:
                     JButton mortgage = new JButton("Mortgage properties");
-                    mortgage.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            controller.showMortgageableProperties();
-                        }
-                    });
+                    mortgage.addActionListener(e -> controller.showMortgageableProperties());
                     turnActionButtonsPanel.add(mortgage);
                     break;
                 case UNMORTGAGE:
                     JButton unmortgage = new JButton("Unmortgage properties");
-                    unmortgage.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            controller.showUnmortgageableProperties();
-                        }
-                    });
+                    unmortgage.addActionListener(e -> controller.showUnmortgageableProperties());
                     turnActionButtonsPanel.add(unmortgage);
                     break;
                 case BUILD_BUILDING:
                     JButton buildBuilding = new JButton("Build houses/hotels");
-                    buildBuilding.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            controller.showBuildableProperties();
-                        }
-                    });
+                    buildBuilding.addActionListener(e -> controller.showBuildableProperties());
                     turnActionButtonsPanel.add(buildBuilding);
                     break;
                 case SELL_BUILDING:
                     JButton sellBuilding = new JButton("Sell houses/hotels");
-                    sellBuilding.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            controller.showBuiltOnProperties();
-                        }
-                    });
+                    sellBuilding.addActionListener(e -> controller.showBuiltOnProperties());
                     turnActionButtonsPanel.add(sellBuilding);
                     break;
                 case TRADE:
                     JButton trade = new JButton("Trade");
-                    trade.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            controller.showTradablePlayers();
-                        }
-                    });
+                    trade.addActionListener(e -> controller.showTradablePlayers());
                     turnActionButtonsPanel.add(trade);
                     break;
                 case END_TURN:
                     JButton endTurn = new JButton("End your turn");
-                    endTurn.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            controller.endTurn();
-                        }
-                    });
+                    endTurn.addActionListener(e -> controller.endTurn());
                     turnActionButtonsPanel.add(endTurn);
                     break;
             }
@@ -168,7 +121,7 @@ public class GameStatePresenter implements GameStateOutputBoundary {
         } else {
             autosaveInfoPanel.add(new JLabel("Autosave Failed :("));
         }
-        showAutosaveInfoPanel(4000);
+        showAutosaveInfoPanel();
     }
 
     private void resetAutosaveInfoPanel() {
@@ -177,19 +130,12 @@ public class GameStatePresenter implements GameStateOutputBoundary {
 
     /**
      * Shows the autosave info panel
-     *
-     * @param timeout time in ms before the infoPanel disappears
      */
-    private void showAutosaveInfoPanel(int timeout) {
+    private void showAutosaveInfoPanel() {
         autosaveInfoPanel.validate();
         autosaveInfoPanel.repaint();
         autosaveInfoPanel.setVisible(true);
-        Timer timer = new Timer(timeout, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                autosaveInfoPanel.setVisible(false);
-            }
-        });
+        Timer timer = new Timer(4000, e -> autosaveInfoPanel.setVisible(false));
         timer.start();
     }
 

@@ -12,26 +12,26 @@ import java.util.ArrayList;
 public class TradeOption {
 
     // The amount of money player1 has.
-    private int player1Money;
+    private final int player1Money;
 
     // The amount of money player2 has.
-    private int player2Money;
+    private final int player2Money;
 
-    private boolean player1JailCard;
+    private final boolean player1JailCard;
 
-    private boolean player2JailCard;
+    private final boolean player2JailCard;
 
     // The properties player1 owns.
-    private ArrayList<Property> player1Properties;
+    private final ArrayList<Property> player1Properties;
 
     // The properties player2 owns.
-    private ArrayList<Property> player2Properties;
+    private final ArrayList<Property> player2Properties;
 
     // The player who started the trade
-    private Player player1;
+    private final Player player1;
 
     // The player who is receiving the trade
-    private Player player2;
+    private final Player player2;
 
     /**
      * Creates a new TradeOption object.

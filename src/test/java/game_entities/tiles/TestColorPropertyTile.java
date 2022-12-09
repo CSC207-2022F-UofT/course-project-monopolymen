@@ -1,4 +1,5 @@
 package game_entities.tiles;
+
 import game_entities.Board;
 import game_entities.Player;
 import org.junit.Test;
@@ -7,12 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 public class TestColorPropertyTile {
     int[] rent = {4, 8, 20, 30, 50, 80, 100};
     ColorPropertyTile colorPropertyTile = new ColorPropertyTile("Brown", "ArcticAvenue",
            "Arctic Avenue", 60, rent, 50, 60, 10);
-    ArrayList<Tile> test = new ArrayList<Tile>(){{
+    ArrayList<Tile> test = new ArrayList<>() {{
         add(colorPropertyTile);
     }};
     Board board = new Board(test);
@@ -20,7 +20,7 @@ public class TestColorPropertyTile {
     public void getRent() {
         // Test if the correct rent price is obtained when the getRent method is called
         Player player1 = new Player("Test", "test", 1500, board);
-        List<Property> propertyList = new ArrayList<Property>();
+        List<Property> propertyList = new ArrayList<>();
         propertyList.add(colorPropertyTile);
         int test = colorPropertyTile.getRent(player1, propertyList);
         assertEquals(test, -1);

@@ -1,10 +1,10 @@
 package turn_use_cases.move_player_use_case;
-import game_entities.Player;
-import game_entities.tiles.*;
+
 import game_entities.Board;
-import turn_use_cases.end_turn_use_case.EndTurnInputBoundary;
-import turn_use_cases.end_turn_use_case.EndTurnUseCase;
+import game_entities.Player;
 import game_entities.cards.CardActionResultModel;
+import game_entities.tiles.*;
+import turn_use_cases.end_turn_use_case.EndTurnInputBoundary;
 
 /**
  * move_player_use_case (Class to handle moving the player and all its relevant logic such as passing a tile and landing
@@ -15,9 +15,9 @@ import game_entities.cards.CardActionResultModel;
  */
 public class MovePlayerUseCase implements MovePlayerInputBoundary {
 
-    private MovePlayerOutputBoundary movePlayerOutputBoundary;
-    private Board board;
-    private EndTurnInputBoundary endTurnUseCase;
+    private final MovePlayerOutputBoundary movePlayerOutputBoundary;
+    private final Board board;
+    private final EndTurnInputBoundary endTurnUseCase;
     /**
      * @param movePlayerOutputBoundary MovePlayerOutputBoundary to handle display
      * @param board The board the game is operating on
@@ -44,18 +44,6 @@ public class MovePlayerUseCase implements MovePlayerInputBoundary {
         int steps = absolutePosition - player.getPosition();
         if(steps == -3) {
             // Only move backwards case
-            for (int i = 0; i < steps; i++) {
-                player.updatePosition(-1);
-                if(board.getTile(player.getPosition()) instanceof GoTile) {
-                    // Player will pass but not collect money from "GO"
-                    TilePassResultModel nullPass = new TilePassResultModel(false, "");
-                    movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), nullPass);
-                } else {
-                    // Normal backwards pass
-                    TilePassResultModel passResult = board.getTile(player.getPosition()).passing(player);
-                    movePlayerOutputBoundary.showResultOfPass(player, player.getPosition(), passResult);
-                }
-            }
             showAction(player, doubleRoll, flavorText);
         } else {
             int positiveSteps = (steps + board.getTilesList().size()) % board.getTilesList().size();

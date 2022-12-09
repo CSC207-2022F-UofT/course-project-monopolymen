@@ -32,7 +32,7 @@ public class FactoryBoard {
         List<UtilityTile> utilityProperties = FactoryProperty.initializeUtilityProperties(utilityPropertyCSV);
         List<RailroadTile> railRoadProperties = FactoryProperty.initializeRailRoadProperties(railRoadPropertyCSV);
         List<Tile> orderedTileList = order(colorProperties, railRoadProperties, utilityProperties);
-        ArrayList<Tile> orderTileArrayList = new ArrayList<Tile>(orderedTileList);
+        ArrayList<Tile> orderTileArrayList = new ArrayList<>(orderedTileList);
         Board board = new Board(orderTileArrayList);
         ArrayList<Card>[] cards = FactoryCard.getCards(cardCSV, board);
         cardUpdate(cards, board);
@@ -49,7 +49,7 @@ public class FactoryBoard {
      */
     public static ArrayList<Tile> order(List<ColorPropertyTile> colorProperty, List<RailroadTile> railRoad,
                                         List<UtilityTile> utility){
-        ArrayList<Tile> tileList = new ArrayList<Tile>();
+        ArrayList<Tile> tileList = new ArrayList<>();
         tileList.add(new GoTile());
         tileList.add(colorProperty.get(0));
         tileList.add(new DrawCardTile

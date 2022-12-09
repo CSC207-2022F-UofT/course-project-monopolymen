@@ -1,4 +1,5 @@
 package game_entities.tiles;
+
 import game_entities.Board;
 import game_entities.Player;
 import org.junit.Test;
@@ -7,16 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 public class TestUtilityTile {
     int[] rent = {20, 40};
     UtilityTile utilityTile = new UtilityTile("UtilityTile", "Utility Tile", 60,
             rent, 10, 20);
-    ArrayList<Tile> test = new ArrayList<Tile>(){{
+    ArrayList<Tile> test = new ArrayList<>() {{
         add(utilityTile);
     }};
     Board board = new Board(test);
-    Player player1 = new Player("Test", "test", 1500, board);
 
     @Test
     public void NumUtilityOwned() {

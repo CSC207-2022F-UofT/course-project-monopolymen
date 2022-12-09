@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class MortgagePropertyTest {
 
-    ArrayList<Tile> tiles = new ArrayList<Tile>();
+    ArrayList<Tile> tiles = new ArrayList<>();
     Board board = new Board(tiles);
     int[] rentPrice = new int[]{0};
 
@@ -37,7 +37,7 @@ public class MortgagePropertyTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         property_2.addHouse(1);
         player_1.addProperty(property_1);
         player_1.addProperty(water);
@@ -46,7 +46,7 @@ public class MortgagePropertyTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         property_2.subtractHouse(1);
         player_1.sellProperty(property_1);
         player_1.sellProperty(water);
@@ -58,14 +58,14 @@ public class MortgagePropertyTest {
     public void testMortgagePropertyWithoutBuildings_3(){
         mortgageProperty.mortgage(player_2, railroad);
         assertEquals(player_2.getMoney(), 1650);
-        assertEquals(railroad.isMortgaged(), true);
+        assertTrue(railroad.isMortgaged());
     }
 
     @Test
     public void testMortgagePropertyWithBuildings(){
         mortgageProperty.mortgage(player_2, property_2);
         assertEquals(player_2.getMoney(), 1500);
-        assertEquals(property_2.isMortgaged(), false);
+        assertFalse(property_2.isMortgaged());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class MortgagePropertyTest {
         mortgageProperty.mortgage(player_1, property_1);
         mortgageProperty.unmortgage(player_1, property_1);
         assertEquals(player_1.getMoney(), 1485);
-        assertEquals(property_1.isMortgaged(), false);
+        assertFalse(property_1.isMortgaged());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class MortgagePropertyTest {
         mortgageProperty.mortgage(player_1, water);
         mortgageProperty.unmortgage(player_1, water);
         assertEquals(player_1.getMoney(), 1490);
-        assertEquals(water.isMortgaged(), false);
+        assertFalse(water.isMortgaged());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class MortgagePropertyTest {
         mortgageProperty.mortgage(player_2, railroad);
         mortgageProperty.unmortgage(player_2, railroad);
         assertEquals(player_2.getMoney(), 1485);
-        assertEquals(railroad.isMortgaged(), false);
+        assertFalse(railroad.isMortgaged());
     }
 
 }

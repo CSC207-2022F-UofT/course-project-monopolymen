@@ -1,4 +1,5 @@
 package game_entities.tiles;
+
 import game_entities.Board;
 import game_entities.Player;
 import org.junit.Test;
@@ -6,7 +7,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 public class TestTaxTile {
     TaxTile taxTile = new TaxTile("TaxTile", "Tax Tile", 100 );
     ArrayList<Tile> test = new ArrayList<>(){{

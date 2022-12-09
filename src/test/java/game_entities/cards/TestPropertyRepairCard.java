@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestPropertyRepairCard {
     ArrayList<Tile> test = new ArrayList<>();
@@ -22,7 +23,7 @@ public class TestPropertyRepairCard {
         assertEquals(test.getPlayerPosition(), 0);
         assertEquals(test.getCardName(), "PropertyRepair");
         assertEquals(test.getPlayer(), player1);
-        assertEquals(test.isChance(), true);
+        assertTrue(test.isChance());
         assertEquals(player1.getMoney(),1500);
 
     }

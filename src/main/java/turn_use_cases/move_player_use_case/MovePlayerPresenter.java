@@ -6,8 +6,6 @@ import turn_interface_adapters.TurnController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.BufferedReader;
@@ -19,18 +17,17 @@ import java.util.List;
  * Implementation of the MovePlayerOutputBoundary interface.
  */
 public class MovePlayerPresenter implements MovePlayerOutputBoundary {
-    private ArrayList<int[]> tilePositions;
+    private final ArrayList<int[]> tilePositions;
     // Player offsets from eachother so all players can be seen on the board.
-    private int[][] playerOffset = {{0,0}, {20, 0}, {0, 20}, {20, 20}};
-    private JLayeredPane board;
-    private JPanel actionDialogBox;
+    private final int[][] playerOffset = {{0,0}, {20, 0}, {0, 20}, {20, 20}};
+    private final JLayeredPane board;
+    private final JPanel actionDialogBox;
     private ArrayList<JLabel> players;
-    private List<Player> playerList;
+    private final List<Player> playerList;
     private double scaleFactor;
     private int[][] scaledTilePositions;
-    private TurnController turnController;
-    private JPanel optionsWindow;
-    private JFrame mainWindow;
+    private final TurnController turnController;
+    private final JPanel optionsWindow;
 
     public MovePlayerPresenter(JFrame mainWindow, JLayeredPane board, JPanel actionDialogBox, List<Player> playerList,
                                TurnController turnController, String tilePositionFilePath) {
@@ -39,7 +36,6 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         this.playerList = playerList;
         this.turnController = turnController;
         this.optionsWindow = new JPanel();
-        this.mainWindow = mainWindow;
         // read in the tile positions from TilePositions.txt
         this.tilePositions = new ArrayList<>();
         actionDialogBox.add(optionsWindow, "Roll options");
@@ -89,7 +85,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                 .getImage().getScaledInstance((int)(1500 * scaleFactor), (int)(1500 * scaleFactor), Image.SCALE_SMOOTH));
         JLabel boardImageLabel = new JLabel(boardImage);
         boardImageLabel.setBounds(0, 0, (int)(1500 * scaleFactor), (int)(1500 * scaleFactor));
-        board.add(boardImageLabel, new Integer(0));
+        board.add(boardImageLabel, Integer.valueOf(0));
         this.players = new ArrayList<>();
         for (int i = 0; i < playerList.size(); i++) {
             // draw a square with the image from assets
@@ -101,7 +97,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
                     scaledTilePositions[playerList.get(i).getPosition()][1]
                             + playerOffset[i][1], 50, 50);
             player.setLayout(new BorderLayout());
-            board.add(player,new Integer(1));
+            board.add(player, Integer.valueOf(1));
             players.add(player);
         }
     }
@@ -131,27 +127,21 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         // Move the player to the new position.
         playerPanel.setBounds(scaledTilePositions[playerPosition][0] + playerOffset[playerList.indexOf(player)][0],
                 scaledTilePositions[playerPosition][1] + playerOffset[playerList.indexOf(player)][1], 50, 50);
+        JButton otherOptions;
         if(player.getTurnsInJail() == -1) {
-            JButton otherOptions = new JButton(buttonText);
-            otherOptions.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                    turnController.endRollDice(rollAgain);
-                }
+            otherOptions = new JButton(buttonText);
+            otherOptions.addActionListener(e -> {
+                // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
+                turnController.endRollDice(rollAgain);
             });
-            optionsWindow.add(otherOptions);
         } else {
-            JButton otherOptions = new JButton("End Turn");
-            otherOptions.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
-                    turnController.endTurn();
-                }
+            otherOptions = new JButton("End Turn");
+            otherOptions.addActionListener(e -> {
+                // Temporary turn controller, gets the other options from the player and returns back to "main" action dialog panel
+                turnController.endTurn();
             });
-            optionsWindow.add(otherOptions);
         }
+        optionsWindow.add(otherOptions);
         CardLayout cardLayout = (CardLayout) actionDialogBox.getLayout();
         cardLayout.show(actionDialogBox, "Roll options");
     }
@@ -195,20 +185,17 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
         if(buyable) {
             JButton buyButton = new JButton("Buy " + property.getTileDisplayName() + " for $"
                     + property.getPurchasePrice());
-            buyButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Temporary turn controller, calls the BuyPropertyUseCase and returns back to "main" action dialog panel
-                    turnController.buyProperty(property);
-                    turnController.endRollDice(doubleRoll);
+            buyButton.addActionListener(e -> {
+                // Temporary turn controller, calls the BuyPropertyUseCase and returns back to "main" action dialog panel
+                turnController.buyProperty(property);
+                turnController.endRollDice(doubleRoll);
 
-                }
             });
             optionsWindow.add(buyButton);
             // Show the property picture
             JLabel propertyImage = new JLabel();
             String frontOrBack = "front";
-            String id = "";
+            String id;
             if (property instanceof UtilityTile){
                 id = "utility_" + property.getTileName() + ".jpg";
             } else if (property instanceof RailroadTile) {
@@ -221,7 +208,7 @@ public class MovePlayerPresenter implements MovePlayerOutputBoundary {
             System.out.println(path);
             ImageIcon temp = new ImageIcon(new ImageIcon
                     (path)
-                    .getImage().getScaledInstance((int) (150), (int) (192), Image.SCALE_SMOOTH));
+                    .getImage().getScaledInstance(150, 192, Image.SCALE_SMOOTH));
             propertyImage.setIcon(temp);
             propertyImage.setPreferredSize(new Dimension(150, 192));
             optionsWindow.add(propertyImage);

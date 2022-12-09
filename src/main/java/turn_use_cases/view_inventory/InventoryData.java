@@ -45,10 +45,10 @@ public class InventoryData {
      * @return      A List of List with each List containing only cards in one set
      */
     public static List<List<Property>> sortProperties(InventoryData player){
-        List<List<Property>> sorted = new ArrayList<List<Property>>();
-        List<Property> railRoadProperties = new ArrayList<Property>();
-        List<Property> utilityProperties = new ArrayList<Property>();
-        List<String> colors = new ArrayList<String>();
+        List<List<Property>> sorted = new ArrayList<>();
+        List<Property> railRoadProperties = new ArrayList<>();
+        List<Property> utilityProperties = new ArrayList<>();
+        List<String> colors = new ArrayList<>();
         for(Property x : player.properties){
             if(x instanceof RailroadTile){
                 railRoadProperties.add(x);
@@ -66,7 +66,7 @@ public class InventoryData {
                     }
                 } else{
                     colors.add(color);
-                    List<Property> newList = new ArrayList<Property>();
+                    List<Property> newList = new ArrayList<>();
                     newList.add(thisProperty);
                     sorted.add(newList);
                 }
@@ -83,7 +83,7 @@ public class InventoryData {
 
     public int getMoney() {return money;}
     public static List<InventoryData> creator(List<Player> playerList){
-        List<InventoryData> returnList = new ArrayList<InventoryData>();
+        List<InventoryData> returnList = new ArrayList<>();
         for (Player player : playerList){
             returnList.add(new InventoryData(player));
         }

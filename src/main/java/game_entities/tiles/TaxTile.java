@@ -5,7 +5,7 @@ import game_entities.Player;
 
 public class TaxTile extends Tile{
 
-    private int taxAmount;
+    private final int taxAmount;
     /**
      * A player landing on the space must pay a income tax or luxury tax to the Bank.
      * @see game_entities.tiles.Property

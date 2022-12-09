@@ -4,8 +4,6 @@ import game_entities.Player;
 import game_entities.tiles.ColorPropertyTile;
 import game_entities.tiles.Property;
 
-import java.util.ArrayList;
-
 public interface BuildBuildingInputBoundary {
     /**
      * Check if player can build buildings
@@ -13,14 +11,14 @@ public interface BuildBuildingInputBoundary {
      * @param player the player who wants to build buildings.
      * @param property the property on which player wants to build buildings.
      */
-    public boolean isBuildable (Player player, Property property);
+    boolean isBuildable (Player player, Property property);
 
     /**
      * A list of properties on which can build a building.
      *
      * @param player the player who wants to build buildings.
      */
-    public void showBuildOption (Player player);
+    void showBuildOption (Player player);
 
     /**
      * Build a house on the property.
@@ -28,7 +26,7 @@ public interface BuildBuildingInputBoundary {
      * @param player the player who wants to build buildings.
      * @param property the property on which player wants to build buildings.
      */
-    public void buildHouse (Player player, ColorPropertyTile property);
+    void buildHouse (Player player, ColorPropertyTile property);
 
     /**
      * Build a hotel on the property.
@@ -36,7 +34,7 @@ public interface BuildBuildingInputBoundary {
      * @param player the player who wants to build buildings.
      * @param property the property on which player wants to build buildings.
      */
-    public void buildHotel (Player player, ColorPropertyTile property);
+    void buildHotel (Player player, ColorPropertyTile property);
 
     /**
      * Check if player can sell buildings
@@ -44,14 +42,14 @@ public interface BuildBuildingInputBoundary {
      * @param player the player who wants to sell buildings.
      * @param property the property on which player wants to sell buildings.
      */
-    public boolean isSellable(Player player, ColorPropertyTile property);
+    boolean isSellable(Player player, ColorPropertyTile property);
 
     /**
      * A list of properties which has building can be sold.
      *
      * @param player the player who wants to sell buildings.
      */
-    public void showSellOption (Player player);
+    void showSellOption (Player player);
 
     /**
      * Selling a building on the property.
@@ -59,7 +57,7 @@ public interface BuildBuildingInputBoundary {
      * @param player the player who wants to sell buildings.
      * @param property the property on which player wants to sell buildings.
      */
-    public void sellHouse(Player player, ColorPropertyTile property);
+    void sellHouse(Player player, ColorPropertyTile property);
 
     /**
      * Selling a building on the property.
@@ -67,5 +65,5 @@ public interface BuildBuildingInputBoundary {
      * @param player the player who wants to sell buildings.
      * @param property the property on which player wants to sell buildings.
      */
-    public void sellHotel(Player player, ColorPropertyTile property);
+    void sellHotel(Player player, ColorPropertyTile property);
 }

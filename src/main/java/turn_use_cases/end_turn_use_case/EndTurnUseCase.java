@@ -9,15 +9,13 @@ import game_entities.Player;
  */
 public class EndTurnUseCase implements EndTurnInputBoundary{
 
-    private EndTurnOutputBoundary endTurnOutputBoundary;
-    private GameState gameState;
+    private final GameState gameState;
 
     /**
      * @param endTurnOutputBoundary EndTurnOutputBoundary to handle display
      * @param gameState             Controller keeping track of turn rotation and current turn
      */
     public EndTurnUseCase(EndTurnOutputBoundary endTurnOutputBoundary, GameState gameState) {
-        this.endTurnOutputBoundary = endTurnOutputBoundary;
         this.gameState = gameState;
     }
 
