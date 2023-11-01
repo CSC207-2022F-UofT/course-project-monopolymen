@@ -7,6 +7,8 @@ Toronto.
 
 Implemented with the Clean Architecture and SOLID design principles.
 
+Includes save/load capabilities with serialization/deserialization of the GameState object.
+
 ## Build & Run Instructions:
 
 - Ensure you are using Java 11. We built and tested this with AdoptOpenJDK Version 11.0.9
